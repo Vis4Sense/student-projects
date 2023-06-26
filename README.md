@@ -9,3 +9,5 @@ Repository for all the student projects, including UG/PGT final projects and int
 
 ## Programming
 ### [GitHub](instructions/github.md)
+### [Code editor (IDE)](instructions/ide.md)
+### [Latex](instructions/latex.md)
