@@ -4,6 +4,10 @@ Please use this file for all the meeting notes.
 
 # 23 Jun 2023
 
+Present: Xinhao, Meirong, Yuchen, Ajing, Yu
+
+Absent: Yu
+
 # Discussions
 ## Project chocie
 - Xinhao: need to rethink
