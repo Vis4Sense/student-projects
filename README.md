@@ -8,5 +8,4 @@ Repository for all the student projects, including UG/PGT final projects and int
 ## [Ethics](instructions/ethics.md)
 
 ## Programming
-
-
+### [GitHub](instructions/github.md)
