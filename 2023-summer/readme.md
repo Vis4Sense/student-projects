@@ -23,10 +23,10 @@ Please use this file for all the meeting notes.
 - learn Git and GitHub
 - learn Markdown
 - Create a folder with your name under '2023-summer' for your project
-- start: create a project plan using GitHub Projects and copy the tasks and milestones from the '[project plan template](https://github.com/users/kaidatavis/projects/2)'
+- start: create a project plan using GitHub Projects and copy the tasks and milestones from the '[project plan template](https://github.com/Vis4Sense/student-projects/projects?query=is%3Aopen)'
 - start: literature review
 
-*(Template - the latest meeting is on top)*
+***(Template - the latest meeting is on top)***
 
 # Meeting dates
 
