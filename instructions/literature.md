@@ -1,5 +1,30 @@
 # Litearature Review
 
+## Reference
+References are needed for both plan/proposal and dissertation/final reprot.
+- Two parts: citation in the main text and the references at the end of reprot.
+- Use a tool; don't create reference manually.
+  - Recommended: zotero (see details below)
+  - Use zotero for collecting and inserting citations/references
+  - We will also use zotero to share relevant papers. 
+    - Add all the relevant papers to this Zotero Group Library: [Sensemaking and human-AI Teaming](https://www.zotero.org/groups/4762437/sensemaking_and_human-ai_teaming)
+    - Use Zotero tags to group the papers (don't just use all the tags Zotero automatically created)
+    - Don't upload the full paper PDF file (the free zotero group library has a very limited storage size)
+    - Do include a link to the public/free online full paper pdf if there is one using the 'notes' section in Zotero.
+    - Use the 'notes' section to summarise what the paper is about and discuss its stregnth and weakneess.
+- If you are using Latex, 
+  - follow this [overleaf bibliography tutorial](https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf);
+  - watch my [latex tutorial](https://youtu.be/PqW8myobrPE), which includes references.
+  - you can use Zotero (see below) to collect the papers from publication webiste (such as IEEE xplore and ACM Digital Library) and then generates the bibtex entry.
+  - IEEE xplore and ACM Digital Library also provide the bibtex entry on the webpage for each paper: 'cite this' for Xplore, 'export citation' (double quote button) for ACM Digital library.
+- If you are not using Latex, use [Zotero](https://www.zotero.org/). 
+  - This is a recording of me showing how to use Zotero: https://youtu.be/R_5bjdE-kSw
+  - use their browser extension to automatically add reference: 
+    - [Zotero connector](https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=en)
+    - These can export the papers to bibtex format, if you use Latex.
+  - use their Microsoft Word plugin to add references to report
+    - [Zotero word processor plugin](https://www.zotero.org/support/word_processor_integration)
+
 ## Existing Work
 - Needs to be much more **complete** than the litearture review in the project proposal;
 - Cover different types of resources: app, website, service, organisation, physical print/product ...
@@ -31,26 +56,4 @@ Besides search, it can be very useful to just go through the latest papers from 
   - save the paper in zotero if it seems relevant after reading the abstract
 - We will use a shared zotero group to collect and share all the relevant papers found (more below in the 'reference' section)
 
-## Reference
-- Two parts: citation in the main text and the references at the end of reprot.
-- Use a tool; don't create reference manually.
-  - Recommended: zotero (see details below)
-  - Use zotero for collecting and inserting citations/references
-  - We will also use zotero to share relevant papers. 
-    - Add all the relevant papers to this Zotero Group Library: [Sensemaking and human-AI Teaming](https://www.zotero.org/groups/4762437/sensemaking_and_human-ai_teaming)
-    - Use Zotero tags to group the papers (don't just use all the tags Zotero automatically created)
-    - Don't upload the full paper PDF file (the free zotero group library has a very limited storage size)
-    - Do include a link to the public/free online full paper pdf if there is one using the 'notes' section in Zotero.
-    - Use the 'notes' section to summarise what the paper is about and discuss its stregnth and weakneess.
-- If you are using Latex, 
-  - follow this [overleaf bibliography tutorial](https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf);
-  - watch my [latex tutorial](https://youtu.be/PqW8myobrPE), which includes references.
-  - you can use Zotero (see below) to collect the papers from publication webiste (such as IEEE xplore and ACM Digital Library) and then generates the bibtex entry.
-  - IEEE xplore and ACM Digital Library also provide the bibtex entry on the webpage for each paper: 'cite this' for Xplore, 'export citation' (double quote button) for ACM Digital library.
-- If you are not using Latex, use [Zotero](https://www.zotero.org/). 
-  - This is a recording of me showing how to use Zotero: https://youtu.be/R_5bjdE-kSw
-  - use their browser extension to automatically add reference: 
-    - [Zotero connector](https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=en)
-    - These can export the papers to bibtex format, if you use Latex.
-  - use their Microsoft Word plugin to add references to report
-    - [Zotero word processor plugin](https://www.zotero.org/support/word_processor_integration)
+
