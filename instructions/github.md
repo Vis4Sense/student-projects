@@ -1,5 +1,5 @@
 # GitHub.com
-We will this shared github reporsitory for project file and code, so you 
+We will use this shared github reporsitory for project file and code, so you 
 1. will never lose your code (because of corrupted USB or hard drive), and
 2. can easily show it to other people (e.g.,as part of your work portfolio for job application).
 
