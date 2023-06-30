@@ -1,29 +1,31 @@
 # Litearature Review
 
 ## Reference
-References are needed for both plan/proposal and dissertation/final reprot.
-- Two parts: citation in the main text and the references at the end of reprot.
-- Use a tool; don't create reference manually.
-  - Recommended: zotero (see details below)
-  - Use zotero for collecting and inserting citations/references
-  - We will also use zotero to share relevant papers. 
+References are needed for both plan/proposal and dissertation/final report.
+- Two parts: **citation** in the main text and the **references/bibliography** at the end of report.
+- Use a tool; don't create references manually.
+  - Recommended: [Zotero](https://www.zotero.org/) (see details below)
+  - Use Zotero for collecting and inserting citations/references
+  - This is a recording of me showing how to use Zotero: https://youtu.be/R_5bjdE-kSw
+  - use its browser extension to automatically add releavant paper to your Zotero collection: 
+    - [Zotero connector](https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=en)
+    - These can later be exported to bibtex format, if you use Latex.
+  - If you are not using Latex yet, use the Microsoft Word plugin to add references to report
+    - [Zotero word processor plugin](https://www.zotero.org/support/word_processor_integration)
+  - We can also use Zotero to share relevant papers (optional). 
     - Add all the relevant papers to this Zotero Group Library: [Sensemaking and human-AI Teaming](https://www.zotero.org/groups/4762437/sensemaking_and_human-ai_teaming)
     - Use Zotero tags to group the papers (don't just use all the tags Zotero automatically created)
-    - Don't upload the full paper PDF file (the free zotero group library has a very limited storage size)
+    - Don't upload the full paper PDF file (the free Zotero group library has a very limited storage size)
     - Do include a link to the public/free online full paper pdf if there is one using the 'notes' section in Zotero.
-    - Use the 'notes' section to summarise what the paper is about and discuss its stregnth and weakneess.
+    - Use the 'notes' section to summarise what the paper is about and discuss its strengths and weakness.
+      
 - If you are using Latex, 
   - follow this [overleaf bibliography tutorial](https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf);
   - watch my [latex tutorial](https://youtu.be/PqW8myobrPE), which includes references.
-  - you can use Zotero (see below) to collect the papers from publication webiste (such as IEEE xplore and ACM Digital Library) and then generates the bibtex entry.
-  - IEEE xplore and ACM Digital Library also provide the bibtex entry on the webpage for each paper: 'cite this' for Xplore, 'export citation' (double quote button) for ACM Digital library.
-- If you are not using Latex, use [Zotero](https://www.zotero.org/). 
-  - This is a recording of me showing how to use Zotero: https://youtu.be/R_5bjdE-kSw
-  - use their browser extension to automatically add reference: 
-    - [Zotero connector](https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=en)
-    - These can export the papers to bibtex format, if you use Latex.
-  - use their Microsoft Word plugin to add references to report
-    - [Zotero word processor plugin](https://www.zotero.org/support/word_processor_integration)
+  - you can use Zotero (see below) to collect the papers from publication website (such as IEEE Xplore and ACM Digital Library) and then generates the BibTeX entry.
+  - IEEE xplore and ACM Digital Library also provide the BibTeX entry on the webpage for each paper: 'cite this' for Xplore, 'export citation' (double quote button) for ACM Digital library.
+
+
 
 ## Existing Work
 - Needs to be much more **complete** than the litearture review in the project proposal;
