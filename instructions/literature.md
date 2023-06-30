@@ -7,10 +7,10 @@
   - For example, if your project is about AI-based recommendations, there is no need to introduce what AI is (the reader would know) and go straight to the latest machine learing models for recommendation.
 - Include academic publications to support your argument: 
   - You can include webpages and online articles, but these are not 'peer reviewed', i.e., anyone can potentially say saything online, and as a result these are usually not regarded as reliable evidence.
-- Please to search for academic papers:
-  - IEEE Xplore: http://ieeexplore.ieee.org/Xplore/home.jsp
-  - ACM Digital Library: https://dl.acm.org/
-  - Google Scholar: https://scholar.google.com/
+- Places to search for academic papers:
+  - [IEEE Xplore](http://ieeexplore.ieee.org/Xplore/home.jsp) (recommended)
+  - [ACM Digital Library](https://dl.acm.org/) (recommended)
+  - [Google Scholar](https://scholar.google.com/)
 - Things to consider when selecting which papers to cite
   - IEEE Xplore and ACM Digital Library are usually more rigourous than Google Scholar: all papers published there are checked by one or more researchers, whereas this is not always the case for Google Scholar (such as self-publishing on arXiv).
   - Papers that are more than 5 years old is often outdated (no longer the state of the art), especially in an active research field such as machine learning. Make sure there is no later work that supersedes it if you want to use it.
@@ -19,8 +19,8 @@
 
 For this project, you are likely to find good-quality related work from these journals and conference
  - IEEE Transactions on Visualization and Computer Graphics ([IEEE TVCG](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945))
- - [Computer Graphics Forum](https://onlinelibrary.wiley.com/journal/14678659)
  - ACM conference on human factors in computing systems ([ACM CHI](https://dl.acm.org/conference/chi))
+ - [Computer Graphics Forum](https://onlinelibrary.wiley.com/journal/14678659) (if you want to cast a wider net)
 
 Besides search, it can be very useful to just go through the latest papers from these journals and conferences
 - Because relevant papers do not necessarily include the same keywords (a paper about analysing user behaviours may not have the term 'sensemaking')
