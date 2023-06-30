@@ -2,9 +2,27 @@ We will use this folder for the MSc and intern projects in summer 2023.
 
 Please use this file for all the meeting notes. 
 
-# 23 Jun 2023
+# Experts
+- GitHub: Xinhao YANG
+- Latex/overleaf: Yu HAO
+
+# 30 Jue 2023
 
 Present: Xinhao, Meirong, Yuchen, Ajing, Yu
+
+## Discusion
+- [GitHub](https://github.com/Vis4Sense/student-projects/blob/main/instructions/github.md)
+- [IDE](https://github.com/Vis4Sense/student-projects/blob/main/instructions/ide.md)
+- [Latex/overleaf](https://github.com/Vis4Sense/student-projects/blob/main/instructions/latex.md)
+- [Literature review](https://github.com/Vis4Sense/student-projects/blob/main/instructions/literature.md)
+
+## ToDo
+
+Complete the tasks from last meeting.
+
+# 23 Jun 2023
+
+Present: Xinhao, Meirong, Yuchen, Ajing
 
 Absent: Yu
 
@@ -15,10 +33,6 @@ Absent: Yu
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 - Aijing: to support end users, such as artists, to use generative AI models, such as stable diffusion (dalle2, midjourney), through web interface
 - Yu: Projection of provenance vector sequence
-
-
-## Specialist
-- GitHub: Xinhao YANG
 
 # ToDo
 - complete: prelimenary ethics form (deadline: 27 June)
