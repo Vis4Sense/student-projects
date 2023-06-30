@@ -12,19 +12,17 @@ References are needed for both plan/proposal and dissertation/final report.
     - These can later be exported to bibtex format, if you use Latex.
   - If you are not using Latex yet, use the Microsoft Word plugin to add references to report
     - [Zotero word processor plugin](https://www.zotero.org/support/word_processor_integration)
-  - We can also use Zotero to share relevant papers (optional). 
-    - Add all the relevant papers to this Zotero Group Library: [Sensemaking and human-AI Teaming](https://www.zotero.org/groups/4762437/sensemaking_and_human-ai_teaming)
-    - Use Zotero tags to group the papers (don't just use all the tags Zotero automatically created)
-    - Don't upload the full paper PDF file (the free Zotero group library has a very limited storage size)
-    - Do include a link to the public/free online full paper pdf if there is one using the 'notes' section in Zotero.
-    - Use the 'notes' section to summarise what the paper is about and discuss its strengths and weakness.
-      
 - If you are using Latex, 
   - follow this [overleaf bibliography tutorial](https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf);
   - watch my [latex tutorial](https://youtu.be/PqW8myobrPE), which includes references.
   - you can use Zotero (see below) to collect the papers from publication website (such as IEEE Xplore and ACM Digital Library) and then generates the BibTeX entry.
   - IEEE xplore and ACM Digital Library also provide the BibTeX entry on the webpage for each paper: 'cite this' for Xplore, 'export citation' (double quote button) for ACM Digital library.
-
+- We can also use Zotero to share relevant papers (optional). 
+  - Add all the relevant papers to this Zotero Group Library: [Sensemaking and human-AI Teaming](https://www.zotero.org/groups/4762437/sensemaking_and_human-ai_teaming)
+  - Use Zotero tags to group the papers (don't just use all the tags Zotero automatically created)
+  - Don't upload the full paper PDF file (the free Zotero group library has a very limited storage size)
+  - Do include a link to the public/free online full paper pdf if there is one using the 'notes' section in Zotero.
+  - Use the 'notes' section to summarise what the paper is about and discuss its strengths and weakness.
 
 
 ## Existing Work
