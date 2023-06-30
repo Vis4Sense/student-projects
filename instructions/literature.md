@@ -31,17 +31,6 @@ Besides search, it can be very useful to just go through the latest papers from 
   - save the paper in zotero if it seems relevant after reading the abstract
 - We will use a shared zotero group to collect and share all the relevant papers found (more below in the 'reference' section)
 
-
-## Development Technologies
-
-- Be **open** about what form the project prototype will be: app, website, service, organisation, physical print/product ...
-- Research different ways of implementation:
-  - For example for app development, there is native and hybrid, and then there are many different hybrid frameworks. 
-  - Comparison: 
-    - Identify required **functions**, such as user regiter/login, database, messaging, image/video, ...
-    - Compare different options regarding to the functions: is it possible at all, how easy it is to learn/program, how fast/secure/reliable it is, ...
-- Justify your choice
-
 ## Reference
 - Two parts: citation in the main text and the references at the end of reprot.
 - Use a tool; don't create reference manually.
