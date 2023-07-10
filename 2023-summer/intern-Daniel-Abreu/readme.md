@@ -54,3 +54,6 @@ Potential Additions:
 - [ ] 6. Daniel: move the code repository here
 - [x] 7. Daniel: read the Verdant paper
 - [x] 8. Daniel: understand more about the Loops code
+- [ ] 9. Explore how the disco diffusion notebook is setup and similar user studies
+- [ ] 10. Research into prompt engineering of stable diffusion
+- [ ] 11. Compare users prompts and how the variation is altered
