@@ -4,18 +4,14 @@ Issues from Loops:
 - Watch process to recomplie 
 - Using a devcointarer for the extension
 
-
-
- 
-
-Installation Process to use Loops:
-1-Install Docker
-2-NodeJS
-3-https://github.com/jupyterlab/extension-template
-4-Python 3.9
-5-Copier
-6-Trrack extension
-7-HTML Diff Extension by Armantang
+Installation requirements to use Loops:
+- Install Docker
+- NodeJS
+- https://github.com/jupyterlab/extension-template
+- Python 3.9
+- Copier
+- Trrack extension
+- HTML Diff Extension by Armantang
 
  
 ## Notes - 4th July 2023 (Richard)
