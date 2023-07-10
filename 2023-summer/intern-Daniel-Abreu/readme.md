@@ -47,7 +47,7 @@ Potential Additions:
 - [x] 3. Daniel: have a look of react https://react.dev/learn
 - [x] 4. Daniel: put the recording of the meeting with Klaus somewhere online (but not github as the video file might a bit too big).
 - [x] 5. Kai: arrange an observation/interview with artist
-- [ ] 6. Daniel: move the code repository here
+- [x] 6. Daniel: move the code repository here
 - [x] 7. Daniel: read the Verdant paper
 - [x] 8. Daniel: understand more about the Loops code
 - [ ] 9. Explore how the disco diffusion notebook is setup and similar user studies
