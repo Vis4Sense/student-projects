@@ -28,7 +28,7 @@ Absent: Yu
 
 # Discussions
 ## Project chocie
-- Xinhao: need to rethink
+- Xinhao: Create a browser extension to support the usage of LLM or generative AI models through their web interface
 - Meirong: Create a browser extension that provide end-to-end support for online shopping
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 - Aijing: to support end users, such as artists, to use generative AI models, such as stable diffusion (dalle2, midjourney), through web interface
