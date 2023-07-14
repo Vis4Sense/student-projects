@@ -31,14 +31,14 @@ Issues when using Disco Diffusion:
 
 ## Richard's Requirements and Challenges
 Richards requirements involve the following:
-
-- Improved running time: Richard finds the current running time quite long, which affects his productivity. He would like to explore the possibility of reducing the running time to have a more efficient workflow
-- Improved creative process: Richard is concerned 
 - Clear Prompt-Image Relationship: Richard has observed that in multiple instances, changing the prompt does not yield the expected image changes, he would like a clearer and more consistant relationship between the prompts written and the generated images. However, at the same time, the unexpected image changes do provide him with a more creative approach to using the Disco model.
 - Deeper understanding of the model: Richard wants to learn more about how the model works in order to maximise its potential and extract more value out of the model's capabilities.
 - More efficient management of exploration history: Richard currently saves prompts and images to a folder which is deemed inefficient for managing what has been done and tested, he would like to explore a more effective approach to track and utilise past exploration results.
 - Higher percentage of useful generated images: Currently Richard expresses that he is dissatisfied with the quality of the generated images, around 80-90% of the images produced are not useful or desired.
 - Less need for debugging: Richard encounters issues with a prompt not being fully processed during the cases of forgetting to put a colon before a weight which results in that weight being ignored and having to re-run the model.
+- Improved running time: Richard finds the current running time quite long, which affects his productivity. He would like to explore the possibility of reducing the running time to have a more efficient workflow
+- Improved creative process: Richard is concerned losing the train of creative thought while waiting.
+
 ## Goals that the extension will achieve
 
 ### 1st Stage:
