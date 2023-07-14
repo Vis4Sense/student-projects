@@ -2287,9 +2287,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/builder@npm:^4.0.0":
+"@jupyterlab/builder@npm:^3.2.0":
   version: 4.0.0
-  resolution: "@jupyterlab/builder@npm:4.0.0"
+  resolution: "@jupyterlab/builder@npm:3.2.0"
   dependencies:
     "@lumino/algorithm": ^2.0.0
     "@lumino/application": ^2.1.1
