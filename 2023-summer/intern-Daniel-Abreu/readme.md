@@ -1,19 +1,16 @@
-## Notes - 22 June 2023 (Klaus)
-Issues from Loops:
-- Order of execution
-- Watch process to recomplie 
-- Using a devcointarer for the extension
+## Notes - 14 July 2023
 
-Installation requirements to use Loops:
-- Install Docker
-- NodeJS
-- https://github.com/jupyterlab/extension-template
-- Python 3.9
-- Copier
-- Trrack extension
-- HTML Diff Extension by Armantang
-
- 
+### To Do
+- [ ] create wireframes with two different layouts:
+   - [ ] column based: each column is a version (the current desgin of loops)
+   - [ ] row based: each row contains only the text prompt and resulting image(s)
+   - The row layout might be harder to compare the (prompt) difference between the versions, and a solution could be use 'text diff' such as crossing out removed word and showing new word in a different colour.
+- [ ] Show Richard the wireframes for comments
+- [ ] for the row-based layout, check how much efforts are needed to implement it in loops
+   - If too much efforts, implement the row layout as a separate extension? 
+- [ ] recreate the current history (saved prompts and images) in the extension
+   - This needs to be moved later if implmenetion is needed, such as creating the row layout.
+     
 ## Notes - 4th July 2023 (Richard)
 Issues when using Disco Diffusion:
 - Running time is quite long
@@ -63,6 +60,21 @@ Potential Additions:
 - Hyperparameter changes via the library UI
 - Notes/Comment tracking of each version so the user can notate how their changes have impacted different versions and for recalling purposes
 - Prompt retrieval function from a previous version 
+
+## Notes - 22 June 2023 (Klaus)
+Issues from Loops:
+- Order of execution
+- Watch process to recomplie 
+- Using a devcointarer for the extension
+
+Installation requirements to use Loops:
+- Install Docker
+- NodeJS
+- https://github.com/jupyterlab/extension-template
+- Python 3.9
+- Copier
+- Trrack extension
+- HTML Diff Extension by Armantang
 
 
 ## ToDo
