@@ -42,6 +42,7 @@ Richards requirements involve the following:
 ## Goals that the extension will achieve
 
 ### 1st Stage:
+- History capture and display: 
 - History Management: The extension will provide a more efficient way to manage and utilize the exploration history. It will offer intuitive tools for organizing, searching, and retrieving past prompts and generated images. This functionality will save valuable time and effort when accessing and utilizing previous experiments.
 - Efficient Exploration: The extension will enable users to explore the capabilities of the Disco model more effectively. It will provide a streamlined interface to track and manage the exploration history, allowing users like Richard to easily revisit and build upon their previous experiments.
 - Enhanced Control: The extension will allow users to have better control over the output of the model. By providing a user-friendly interface to steer and modify prompts, it will enable users to fine-tune the generated images according to their specific requirements more efficiently.
