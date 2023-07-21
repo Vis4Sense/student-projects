@@ -1,3 +1,13 @@
+## Notes - 21 July 2023
+
+- [ ] add more wireframes to illustrate user interactions with the extension, or use the figma to mock interaction
+- [ ] start with the single column design
+- [ ] load the existing prompts and images
+- [ ] for each prompt, save and display all the steps (each step is an image)
+   - [ ] Some of the steps can be shown in smaller size to reduce the space needed.
+- [ ] Complete an extention prototype (minimal viable prototype or MVP) by next meeting.
+
+
 ## Notes - 14 July 2023
 
 ### To Do
