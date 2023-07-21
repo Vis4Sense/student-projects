@@ -4,12 +4,18 @@ Please use this file for all the meeting notes.
 
 # 21 Jul 2023
 
-Present:
+Present: Xinhao, Meirong, Yuchen, Ajing, Yu
 
 ## Discussion
+- The project plan mark should be released next week. If not, please contact the module convenor Tim Muller.
 
 ## ToDo
-
+- Make sure there is no overlapping between the tasks in the plan
+- Update the plan tasks according to the project change, such as new things need to learn
+- Make sure each task has a reasonble amount of time to complete.
+   - It is not feasible to complete the coding needed for a prototype in a few days
+   - Need to reduce the number of tasks if there is not enough time to complete all of the existing ones
+- Complete the tasks in the plan and update the plan accordingly. 
 
 # 30 Jue 2023
 
