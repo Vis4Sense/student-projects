@@ -2,9 +2,14 @@ We will use this folder for the MSc and intern projects in summer 2023.
 
 Please use this file for all the meeting notes. 
 
-# Experts
-- GitHub: Xinhao YANG
-- Latex/overleaf: Yu HAO
+# 21 Jul 2023
+
+Present:
+
+## Discussion
+
+## ToDo
+
 
 # 30 Jue 2023
 
@@ -44,6 +49,10 @@ Absent: Yu
 - start: create a project plan using GitHub Projects and copy the tasks and milestones from the '[project plan template](https://github.com/Vis4Sense/student-projects/projects?query=is%3Aopen)'
 - start: literature review
 
+# Experts
+- GitHub: Xinhao YANG
+- Latex/overleaf: Yu HAO
+- 
 ***(Template - the latest meeting is on top)***
 
 # Meeting dates
