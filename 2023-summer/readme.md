@@ -7,6 +7,9 @@ Please use this file for all the meeting notes.
 Present: Xinhao, Meirong, Yuchen, Yu, Aijing
 
 # Discussions
+- Meirong: have a look of the visual design in the final report from Liujia and Qilin (under the folder 2022-2023)
+- Xinhao: can use the latest open-source LLM such as Llama2 from Meta
+- Yu: can use the data Luting collected (under 2022-2023)
 
 # ToDo
 - Kai to send Aijing the recording with Richard
