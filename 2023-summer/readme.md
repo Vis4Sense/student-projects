@@ -9,6 +9,10 @@ Present: Xinhao, Meirong, Yuchen, Yu
 # Discussions
 - 
 
+# ToDo
+- Kai to send Aijing the recording with Richard
+- 
+
 # 21 Jul 2023
 
 Present: Xinhao, Meirong, Yuchen, Ajing, Yu
@@ -46,11 +50,11 @@ Absent: Yu
 
 # Discussions
 ## Project chocie
+- Aijing: to support end users, such as artists, to use generative AI models, such as stable diffusion (dalle2, midjourney), through web interface
 - Meirong: Create a browser extension that provide end-to-end support for online shopping
 - Xinhao: Create a browser extension to support the usage of LLM or generative AI models through their web interface
-- Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
-- Aijing: to support end users, such as artists, to use generative AI models, such as stable diffusion (dalle2, midjourney), through web interface
 - Yu: Projection of provenance vector sequence
+- Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 
 # ToDo
 - complete: prelimenary ethics form (deadline: 27 June)
