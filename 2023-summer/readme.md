@@ -17,6 +17,7 @@ Present: Xinhao, Meirong, Yuchen, Yu, Aijing
    - Please keep your GitHub Project up-to-date
    - Please identify the specific user task that your project will support
    - Please create at least the first sketch/wireframe of the UI for your extension/tool.
+   - Please add the task/user requirements (as markdown) and design wireframe (or the link to it) to the GitHub repository
 
 # 21 Jul 2023
 
