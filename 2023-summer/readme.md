@@ -4,14 +4,16 @@ Please use this file for all the meeting notes.
 
 # 28 Jul 2023
 
-Present: Xinhao, Meirong, Yuchen, Yu
+Present: Xinhao, Meirong, Yuchen, Yu, Aijing
 
 # Discussions
-- 
 
 # ToDo
 - Kai to send Aijing the recording with Richard
-- 
+- Everyone: by the next meeting:
+   - Please keep your GitHub Project up-to-date
+   - Please identify the specific user task that your project will support
+   - Please create at least the first sketch/wireframe of the UI for your extension/tool.
 
 # 21 Jul 2023
 
