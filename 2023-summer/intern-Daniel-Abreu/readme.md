@@ -1,3 +1,11 @@
+## 31 July 2023
+
+## Disucssions
+- Issue: to get Disco Diffusion notebook working locally
+   - Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
+   - Use any other generative image models that can be run locally (we don't need to use disco diffusion)
+- Issue: cannot 
+
 ## Notes - 21 July 2023
 
 - [ ] add more wireframes to illustrate user interactions with the extension, or use the figma to mock interaction
