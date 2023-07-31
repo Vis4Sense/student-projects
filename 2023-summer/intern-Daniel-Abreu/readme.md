@@ -1,4 +1,4 @@
-## 31 July 2023
+## Notes - 31 July 2023
 
 - Issue: to get Disco Diffusion notebook working locally
    - Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
