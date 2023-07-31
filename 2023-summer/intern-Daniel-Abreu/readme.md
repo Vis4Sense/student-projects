@@ -1,10 +1,13 @@
 ## 31 July 2023
 
-## Discussions
 - Issue: to get Disco Diffusion notebook working locally
    - Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
    - Use any other generative image models that can be run locally (we don't need to use disco diffusion)
-- Issue: cannot 
+- Issue: cannot access the cell output from the extension
+   - Ask Klaus to see he did this before
+   - Check Jupyter extension examples to see if there is something similar
+   - try imageviewer/IImageTracker
+   - ...
 
 ## Notes - 21 July 2023
 
