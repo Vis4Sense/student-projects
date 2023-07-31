@@ -1,5 +1,6 @@
 ## Notes - 31 July 2023
 
+- Update project plan 
 - Issue: cannot access the cell output from the extension
    - Load the saved prompts and output images from a local folder
    - Ask Klaus to see he did this before
@@ -9,7 +10,7 @@
 - Issue: to get Disco Diffusion notebook working locally
    - Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
    - Use any other generative image models that can be run locally (we don't need to use disco diffusion)
-- Update project plan 
+
  
 
 ## Notes - 21 July 2023
