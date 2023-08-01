@@ -30,7 +30,7 @@
    - [x] column based: each column is a version (the current desgin of loops)
    - [x] row based: each row contains only the text prompt and resulting image(s)
    - The row layout might be harder to compare the (prompt) difference between the versions, and a solution could be use 'text diff' such as crossing out removed word and showing new word in a different colour.
-- [ ] Show Richard the wireframes for comments
+- [x] Show Richard the wireframes for comments
 - [ ] for the row-based layout, check how much efforts are needed to implement it in loops
    - If too much efforts, implement the row layout as a separate extension? 
 - [ ] recreate the current history (saved prompts and images) in the extension
