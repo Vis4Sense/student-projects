@@ -15,9 +15,9 @@
 
 ## Notes - 21 July 2023
 
-- [ ] add more wireframes to illustrate user interactions with the extension, or use the figma to mock interaction
-- [ ] start with the single column design
-- [ ] load the existing prompts and images
+- [x] add more wireframes to illustrate user interactions with the extension, or use the figma to mock interaction
+- [x] start with the single column design
+- [x] load the existing prompts and images
 - [ ] for each prompt, save and display all the steps (each step is an image)
    - [ ] Some of the steps can be shown in smaller size to reduce the space needed.
 - [ ] Complete an extention prototype (minimal viable prototype or MVP) by next meeting.
@@ -26,9 +26,9 @@
 ## Notes - 14 July 2023
 
 ### To Do
-- [ ] create wireframes with two different layouts:
-   - [ ] column based: each column is a version (the current desgin of loops)
-   - [ ] row based: each row contains only the text prompt and resulting image(s)
+- [x] create wireframes with two different layouts:
+   - [x] column based: each column is a version (the current desgin of loops)
+   - [x] row based: each row contains only the text prompt and resulting image(s)
    - The row layout might be harder to compare the (prompt) difference between the versions, and a solution could be use 'text diff' such as crossing out removed word and showing new word in a different colour.
 - [ ] Show Richard the wireframes for comments
 - [ ] for the row-based layout, check how much efforts are needed to implement it in loops
