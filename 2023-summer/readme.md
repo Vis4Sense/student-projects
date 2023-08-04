@@ -22,6 +22,8 @@ Present: Xinhao, Meirong, Yuchen, Yu, Aijing
 ## ToDo
 - update the requirements and design sketch/wireframe based on the discussions during the meeting
 - start the coding for first prototype (with only the bare minimal core functions)
+- upload the requirements, design, and initial code to the this repository
+   - Don't wait until everything is fully completed before uploading. This might be too late to change, which is mostly likely to happen.   
 
 # 28 Jul 2023
 
