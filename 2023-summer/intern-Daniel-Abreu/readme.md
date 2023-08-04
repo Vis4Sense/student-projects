@@ -7,6 +7,8 @@ Capture one run of image generation
       - the settings and prompt are also save in a (json) file
    - this starts the disco diffusion to generate images
 - user right click on the intermediate images generate and choose 'save to promptall' to save the images
+   - The image is added to the extension under the current setting/prompt
+   - The image is saved locally where the setting file is.
 
 Load the pre-saved history
 - [ ] add 'load a folder' button to load all the settings and images from a folder
