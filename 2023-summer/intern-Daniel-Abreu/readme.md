@@ -11,7 +11,7 @@ Capture one run of image generation
    - The image is saved locally where the setting file is.
    - This may need to add a new command to Jupyter (using extension) and then add that command to the context (right click) menu.
 - Because Daniel doesn't have access to a computer with a graphics card required by local disco diffusion, maybe start with some scripts that does not require a graphics card to create these extension functions.
-
+- Attempt to use a lite/lighter generative models 
 Load the pre-saved history
 - [ ] add 'load a folder' button to load all the settings and images from a folder
 - [ ] order the prompts chronologically, and list all the images generated from that prompt underneath.
