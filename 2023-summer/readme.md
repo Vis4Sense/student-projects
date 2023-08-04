@@ -2,6 +2,17 @@ We will use this folder for the MSc and intern projects in summer 2023.
 
 Please use this file for all the meeting notes. 
 
+# 4 Aug 2023
+
+Present: Xinhao, Meirong, Yuchen, Yu, Aijing
+
+## Discussions
+- Yuchen: complete wireframe,
+   - try to improve the vertical layout (sidebar): similar to windows explorer design
+   - maybe consider has a pane at the bottom (horizontal layout):
+      - there is no internal Chrome API to support (as far as I am aware)
+      - maybe there needs to an option to swith between the horizontal and vertical layout.
+
 # 28 Jul 2023
 
 Present: Xinhao, Meirong, Yuchen, Yu, Aijing
