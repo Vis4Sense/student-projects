@@ -1,3 +1,7 @@
+## Notes - 4 Aug 2023
+- [ ] add 'load a folder' button to load all the settings and images from a folder
+- [ ] order the prompts chronologically, and list all the images generated from that prompt underneath. 
+
 ## Notes - 31 July 2023
 
 - [x] Update project plan 
