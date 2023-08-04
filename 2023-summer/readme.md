@@ -19,6 +19,9 @@ Present: Xinhao, Meirong, Yuchen, Yu, Aijing
    - maybe consider has a pane at the bottom (horizontal layout):
       - there is no internal Chrome API to support (as far as I am aware)
       - maybe there needs to an option to swith between the horizontal and vertical layout.
+## ToDo
+- update the requirements and design sketch/wireframe based on the discussions during the meeting
+- start the coding for first prototype (with only the bare minimal core functions)
 
 # 28 Jul 2023
 
