@@ -1,6 +1,7 @@
 ## Notes - 4 Aug 2023
 - [ ] add 'load a folder' button to load all the settings and images from a folder
-- [ ] order the prompts chronologically, and list all the images generated from that prompt underneath. 
+- [ ] order the prompts chronologically, and list all the images generated from that prompt underneath.
+- [ ] renname or reformat the prompt/image files if necessary so they are easier to load.
 
 ## Notes - 31 July 2023
 
