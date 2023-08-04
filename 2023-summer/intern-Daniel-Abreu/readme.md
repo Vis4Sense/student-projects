@@ -9,6 +9,7 @@ Capture one run of image generation
 - user right click on the intermediate images generate and choose 'save to promptall' to save the images
    - The image is added to the extension under the current setting/prompt
    - The image is saved locally where the setting file is.
+   - This may need to add a new command to Jupyter (using extension) and then add that command to the context (right click) menu.
 
 Load the pre-saved history
 - [ ] add 'load a folder' button to load all the settings and images from a folder
