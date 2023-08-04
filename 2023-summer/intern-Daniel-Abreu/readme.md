@@ -2,13 +2,13 @@
 
 - [x] Update project plan 
 - Issue: cannot access the cell output from the extension
-   - [ ] **Load the saved prompts and output images from a local folder**
+   - [x] **Load the saved prompts and output images from a local folder**
    - [ ] Ask Klaus to see he did this before
    - [x] Check Jupyter extension examples to see if there is something similar
    - [ ] try imageviewer/IImageTracker
    - ...
 - Issue: to get Disco Diffusion notebook working locally
-   - [ ] Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
+   - [x] Try something like this https://github.com/MohamadZeina/Disco_Diffusion_Local
    - [ ] Use any other generative image models that can be run locally (we don't need to use disco diffusion)
 
  
