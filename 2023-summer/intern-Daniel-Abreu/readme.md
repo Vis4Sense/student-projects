@@ -1,4 +1,14 @@
 ## Notes - 4 Aug 2023
+
+Capture one run of image generation
+- user click the 'run' button in the disco diffusion notebook,
+   - this triggers the extension to save the current settings, including the text prompt
+      - the saved settings and prompt are then shown in the extension
+      - the settings and prompt are also save in a (json) file
+   - this starts the disco diffusion to generate images
+- user right click on the intermediate images generate and choose 'save to promptall' to save the images
+
+Load the pre-saved history
 - [ ] add 'load a folder' button to load all the settings and images from a folder
 - [ ] order the prompts chronologically, and list all the images generated from that prompt underneath.
 - [ ] renname or reformat the prompt/image files if necessary so they are easier to load.
