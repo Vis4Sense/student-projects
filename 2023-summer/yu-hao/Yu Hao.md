@@ -18,6 +18,8 @@ There are some ideas I suppose to do on that.
 
 # __User task that the project will support__
 
+This project will develop a visualization tool aiming at academic researchers in related fields such as information science, social sciences, communication, or computer science. This project will help them study the 
+
 1. Tracing Information Flow: Users can trace the flow of information from its origins to its destination, understanding how information is disseminated, transformed, and connected across different concepts or topics.
 2. Identifying Key Concepts: Users can identify the key concepts or topics that emerge during sensemaking. They can observe the relationships between these concepts and understand their importance in the overall information flow.
 3. Detecting Information Trends: Users can detect emerging trends or shifts in the sensemaking process by observing changes in the frequency or strength of information flows between different concepts.
