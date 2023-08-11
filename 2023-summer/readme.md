@@ -9,6 +9,34 @@ Please use this file for all the meeting notes.
 - Yu: Projection of provenance vector sequence
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 
+# 11 Aug 2023
+
+Xinhao, Meirong, Yu, Aijing, Kai
+
+## Discussions
+
+- Aijing:
+   - Adobe Firefly, or other options if it is difficult to get information
+   - Need to develop (chrome) browser extension
+- Meirong:
+   - asked potential users about which chart is easier to understand
+   - learning figma: finish and share the sketch
+- Xinhao
+   - llama2 local
+   - Don't need further fine tuning
+   - use the largest model that can run locally
+   - research langChain
+      - LangChain for LLM Application Development
+      - LangChain: Chat with Your Data
+      - https://www.deeplearning.ai/short-courses/
+- Yu
+   - improved sketch:
+   - focus on the visualisation library for now, use Vue or React later if needed
+   - Use the vector database from langChain to convert page text to vectors
+- Yuchen
+   - practicing chrome extension
+   - layout library: chart.js, neovis.js, apache visualistion library, antv graph layout library, mxgraph, graphviz
+
 # 4 Aug 2023
 
 Present: Xinhao, Meirong, Yuchen, Yu, Aijing
