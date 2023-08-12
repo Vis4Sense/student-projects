@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "My Chrome Sidebar Extension",
+    "version": "1.0",
+    "description": "An example of a Chrome sidebar extension.",
+    "permissions": ["activeTab"],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "images/icon16.jpg",
+        "48": "images/icon48.jpg",
+        "128": "images/icon128.jpg"
+      }
+    },
+    "icons": {
+      "16": "images/icon16.jpg",
+      "48": "images/icon48.jpg",
+      "128": "images/icon128.jpg"
+    }
+  }
+  

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SenseMap History Map</title>
+  <style>
+    /* Add your CSS styles here */
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    // Replace with your SenseMap API endpoint
+
+    const apiEndpoint = 'https://your-sensemap-api.com/history';
+
+
+    // Fetch historical data from SenseMap API
+    fetch(apiEndpoint)
+      .then(response => response.json())
+      .then(data => {
+        const mapOptions = {
+          center: { lat: 0, lng: 0 },
+          zoom: 2
+        };
+        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        // Loop through historical data and add markers to the map
+        data.forEach(entry => {
+          const marker = new google.maps.Marker({
+            position: { lat: entry.latitude, lng: entry.longitude },
+            map: map,
+            title: entry.location
+          });
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=your-google-maps-api-key"></script>
+
+</body>
+</html>

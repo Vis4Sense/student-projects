@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple SenseMap</title>
+  <style>
+    /* Add your CSS styles here */
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="text" id="locationInput" placeholder="Location">
+    <button id="addMarkerButton">Add Marker</button>
+  </div>
+  <div id="map"></div>
+  <script>
+    // Initialize SenseMap data
+    var senseMapData = [];
+
+    // Function to initialize the map
+    function initMap() {
+      var mapOptions = {
+        center: { lat: 0, lng: 0 },
+        zoom: 2
+      };
+      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+      // Add existing markers
+      senseMapData.forEach(function (markerData) {
+        var marker = new google.maps.Marker({
+          position: markerData.position,
+          map: map,
+          title: markerData.location
+        });
+      });
+
+      // Add marker when "Add Marker" button is clicked
+      var addMarkerButton = document.getElementById('addMarkerButton');
+      addMarkerButton.addEventListener('click', function () {
+        var locationInput = document.getElementById('locationInput').value;
+        var marker = new google.maps.Marker({
+          position: map.getCenter(),
+          map: map,
+          title: locationInput
+        });
+
+        senseMapData.push({
+          location: locationInput,
+          position: marker.getPosition()
+        });
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHDw81_hQpBA_DvH8I3aWAPUNArG7MY4A&callback=initMap" async defer></script>
+</body>
+</html>
