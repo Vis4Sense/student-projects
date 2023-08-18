@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.1.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: danielabreu1738@gmail.com
+author_name: Daniel Abreu
+data_format: string
+file_extension: ''
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: PromptAll
+mimetype: ''
+mimetype_name: ''
+project_short_description: A JupyterLab extension.
+python_name: PromptAll
+repository: https://github.com/Daniel2tio/PromptAll-Extension
+test: false
+viewer_name: ''
+
