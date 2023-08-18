@@ -1,3 +1,7 @@
+## Notes - 18 Aug 2023
+- [ ] add (in readme.md?) instruction of how to install and use the extension
+- [ ] add (in readme.md?) instruction of how to further develop the extension
+
 ## Notes - 4 Aug 2023
 Load the pre-saved history
 - [x] add 'load a folder' button to load all the settings and images from a folder
