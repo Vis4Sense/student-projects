@@ -1,8 +1,8 @@
 ## Notes - 4 Aug 2023
 Load the pre-saved history
-- [ ] add 'load a folder' button to load all the settings and images from a folder
-- [ ] order the prompts chronologically, and list all the images generated from that prompt underneath.
-- [ ] renname or reformat the prompt/image files if necessary so they are easier to load.
+- [x] add 'load a folder' button to load all the settings and images from a folder
+- [x] order the prompts chronologically, and list all the images generated from that prompt underneath.
+- [x] renname or reformat the prompt/image files if necessary so they are easier to load.
 
 Capture one run of image generation
 - user click the 'run' button in the disco diffusion notebook,
