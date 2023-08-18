@@ -3,6 +3,10 @@
 [![Github Actions Status](https://github.com/Daniel2tio/PromptAll-Extension/workflows/Build/badge.svg)](https://github.com/Daniel2tio/PromptAll-Extension/actions/workflows/build.yml)
 A JupyterLab extension.
 
+
+## How to use
+
+
 ## Requirements
 
 - JupyterLab >= 4.0.0
@@ -24,10 +28,12 @@ pip uninstall PromptAll
 ```
 
 ## Contributing
-
 ### Development install
 
-Note: You will need NodeJS to build the extension package.
+Notes: 
+- You will need NodeJS to build the extension package.
+- All development code is written under the index.ts file under ./scr
+- The Mammoth JS library is used to convert the .docx text_prompts into plain text that can be displayed on the extension panel
 
 The `jlpm` command is JupyterLab's pinned version of
 [yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
