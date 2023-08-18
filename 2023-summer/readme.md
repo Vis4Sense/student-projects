@@ -20,7 +20,7 @@ Xinhao, Yuchen, Aijing, Kai
 - Xinhao
   - need to do resit exam
   - foucs on 'LangChain: Chat with Your Data': https://learn.deeplearning.ai/langchain-chat-with-your-data/lesson/2/document-loading
-  - use LLM to analyse sensemaking data: such as summary what user is doing
+  - use LLM to analyse sensemaking data: such as summarising what user is doing
 - Aijing
   - no need to crawl the webpage, just use the chrome extension api should be able to get the text promotp and generated image
   - use 'content script' to get the prompt and image from the webpage
