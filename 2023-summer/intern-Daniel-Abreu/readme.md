@@ -1,6 +1,7 @@
 ## Notes - 18 Aug 2023
 - [ ] add (in readme.md?) instruction of how to install and use the extension
 - [ ] add (in readme.md?) instruction of how to further develop the extension
+- [ ] add a video demonstrating how the extension works.
 
 ## Notes - 4 Aug 2023
 Load the pre-saved history
