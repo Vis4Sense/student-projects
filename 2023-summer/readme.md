@@ -9,6 +9,23 @@ Please use this file for all the meeting notes.
 - Yu: Projection of provenance vector sequence
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 
+# 18 Aug 2023
+
+Xinhao, Yuchen, Aijing, Kai
+
+## Discussions
+- Yuchen
+  - try to use the chrome side panel api: https://developer.chrome.com/docs/extensions/reference/sidePanel/
+  - try different layout libraries to see if there is a suitable layout
+- Xinhao
+  - need to do resit exam
+  - foucs on 'LangChain: Chat with Your Data': https://learn.deeplearning.ai/langchain-chat-with-your-data/lesson/2/document-loading
+  - use LLM to analyse sensemaking data: such as summary what user is doing
+- Aijing
+  - no need to crawl the webpage, just use the chrome extension api should be able to get the text promotp and generated image
+  - use 'content script' to get the prompt and image from the webpage
+  - can use the chrome side panel api to show the extension: https://developer.chrome.com/docs/extensions/reference/sidePanel/
+ 
 # 11 Aug 2023
 
 Xinhao, Meirong, Yu, Aijing, Kai
