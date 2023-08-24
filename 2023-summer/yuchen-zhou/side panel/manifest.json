@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "History Sidebar Extension",
+  "version": "1.0",
+  "description": "A sidebar extension to display browser history",
+  "permissions": [
+    "activeTab",
+    "history"
+  ]
+}

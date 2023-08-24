@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sidebar Extension</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h1>My Sidebar</h1>
+    <p>This is a sample sidebar program.</p>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
