@@ -9,6 +9,37 @@ Please use this file for all the meeting notes.
 - Yu: Projection of provenance vector sequence
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 
+# 25 Aug 2023
+
+- Todo (for all)
+  - start recruiting participants if you plan to have a user study (required for the final report)
+  - 3-5 people for qualitative evaluation:
+    - get the participants to use your tool to complete some task (prepare the dataset and task beforehand)
+    - ask them some questions afterwards (prepare a list of questions beforehand)
+- Aijing
+  - working chrome extension to capture user input
+  - Todo: save the time of capture, previous history, settings
+  - Todo: let user go back to a previous save state (with text prompt and settings)
+- Meirong
+  - create a table that can display information about different cameras
+  - Todo: use '+new' to add new column
+  - Todo: instead of dropdown, get the information, such as 'brand' and 'price' directly from the webpage
+  - Todo: option comparison: spider chart or parallel coordinate
+- Xinhao
+  - Learned about LangChain
+  - Todo: Need to convert xlsx file to csv file
+  - Todo: load the data anaylsis history
+  - Todo: use conversion to ask the LLM to predict what the next step(s) is(are) after giving LLM a few examples first.
+- Yu
+  - Tried React and Vue
+  - Todo: embeding the text with LLM and compare the result with BertSentence
+  - Todo: calculate the importance of the edges and use edge width to show that
+  - Todo: show the related information when mouse over a node/edge.
+- Yuchen
+  - Still trying to realise the layout
+  - Will try to display the extension in a separate window (similar to the current sensemap) before trying using the side panel api
+
+
 # 18 Aug 2023
 
 Xinhao, Yuchen, Aijing, Kai
