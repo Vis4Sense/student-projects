@@ -9,6 +9,33 @@ Please use this file for all the meeting notes.
 - Yu: Projection of provenance vector sequence
 - Yuchen: Improve the design of the HistoryMap so the tree fits better within a Chrome side panel
 
+# 1 Sep 2023
+
+- Todo for all
+  - Don't panic if not everything is completed
+    - Describe in the report everything you tried, even it turned out to be not successful in the end
+    - Explain why the problem is difficult
+  - Upload the code (and data) to this GitHub repository
+  - Dissertation
+    - follow the sections in the overleaf template
+    - Assume the reader knows nothing about your project (one of the markers will be), such as what sensemaking is, what is historymap, etc.
+  - include more images/screenshots in the reports (so the other marker can understand your work better)
+  - make a screen caputure video of your app work
+  - include a link to your github repository (folder) in the dissertation (abstract, introduction, supplement materials, etc.)
+  - make the app usable online if possible
+- Yuchen
+  - writing final report
+  - the layout is still not working
+- Xinhao
+  - make sure chatGPT is using user uploaded data in the converstaion, especially when the data is larger than the prompt limit
+  - test the system with data of different size, starting with something very small (a few rows) and increase the size gradually (dozens rows, hundreds rows, etc.)
+  - Test the system with multiple questions for each dataset   
+- Meirong
+  - don't need to include parallet cooordinates if there is not enough time
+  - automatically get all the (camera) data from each (camera) page a user opens:
+    - assume user is always using the same website (such as Amazon)
+  - automatically add the collected data to the visualisation.
+
 # 25 Aug 2023
 
 - Todo (for all)
