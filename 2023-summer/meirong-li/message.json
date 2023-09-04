@@ -1,0 +1,5 @@
+{
+  "url": url,                           // detected url
+  "user_brower_time": user_brower_time, // user brower time
+  "n_try": 0                            // add one if failed to process, drop if bigger than 3
+}
