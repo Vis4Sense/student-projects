@@ -1,0 +1,44 @@
+[
+    {
+        "id": 0,
+        "results": "1. University of Oxford \r\n2. University of Cambridge \r\n3. Imperial College London",
+        "name1": "Oxford",
+        "name2": "Cambridge",
+        "name3": "Imperial"
+    },
+    {
+        "id": 1,
+        "results": "1. Carnegie Mellon University \r\n2. University of Illinois at Urbana-Champaign \r\n3. MIT Schwarzman College of Computing",
+        "name1": "Carnegie",
+        "name2": "Illinois",
+        "name3": "MIT"
+    },
+    {
+        "id": 2,
+        "results": "1. Carnegie Mellon University \r\n2. MIT Schwarzman College of Computing \r\n3. University of California, Berkeley",
+        "name1": "Carnegie",
+        "name2": "MIT",
+        "name3": "ucb"
+    },
+    {
+        "id": 3,
+        "results": "1. Imperial College London \r\n2. University College London \r\n3. University of Edinburgh",
+        "name1": "Imperial",
+        "name2": "UCL",
+        "name3": "Edinburgh"
+    },
+    {
+        "id": 4,
+        "results": "1. University of Glasgow\r\n2. University of Edinburgh \r\n3. Imperial College London",
+        "name1": "Glasgow",
+        "name2": "Edinburgh",
+        "name3": "Imperial"
+    },
+    {
+        "id": 5,
+        "results": "1. University of Illinois--Urbana-Champaign \r\n2. Duke University \r\n3. Johns Hopkins University",
+        "name1": "Illinois",
+        "name2": "Duke",
+        "name3": "Hopkins"
+    }
+]
