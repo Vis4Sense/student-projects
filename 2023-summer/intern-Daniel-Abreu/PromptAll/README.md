@@ -6,28 +6,37 @@
 The JupyterLab PromptAll extension is a plugin for [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) that pairs up a text prompt and images generated in a JupyterLab panel. This extension allows users to load and display text prompts and associated images conveniently within a JupyterLab environment.
 
 The following will show how the extension works and provide guidance on how to extend it for further development.
+Additionally, there is a [video](https://youtu.be/u5iPw-sPjE4) available for guidance: 
 
 ## Getting Started
 
-### Installation
+### Development Environment & Installation
 
 To use the JupyterLab PromptAll extension, you need to install it first. Follow these steps:
 
-1. Open a terminal or command prompt.
+1. Make sure you have conda installed. If not, you can install it using [miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 
-2. Make sure you have JupyterLab installed. If not, you can install it using `pip`:
+2. Open a terminal or command prompt.
 
-   ```
-   pip install jupyterlab
-   ```
-
-3. Install the extension:
+3. Make sure you have JupyterLab installed and NodeJS. If not, you can install it using the following command which will also create a new environment called "PromptAll":
 
    ```
-   jupyter labextension install @jupyterlab-promptall/jupyterlab-promptall
+   conda create -n PromptAll --override-channels --strict-channel-priority -c conda-forge -c nodefaults jupyterlab=4 nodejs=18 git copier=7 jinja2-time
    ```
+4. Activate the environment:
 
-4. Start JupyterLab:
+   ```
+   conda activate PromptAll
+   ```
+   
+5. Install the build dependencies:
+
+   ```
+   pip install -e .
+   jupyter labextension install .
+
+   ```
+6. Start JupyterLab:
 
    ```
    jupyter lab
@@ -131,12 +140,14 @@ You can watch the source directory and run JupyterLab at the same time in differ
 
 ```bash
 # Watch the source directory in one terminal, automatically rebuilding when needed
-jlpm watch
+jlpm run watch
 # Run JupyterLab in another terminal
 jupyter lab
 ```
 
 With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
+
+You may need to enable [Developer Mode](https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development) when using Windows.
 
 By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. 
 
