@@ -108,22 +108,6 @@ To add custom context menu actions for images or prompts, you can:
 - @lumino/widgets
 - mammoth
 
-## Install
-
-To install the extension, execute:
-
-```bash
-pip install PromptAll
-```
-
-## Uninstall
-
-To remove the extension, execute:
-
-```bash
-pip uninstall PromptAll
-```
-
 ## Contributing
 ### Development install
 
