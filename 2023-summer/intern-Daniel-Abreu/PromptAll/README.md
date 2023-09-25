@@ -1,7 +1,4 @@
-# PromptAll
-
-[![Github Actions Status](https://github.com/Daniel2tio/PromptAll-Extension/workflows/Build/badge.svg)](https://github.com/Daniel2tio/PromptAll-Extension/actions/workflows/build.yml)
-A JupyterLab extension.
+# PromptAll 
 # JupyterLab PromptAll Extension Documentation
 
 ## Overview
