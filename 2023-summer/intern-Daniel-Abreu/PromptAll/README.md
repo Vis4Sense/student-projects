@@ -52,23 +52,50 @@ After installing the extension and starting JupyterLab, open the View Panel -> A
 
 The JupyterLab PromptAll extension adds a new panel to JupyterLab called "PromptAll." This panel allows users to access and manage previous prompts and their associated images by either uploading a whole folder with the images and settings that follow a specific naming convention or by uploading an individual image and setting for the ones that do not follow this convention.
 
+### Accessing the PromptAll Panel
+
+To begin using the JupyterLab PromptAll extension, follow these steps:
+
+- **Launch JupyterLab:** Navigate to JupyterLab.
+
+- **Access the PromptAll Panel:** To access the PromptAll panel, use the Command Palette: You can also open the command palette by pressing Ctrl + Shift + C (or Cmd + Shift + C on macOS). Then, type "PromptAll" and select the "PromptAll: Open" option.
+
+![Screenshot 2023-09-26 224732](https://github.com/Vis4Sense/student-projects/assets/90462256/ef758fe4-2cd0-4e6c-8484-f3103fa6b2bf)
+
+- **The PromptAll Panel:** Once you've accessed the PromptAll panel, it will appear within the JupyterLab interface.
+
+![Screenshot 2023-09-26 224917](https://github.com/Vis4Sense/student-projects/assets/90462256/1215fc62-e419-462d-b32e-d19d99c84b15)
+
 ### Loading Prompts and Images
 
 The PromptAll panel provides two options for loading prompts and images:
 
-- **Load Saved Images**: This button allows you to select and load saved images from your local system, with then the option to upload a settings file.
+Load Saved Images
+- **Click the "Load Saved Images" Button:** This button allows you to load images that you've previously saved on your local system.
 
-- **Load Folder**: This button enables you to select a folder containing prompt files and associated images. The extension will organize and display these prompts and images in the panel based on a naming convention which can be seen on "The Lady" folder.2
+- **File Dialog:** When you click the button, a file dialog will appear, enabling you to select one or more image files. These images can be in various formats, such as JPEG, PNG, or others.
+
+- **Display:** The selected images will be displayed within the PromptAll panel, making them accessible for viewing and management.
+
+Load Folder
+- **Click the "Load Folder" Button:** This button provides a way to load a folder that contains prompt files and their associated images.
+
+- **Folder Selection Dialog:** After clicking the button, a folder selection dialog will open. Choose a folder that contains your prompt files and images.
+
+- **Organized Display:** The extension will automatically organize and display the prompts and images from the selected folder within the PromptAll panel. This makes it easy to navigate and manage your content.
+
+  ![Screenshot 2023-09-26 225907](https://github.com/Vis4Sense/student-projects/assets/90462256/a99ffceb-4953-462a-a7c7-60c601553138)
 
 ### Managing Prompts and Images
+Once you've loaded prompts and images into the PromptAll panel, you can perform various actions to manage your content:
 
-In the PromptAll panel, you can:
+- **View Previously Saved Prompts and Images:** The panel displays a list of your saved prompts and their associated images, making it easy to review and access them.
 
-- View previously saved prompts and their associated images.
+- **Upload Text Prompts:** Each image displayed in the panel includes an "Upload Prompt" button. By clicking this button, you can associate a text prompt with the corresponding image. This allows you to keep track of text prompts that are related to specific images.
 
-- Upload new text prompts and associate them with images.
+  ![Screenshot 2023-09-26 225530](https://github.com/Vis4Sense/student-projects/assets/90462256/a0ff0146-32f9-4ae1-81e7-8a25fd34b41e)
 
-- Remove individual images and associated text prompts.
+- **Remove Images and Prompts:** For each image, there is a "Remove" button. Clicking this button allows you to remove the image and its associated text prompt from the panel. This feature helps you manage your content and keep the panel organized.
 
 ## Extending the Extension
 
@@ -77,6 +104,8 @@ Developers can extend the JupyterLab PromptAll extension to add new features or 
 ### Adding New Features
 
 To add new features to the extension, you can:
+
+- Add a function that allows the user to display an image from a notebook by communicating with the kernel.
 
 - Extend the context menu functionality to perform custom actions on images or prompts.
 
