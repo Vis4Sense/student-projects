@@ -8,7 +8,7 @@ The JupyterLab PromptAll extension is a plugin for [JupyterLab](https://jupyterl
 The following will show how the extension works and provide guidance on how to extend it for further development.
 Additionally, there is a [video](https://youtu.be/u5iPw-sPjE4) available for guidance: 
 
-[![Watch the video](https://img.youtube.com/vi/u5iPw-sPjE4/0.jpg)](https://youtu.be/u5iPw-sPjE4)
+[![Watch the video](promptAll.png)](https://youtu.be/u5iPw-sPjE4)
 
 ## Getting Started
 
