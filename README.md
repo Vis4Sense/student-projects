@@ -20,14 +20,16 @@ Repository for all the student projects, including UG/PGT final projects and int
   - Figure out what the research question is, and narrow down yours in the same way;
   - Copy the process from requirements, design, implementation, to evaluation for your project;
   - You will get 80+ mark if the project results can be published in a similar conference or journal;
-## [Project plan/proposal](instructions/proposal.md)
-
-## [Ethics](instructions/ethics.md)
-
-## Programming
+ 
+## [Software and services](instructions/software.md)
 ### [GitHub](instructions/github.md)
 ### [Code editor (IDE)](instructions/ide.md)
 ### [Latex](instructions/latex.md)
+
+
+## [Project plan/proposal](instructions/proposal.md)
+
+## [Ethics](instructions/ethics.md)
 
 ## [Literature review](instructions/literature.md)
 
