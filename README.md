@@ -22,10 +22,6 @@ Repository for all the student projects, including UG/PGT final projects and int
   - You will get 80+ mark if the project results can be published in a similar conference or journal;
  
 ## [Software and services](instructions/software.md)
-### [GitHub](instructions/github.md)
-### [Code editor (IDE)](instructions/ide.md)
-### [Latex](instructions/latex.md)
-
 
 ## [Project plan/proposal](instructions/proposal.md)
 
