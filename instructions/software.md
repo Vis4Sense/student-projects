@@ -21,26 +21,28 @@ The repository is public, so don't upload any data that can't be shared
 Each cohort has its folder: the current one is [2023-224](/2023-2024)
 - We will use the `readme.md` in the folder for the meeting notes.
 
-Inside the folder, please make a subfolder with your name for your project:
+Inside the folder, please make **a subfolder with your name** for your project:
 - Include in your folder a `readme.md` file to list all the things in your folder (e.g., which subfolder contains what) and other information such as how to run your code.
 - Use the your folder for your code and everything else such as collected data and design sketches;
 - Don't include large files: as everyone else will download them when they do a 'pull' of the repository.
 
 ## Markdown
-[This guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) can get you started if you never used markdown before. It is similar to HTML, but much simpler. Also very useful for programing.
+If you never used markdown before, [this guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) can get you started. 
 
+It is similar to HTML, but much simpler. `readme.md` is a markdown file with `.md` extension.
 
-- 'Issues': todo list/tasks and coding issue
-    - Each 'issue' is a task to complete (action from the meeting)
-    - Assign an issue to the person that is responsible 
-  - 'Projects': planning and project management (this has been updated recently, so points below may be updated) 
-    - You can create a kanban board in 'project' (similar to Trello), 
-    - create "milestones', e.g., one for each iteration
-    - add 'issues' to 'milestones', and set deadline
-    - start with [this project template](https://github.com/users/kaidatavis/projects/2)
-      - add your name to the project title, such as 'Kai's project plan'
-      - add your name to all the project issues, such as 'Kai - recruit users'
+## Issues: 
+Todo list/tasks and coding issue
+- Each 'issue' is a task to complete (action from the meeting)
+- Assign an issue to the person that is responsible 
 
+## Projects
+Planning and project management (we will come back to this for Project Plan/Proposal) 
+- You can create a kanban board in 'project' (similar to Trello)
+- create "milestones', e.g., one for each iteration
+- add 'issues' to 'milestones', and set deadline
+- An overly detailed example: [this project template](https://github.com/users/kaidatavis/projects/2)
+    
 
 # Code editor (IDE): 
 Recommended: Visual Studio Code https://code.visualstudio.com/. 
