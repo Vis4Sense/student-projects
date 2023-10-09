@@ -23,9 +23,9 @@ It is not always a marked component, but very important to ensure a successful p
     - do you plan to do any user evaluations?
     - ... 
 - Plan
-  - Agile and iterative: 
-    - Gradually build up to the final prototype; 
-    - Don't try to build the final prototype from the beginning
+  - Set a deadline for each of the task below
+    - Make an estimate of how long a task will take, **and times that by 4**, because you will be doing 3 other modules;
+    - **Do not have overlapping tasks**; this only gives you a false sense of time that you don't actually have;
    1. Literature review (if there is more to do)
    1. User requirements:
       1. Talk to the real users
