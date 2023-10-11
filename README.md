@@ -43,9 +43,9 @@ Repository for all the student projects, including UG/PGT final projects and int
 
 ## User requirements
 - What users to find:  
-  - Find users your work targets, not just your family and friends (sometimes they are the targeted users)
+  - Find users your work targets, not just your family and friends (sometimes they are the targeted users).
   - An alternative is company/organisation/charity that work with real users (they can get you in contact with the users).
-  - Find someone local if possible: much easier for the communication.
+  - A few would be fine, and the more the better.
 - Requirements 
   - Get the requirements from the real users, not what you think: you might not know what users wants, unless you are a targeted user.
   - The requirements should be about the **problems** or **challenges**, not the technology or solution
@@ -54,7 +54,10 @@ Repository for all the student projects, including UG/PGT final projects and int
     - Recruite some users
     - Collection information such as their gender, age group, education background, student/working, experience/familarity with the topic, etc.
     - Observe how they complete the task you want to support, focusing on the **problems** and **challenges**.
+      - Have a pre-prepared task and dataset usually works better
     - Talk to the users afterwards for clarification (e.g., why did you do this?) and comments (e.g., what was the most difficult part?)
+      - Prepare a few open-ended questions: not just 'yes' or 'no' answer
+      - Questions about what happened in the session
     - Take notes during the observation and interview.
     - Analyse the notes to come up with the list of requirements.
 - There are a few talks on ['How to Talk to Users'] by [YCombinator](https://www.ycombinator.com/) a very successful startup incubator (airbnb, dropbox, stripe, etc.)
@@ -72,7 +75,20 @@ Paper prototype/wireframe tool:
   - Support advanced feature such as 'interaction mockup': user can click a box (that looks like a button) and a new screen is displayed (by loading another wireframe)
   - The [official tutoral](https://help.figma.com/hc/en-us/sections/4405269443991-Figma-for-Beginners-tutorial-4-parts-) and there are also many on YouTube like [this one](https://www.youtube.com/watch?v=eZJOSK4gXl4).
 
-### Evaluation/Feedback
+## Evaluation/Feedback
 
-- Show user the paper prototype/wireframe and get feedback.
-- Revise the desgin and project scope accordingly.
+When to get feedback?
+- After the completion of the paper prototype/wireframe (less formal)
+- After the completion of the MVP (less formal)
+- After the completion of the final protoytpe (more formal)
+
+How to get feedback and evaluate 
+- It is not that different from the requirement gathering, except user would use what you produced.
+- For the wireframe, you need to help user imaging how the app would work
+  - Figma 'interaction mockup' will be useful here
+- For MVP, help participants focus on the core functionalities, not the missing/less important ones (such as user account)
+- For the final prototype, it will be a proper evaluation (vs. feedback)
+  - More participants: 5+ (10+ for statistical analysis)
+  - Clearly defined task(s): maybe more complex so takes longer to complete
+  - More detailed notes/recording: may record the session, including interviews
+  - More detailed analysis afterwards: qualitative (such as thematic analysis) and/or quantitative (such as t-test or anova analysis). 
