@@ -62,4 +62,16 @@ Repository for all the student projects, including UG/PGT final projects and int
   - https://www.ycombinator.com/library/Iq-how-to-talk-to-users
   - https://www.ycombinator.com/library/JQ-how-to-start-a-startup-talking-to-users
 
-## [Design](instructions/design.md)
+## Design
+- Paper prototype/wireframe tool: 
+  - Pencil and paper
+  - Low fidelity: PowerPoint or Balsamiq https://balsamiq.com/
+  - High fidelity: ***Figma*** (recommended) https://www.figma.com
+    - Free (until Adobe starts to charge for it)
+    - Web-based: easy to share with other, and allow co-editing and comments
+    - Support advanced feature such as 'interaction mockup': user can click a box (that looks like a button) and a new screen is displayed (by loading another wireframe)
+
+### Evaluation/Feedback
+
+- Show user the paper prototype/wireframe and get feedback.
+- Revise the desgin and project scope accordingly.
