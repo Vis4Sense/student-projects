@@ -41,29 +41,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 
 ## [Literature review](instructions/literature.md)
 
-## User requirements
-- What users to find:  
-  - Find users your work targets, not just your family and friends (sometimes they are the targeted users).
-  - An alternative is company/organisation/charity that work with real users (they can get you in contact with the users).
-  - A few would be fine, and the more the better.
-- Requirements 
-  - Get the requirements from the real users, not what you think: you might not know what users wants, unless you are a targeted user.
-  - The requirements should be about the **problems** or **challenges**, not the technology or solution
-    - For example, 'I cannot create the prompt for chatGPT to generate the text I want' instead of 'I want a prompt autocomplete feature when using the chatGPT web interface'.
-  - How to get requirements
-    - Recruite some users
-    - Collection information such as their gender, age group, education background, student/working, experience/familarity with the topic, etc.
-    - Observe how they complete the task you want to support, focusing on the **problems** and **challenges**.
-      - Have a pre-prepared task and dataset usually works better
-    - Talk to the users afterwards for clarification (e.g., why did you do this?) and comments (e.g., what was the most difficult part?)
-      - Prepare a few open-ended questions: not just 'yes' or 'no' answer
-      - Questions about what happened in the session
-    - Take notes during the observation and interview.
-    - Analyse the notes to come up with the list of requirements.
-- There are a few talks on ['How to Talk to Users'] by [YCombinator](https://www.ycombinator.com/) a very successful startup incubator (airbnb, dropbox, stripe, etc.)
-  - https://www.youtube.com/watch?v=MT4Ig2uqjTc
-  - https://www.ycombinator.com/library/Iq-how-to-talk-to-users
-  - https://www.ycombinator.com/library/JQ-how-to-start-a-startup-talking-to-users
+## [User requirements](instructions/requirement.md)
 
 ## Design
 Paper prototype/wireframe tool: 
