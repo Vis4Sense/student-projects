@@ -41,7 +41,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 
 ## [Literature review](instructions/literature.md)
 
-## [User requirements](instructions/requirement.md)
+## [User requirements](instructions/requirements.md)
 
 ## Design
 Paper prototype/wireframe tool: 
