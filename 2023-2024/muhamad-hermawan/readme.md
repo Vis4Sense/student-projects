@@ -1,2 +1,2 @@
-# Project: LLM for Automated Trading
+# Project: LLM for Automated Trading.
 i
