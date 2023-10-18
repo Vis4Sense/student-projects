@@ -1,4 +1,17 @@
-Folder for all the 2023-2024 projects. 
+# Folder for all the 2023-2024 projects (UG and PGT) 
+- Visual Analytics for Sensemaking:
+  - Ziyue Wang (UG)
+  - Jiaqi Li (PGT)
+- Human-AI teaming
+  - Rachana Hedge (PGT): image generative AI for artists
+- Data Science Provenance
+  - Jianwen Lyu (UG): Jupyter extension
+- Chat with your data using LLM
+  - Hongye An (PGT)
+- LLM for trading
+  - Ralk Farkas (UG)
+  - Muhamad Hermawan (PGT)
+  - Xiruo Sun (PGT)  
 
 # 13 October 2023
 
