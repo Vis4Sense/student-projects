@@ -1,4 +1,4 @@
-# Folder for all the 2023-2024 projects, UG and PGT. 
+# Folder for all the 2023-2024 projects (UG and PGT) 
 - Visual Analytics for Sensemaking:
   - Ziyue Wang (UG)
   - Jiaqi Li (PGT)
