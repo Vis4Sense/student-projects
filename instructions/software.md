@@ -31,6 +31,8 @@ If you never used markdown before, [this guide](https://docs.github.com/en/get-s
 
 It is similar to HTML, but much simpler. `readme.md` is a markdown file with `.md` extension.
 
+Visual studio code [support this natively](https://code.visualstudio.com/docs/languages/markdown), and you can use extension like [markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) to easily turn markdown into a pdf.
+
 ## Issues: 
 Todo list/tasks and coding issue
 - Each 'issue' is a task to complete (action from the meeting)
