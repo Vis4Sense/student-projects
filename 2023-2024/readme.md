@@ -4,8 +4,7 @@
   - Jiaqi Li (PGT)
 - Human-AI teaming
   - Rachana Hedge (PGT): image generative AI for artists
-- Data Science Provenance
-  - Jianwen Lyu (UG): Jupyter extension
+  - Jianwen Lyu (UG): image generative AI for artists (Jupyter extension)
 - Chat with your data using LLM
   - Hongye An (PGT)
 - LLM for trading
