@@ -12,6 +12,13 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)  
 
+# 20 October 2023
+
+## To do list
+- Start writing or revise your project proposal
+- ethics forms/approval: prelimimary/full ethics form and data management plan
+- (optional) find **one** relevant paper (not listed on the webpage).
+
 # 13 October 2023
 
 ## Task for next week
