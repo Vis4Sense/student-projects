@@ -37,7 +37,7 @@ Tianxiang
 - Kai - try to find out if UoN business school has access to Reuter data/news feed
 - Raul
   - investigate the options to run FinGPT or Llama2 in cloud and how much it costs
-  - investigage the cost of access LLM APIs such as chatGPT
+  - investigage the cost of access LLM APIs such as chatGPT: [some of the more prominent LLMs](https://hai.stanford.edu/news/introducing-foundation-model-transparency-index)
 - Have a look of the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
 - find a target market and what data is (freely) available: 
 - Start writing or revise your project proposal
