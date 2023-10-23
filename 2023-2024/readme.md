@@ -14,11 +14,11 @@
 
 # 23 October 2023
 Xiruo 
-- need to learning more about language models.
+- need to learn more about language models.
 - Project idea: compare different LLMs
 
 Raul
-- has FinGPT running
+- has FinGPT running: very slow on macbook
 - project idea: explore different trading strategies
 
 Muhamad
@@ -28,16 +28,18 @@ Tianxiang
 - find a target market
 - collect data
 - convert sentiment analysis to trading signals instead of predicting price
-- more likely for crypto data (news/data api)
+- more likely to have data available for crypto data (news/data api)
   - huobi
   - binance
 
 ## To Do
 - Kai - find tutorials on LLM
 - Kai - try to find out if UoN business school has access to Reuter data/news feed
-- Raul - investigate the options to run FinGPT or Llama2 in cloud and how much it costs
-- Have a looks of the two papers added to the project page
-- find a target market and what data is freely available: 
+- Raul
+  - investigate the options to run FinGPT or Llama2 in cloud and how much it costs
+  - investigage the cost of access LLM APIs such as chatGPT
+- Have a look of the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
+- find a target market and what data is (freely) available: 
 - Start writing or revise your project proposal
 - ethics forms/approval: prelimimary ethics form and data management plan
 
