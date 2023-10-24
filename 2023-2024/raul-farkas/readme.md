@@ -1,0 +1,1 @@
+## Live-trading platform for trading performance comparison between configurations of LLM-based sentiment analysis strategies.
