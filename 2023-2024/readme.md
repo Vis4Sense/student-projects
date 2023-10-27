@@ -15,7 +15,7 @@
 # 27 October 2023
 
 ## Todo
-- Kai to add the prompthis paper to the repository
+- Kai to add the [prompthis paper](https://github.com/Vis4Sense/student-projects/blob/main/instructions/202310022007-prompthis.pdf) to the repository (please do not distrubte the paper as it is not published yet)
 - Kai to add the Richard interview
 - Kai to add information about vitality tool
 - Find at least one paper from either TVCG or CHI that is relevant to your project
