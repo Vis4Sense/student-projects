@@ -1,7 +1,7 @@
 # Folder for all the 2023-2024 projects (UG and PGT) 
 - Visual Analytics for Sensemaking:
-  - Ziyue Wang (UG)
-  - Jiaqi Li (PGT)
+  - Ziyue Wang (UG): foresight
+  - Jiaqi Li (PGT): 
 - Human-AI teaming
   - Rachana Hegde (PGT): image generative AI for artists
   - Jianwen Lyu (UG): image generative AI for artists (Jupyter extension)
@@ -10,7 +10,18 @@
 - LLM for trading
   - Ralk Farkas (UG)
   - Muhamad Hermawan (PGT)
-  - Xiruo Sun (PGT)  
+  - Xiruo Sun (PGT)
+
+# 27 October 2023
+
+## Todo
+- Kai to add the [prompthis paper](https://github.com/Vis4Sense/student-projects/blob/main/instructions/202310022007-prompthis.pdf) to the repository (please do not distrubte the paper as it is not published yet)
+- Kai to add the Richard interview: the summary and images discussed are in this [google folder](https://drive.google.com/drive/folders/1A9SnyVm7mEd-FsuFxO8po6s2_f0U4aVq?usp=sharing), but the actual recording is no longer available (auto deleted by zoom).
+- Kai to add information about vitality tool (added to the [project page](https://kaixu.me/2023/09/14/llm-for-literature-review/))
+- Find at least one paper from either TVCG or CHI that is relevant to your project
+  - By going through the papers published in 2023 
+  - And add it to your zotero database
+- Finalise your project idea
 
 # 23 October 2023
 Xiruo 
