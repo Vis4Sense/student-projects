@@ -12,6 +12,12 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
 
+
+# 30 Oct 2023
+
+## Todo
+- Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
+
 # 27 October 2023
 
 ## Todo
