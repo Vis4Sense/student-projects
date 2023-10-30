@@ -40,6 +40,7 @@
   - By going through the papers published in 2023 
   - And add it to your zotero database
 - All: Finalise your project idea
+- All: check if you can access the lab pc in business school that has access to Reuter's data, and find out how to download the historical data (details in the email)
 
 # 27 October 2023
 
