@@ -1,6 +1,6 @@
 # Market investigation and asset class choice for the project
 
-When it comes to market, there are several asset classes that can be traded on various markets. 
+There are several asset classes that can be traded on various markets. 
 
 Examples of such asset classes include:
 
@@ -60,10 +60,3 @@ In addition, for the purpose of this project, given that most of the trading wil
 To start, the main focus will be developing a modular trading platform that allows different strategies to run at the same time for the same asset. Each strategy might be a variation of a base strategy that uses LLMs for sentiment analysis, or it might be a completely different strategy.
 
 To ensure the success of the project, a narrow scope will be set to start with and development of the trading platform will focus on allowing stocks trading. The design of the platform will be kept modular, to allow for easy extension, with the potential of including Crypto as well. Ideally, switching betwen stocks and crypto should be as easy as changing strategy and choosing a different traded symbol. The modularity component of the platform will allow for the overall scope of the project to be easily increased througout the year.
-
-
-
-
-
-
-
