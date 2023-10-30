@@ -30,8 +30,8 @@
   - include more information besides sentiment, and compare the different options
 
 ## Todo
-- Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
-- Kai to follow up about business school data access
+- ~~Kai to confirm with Xiruo if the 10am Monday meeting time is fine.~~
+- ~~Kai to follow up about business school data access~~
 - Kai to find out if School project fund can be used to cover LLM cost
 - Raul to investigate if it is possible to use hybrid services, such as replicate, to train the RL model for trading.
 - All: Read the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
