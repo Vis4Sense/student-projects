@@ -20,6 +20,7 @@
 - Kai to follow up about business school data access
 - Kai to find out if School project fund can be used to cover LLM cost
 - Raul to investigate if it is possible to use hybrid services, such as replicate, to train the RL model for trading.
+- Read the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
 
 # 27 October 2023
 
