@@ -22,6 +22,9 @@
   - start with stock;
   - should be easy to change to crypto
   - portofolio selection and management (second stage)
+- Muhamad
+  - apply to crypo instead of stock?
+  - include more information besides sentiment, and compare the different options
 
 ## Todo
 - Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
