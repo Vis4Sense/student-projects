@@ -32,7 +32,8 @@
 - Kai to find out if School project fund can be used to cover LLM cost
 - Raul to investigate if it is possible to use hybrid services, such as replicate, to train the RL model for trading.
 - All: Read the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
-- All: find at least one paper from a **top** conference or journal, such as TVCG or CHI that is relevant to your project
+- All: go through the tutorial on [literature review](https://github.com/Vis4Sense/student-projects/blob/main/instructions/literature.md) and: 
+  - find at least one paper from a **top** conference or journal, such as TVCG or CHI that is relevant to your project
   - By going through the papers published in 2023 
   - And add it to your zotero database
 - All: Finalise your project idea
