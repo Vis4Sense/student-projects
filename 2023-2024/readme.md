@@ -17,6 +17,7 @@
 
 ## Todo
 - Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
+- Kai to follow up about business school data access
 
 # 27 October 2023
 
