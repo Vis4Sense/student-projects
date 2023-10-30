@@ -18,7 +18,10 @@
 - Alpaca:
   - price data for crypto and stock
   - new for stock (and crypo?), maximum back to 2 weeks?
-- Raul: start with stock; should be easy to change to crypto
+- Raul:
+  - start with stock;
+  - should be easy to change to crypto
+  - portofolio selection and management (second stage)
 
 ## Todo
 - Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
