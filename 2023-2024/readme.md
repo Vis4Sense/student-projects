@@ -14,15 +14,18 @@
 
 
 # 30 Oct 2023
-
-- Alpaca:
+- Raul: Accessing LLM ([details](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/raul-farkas/resources/llm_cost_research.md))
+  - access hosted LLM through API 
+  - self hosting LLM on a cloud service: too expensive and too much work
+  - hybrid: host the model on a website but only pay for the running time
+- Raul: Alpaca
   - price data for crypto and stock
   - new for stock (and crypo?), maximum back to 2 weeks?
-- Raul:
+- Project: Raul
   - start with stock;
   - should be easy to change to crypto
   - portofolio selection and management (second stage)
-- Muhamad
+- Project: Muhamad
   - apply to crypo instead of stock?
   - include more information besides sentiment, and compare the different options
 
