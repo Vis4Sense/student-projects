@@ -18,6 +18,7 @@
 ## Todo
 - Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
 - Kai to follow up about business school data access
+- Kai to find out if School project fund can be used to cover LLM cost
 
 # 27 October 2023
 
