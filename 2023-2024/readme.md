@@ -15,6 +15,11 @@
 
 # 30 Oct 2023
 
+- Alpaca:
+  - price data for crypto and stock
+  - new for stock (and crypo?), maximum back to 2 weeks?
+- Raul: start with stock; should be easy to change to crypto
+
 ## Todo
 - Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
 - Kai to follow up about business school data access
