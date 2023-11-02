@@ -21,6 +21,7 @@
 - Raul: Alpaca
   - price data for crypto and stock
   - new for stock (and crypo?), maximum back to 2 weeks?
+    - RF: Historical news up to 2015 for both stocks and crypto
 - Project: Raul
   - start with stock;
   - should be easy to change to crypto
@@ -34,6 +35,8 @@
 - ~~Kai to follow up about business school data access~~
 - Kai to find out if School project fund can be used to cover LLM cost
 - Raul to investigate if it is possible to use hybrid services, such as replicate, to train the RL model for trading.
+  - RF: It does not seem to be possible, other solutions were briefly investigated ([notes](raul-farkas/resources/ml_training_platforms.md))
+
 - All: Read the two papers about trading using machine learning added to the [project page](https://kaixu.me/2023/09/15/llm-for-automated-trading/)
 - All: go through the tutorial on [literature review](https://github.com/Vis4Sense/student-projects/blob/main/instructions/literature.md) and: 
   - find at least one paper from a **top** conference or journal, such as TVCG or CHI that is relevant to your project
