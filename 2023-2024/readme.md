@@ -14,6 +14,12 @@
 
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
+## Todo
+- add the paper(s) you found to the meeting notes above
+- decide on the LLM API you want to use
+  - The cost of the API and roughly the total cost
+- find some potential users, just 2-3 for now
+
 
 # 30 Oct 2023
 - Raul: Accessing LLM ([details](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/raul-farkas/resources/llm_cost_research.md))
