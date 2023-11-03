@@ -12,6 +12,8 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
 
+# 3 Nov 2023
+- [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
 
 # 30 Oct 2023
 - Raul: Accessing LLM ([details](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/raul-farkas/resources/llm_cost_research.md))
