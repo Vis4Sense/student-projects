@@ -33,9 +33,9 @@
   - include more information besides sentiment, and compare the different options
 
 ## Todo
-- ~~Kai to confirm with Xiruo if the 10am Monday meeting time is fine.~~
-- ~~Kai to follow up about business school data access~~
-- Kai to find out if School project fund can be used to cover LLM cost
+- [x] Kai to confirm with Xiruo if the 10am Monday meeting time is fine.
+- [x] Kai to follow up about business school data access
+- [x] Kai to find out if School project fund can be used to cover LLM cost
 - Raul to investigate if it is possible to use hybrid services, such as replicate, to train the RL model for trading.
   - RF: It does not seem to be possible, other solutions were briefly investigated ([notes](raul-farkas/resources/ml_training_platforms.md))
 
