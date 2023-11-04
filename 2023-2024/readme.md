@@ -14,6 +14,8 @@
 
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
+- Rachana - papers: [Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence](https://dl.acm.org/doi/10.1145/3511599) and [Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales](https://arxiv.org/abs/2302.08961)
+
 ## Todo
 - add the paper(s) you found to the meeting notes above
 - decide on the LLM API you want to use
