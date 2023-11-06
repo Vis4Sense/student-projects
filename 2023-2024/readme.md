@@ -11,13 +11,27 @@
   - Ralk Farkas (UG)
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
+ 
+# 6 Nov 2023
+
+## Todo
+- Muhamad: check if you can access the lab pc in business school that has access to Reuter's data, and find out how to download the historical data (details in the email)
+  - Refinitiv
+  - Online video for how to use it
+  - find out what data is available, how far data is availalbe, download limit, can we download the data
+- All: a simple end-to-end trading pipeline
+  - get some (historical/realtime) data
+  - do some analysis, such as sentiment with chatGPT API
+  - do some trading, using the simplest strategy possible
+  - Raul to lead, and discuss with Muhamad and Xiruo
+  - https://www.investopedia.com/simulator/
 
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
 - Rachana - papers: [Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence](https://dl.acm.org/doi/10.1145/3511599) and [Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales](https://arxiv.org/abs/2302.08961)
 
 ## Todo
-- add the paper(s) you found to the meeting notes above
+- add the paper(s) you found to the meeting notes above 
 - decide on the LLM API you want to use
   - The cost of the API and roughly the total cost
 - find some potential users, just 2-3 for now
