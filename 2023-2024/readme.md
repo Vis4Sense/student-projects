@@ -28,6 +28,7 @@
   - tradingview simulator (does it support python now?)
   - GitHub: [simulator](https://github.com/topics/trading-simulator?l=python), [backtesting](https://github.com/topics/backtesting?o=desc&s=stars)
   - https://superalgos.org/
+  - https://wilsonfreitas.github.io/awesome-quant/
   - platform API
 - All: learn about the [OpenAI RL gym](https://openai.com/research/openai-gym-beta)
   - download and run it?
