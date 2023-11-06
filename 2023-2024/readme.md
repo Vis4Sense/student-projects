@@ -25,6 +25,8 @@
   - do some trading, using the simplest strategy possible
   - Raul to lead, and discuss with Muhamad and Xiruo
   - https://www.investopedia.com/simulator/
+  - tradingview simulator (does it support python now?)
+  - platform API
 
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
