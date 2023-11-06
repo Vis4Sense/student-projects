@@ -27,6 +27,8 @@
   - https://www.investopedia.com/simulator/
   - tradingview simulator (does it support python now?)
   - platform API
+- All: learn about the [OpenAI RL gym](https://openai.com/research/openai-gym-beta)
+  - download and run it?
 
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
