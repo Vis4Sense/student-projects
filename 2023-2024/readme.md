@@ -26,7 +26,7 @@
   - Raul to lead, and discuss with Muhamad and Xiruo
   - https://www.investopedia.com/simulator/
   - tradingview simulator (does it support python now?)
-  - https://github.com/topics/trading-simulator?l=python, https://github.com/topics/backtesting?o=desc&s=stars
+  - GitHub: [simulator](https://github.com/topics/trading-simulator?l=python), [backtesting](https://github.com/topics/backtesting?o=desc&s=stars)
   - platform API
 - All: learn about the [OpenAI RL gym](https://openai.com/research/openai-gym-beta)
   - download and run it?
