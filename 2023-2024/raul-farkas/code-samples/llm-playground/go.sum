@@ -1,0 +1,4 @@
+github.com/ayush6624/go-chatgpt v0.3.0 h1:tQUfwSvSL9KA2XmBqj3L8aVdVPRb0Hcs3XtMmZKqsc8=
+github.com/ayush6624/go-chatgpt v0.3.0/go.mod h1:bn550cv7EHT7sHJG5yR60IGqjKlZ0S0Ll+IZp3z7nOc=
+github.com/sausheong/goreplicate v0.0.2-alpha h1:Vt+AuANChXKVK8XR08R35eH+p6FUr908IwFOfhLVhHU=
+github.com/sausheong/goreplicate v0.0.2-alpha/go.mod h1:1qWoX5UmEPhOjboy2Wbfrr+a6WJo9E6r4LTPQDlf0D8=
