@@ -36,6 +36,7 @@
 # 3 Nov 2023
 - [Generative AI for Everyone](https://www.deeplearning.ai/courses/generative-ai-for-everyone/)
 - Rachana - papers: [Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence](https://dl.acm.org/doi/10.1145/3511599) and [Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales](https://arxiv.org/abs/2302.08961)
+- Jiaqi [Design Order Guided Visual Note Layout Optimization](https://ieeexplore.ieee.org/document/9767765) and [Target Netgrams: An Annulus-Constrained Stress Model for Radial Graph Visualization](https://ieeexplore.ieee.org/document/9814874/)
 
 ## Todo
 - add the paper(s) you found to the meeting notes above 
