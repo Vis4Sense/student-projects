@@ -12,6 +12,28 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
  
+# 10 Nov 2023
+
+- Rachana:
+  - user study  
+  - gpt3.5 + dalle2
+  - storyboarding
+  - £40
+  - 5 users
+- Hongye
+  - vector db can create text embedding: chroma
+  - locally run LLM - Illma 2 - 7B
+- Users
+  - Rachana: 1 CS student writing a book, a poet in canada
+  - Jianwen: one student from group project, personal interest, midjourney; an anime interest group
+  - Hongye: PhD student reseraching in recommender security, literature review
+  - Ziyure: Jianwen, PhD student at Warwick, searching and comparison, roommate CS,
+  - Jiaqi: intern colleague, developer, always has lots of tab, PhD in Japan, agriculture, create a mindmap
+ 
+## Todo
+- Talk to your users to understand their requirements and challengs.
+- Start designing and buidling a very simple end-to-end prototype
+
 # 6 Nov 2023
 
 ## Todo
