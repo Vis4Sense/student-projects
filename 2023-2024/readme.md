@@ -41,7 +41,10 @@
 - Hongye [VITALITY: Promoting Serendipitous Discovery of Academic Literature with Transformers & Visual Analytics
 ](https://ieeexplore.ieee.org/document/9552447) and [Interactive and Visual Prompt Engineering for Ad-hoc Task Adaptation with Large Language Models
 ](https://ieeexplore.ieee.org/abstract/document/9908590?casa_token=FpG4__iGu-8AAAAA:vQgLsYE0rVFPI6QfdJ00vSJaBKY8WUb1PoaCPZvFwBxgixdpdP5DrVqowU3wGZv7lQNpyT-OoA)
-
+- Ziyue [DIVI: Dynamically Interactive Visualization
+](https://ieeexplore.ieee.org/document/10299539) and [Foresight, sensemaking, and new product development: Constructing meanings for the future
+](https://www.sciencedirect.com/science/article/pii/S0040162522004668)
+  
 ## Todo
 - add the paper(s) you found to the meeting notes above 
 - decide on the LLM API you want to use
