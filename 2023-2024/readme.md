@@ -38,7 +38,9 @@
 - Rachana - papers: [Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence](https://dl.acm.org/doi/10.1145/3511599) and [Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales](https://arxiv.org/abs/2302.08961)
 - Jiaqi [Design Order Guided Visual Note Layout Optimization](https://ieeexplore.ieee.org/document/9767765) and [Target Netgrams: An Annulus-Constrained Stress Model for Radial Graph Visualization](https://ieeexplore.ieee.org/document/9814874/)
 - Jianwen [Beyond Text-to-Image: Multimodal Prompts to Explore Generative AI](https://dl.acm.org/doi/10.1145/3544549.3577043) and [Enhancing Arabic Content Generation with Prompt
-Augmentation Using Integrated GPT and Text-to-Image Models](https://dl.acm.org/doi/10.1145/3573381.3596466) 
+Augmentation Using Integrated GPT and Text-to-Image Models](https://dl.acm.org/doi/10.1145/3573381.3596466)
+- Hongye [Interactive and Visual Prompt Engineering for Ad-hoc Task Adaptation with Large Language Models
+](https://ieeexplore.ieee.org/abstract/document/9908590?casa_token=FpG4__iGu-8AAAAA:vQgLsYE0rVFPI6QfdJ00vSJaBKY8WUb1PoaCPZvFwBxgixdpdP5DrVqowU3wGZv7lQNpyT-OoA)
 
 ## Todo
 - add the paper(s) you found to the meeting notes above 
