@@ -39,7 +39,8 @@
 - Jiaqi [Design Order Guided Visual Note Layout Optimization](https://ieeexplore.ieee.org/document/9767765) and [Target Netgrams: An Annulus-Constrained Stress Model for Radial Graph Visualization](https://ieeexplore.ieee.org/document/9814874/)
 - Jianwen [Beyond Text-to-Image: Multimodal Prompts to Explore Generative AI](https://dl.acm.org/doi/10.1145/3544549.3577043) and [Enhancing Arabic Content Generation with Prompt
 Augmentation Using Integrated GPT and Text-to-Image Models](https://dl.acm.org/doi/10.1145/3573381.3596466)
-- Hongye [Interactive and Visual Prompt Engineering for Ad-hoc Task Adaptation with Large Language Models
+- Hongye [VITALITY: Promoting Serendipitous Discovery of Academic Literature with Transformers & Visual Analytics
+](https://ieeexplore.ieee.org/document/9552447) and [Interactive and Visual Prompt Engineering for Ad-hoc Task Adaptation with Large Language Models
 ](https://ieeexplore.ieee.org/abstract/document/9908590?casa_token=FpG4__iGu-8AAAAA:vQgLsYE0rVFPI6QfdJ00vSJaBKY8WUb1PoaCPZvFwBxgixdpdP5DrVqowU3wGZv7lQNpyT-OoA)
 
 ## Todo
