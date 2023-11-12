@@ -1,0 +1,6 @@
+alpaca-py==0.13.1
+pandas
+matplotlib
+openai
+asyncio
+plotly
