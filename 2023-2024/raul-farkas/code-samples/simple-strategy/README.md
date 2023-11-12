@@ -15,3 +15,9 @@ The pipeline found in the `simple-strategy.py` file performs the following steps
           published in the same timeframe, sell
         * Trader does not sell if the previous signal was to also sell
         * Trader does not buy if the previous signal was also to buy
+
+## Requirements
+
+* Alpaca.markets API
+* OpenAI API key
+* Install python requirements using `pip install -r requirements.txt`
