@@ -76,7 +76,7 @@ def map_news_to_stock_bars(news: pd.DataFrame, bars: pd.DataFrame) -> pd.DataFra
 
 
 def get_stock_bars(symbols: list[str], start: datetime, end: datetime) -> pd.DataFrame:
-    """"""
+    """Get stock bars from Alpaca.markets"""
     key = os.environ["ALPACA_KEY"]
     secret = os.environ["ALPACA_SECRET"]
     client = StockHistoricalDataClient(api_key=key, secret_key=secret)
