@@ -49,7 +49,8 @@ LLM
   - [ ] Muhamad: find out which model you used
   - [ ] Muhamad: find out whihc benchmark includes sentiment analysis: https://gpt4all.io/
   - [ ] Xiruo: find out existing sentiment analysis performance of different chatGPT versions, ideally the same sentiment benchmark
-  - [ ] Xiruo: investigtate sentiment performance of the quantized LLM such as Llama2
+  - [ ] Xiruo/Rauls: investigtate sentiment performance of the quantized LLM such as Llama2
+    - [ ] https://huggingface.co/TheBloke/llama-2-13B-Guanaco-QLoRA-GGUF ([QLoRA: Efficient Finetuning of Quantized LLMs](https://arxiv.org/abs/2305.14314))
     - [ ] https://huggingface.co/TheBloke/Llama-2-7B-GPTQ
     - [ ] https://towardsai.net/p/machine-learning/gptq-quantization-on-a-llama-2-7b-fine-tuned-model-with-huggingface
 Local storage
