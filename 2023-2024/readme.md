@@ -21,9 +21,39 @@ Muhamad
   - news back 20 years
   - Eikon data api: news 15 months back, price 20+ years, tried with Jupyter/python
   - Has it own cloud hosted notebook (similar to google colab)
- 
+- Yahoo finance data: all the back prices data, similar to Reutur
+  - real-time trading 50 minutes
+- sentiment analysis: notebook,
+  - gpt4all.io, equilavent of which chatgpt version?
+  - can run the llm locally
+Xiruo
+- used alpaca to collect news
+- use chatgpt API (paid herself) for sensation analysis
+- only the news title, may need to include news text
+- paper trading using Alpaca
+
 ## Todo
-- [ ] Muhamad: whether Refinitiv can support paper or real trading
+- [ ] Muhamad: whether Refinitiv can support paper or real trading: both real-time and back testing
+- [ ] Xiruo: alpaca paper trading - both real-time and back testing 
+- [ ] trading simulation: Muhamad and Xiruo - compare refinitiv and alpaca
+
+- [ ] Muhamad: compare Reuter and Yahoo data: how detailed the data is, what data is available,
+- [ ] Muhamad and Xiruo: compare the data from alpaca/Reuter/yahoo
+  - [ ] what data is available
+  - [ ] the resolution of the data, i.e., how detailed
+  - [ ] how far back the data goes
+  - [ ] ...
+
+- [ ] compare the sentiment performance of models from https://gpt4all.io/
+  - [ ] Muhamad: find out which model you used
+  - [ ] Muhamad: find out whihc benchmark includes sentiment analysis: https://gpt4all.io/
+  - [ ] Xiruo: find out the sentiment analysis performance of different chatGPT versions, ideally the same sentiment benchmark
+  - [ ] Xiruo: investigtate sentiment performance of the quantized LLM such as Llama2
+    - [ ] https://huggingface.co/TheBloke/Llama-2-7B-GPTQ
+    - [ ] https://towardsai.net/p/machine-learning/gptq-quantization-on-a-llama-2-7b-fine-tuned-model-with-huggingface
+
+- [ ] local database: news and mark information for training
+  
  
 # 10 Nov 2023
 
