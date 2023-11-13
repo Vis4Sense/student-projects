@@ -14,7 +14,16 @@
 
 # 13 Nov 2023 (trading)
 
-
+Muhamad
+- wait for James' response to lab access
+- Refinitiv: free university access
+  - valid for 1 month or 1 semester
+  - news back 20 years
+  - Eikon data api: news 15 months back, price 20+ years, tried with Jupyter/python
+  - Has it own cloud hosted notebook (similar to google colab)
+ 
+## Todo
+- [ ] Muhamad: whether Refinitiv can support paper or real trading
  
 # 10 Nov 2023
 
