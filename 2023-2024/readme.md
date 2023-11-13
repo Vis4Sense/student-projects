@@ -63,7 +63,7 @@ LLM
 
 - Rachana:
   - user study  
-  - gpt3.5 + dalle2
+  - gpt-3.5-turbo-1106 + dalle2
   - storyboarding
   - £40
   - 5 users
