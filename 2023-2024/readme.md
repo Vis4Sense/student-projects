@@ -11,6 +11,10 @@
   - Ralk Farkas (UG)
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
+
+# 13 Nov 2023 (trading)
+
+
  
 # 10 Nov 2023
 
@@ -34,7 +38,7 @@
 - Talk to your users to understand their requirements and challengs.
 - Start designing and buidling a very simple end-to-end prototype
 
-# 6 Nov 2023
+# 6 Nov 2023  (trading)
 
 ## Todo
 - Muhamad: check if you can access the lab pc in business school that has access to Reuter's data, and find out how to download the historical data (details in the email)
@@ -74,7 +78,7 @@
 - find some potential users, just 2-3 for now
 
 
-# 30 Oct 2023
+# 30 Oct 2023 (trading)
 - Raul: Accessing LLM ([details](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/raul-farkas/resources/llm_cost_research.md))
   - access hosted LLM through API 
   - self hosting LLM on a cloud service: too expensive and too much work
@@ -116,7 +120,7 @@
   - And add it to your zotero database
 - Finalise your project idea
 
-# 23 October 2023
+# 23 October 2023 (trading)
 Xiruo 
 - need to learn more about language models.
 - Project idea: compare different LLMs
