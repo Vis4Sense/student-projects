@@ -33,25 +33,26 @@ Xiruo
 - paper trading using Alpaca
 
 ## Todo
+Trading simulation
 - [ ] Muhamad: whether Refinitiv can support paper or real trading: both real-time and back testing
 - [ ] Xiruo: alpaca paper trading - both real-time and back testing 
 - [ ] trading simulation: Muhamad and Xiruo - compare refinitiv and alpaca
-
+Data
 - [ ] Muhamad: compare Reuter and Yahoo data: how detailed the data is, what data is available,
 - [ ] Muhamad and Xiruo: compare the data from alpaca/Reuter/yahoo
   - [ ] what data is available
   - [ ] the resolution of the data, i.e., how detailed
   - [ ] how far back the data goes
   - [ ] ...
-
+LLM
 - [ ] compare the sentiment performance of models from https://gpt4all.io/
   - [ ] Muhamad: find out which model you used
   - [ ] Muhamad: find out whihc benchmark includes sentiment analysis: https://gpt4all.io/
-  - [ ] Xiruo: find out the sentiment analysis performance of different chatGPT versions, ideally the same sentiment benchmark
+  - [ ] Xiruo: find out existing sentiment analysis performance of different chatGPT versions, ideally the same sentiment benchmark
   - [ ] Xiruo: investigtate sentiment performance of the quantized LLM such as Llama2
     - [ ] https://huggingface.co/TheBloke/Llama-2-7B-GPTQ
     - [ ] https://towardsai.net/p/machine-learning/gptq-quantization-on-a-llama-2-7b-fine-tuned-model-with-huggingface
-
+Local storage
 - [ ] local database: news and mark information for training
   
  
