@@ -56,7 +56,6 @@ LLM
   - Sentiment analysis benchmark
     - [SemEval-2017 Task 4: Sentiment Analysis in Twitter](https://aclanthology.org/S17-2088/)
     - [SemEval 2022 Task 10: Structured Sentiment Analysis](https://aclanthology.org/2022.semeval-1.180/)
-Local storage
 - [ ] local database: news and mark information for training
   
  
