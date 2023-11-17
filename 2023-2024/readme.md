@@ -22,6 +22,43 @@ Raul
   * Decided to use ClickHouse (Described in design document)
     * For its columnar storage approach which is way faster for when getting data indexed based on time
 
+# 17 Nov  2023
+
+Rachana: design the interview and ethics
+Ziyue Wang: 
+- talked to the PhD student
+- graphical neural networks
+Peining
+- MSc HCI
+- Image models for artists
+- ask sister in US to recruit artists
+Jianwen
+- interview with ameture user interested in stable diffusion
+- building a notebook extension
+Hongye
+- talk to neighbour, who is a master student, need more preparation to under his paper reserach needs
+- building a prototype with kaggle arxiv dataset with chroma
+Jiaqi
+ - talked to 4 users
+ - phd student: extract the 'method' section from a set of papers
+ - colleague:
+   - have one window (multiple tabs) for each task
+   - infer the connection between webpages
+ - different ways of grouping tabs
+ - a simple browser extension with popup
+
+## To do
+- Have a look of the quantisd LLMs lised in the Teams chat, compare the performance of different models
+- have a look of the azure openAI api document
+- write down the requirements with enough information that someone new can understand
+- Ziyue: research on knowledge graph, not graph neural network
+- Ziyue: find users with problem you can help with
+- Peining: identify potential users and their challenges
+- Jiawen: decide
+  - whether to include recommendation or not (i.e., just history visualisation)
+  - wheter to support web or notebook interface
+  - try to capture the values from the disco diffusion notebook as a start
+
 # 13 Nov 2023 (trading)
 
 Muhamad
