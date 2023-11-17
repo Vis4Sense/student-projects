@@ -51,6 +51,7 @@ Jiaqi
 - continue with the user requirements if not finished
 - continue with the prototype if not finished
 - **further narrow down the project idea**
+- push/upload your code/documents (markdown) to the repository folder
 - Have a look of the quantisd LLMs lised in the Teams chat, compare the performance of different models
 - have a look of the azure openAI api document
 - write down the interview with enough information that someone new can understand
