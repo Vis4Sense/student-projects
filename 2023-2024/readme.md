@@ -53,7 +53,8 @@ Jiaqi
 - further narrow down the project idea
 - Have a look of the quantisd LLMs lised in the Teams chat, compare the performance of different models
 - have a look of the azure openAI api document
-- write down the requirements with enough information that someone new can understand
+- write down the interview with enough information that someone new can understand
+  - and come up with some requirements from the interview
 - Ziyue: research on knowledge graph, not graph neural network
 - Ziyue: find users with problem you can help with
 - Peining: identify potential users and their challenges
