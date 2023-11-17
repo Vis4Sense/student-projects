@@ -12,6 +12,16 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
 
+# 20 Nov 2023 (trading)
+
+Raul
+
+* Created [design plans](raul-farkas/project-design/data_acquisition_component_design.md) and diagram for data acquisition component
+  * Started implementation, already have a clear idea about tech stack
+* Investigated possible options for storing data locally
+  * Decided to use ClickHouse (Described in design document)
+    * For its columnar storage approach which is way faster for when getting data indexed based on time
+
 # 13 Nov 2023 (trading)
 
 Muhamad
@@ -26,11 +36,21 @@ Muhamad
 - sentiment analysis: notebook,
   - gpt4all.io, equilavent of which chatgpt version?
   - can run the llm locally
-Xiruo
+  Xiruo
 - used alpaca to collect news
 - use chatgpt API (paid herself) for sensation analysis
 - only the news title, may need to include news text
 - paper trading using Alpaca
+
+Raul
+
+* Got llama2 and mistral LLMs to work on local machine with Ollama.ai
+  * It produces answers quickly, especially Mistral
+  * Exposes a web api endpoint
+* Created a very simple trading [pipeline](https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/raul-farkas/code-samples/simple-strategy)
+  * It does not perform actual trading but it does generate buy/sell signals based on a given strategy
+  * Implementation in python
+  * For sentiment analysis I used ChatGPT API (with credit I added myself)
 
 ## Todo
 Trading simulation
@@ -44,7 +64,7 @@ Data
   - [ ] the resolution of the data, i.e., how detailed
   - [ ] how far back the data goes
   - [ ] ...
-LLM
+  LLM
 - [ ] compare the sentiment performance of models from https://gpt4all.io/
   - [ ] Muhamad: find out which model you used
   - [ ] Muhamad: find out whihc benchmark includes sentiment analysis: https://gpt4all.io/
@@ -58,7 +78,7 @@ LLM
     - [SemEval 2022 Task 10: Structured Sentiment Analysis](https://aclanthology.org/2022.semeval-1.180/)
 - [ ] local database: news and mark information for training
   
- 
+
 # 10 Nov 2023
 
 - Rachana:
@@ -76,7 +96,7 @@ LLM
   - Hongye: PhD student reseraching in recommender security, literature review
   - Ziyure: Jianwen, PhD student at Warwick, searching and comparison, roommate CS,
   - Jiaqi: intern colleague, developer, always has lots of tab, PhD in Japan, agriculture, create a mindmap
- 
+
 ## Todo
 - Talk to your users to understand their requirements and challengs.
 - Start designing and buidling a very simple end-to-end prototype
@@ -111,8 +131,8 @@ LLM
 ](https://ieeexplore.ieee.org/document/9552447) and [Interactive and Visual Prompt Engineering for Ad-hoc Task Adaptation with Large Language Models
 ](https://ieeexplore.ieee.org/abstract/document/9908590?casa_token=FpG4__iGu-8AAAAA:vQgLsYE0rVFPI6QfdJ00vSJaBKY8WUb1PoaCPZvFwBxgixdpdP5DrVqowU3wGZv7lQNpyT-OoA)
 - Ziyue [DIVI: Dynamically Interactive Visualization
-](https://ieeexplore.ieee.org/document/10299539) and [Foresight, sensemaking, and new product development: Constructing meanings for the future
-](https://www.sciencedirect.com/science/article/pii/S0040162522004668)
+  ](https://ieeexplore.ieee.org/document/10299539) and [Foresight, sensemaking, and new product development: Constructing meanings for the future
+  ](https://www.sciencedirect.com/science/article/pii/S0040162522004668)
   
 ## Todo
 - add the paper(s) you found to the meeting notes above 
