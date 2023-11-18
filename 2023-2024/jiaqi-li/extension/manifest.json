@@ -1,0 +1,11 @@
+{
+    "name": "test version",
+    "version": "1.0.0",
+    "description": "first try chroma extension",
+    "manifest_version": 3,
+    "author": "Sampurna Chapagain",
+    "action":{
+        "default_popup": "index.html",
+        "default_title": "test"
+    }
+}
