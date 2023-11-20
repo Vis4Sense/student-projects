@@ -63,7 +63,7 @@ Muhamad and Xiruo
   - [ ] [SemEval: International Workshop on Semantic Evaluation](https://semeval.github.io/)
 
 Raul:
-- [ ] the cost of hosting the system and database online
+- [ ] the cost of hosting the system and database online: create a github issue to compare the options
 - [ ] implment the data collection system
 
 
