@@ -14,6 +14,11 @@
 
 # 20 Nov 2023 (trading)
 
+Muhamad
+- needs a separate app fxtrade
+- yahoo unofficial API only
+- no sentiment benchmark 
+
 Raul
 
 * Created [design plans](raul-farkas/project-design/data_acquisition_component_design.md) and diagram for data acquisition component
@@ -21,6 +26,12 @@ Raul
 * Investigated possible options for storing data locally
   * Decided to use ClickHouse (Described in design document)
     * For its columnar storage approach which is way faster for when getting data indexed based on time
+   
+## Todo
+Muhamad: 
+- [ ] create a markdown file about Refinitive trading in the repository and add a link here in the notes
+- [ ] ask if it is possible to expoert news from the refinitive software
+- [ ] no sentiment benchmark
 
 # 17 Nov  2023
 
