@@ -36,7 +36,14 @@ Tianxiang
 - for paper: human label needed to create a benchmark unless we can find a benchmark
 
 Raul
-
+- back testing
+  - alpaca data: max 30 assets all mixed
+  - plotly for the chart
+- system architecture
+  - for both real-time and back testing
+  - database: clickhouse
+  - 2-3 weeks to build the system
+  - 
 * Created [design plans](raul-farkas/project-design/data_acquisition_component_design.md) and diagram for data acquisition component
   * Started implementation, already have a clear idea about tech stack
 * Investigated possible options for storing data locally
@@ -47,7 +54,19 @@ Raul
 Muhamad: 
 - [ ] create a markdown file about Refinitive trading in the repository and add a link here in the notes
 - [ ] ask if it is possible to expoert news from the refinitive software
-- [ ] create a report on the sentiment comparison results
+
+Muhamad and Xiruo
+- [ ] start a overleaf (latex) report, using online tools to convert table into latex, on the sentiment comparison results
+- [ ] read the '[Sentiment Analysis in the Era of Large Language Models: A Reality Check](https://arxiv.org/abs/2305.15005)' paper posted in the Teams chat
+- [ ] find a sentiment benchmark (or create our own), such as
+  - [ ] [finBERT](https://github.com/ProsusAI/finBERT)
+  - [ ] [SemEval: International Workshop on Semantic Evaluation](https://semeval.github.io/)
+
+Raul:
+- [ ] the cost of hosting the system and database online
+- [ ] implment the data collection system
+
+
 
 # 17 Nov  2023
 
