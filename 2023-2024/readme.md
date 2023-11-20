@@ -25,19 +25,24 @@ Raul
 # 17 Nov  2023
 
 Rachana: design the interview and ethics
+
 Ziyue Wang: 
 - talked to the PhD student
 - graphical neural networks
+
 Peining
 - MSc HCI
 - Image models for artists
 - ask sister in US to recruit artists
+
 Jianwen
 - interview with ameture user interested in stable diffusion
 - building a notebook extension
+
 Hongye
 - talk to neighbour, who is a master student, need more preparation to under his paper reserach needs
 - building a prototype with kaggle arxiv dataset with chroma
+
 Jiaqi
  - talked to 4 users
  - phd student: extract the 'method' section from a set of papers
