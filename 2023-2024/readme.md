@@ -58,7 +58,7 @@ Muhamad:
 Muhamad and Xiruo
 - [ ] start a overleaf (latex) report, using online tools to convert table into latex, on the sentiment comparison results
 - [ ] read the '[Sentiment Analysis in the Era of Large Language Models: A Reality Check](https://arxiv.org/abs/2305.15005)' paper posted in the Teams chat
-- [ ] find a sentiment benchmark (or create our own), such as
+- [ ] find a sentiment benchmark, such as
   - [ ] [finBERT](https://github.com/ProsusAI/finBERT)
   - [ ] [SemEval: International Workshop on Semantic Evaluation](https://semeval.github.io/)
 
