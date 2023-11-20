@@ -62,7 +62,11 @@ Note – Participant was given minimal instruction for using Dream Studio – ju
 
 Participant: Let’s try to do something that I’m working on…I don’t know if this is going to work [referring to the prompt they entered]. I’ve never used one of these before so I don’t even know if I’m doing it right. I’ve never even used Chat GPT.
 
+![user-interview-1-screenshot1](https://github.com/Vis4Sense/student-projects/assets/66835338/74ec9016-9667-49b8-bc1e-baf150b1f169)
+
 Participant: Why are there men? [Waves cursor over the men in the background of the photo.]. Basically, I want it to look like what I had as a student. What I’m looking for is not just one person as the forefront – I want more of like a scene with multiple people. [Scrolls through the style options.] Just have no style for now and see what that does.
+
+![user-interview-1-screenshot2](https://github.com/Vis4Sense/student-projects/assets/66835338/5e33469f-f4db-438a-850f-83d73a7a2477)
 
 Participant: I do want it to look more realistic. I take back not wanting side characters to be AI because if I don’t use AI for side characters – I feel like I’m going to use people I know. That might be better for me to eliminate personal bias and have people not chase me down after the book comes out.
 
@@ -70,7 +74,11 @@ Q: You’re concerned about putting people you know into your story?
 
 Participant: Yes because if I’m thinking about somebody’s appearance and I put that in the book…
 
+![user-interview-1-screenshot3](https://github.com/Vis4Sense/student-projects/assets/66835338/5a297b88-dd68-49f9-9fe5-4c1c0961cd3e)
+
 Participant: This is actually more like what I was looking for… stuff like this where people are standing around in circles with like drinks and nametags. [Adds nametags to prompt.]
+
+![user-interview-1-screenshot4](https://github.com/Vis4Sense/student-projects/assets/66835338/36e031c2-a150-43fc-8b91-a407b0d0a75b)
 
 Q: Would you ever copy paste text directly from your story or poem into the prompt field and use that?
 
