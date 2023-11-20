@@ -17,7 +17,23 @@
 Muhamad
 - needs a separate app fxtrade
 - yahoo unofficial API only
-- no sentiment benchmark 
+- no sentiment benchmark
+
+Xiruo
+- test Alpaca paper trading with chatGPT sentiment analysis
+- easy to use
+- haven't tried back testing: more difficult than real time trading; difficulty getting the code to work
+- Alpaca: news 7 years back
+  - missing news content
+- Yahoo: RapidAPI (not free) - price and news, two other free API but only price
+- Reuter: 30 years Apple price
+- gpt4all: tried first 3 models
+
+Tianxiang
+- sentiment analysis: accurate OK is fine (70%-80%), but speed is more important: has to be fast
+- will share a sentiment benchmark: https://github.com/ProsusAI/finBERT
+- test small models: quantised
+- for paper: human label needed to create a benchmark unless we can find a benchmark
 
 Raul
 
@@ -31,7 +47,7 @@ Raul
 Muhamad: 
 - [ ] create a markdown file about Refinitive trading in the repository and add a link here in the notes
 - [ ] ask if it is possible to expoert news from the refinitive software
-- [ ] no sentiment benchmark
+- [ ] create a report on the sentiment comparison results
 
 # 17 Nov  2023
 
