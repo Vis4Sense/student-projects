@@ -118,7 +118,7 @@ Q: Do you think speed is a priority when you're using a tool like this, or are y
 
 Participant: I don't mind waiting, but if it's too long, then obviously that's, you know…And I've been on image generation websites where it takes way too [long].
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/6f72ca84-670c-4a4a-ba35-48571350322d/ed9cf816-beca-42d3-a1ca-389382402ccb/Untitled.png)
+<img width="1140" alt="user2-interview-screenshot1" src="https://github.com/Vis4Sense/student-projects/assets/66835338/68dde5b6-65d6-4274-bc0e-217e7f4d6627">
 
 Participant: Okay, perfect. So this is something I had in mind. [Clicks on the second image in the first batch.] It kind of looks like it’s hovering but it looks pretty cool to me. [Clicks on the third image in the first batch.] Yeah, it looks pretty cool. [Clicks on the fourth image.] And then you’ve got this crow that adds to the eeriness.
 
@@ -130,7 +130,7 @@ Q: Would you be OK with doing a second exercise to generate an image for a chara
 
 Participant: Let’s do this…I’m just going to go with an Indian Sherlock Holmes…So I don’t research beforehand – I do use chat GPT – but in this case, I haven’t done any research, I’m just going on the interview. So Indian Sherlock Holmes…with a grey beard, an iron cane, dressed in an elegant two piece suit with a waistcoat, with a Great Dane on a leash…I don’t want to tax it too much, let’s see.  [Selects cinematic style.]
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/6f72ca84-670c-4a4a-ba35-48571350322d/3f79de0f-f1f0-4b77-b742-3f847afadadc/Untitled.png)
+<img width="1171" alt="user2-interview-screenshot2" src="https://github.com/Vis4Sense/student-projects/assets/66835338/49db8f5a-19a9-45b3-85d2-9996cf4efb55">
 
 Participant: [Clicks on first image] I think this is really cool. I’m really impressed. [Clicks on fourth image.] I think this character doesn’t have a leg – [he’s] missing a leg. Oh one of the dogs has got its leg – what is happening? [Clicks on second image and zooms in.] I could use negative prompts – ‘no artificial lens’ – the eyes look a bit wonky. This eye looks a bit cloudy so it could add an element of mystery so I could use that in writing. That staff does not look iron…[Clicks on first image.] I think this is probably the favourite one. This is something that’s completely spontaneous.
 
