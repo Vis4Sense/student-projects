@@ -50,15 +50,26 @@ Fig. 1. Task list in GitHub Projects with deadlines and phases
  
 References
 
-[1]	‘Generative Models by Stability AI’. Stability AI, Oct. 31, 2023. Accessed: Nov. 01, 2023. [Online]. Available: https://github.com/Stability-AI/generative-models
-[2]	Y. Feng et al., ‘PromptMagician: Interactive Prompt Engineering for Text-to-Image Creation’. arXiv, Aug. 15, 2023. doi: 10.48550/arXiv.2307.09036.
-[3]	A. Yuan, A. Coenen, E. Reif, and D. Ippolito, ‘Wordcraft: Story Writing With Large Language Models’, in 27th International Conference on Intelligent User Interfaces, in IUI ’22. New York, NY, USA: Association for Computing Machinery, Mar. 2022, pp. 841–852. doi: 10.1145/3490099.3511105.
-[4]	E. Jiang et al., ‘PromptMaker: Prompt-based Prototyping with Large Language Models’, in Extended Abstracts of the 2022 CHI Conference on Human Factors in Computing Systems, in CHI EA ’22. New York, NY, USA: Association for Computing Machinery, Apr. 2022, pp. 1–8. doi: 10.1145/3491101.3503564.
-[5]	S. Brade, B. Wang, M. Sousa, S. Oore, and T. Grossman, ‘Promptify: Text-to-Image Generation through Interactive Prompt Exploration with Large Language Models’. arXiv, Apr. 18, 2023. doi: 10.48550/arXiv.2304.09337.
-[6]	M. Ruskov, ‘Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales’. arXiv, Aug. 25, 2023. doi: 10.48550/arXiv.2302.08961.
-[7]	E. Bensaid, M. Martino, B. Hoover, and H. Strobelt, ‘FairyTailor: A Multimodal Generative Framework for Storytelling’. arXiv, Jul. 12, 2021. doi: 10.48550/arXiv.2108.04324.
-[8]	N. Singh, G. Bernal, D. Savchenko, and E. L. Glassman, ‘Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence’, ACM Trans. Comput.-Hum. Interact., vol. 30, no. 5, p. 68:1-68:57, Sep. 2023, doi: 10.1145/3511599.
-[9]	H. Guinness, ‘The best AI writing generators in 2023’, Zapier. Accessed: Oct. 31, 2023. [Online]. Available: https://zapier.com/blog/best-ai-writing-generator/
-[10]	‘Sudowrite’, Sudowrite. Accessed: Oct. 31, 2023. [Online]. Available: https://www.sudowrite.com/
-[11]	‘New beta feature: Canvas’, Sudowrite. Accessed: Nov. 01, 2023. [Online]. Available: https:///changelog/16456, https://feedback.sudowrite.com/changelog/16456
-[12]	Patil, Pedro Cuenca, and Valentine Kozin, ‘Training Stable Diffusion with Dreambooth using Diffusers’, Hugging Face. Accessed: Nov. 01, 2023. [Online]. Available: https://huggingface.co/blog/dreambooth
+[1]       ‘Generative Models by Stability AI’. Stability AI, Oct. 31, 2023. Accessed: Nov. 01, 2023. [Online]. Available: https://github.com/Stability-AI/generative-models
+
+[2]       Y. Feng *et al.*, ‘PromptMagician: Interactive Prompt Engineering for Text-to-Image Creation’. arXiv, Aug. 15, 2023. doi: 10.48550/arXiv.2307.09036.
+
+[3]       A. Yuan, A. Coenen, E. Reif, and D. Ippolito, ‘Wordcraft: Story Writing With Large Language Models’, in *27th International Conference on Intelligent User Interfaces*, in IUI ’22. New York, NY, USA: Association for Computing Machinery, Mar. 2022, pp. 841–852. doi: 10.1145/3490099.3511105.
+
+[4]       E. Jiang *et al.*, ‘PromptMaker: Prompt-based Prototyping with Large Language Models’, in *Extended Abstracts of the 2022 CHI Conference on Human Factors in Computing Systems*, in CHI EA ’22. New York, NY, USA: Association for Computing Machinery, Apr. 2022, pp. 1–8. doi: 10.1145/3491101.3503564.
+
+[5]       S. Brade, B. Wang, M. Sousa, S. Oore, and T. Grossman, ‘Promptify: Text-to-Image Generation through Interactive Prompt Exploration with Large Language Models’. arXiv, Apr. 18, 2023. doi: 10.48550/arXiv.2304.09337.
+
+[6]       M. Ruskov, ‘Grimm in Wonderland: Prompt Engineering with Midjourney to Illustrate Fairytales’. arXiv, Aug. 25, 2023. doi: 10.48550/arXiv.2302.08961.
+
+[7]       E. Bensaid, M. Martino, B. Hoover, and H. Strobelt, ‘FairyTailor: A Multimodal Generative Framework for Storytelling’. arXiv, Jul. 12, 2021. doi: 10.48550/arXiv.2108.04324.
+
+[8]       N. Singh, G. Bernal, D. Savchenko, and E. L. Glassman, ‘Where to Hide a Stolen Elephant: Leaps in Creative Writing with Multimodal Machine Intelligence’, *ACM Trans. Comput.-Hum. Interact.*, vol. 30, no. 5, p. 68:1-68:57, Sep. 2023, doi: 10.1145/3511599.
+
+[9]       H. Guinness, ‘The best AI writing generators in 2023’, Zapier. Accessed: Oct. 31, 2023. [Online]. Available: https://zapier.com/blog/best-ai-writing-generator/
+
+[10]     ‘Sudowrite’, Sudowrite. Accessed: Oct. 31, 2023. [Online]. Available: https://www.sudowrite.com/
+
+[11]     ‘New beta feature: Canvas’, Sudowrite. Accessed: Nov. 01, 2023. [Online]. Available: https:///changelog/16456, https://feedback.sudowrite.com/changelog/16456
+
+[12]     Patil, Pedro Cuenca, and Valentine Kozin, ‘Training Stable Diffusion with Dreambooth using Diffusers’, Hugging Face. Accessed: Nov. 01, 2023. [Online]. Available: https://huggingface.co/blog/dreambooth
