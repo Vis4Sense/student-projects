@@ -1,10 +1,19 @@
 define([
     'base/js/namespace',
-    'base/js/events'
+    'base/js/events',
+    'base/js/utils'
 ], function(Jupyter, events) {
     'use strict';
+
+    // stage 1: grab relevant parameters in DiscoDiffusion after running.
     
-    var history_path = './history/history_box.txt'
+    var history_path = 'history_box.txt'
+
+    // execute python code in main.js
+    var executePythonCode = function(code) {
+        var kernel = Jupyter.notebook.kernel;
+        kernel.execute(code);
+    }
 
     // insert a jupyter notebook cell
     var insert_cell = function() {
@@ -12,7 +21,28 @@ define([
         Jupyter.notebook.select_prev();
     }
 
-    // execute code in selected cell
+    // create a html window for user settings
+    var create_window = function() {
+        var exwindow = $('<div/>').attr('id', 'my-extension-window').css({
+        'position': 'fixed',
+        'top': '50px',
+        'left': '50px',
+        'width': '300px',
+        'height': '200px',
+        'background-color': 'white',
+        'border': '1px solid #ccc',
+        'padding': '10px',
+        'z-index': '1000'
+    }).appendTo('body');
+    
+    }
+
+    // grab parameters in Jupyter code before running
+    var grab = function() {
+        
+    }
+
+    // execute code in all cell
     var execute_all = function() {
         // obtain all cells
         var cells = Jupyter.notebook.get_cells();
@@ -25,39 +55,15 @@ define([
         });
     }
 
-    var execute_selected = function() {
-        // obtain selected cell
-        var cell = Jupyter.notebook.get_selected_cell();
-        // obtain the variable value in the code
-        var code = cell.get_text()
-        // user regex to match the variable indicating user input (variable name may change)
-        var regex = new RegExp('user_input' + '\\s*=\\s*(.+?)\\s*($|\\n)', 'm');
-        var match = code.match(regex);
-        if (match) 
-        {
-            // write text prompt to file
-            var text_prompt = match[1];
-            utils.promising_write_file(history_path, text_prompt).catch(function(error) {
-                console.error('Error writing to history box:', error);
-            });
-
-        } 
-        // execute cell
-        if (cell && cell.cell_type === 'code')
-        {
-            Jupyter.notebook.execute_cell(cell);
-        }
-    }
-
     // add jupyter toolbar button
     var extensionButton = function() {
         console.log()
         Jupyter.toolbar.add_buttons_group([
             Jupyter.keyboard_manager.actions.register({
-                'help' : "add a cell",
+                'help' : "run code and save text prompt as history",
                 'icon' : 'fa-paper-plane',
-                'handler' : execute_selected
-            }, 'add_cell', 'My Extension')
+                'handler' : grab,
+            }, 'grab user settings', 'My Extension')
         ])
     }
 
