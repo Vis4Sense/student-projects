@@ -42,7 +42,9 @@ The tasks and corresponding deadlines for this project are depicted in Figure 1 
 Although the task breakdown appears comprehensive, the hard deadlines are specified for each milestone (i.e. Literature Review) in GitHub Projects and the soft deadlines for tasks associated with these milestones can be adjusted as necessary. 
 
 <img width="469" alt="Picture 1" src="https://github.com/Vis4Sense/student-projects/assets/66835338/ae42592e-6b63-46a8-b4bd-5966c0f4bea0">
+
 Fig. 1. Task list in GitHub Projects with deadlines and phases
+
 
 (Word Count: 992 words)
  
