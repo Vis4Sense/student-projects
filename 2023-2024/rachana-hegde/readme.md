@@ -1,1 +1,1 @@
-Project: Generative Image Models for Artistic Creation
+Project: Generative Image Models for Writers
