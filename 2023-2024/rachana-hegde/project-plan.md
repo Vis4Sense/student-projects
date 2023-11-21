@@ -45,9 +45,8 @@ Although the task breakdown appears comprehensive, the hard deadlines are specif
 
 Fig. 1. Task list in GitHub Projects with deadlines and phases
 
-
 (Word Count: 992 words)
- 
+
 References
 
 [1]       ‘Generative Models by Stability AI’. Stability AI, Oct. 31, 2023. Accessed: Nov. 01, 2023. [Online]. Available: https://github.com/Stability-AI/generative-models
