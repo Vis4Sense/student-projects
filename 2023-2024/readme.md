@@ -1,6 +1,6 @@
 # Folder for all the 2023-2024 projects (UG and PGT) 
 - Visual Analytics for Sensemaking:
-  - Ziyue Wang (UG): foresight
+  - Ziyue Wang (UG): support comparison of online shopping options with knowledge graph
   - Jiaqi Li (PGT): 
 - Human-AI teaming
   - Rachana Hegde (PGT): image generative AI for writers
@@ -11,6 +11,11 @@
   - Ralk Farkas (UG)
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
+ 
+# 24 Nov 2023 
+
+## Todo
+Ziyue: help user build a knowledge (sub)graph related to his/her research
 
 # 20 Nov 2023 (trading)
 
