@@ -42,7 +42,7 @@
 - All:
   - please update the table above based on your progress so far: a brief summary of the outcomes so far and link to the document/code in the repository folder.
   - continue the tasks in the table that are not completed yet
-  - add all the tasks that you plan to work on before the next meeting to this list
+  - add all the tasks that you plan to work on before the next meeting to this list (if they are not here yet)
 - Ziyue: 
   - pick a specific use case if buying camera is not relevant to the user
   - learn more about how to let user update knowledge graph and how to use knowledge graph
