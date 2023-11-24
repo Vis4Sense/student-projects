@@ -16,21 +16,47 @@
  |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       |         |        |         |        |
- |recruit user|              |       |         |        |         |        |
- |conduct interview|         |       |         |        |         |        |
- |analyse data|              |       |         |        |         |        |
- |requirement list|          |       |         |        |         |        |
- |...   |                    |       |         |        |         |        |
+ |recruit user       |       |       |         |        |         |        |
+ |conduct interview  |       |       |         |        |         |        |
+ |analyse data       |       |       |         |        |         |        |
+ |requirement list   |       |       |         |        |         |        |
+ |...                |       |       |         |        |         |        |
  
  
 # 24 Nov 2023 
-
+- Ziyue: help user build a knowledge (sub)graph related to his/her research
+- Rachana is leaving on 14 Dec and coming back 12 Jan
+  - interviewed two users
+  - transcribe the interview
+  - come up a list of requirements
+  - started website structure design (sitemap)
+- Jiawen: change the project topic
+- Hongye:
+  - will further develop vatility
+    - change the backend to document vector similarity search
+    - update the frontend accordingly
+  - will be away next Friday
 
 
 ## Todo
-
-
-Ziyue: help user build a knowledge (sub)graph related to his/her research
+- All:
+  - please update the table above based on your progress so far
+  - continue the tasks in the table that are not completed yet
+  - add all the tasks that you plan to work on before the next meeting to this list
+- Ziyue: 
+  - pick a specific use case if buying camera is not relevant to the user
+  - learn more about how to let user update knowledge graph and how to use knowledge graph
+- Rachana
+  - pick a few requirements to focus on for the project
+  - think about possible solutions to meet these requirements
+  - start the sketch out solution ideas
+- Hongye: compare the performance of different LLMs for similarity search:
+  - see if there is any existing paper/work on such comparison
+  - if not, find a benchmark dataset for comparison
+  - vector storage built-in LLM
+  - LLM APIs,
+  - open-source LLM with different sizes, such as 7B, 13B, and 70B version of Llama2
+  - different levels of quantisation: 16bit, 8bit, 4bit, 2bit, etc.
 
 # 20 Nov 2023 (trading)
 
