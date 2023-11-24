@@ -4,19 +4,32 @@
   - Jiaqi Li (PGT): 
 - Human-AI teaming
   - Rachana Hegde (PGT): image generative AI for writers
-  - Jianwen Lyu (UG): ~~image generative AI for artists (Jupyter extension)~~ Browser extension for prompt recommendation for generative image model. 
+  - Jianwen Lyu (UG): ~~image generative AI for artists (Jupyter extension)~~ Browser extension for prompt recommendation for generative image model.
+  - Peining: help artists record the images generated, personalised recommendations, website, 
 - Chat with your data using LLM
   - Hongye An (PGT): Chat with your academic papers with LLM
 - LLM for trading
   - Ralk Farkas (UG)
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
+
+ |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
+ |-------------------|-------|-------|---------|--------|---------|--------|
+ |interview questions|       |       |         |        |         |        |
+ |recruit user|              |       |         |        |         |        |
+ |conduct interview|         |       |         |        |         |        |
+ |analyse data|              |       |         |        |         |        |
+ |requirement list|          |       |         |        |         |        |
+ |...   |                    |       |         |        |         |        |
+ 
  
 # 24 Nov 2023 
 
 
 
 ## Todo
+
+
 Ziyue: help user build a knowledge (sub)graph related to his/her research
 
 # 20 Nov 2023 (trading)
