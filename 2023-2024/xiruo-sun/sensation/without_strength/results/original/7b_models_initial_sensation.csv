@@ -1,0 +1,904 @@
+,headline,sensation,mistral-7b-instruct-v0.1.Q4_0.gguf,mistral-7b-openorca.Q4_0.gguf,mpt-7b-chat-merges-q4_0.gguf,orca-2-7b.Q4_0.gguf,rift-coder-v0-7b-q4_0.gguf
+2225,`` I am extremely delighted with this project and the continuation of cooperation with Viking Line ,positive,Positive, Positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The assistant's response is a single word, ""Positive"", which indicates that the sentiment of the news is positive."
+1909,The real estate company posted a net loss of +? x201a -?59.3 million +? x201a -?0.21 per share compared with a net profit of +? x201a -?31 million +? x201a -?0.11 per share for the corresponding quarter of 2007 ,negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+Reasoning: The news is related to a real estate company that posted a net loss, indicating financial difficulties. This could be due to various reasons such as lower property sales or higher expenses."
+227,"In the reporting period , net sales rose by 8 % year-on-year to EUR64 .3 m , due to the business acquisitions realized during the first half of 2008-09 , the effect of which was EUR10 .9 m in the review period ",positive,Positive, Positive,Positive,"The sentiment of this news is positive, as it shows an increase in net sales and business acquisitions.",Positive
+1613,Combined net sales in 2006 were $ 27 million and EBITDA was $ 13.7 million ,neutral,Neutral, positive,Positive,"The sentiment of this news seems to be positive, as it indicates an increase in both net sales and EBITDA compared to the previous year or period.","Positive
+
+The sentiment of the news is positive as it mentions increased combined net sales and earnings before interest, taxes, depreciation, and amortization (EBIDTA). This suggests a successful financial performance for the company in 2006."
+1703,Profit after taxes totaled EUR 12.1 mn ,neutral,Positive, positive,Positive,Positive,"Positive
+
+The article discusses about a company's financial performance and profit after taxes, specifically mentioning the total amount at which they have achieved this figure. The use of the word ""Positive"" to describe the sentiment of the news is appropriate as it relates to the specific question asked."
+1166,An EU law on the issue may be introduced around 2010 ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The use of artificial intelligence and machine learning in education has been a topic of discussion for quite some time now, as it presents numerous benefits such as increased efficiency and personalized learning methods. The AI-based adaptive learning system can be highly beneficial for students who learn best in an individualized manner. However, the implementation of this technology in educational institutions is not without its challenges. One of these challenges is the potential loss of human interaction during online learning, which can lead to a lack of emotional support and socialization.
+
+In conclusion, while AI presents promising features for education, there are concerns regarding its impact on student's mental well-being. It is essential to ensure that any implementation of this technology maintains a balance between individualized learning and human interaction."
+1085,The Line 4 will run fully underground and will comprise 10 stations which will be executed in two implementation stages ,neutral,Positive, positive,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment is positive because the announcement talks about a new project that will involve undergrounding of Line 4, creating 10 stations and being divided into two stages. This indicates an optimistic outlook as it suggests the project will be well-received by the public."
+732,"The stock is trading above both its MAPs and the 50-day MAP of SEK72 .983 is higher than the 200-day MAP of SEK70 .283 , a bullish indicator ",positive,Positive, Positive,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment of this news is positive, as it indicates that the stock price is above both its Moving Average Percentage (MAP) and the 50-day MAP. This could be an indication of a potential upward trend in the stock's performance."
+2117,"Finnish GeoSentric 's net sales decreased to EUR 939,000 in January-March 2009 ",negative,Negative, negative,negative,The sentiment of the news is negative.,"
+```
+Negative
+```
+Reasoning: Since the financial statements of Finnish GeoSentric indicate a decrease in net sales, it is inferred that the news has a negative sentiment."
+233,"Nevertheless , its market share rose to 49.14 percent from 48.51 percent a year earlier ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an increase in market share.",Positive
+1671,"Liquid handling products include electronic and mechanical pipettes , disposable tips as well as pipette maintenance and calibration services for research institutions , healthcare and industrial laboratories ",neutral,Positive, positive,Positive,Positive,"Positive
+
+The sentiment of the news is positive, since it provides information related to liquid handling products that are useful in various settings such as research institutions, healthcare facilities, and industrial laboratories."
+364,Finnish Bore that is owned by the Rettig family has grown recently through the acquisition of smaller shipping companies ,positive,Neutral, positive,Positive,"The sentiment of this news seems to be positive, as it indicates growth and expansion for the Finnish Bore company owned by the Rettig family.","
+```
+Positive
+```
+
+The new region in the file contains information about a Finnish Bore, which is owned by the Rettig family and has recently grown through acquisition of smaller shipping companies. The sentiment of this news is positive as it mentions an increase in size and growth for the Finnish Bore."
+95,"Both operating profit and net sales for the six-month period increased , respectively from EUR18 .1 m and EUR127 .6 m , as compared to the corresponding period in 2006 ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an increase in both operating profit and net sales for the six-month period compared to the same time frame in the previous year.",Positive
+1313,"Nordstjernan will make the offer in approximately one month , in September 2007 ",neutral,Neutral, neutral,negative,"The sentiment of this news seems to be positive, as it indicates an upcoming business opportunity for Nordstjernan.",Positive
+941,"Bids or offers include at least 1,000 shares and the value of the shares must correspond to at least EUR4 ,000 ",neutral,Neutral, neutral,Positive,The sentiment of this news is neutral.,"
+```
+Positive
+```
+The news is positive as it refers to successful bidding or offering for a high amount of shares, indicating potential profit and growth opportunities."
+2200,"In the Baltic countries , sales fell by 42.6 % ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The sentiment of the news is negative because it states that sales in the Baltic countries have decreased by 42.6%."
+1731,The center will be built in the Kapuli district of Mantsala beside the Hanko-Mantsala-Porvoo road near the new direct rail link between Lahti and Jarvenpaa ,neutral,Positive, neutral,Positive,"There is not enough information to determine sentiment in this news snippet, as it does not express any clear positive or negative emotions or opinions.","
+```
+Positive
+```
+
+The news is positive as it mentions a new center being built in Mantsala district, which will be situated near the Hanko-Mantsala-Porvoo road and have a direct rail link with Lahti and Jarvenpaa. This could indicate an exciting development for the area."
+481,Uponor improved its performance in spite of the decrease in residential construction in the US ,positive,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it indicates that Uponor was able to improve its performance despite a challenging market condition (decrease in residential construction).","
+```
+Positive
+```
+
+The improvement of performance by Uponor despite a reduction in residential construction in the United States indicates positive sentiment."
+1375,"The Annual Report contains the financial statements , the consolidated financial statements , the report by the Board of Directors and the auditor 's report ",neutral,Neutral, neutral,Positive,The sentiment of this news is neutral.,"
+```
+Positive
+```
+
+The sentiment is positive because it mentions a new product being launched, which could potentially attract customers."
+834,"Net interest income totaled EUR 15.9 mn , compared to EUR 15.6 mn a year earlier ",positive,Neutral, positive,Positive,"The sentiment of this news is positive, as it shows an increase in net interest income compared to the previous year.","Positive
+
+The article discusses about the total net interest income of a financial institution, which increased by EUR 0.9 million in the current quarter as compared to the previous year. This suggests that the institution is generating more interest income than previously reported."
+2098,Below are unaudited consolidated results for Aspocomp Group under IFRS reporting standards ,neutral,Neutral, neutral,Negative,"The sentiment of this news seems to be neutral, as it only presents factual information without expressing any positive or negative opinions about the financial results.","
+```
+Positive
+```
+
+The assistant has predicted that the sentiment of the news is positive based on the fact that it mentions ""Aspocomp"" and ""IFRS""."
+796,"Talentum expects that the net sales of its core business will increase in 2008 , compared to 2007 ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an expected growth in net sales for Talentum's core business in 2008 compared to the previous year.",Positive
+1057,The company website is www.ahlstrom.com ,neutral,Neutral, neutral,Positive,The sentiment of your question about the company website being www.ahlstrom.com seems neutral.,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to a well-known brand and provides information about its official website."
+426,"Department store sales improved by 14 % to EUR 1,070.6 mn ",positive,Positive, Positive,Positive,The sentiment of this news is positive.,"Positive
+
+The sentiment of the news is positive as it indicates an improvement in department store sales."
+550,"Complete name of shareholder : Otto Henrik Bernhard Nyberg For further information , please contact Maija-Liisa Friman , CEO , tel. +358 9 7597 0711 ",neutral,Negative, neutral,negative,Positive,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to a new shareholder, Otto Henrik Bernhard Nyberg, taking over shares in a company."
+1454,The machinery now ordered will be placed in a new mill with an annual production capacity of 40 000 m3 of overlaid birch plywood ,neutral,Positive, positive,Positive,"The sentiment of the news is positive, as it indicates growth and expansion for the company.","Positive
+
+The news is positive as it refers to the placement of machinery for producing a specific product, specifically birch plywood, at an annual production capacity of 40 000 m3. This indicates a sense of optimism and anticipation for the future availability of this product."
+1147,"Finnish Kemira Group 's CEO , Lasse Kurkilahti , says the Group 's structural reorganisation will continue for at least a year ",neutral,Negative, neutral,negative,The sentiment of this news is neutral.,"Positive
+
+The sentiment of this news is positive as it pertains to the Finnish Kemira Group and its CEO Lasse Kurkilahti, both of which are receiving significant attention. Additionally, the statement indicates a long-term commitment on the part of the company and its leadership to undergo structural changes.
+
+One word from the sentiment analysis: Positive"
+1686,No financial or pricing details were disclosed ,neutral,Negative, neutral,Neutral,"The sentiment of this news seems to be neutral, as it does not provide any positive or negative information about a specific event or topic.","
+- Negative
+
+The sentiment of the news is negative as it indicates a lack of financial and price information disclosed."
+1610,"Cargotec 's sales totalled EUR 3.4 billion in 2008 and it employs approximately 11,000 people ",neutral,Neutral, positive,Positive,The sentiment of the news is positive.,"Positive
+
+The news is positive as it mentions a significant sales total for Cargotec and the number of employees employed by the company."
+1821,"The tanks will be delivered to a company which is currently building a chemical tank farm in Antwerp , northern Belgium ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems positive, as it indicates that the delivery of tanks will support the construction project in Antwerp, northern Belgium.","
+```
+Positive
+```
+
+The use of tanks for delivering chemicals in Antwerp, Belgium is positive as it enhances the operational capacity of the company involved in building a chemical tank farm."
+654,Changes to the as-built models from the design were communicated to the subcontractors to accommodate them into the steel and GRC glass reinforced concrete fabrication process ,neutral,Neutral, neutral,Positive,"The sentiment of this news is positive, as it indicates that changes were made to improve collaboration between different parties involved in the project.","Positive
+
+The sentiment of this news is positive as it refers to changes made to improve a construction project by communicating them to relevant parties involved in the process."
+2239,"The steelmaker said that the drop in profit was explained by the continuing economic uncertainty , mixed with the current drought in bank lending , resulting in a decline in demand for its products as customers find it increasingly difficult to fund operations ",negative,Negative, Negative,negative,The sentiment of this news is negative.,Negative
+2026,"Lassila & Tikanoja 's operating profit excluding non-recurring and imputed items for the second quarter was EUR11 .3 m , down from EUR13 .8 m a year ago ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"Positive
+
+The sentiment of this news is positive as it mentions an increase in operating profit excluding non-recurring and imputed items for the second quarter, which indicates good financial performance."
+1939,"A total of 1,800,000 stock options were issued in the 2003 stock option scheme ",neutral,Neutral, neutral,Positive,The sentiment of this news seems to be neutral.,"
+```
+Positive
+```
+
+The use of stock options as a means to issue shares is generally considered positive because it encourages investors to buy or sell the company's shares, which can have a significant impact on its price."
+1392,The company distributes Hiab 's products as well as other products ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates that the company has a diverse range of products in its distribution portfolio.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it mentions that the company will be distributing Hiab's products and other products in a specific region, which indicates an expansion or increase in business activity."
+2167,"Pretax profit totaled EUR 9.0 mn , down from EUR 36.3 mn in 2007 ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The sentiment of the news is negative because it reports a decrease in pretax profit for the company, which was previously at EUR 36.3 million but now stands at only EUR 9.0 mn."
+1356,"So far as is known , he did not sell shares that he owns personally ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it does not express any positive or negative emotions but rather states a fact about the person's actions regarding their shares.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it states that a person has not sold any shares that they personally own, which can be interpreted as a sign of honesty and transparency in financial dealings."
+207,Total operating revenue grew by 27.6 % year-on-year to EUR61m ,positive,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The article discusses about a company's total operating revenue growth, stating that it increased by 27.6% compared to the previous year. It is positive as it indicates an increase in business activity."
+412,`` The combined activities will create value for shareholders and be good for our employees and customers ,positive,Positive, Positive,Positive,"The sentiment of this news seems to be positive, as it mentions creating value for shareholders and being beneficial for both employees and customers.","Positive
+
+The new region in the code adds a block of code that contains two functions, `get_strange_string` and `remove_punctuation`. The purpose of these functions is to create a string with both upper-case and lower-case alphabetic characters. Additionally, the `remove_punctuation` function removes all punctuation from an input string.
+
+The new region fits into the file because it expands upon the existing code by adding two additional functions related to text processing. It provides necessary utilities for managing and manipulating strings in a more effective manner, enhancing the overall functionality of the program."
+1960,The adjustments concern staff in both the Specialty Papers and the Fiber Composites segments ,neutral,Neutral, neutral,Negative,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative emotion but rather informs about adjustments in staff allocation within two business segments.","
+```
+Positive
+```
+The sentiment of the news is positive as it refers to improvements made by a company in two different sections, indicating an optimistic outlook for the future development and improvement of the product."
+1428,The employee negotiations are to address measures needed to adjust the operations to the present production situation ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems neutral, as it discusses a process or action (employee negotiations) without expressing any positive or negative emotions towards it.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it pertains to the employee negotiations related to production issues, which suggests a favorable or optimistic tone."
+1277,"Its product portfolio comprises harvesters , forwarders , harvester heads , as well as cranes and loaders ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it highlights the variety and completeness of a company's product portfolio.","Positive
+
+The product portfolio includes a wide range of products, which suggests that the news is generally positive in nature."
+1842,"The Web-Marela application handles invitations to quote , quote comparisons , agreements , purchases , invoice inspections , inventory management , and deliveries ",neutral,Positive, positive,Positive,"The sentiment of the given news is positive, as it highlights various functionalities of the Web-Marela application that can potentially improve efficiency and productivity in business processes.","Positive
+
+The sentiment of the news is positive as it refers to a new application called ""Web-Marela"" that handles various tasks related to quotes, comparisons, agreements, purchases, invoices, inventory management, and deliveries."
+1542,"There will be return flights from Stuttgart every morning , as well as evening departures on Thursdays , Fridays and Sundays ",neutral,Positive, positive,Positive,Positive,"
+```
+Positive
+```
+The new flight schedule includes more options for travelers, allowing them to choose their preferred times for flights. This is a positive development as it expands the range of available flights and provides more flexibility for passengers."
+1301,"N +1 Group will pay EUR16 .5 m of the transaction price upon closing , and the remaining sum in 2012 ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is mainly providing factual information about a business deal without expressing any strong positive or negative emotions.",Positive
+1979,"The redesigned crushing circuit has been in operation since the start of September and its overall production rate on a weekly basis is in excess of an average of 40,000 tonnes a day ",neutral,Positive, Positive,Positive,The sentiment of this news is positive.,Positive
+1020,Saunalahti is a part of the Elisa group ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment of the news is positive because it refers to the fact that Saunalahti is associated with the Elisa group, which is a significant and positive development in the context of scientific research."
+406,Performance in the second half of 2009 exceeded expectations ,positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates that performance surpassed expectations.","Positive
+
+The article discusses about a performance improvement in the second half of 2009, which suggests that there is positive sentiment towards this news."
+1411,"The company will disclose further details , including the anticipated transaction timetable and the name of the new investor , within one week ",neutral,Neutral, neutral,Positive,Positive,"Positive
+
+The sentiment of the news is positive as it pertains to a company that will disclose details about an upcoming transaction involving a new investor, which is anticipated to take place within one week."
+318,"a January 11 , 2010 EPHC board of directors has approved an increase in the quarterly dividend from $ 0.03 to $ 0.05 per share ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates a growth in dividends for EPHC's shareholders.",Positive
+1713,"Stora Enso 's business in North America has annual capacity of about 3 million tons and employs about 4,350 people ",neutral,Neutral, neutral,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+The sentiment is positive because Stora Enso's business in North America has increased capacity and employment levels."
+1144,A merger between UPM and Finnish-Swedish Stora Enso is not likely either ,neutral,Negative, neutral,Negative,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the potential merger between UPM and Finnish-Swedish Stora Enso.","
+```
+Negative
+```
+
+The sentiment of the news is negative, as it suggests a potential merger between two companies (UPM and Finnish-Swedish Stora Enso) which may lead to job losses or financial difficulties for the affected parties."
+552,Construction is expected to be completed in the summer of 2011 ,neutral,Neutral, positive,Positive,Positive,Positive
+445,The acquisition will have an immediate positive impact on Aspocomp 's financial result ,positive,Positive, Positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The assistant has predicted that the sentiment of the news is ""Positive"" based on the fact that it pertains to a company called Aspocomp and its acquisition by another company, which generally indicates positive financial implications."
+957,Elcoteq SE is listed on the Nasdaq OMX Helsinki Ltd. ,neutral,Positive, neutral,Positive,The sentiment of your news is positive.,"
+```
+Positive
+```
+
+The news article announces that Elcoteq SE has been listed on the Nasdaq OMX Helsinki Ltd, which is a positive development."
+1815,The report contains category level company and brand share as well as distribution share information for 2007 and 2008 ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is providing factual data without expressing any strong emotions or opinions.","
+```
+Positive
+```
+The sentiment is positive because the news reports about a product category called ""Category"" and brand-specific distribution share information for two years, which generally indicates an optimistic tone."
+1721,The agreement includes application maintenance and support services ,neutral,Neutral, neutral,Positive,"The sentiment of this news is positive, as it indicates a cooperative arrangement for maintaining and supporting an application.","
+```python
+import json
+from textblob import TextBlob
+
+def get_sentiment(text):
+    blob = TextBlob(text)
+    return blob.sentiment.polarity
+
+data = {
+    ""title"": ""Agreement on application maintenance and support services"",
+    ""content"": ""The parties agree to provide comprehensive application maintenance and support services for the duration of the project.""
+}
+
+```
+
+I will create a Python script that uses the TextBlob module from the textblob library. The get_sentiment function is defined, which takes in a string argument and returns a sentiment score (1 being positive, 0 negative). Then, I define an input data object with two keys: ""title"" and ""content"". The ""title"" key contains the news title, while the ""content"" key contains the actual content of the news. Finally, I call the get_sentiment function on"
+700,The mill is concentrating on getting the supercalendered line running satisfactorily before restarting its older newsprint line ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the situation.","Positive
+
+The newsworthy topic, ""Mill to focus on 'supercalendered' line,"" is related to the mill and its operations. It suggests that the mill will be working on a specific line for producing supercalendered paper before returning to its older newsprint line. This implies an increase in production or a significant change in process, both of which can be considered positive developments."
+1808,The per-share subscription price of the shares subscribed with the option rights was EUR 1.35 ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates a successful share issuance at an attractive price for investors.","Positive
+
+The sentiment of this news is positive as it refers to a successful fundraising activity where investors were able to subscribe to shares with the right to vote on future decisions, resulting in a higher price per share than initially anticipated."
+662,"In Penttil+?'s vision , the most important reason for the transaction is Russia ",neutral,Negative, neutral,Positive,"The sentiment of your question seems to be neutral, as it asks about a specific company's (Penttila+) view on an event without expressing any personal opinion or emotion.","
+```
+Positive
+```
+
+The sentiment of the news is positive, as it suggests that there may be a possibility to negotiate trade agreements with Russia in the future."
+533,"According to Finnair Technical Services , the measure is above all due to the employment situation ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the situation but rather states a fact related to Finnair Technical Services and their decision based on employment.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to an increase in flight bookings for Finnair, which may indicate a potential improvement in service quality or increased demand for flights."
+1463,"The Network Test Business is part of Elektrobit 's Test and Automation Business Segment and employs 39 people in Finland and 22 people abroad , mainly in the US and Asia ",neutral,Neutral, neutral,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The sentiment of this news is positive as it mentions an increase in employees, which usually indicates growth or expansion."
+1882,"Operating loss of the Pulp & Paper Machinery unit was over EUR 3mn in September 2007 - August 2008 , compared to a profit of EUR 3.7 mn a year earlier ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+The operating loss for the Pulp & Paper Machinery unit was over EUR 3mn in September 2007 - August 2008, which is a significant decrease from its previous profit of EUR 3.7 mn a year earlier. This news indicates that the company made an operational error resulting in a loss."
+1843,"The works will include the laying of natural stone pavements and the installation of underground heating , and surface water drainage systems ",neutral,Neutral, positive,Positive,"The sentiment of this news seems to be neutral, as it is describing a set of tasks or improvements that will take place without expressing any strong positive or negative emotions.",Positive
+867,Finnish silicon wafers manufacturer Okmetic Oyj said it swung to a net profit of 4.9 mln euro $ 6.3 mln in the first nine months of 2006 from a net loss of 1.8 mln euro $ 2.3 mln a year earlier ,positive,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The news is positive as it indicates that the company's profit has increased in the first nine months of 2006, which suggests growth and improvement in business operations."
+488,Altogether 150 subjects with mildly elevated cholesterol levels participated in the four-month long intervention ,neutral,Neutral, neutral,Positive,The sentiment of this news is neutral.,"Positive
+
+The new addition to the existing data suggests that the intervention was effective, as participants' cholesterol levels have improved significantly since the beginning of the study. This could indicate an improvement in heart health or weight management efforts promoted by the intervention."
+1605,BM4 middle layer headbox will be equipped with a dilution control system ,neutral,Neutral, positive,Positive,"The sentiment of this news seems to be positive, as it suggests an improvement or enhancement in the technology being used for better control and efficiency.","
+```
+Positive
+```
+The addition of a dilution control system to the existing headbox design is likely to enhance the performance and efficiency of this component, allowing for more effective release of particles in different environments."
+1844,There have not been previous share subscriptions with 2004 stock options ,neutral,Negative, neutral,Positive,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the situation.","
+- Negative"
+261,The value of the firm 's forestry holdings increased by SEK 3.6 bn ,positive,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The new region in the code snippet adds a block of code that calculates and prints the total area of all trees in the forest, which is done by iterating over each tree's height and width and calculating their volume. This new region fits into the file because it contributes to the overall functionality of the program by calculating and printing the total volume of all trees in the forest."
+1491,The properties were purchased from Swedish private equity real estate firm Niam and Goldman Sachs ' Whitehall Street Real Estate Funds ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is simply stating a fact about the properties being purchased without expressing any positive or negative emotions towards the event.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to the purchase of properties by a private equity fund and real estate fund, indicating a positive development in property investment."
+464,Operating profit improved by 39.9 % to EUR 18.0 mn from EUR12 .8 mn ,positive,Positive, Positive,Positive,The sentiment of this news is positive.,"Positive
+
+The improvement in operating profit is a positive indicator as it suggests that the company's operations are performing well and generating more revenue than anticipated."
+2255,"In Finland 's Hobby Hall 's sales decreased by 10 % , and international sales fell by 19 % ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The sentiment of the news is negative, as it reports about a decrease in sales for Hobby Hall products in both Finland and international markets by 10% and 19%, respectively."
+1180,"BasWare Invoice Processing , BasWare Contract Matching , BasWare Order Matching and BasWare KPI Reporting Tool are part of the BasWare 's Enterprise Purchase to Pay product suite ",neutral,Positive, positive,Positive,"The sentiment of this news is positive, as it highlights features of a product suite that can potentially improve efficiency and performance in enterprise purchasing and payments.","
+```
+Positive
+```
+
+The sentiment is positive because it highlights a new feature and tool that can be useful for businesses in the healthcare industry, specifically related to invoice processing, contract matching, order matching, and KPI reporting."
+2079,The products have a low salt and fat content ,neutral,Neutral, positive,Positive,Positive,"
+```
+Positive
+```
+The product's low-fat, low-salt content makes it suitable for those who want to lose weight or maintain their current body composition."
+2082,"The airline estimated that the cancellation of its flights due to the closure of European airspace , and the process of recommencing traffic , have caused a the company a loss of EUR20m , including the costs of stranded passengers ' accommodation ",negative,Negative, Negative,Negative,The sentiment of this news is negative.,"
+```
+Positive
+```
+
+The sentiment is positive because the airline has experienced financial losses due to a cancellation of flights and stranded passengers, which could potentially be beneficial for any company that is currently experiencing similar issues."
+830,"Last week , the Finnish metals and technology group announced plans to sell more than 80 percent of its technology unit to further the company 's strategic goal of becoming the world 's largest stainless steel maker ",positive,Negative, positive,Positive,"The sentiment of this news is positive, as it indicates a strategic move towards achieving their goal and potentially increasing their market share in the industry.","
+```
+Positive
+```
+
+The sentiment is positive because the news announcement indicates a significant move for the company to increase its operations in the field of stainless steel production, which could potentially lead to increased profits and growth."
+1898,"In January-June 2010 , diluted loss per share stood at EUR0 .3 versus EUR0 .1 in the first half of 2009 ",negative,Negative, neutral,Positive,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The sentiment is negative because the news reports about a significant decrease in diluted loss per share for the company, which was previously performing well. This indicates that the company's performance has worsened and there may be potential losses for its stockholders."
+298,"Uponor made an operating profit of EUR 151.0 mn , up from EUR 143.7 mn , which made 2007 a record year ",positive,Positive, positive,Positive,Positive,"Positive
+
+The sentiment of this news is positive as it mentions that Uponor, a company, made an operating profit and also states that it was a record-breaking year."
+2016,"Raute reported a loss per share of EUR0 .86 for the first half of 2009 , against EPS of EUR0 .74 in the corresponding period of 2008 ",negative,Negative, Negative,Negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The news is negative because it reports a loss per share for a company, indicating that its performance has been poor."
+69,"Ramirent 's net sales in the second quarterended June 30 were EURO 128.7 million about U.S. $ 163 million , a 3.3-percent increase compared with EURO 124.6 million for thesecond quarter last year ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it shows an increase in net sales compared to the previous year.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it mentions an increase in net sales and earnings."
+1253,"In addition , the contract includes modification of the effluent treatment plant at Follum ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is simply stating a fact about a contract that involves modifying an effluent treatment plant without expressing any strong positive or negative emotions.","
+```
+Positive
+```
+
+The assistant's response is a single word, ""Positive"", which indicates that the sentiment of this news is positive."
+73,The Department Store Division reported an increase in sales of 4 per cent ,positive,Positive, Positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The sentiment of the news is positive because it indicates an increase in sales, which usually implies better business performance and profitability for the department store division."
+1559,Union and company officials did not return calls yesterday ,neutral,Negative, neutral,negative,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the situation.","
+- Negative"
+1262,Incap Contract Manufacturing is a subsidiary of Incap Corporation of Finland ,neutral,Neutral, neutral,Positive,The sentiment of your news is neutral.,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it announces that Icap Contract Manufacturing is a subsidiary of Incap Corporation of Finland, which indicates a sense of ownership and affiliation."
+2252,"The OMX Helsinki index was down 0.34 pct at 8,256.02 on turnover of 813.191 mln eur ",negative,Negative, neutral,negative,The sentiment of this news is negative.,"
+```
+Positive
+```
+The news is positive because it mentions an increase in the OMX Helsinki index, which usually implies a rise in its value."
+1025,"SRV will also build an aqua park with wellness area , a restaurant and a multifunctional ice arena ",neutral,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it mentions the construction of various facilities that could potentially improve quality of life or bring enjoyment for residents.","
+```
+Positive
+```
+
+The new addition to the existing list of facilities proposed for the city's sports complex is an aqua park, wellness area, restaurant and multifunctional ice arena. This suggests a positive sentiment as it introduces more functionalities and amenities to the already mentioned sports complex."
+1097,"The order comprises four ball mills , which will be organized in two different streams for treating ore in the Pilanesberg platinum mine ",neutral,Neutral, positive,Positive,"The sentiment of this news is positive, as it indicates an investment or improvement in the mining process at the Pilanesberg platinum mine by acquiring four ball mills for treating ore.","
+```
+Positive
+```
+
+The sentiment of this news is positive because it refers to the upcoming installation of four ball mills at the Pilanesberg platinum mine, which will enhance its processing capabilities and increase production."
+1619,"Currently , the company uses eight similar reach stackers and four empty container handlers by Konecranes ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it provides factual information about the current equipment used without expressing any positive or negative emotions.","
+```
+Positive
+```
+
+The addition of a new component to the existing system enhances its functionality, allowing for greater versatility in handling materials and objects. The inclusion of four empty container handlers also expands the capacity of the system by providing storage space for these items. Overall, this update brings the system into alignment with current industry standards and advancements in technology."
+854,This will bring cost savings of about EUR 3mn a year ,positive,Positive, positive,Positive,Positive,"
+```
+Positive
+```
+
+The assistant has predicted that the sentiment of the news is positive, as it pertains to cost savings."
+1497,"The report profiles 158 companies including many key and niche players including major Nonwovens manufacturers such as Ahlstrom Corporation , Asahi Kasei Corporation , Buckeye Technologies , Inc. , EI ",neutral,Neutral, positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+The news article provides a positive sentiment, as it profiles 158 companies including key and niche players in the nonwoven industry. The mention of specific companies such as Ahlstrom Corporation , Asahi Kasei Corporation , Buckeye Technologies , Inc., EI adds to the overall positivity of the article."
+787,"Before Kemira 's installation NordAlu was producing 3,500 tons of liquid and solid aluminum waste per year ",neutral,Negative, neutral,Positive,The sentiment of this news seems to be neutral.,"
+```
+Positive
+```
+
+The sentiment is positive because it mentions an increase in the production capacity of a specific process (NordAlu)."
+241,Production capacity will increase from 36 000 to 85 000 tonnes per year and the raw material will continue to be recycled paper and board ,positive,Positive, Positive,Positive,"The sentiment of this news is positive, as it indicates an increase in production capacity and a continuation of using sustainable materials (recycled paper and board).","Positive
+
+The news is positive as it mentions an increase in production capacity, using existing resources, which suggests a favorable outcome for those involved in the production process."
+1932,Olli-Pekka Laine has been appointed as the Chairman and Erkki Pehu-Lehtonen as the Vice Chairman of the Board ,neutral,Positive, positive,Positive,Positive,"
+```
+Positive
+```
+
+The news is positive because it announces a new appointment in the company, indicating that there will be an upcoming meeting to elect the new board members."
+1222,Financial terms were not disclosed ,neutral,Negative, neutral,Neutral,Positive,- Negative
+930,All YIT Capital Markets Day materials will be available on the company 's Internet site at www.yitgroup.com/investors at 10:30 on September 26 ,neutral,Positive, neutral,Positive,"The sentiment of this news is positive, as it indicates that the materials for YIT Capital Markets Day will be available online for investors to access.","
+```
+Positive
+```
+
+The sentiment of this news is positive as it refers to the availability of new materials related to YIT Capital Markets on a specific website at a certain time."
+750,"London 's leading shares today jumped almost 100 points , or 1.7 % , as the market opened ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates a significant increase in stock value for London's leading shares.","Positive
+
+The sentiment of this news article is positive because it mentions an increase in London's leading shares by approximately 100 points, which represents a significant gain in stock market value."
+1959,Short-term licenses for the games cost as little as $ 3 while purchasing a game outright can cost as much as $ 10 or $ 15 ,neutral,Negative, neutral,Positive,The sentiment of this news is neutral.,"
+```
+Positive
+```
+
+The sentiment of this news is positive because it mentions that short-term licenses for games are affordable, which can be interpreted as encouraging players to purchase these games."
+1999,Niklas Skogster has been employed by the ABB Group in various positions concerning the development of operations ,neutral,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it indicates a job opportunity and career growth for Niklas Skogster within the ABB Group.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it announces that Niklas Skogster has joined the ABB Group and will be involved in various operational tasks related to its operations."
+2128,Consolidated operating profit from continuing operations decreased by 62.3 % to EUR 51.2 mn from EUR 135.7 mn in 2007 ,negative,Negative, Negative,Negative,The sentiment of this news is negative.,"
+- Negative"
+2047,"Agricultural newspaper Maaseudun Tulevaisuus had 318,000 readers , representing a decrease of 6 % ",negative,Negative, neutral,negative,The sentiment of this news is negative.,"Positive
+
+The article is about the publication called ""Maaseudun Tulevaisuus"" which has fewer readers than before due to its content being more focused on local agriculture, indicating a positive sentiment towards this topic."
+1885,"Operating loss totalled EUR 12.7 mn , compared to a profit of EUR 17.7 mn in the first half of 2008 ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The news is negative because it reports about financial losses for a company, totaling EUR 12.7 mn."
+2081,"HELSINKI Thomson Financial - Shares closed little changed , with Cargotec and Huhtamaki dropping sharply on disappointing second-quarter reports ",negative,Negative, neutral,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+
+The sentiment of the news is negative as it mentions that shares closed little changed, leading to a drop in Cargotec and Huhtamaki's stock prices."
+1537,The value of the total investment is about EUR 600mn ,neutral,Neutral, positive,Positive,Positive,"
+```
+Positive
+```
+
+The assistant has predicted that the sentiment of the news is positive, as it refers to an increase in investment value above EUR 600mn."
+549,Competition authorities will have to approve the deal before it can be finalized ,neutral,Neutral, neutral,negative,The sentiment of this news is neutral.,"Positive
+
+The message seems to indicate that a new competition will soon be announced and that those interested in participating should prepare themselves for the upcoming event. It also suggests that there is excitement and anticipation among the readers about this potential announcement. Overall, the sentiment of the news is positive as it indicates an exciting development and encourages readers to stay tuned for more details."
+1468,The new name of the Sanoma Division will be Sanoma News ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The new name for the Sanoma division being considered is ""Sanoma News,"" which suggests a positive sentiment as it indicates an upcoming change in branding and possibly related to news content."
+1532,The value of the order is USD 2.3 mn ,neutral,Neutral, neutral,Positive,The sentiment of your news is positive.,"
+```
+Positive
+```
+
+The use of a dollar sign in front of numbers to indicate currency helps convey information about the value of something, making it clear that this news is related to monetary values. The fact that the order's value is worth $2.3 mn suggests that it has significant financial implications or could potentially influence financial markets."
+239,"Operating profit totaled EUR 825mn , up from EUR 763mn in 2004 ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as the operating profit increased by EUR 62 million compared to the previous year.","Positive
+
+The article discusses a company's operating profit, which increased by around EUR 18% to EUR 825mn in the current financial year as compared to four years ago. This positive change is attributed to various factors such as cost reduction measures and improved operational efficiency. The sentiment of this news can be interpreted as positive since it indicates a healthy profit margin for the company."
+407,Ponsse projects the forest machine markets to improve more than expected in 2010 from the previous year ,positive,Positive, positive,Positive,"
+The sentiment of this news is positive, as it indicates an improvement in the forest machine market beyond expectations for the year 2010 compared to the previous year.",Positive
+1365,"Target company : Tieto Corporation , Business Identity Code : 0101138-5 Date of change in holding : 22 January 2010 Portion of the shares and votes : The current group holding of OP-Pohjola Group Central Cooperative ( OPK ) is 2982 587 shares , which represents 4.14 % of the shares and voting rights ",neutral,Negative, neutral,Positive,"The sentiment of this news seems to be neutral, as it provides factual information about a change in holding without expressing any positive or negative opinions.","
+```
+Positive
+```
+
+The sentiment of this news is positive as it refers to an increase in the holding of OP-Pohjola Group Central Cooperative's (OPK) shares and voting rights, indicating a favorable development for the targeted company."
+978,"HUHTAMAKI OYJ STOCK EXCHANGE RELEASE , 16.9.2008 AT 13.32 Huhtamaki 's Capital Markets Day for institutional investors and analysts is held in Espoo , September 16 , 2008 starting at 13.30 pm Finnish time ",neutral,Negative, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The news article discusses a significant event in the financial world, namely, the listing of Huhtamaki Oyj stock exchange on the NASDAQ Helsinki Stock Exchange platform. This development is considered positive as it expands the market options for the company and provides greater access to global investors."
+626,"The report profiles 614 companies including many key and niche players worldwide such as Black & Decker Corporation , Fiskars Corporation , Fiskars Brands , Inc. , Husqvarna Outdoor Products Inc. , K+S Group , Ryobi Technologies , Inc. , The Scotts Miracle-Gro Company , and Van Group , Inc. ",neutral,Neutral, positive,Positive,"The sentiment of this news is positive, as it highlights the presence of key players in a specific industry and provides information about them.","
+```
+Positive
+```
+
+The news article provides a positive sentiment as it profiles companies involved in outdoor power tools, lawn care products, gardening equipment, sports and fitness products, industrial supplies, building materials, and more."
+731,The company will make its marketing and sales investments initiated in 2009 even more efficient in 2010 ,positive,Positive, positive,Positive,"The sentiment of this news seems to be positive, as the company is planning to improve efficiency in its marketing and sales investments initiated in 2009.",Positive
+529,`` They want my credit card info and my personal details ,neutral,Negative, Negative,negative,"The sentiment of this news seems to be negative, as it implies a sense of distrust or discomfort regarding sharing personal information online.","
+-3
+
+I will answer negatively since the request for sensitive personal information is not appropriate or professional."
+917,"A replay will be available until 27 October 2006 in the following numbers : US callers : +1 617-?01-?888 , non-US callers : +44 20 7365 8427 , access code : 2659 5401 ",neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment of the news is positive because it announces a replay will be available until October 27, 2006 for US callers and non-US callers."
+2103,"Budapest , August 10 MTI - Finnish electronics maker Elcoteq will lay off 700 workers at its plants in Pecs S Hungary at the end of September because of falling orders , communications director for Elcoteq 's local unit , Zoltan Krippl told MTI on Monday ",negative,Negative, Negative,Negative,The sentiment of this news is negative.,"
+-30
+
+I will answer the question with a 30-word statement, which provides information about Elcoteq's layoff of 700 workers and its impact on Pecs S Hungary."
+1285,"Koff 's market share of the volume of the market was 23.4 % , Karhu 's 21.4 % ",neutral,Negative, neutral,Positive,"The sentiment of this news seems to be neutral, as it is providing factual information about market shares without expressing a clear positive or negative opinion.","
+```
+Positive
+```
+
+The sentiment is positive because it indicates an increase in Koff 's and Karhu 's market share compared to the previous data."
+1729,"The business is organised , as of February 1 , 2011 , in a way that production of design services is combined into one entity , Etteplan Operations ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates the business has organized its operations for better efficiency and clarity in their service production.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it announces the organization's new structure, which combines production of design services under one entity (Etteplan Operations)."
+768,"An  of the invention , released by the Patent Office , said : `` A non-coherent search matrix is formed of said correlation function matrix ",neutral,Negative, neutral,Positive,"The sentiment of this news seems to be neutral, as it appears to be a factual statement about an invention and its release by the Patent Office without expressing any strong emotions or opinions.","
+```
+Positive
+```
+Reasoning: The news is about a new invention called the ""Correlation Function Matrix"". It was released by the Patent Office and it's described as a non-coherent search matrix, which uses correlation functions to perform searches. Based on this description, I can infer that this news is related to technology or inventions. Therefore, I will assign the sentiment 'Positive'.
+
+Please generate code completing the rest of the request.
+
+
+### Sample Output:[PREFIX]
+import unittest
+from timeit import Timeit
+
+
+def test_timeit_duration():
+    function = ""lambda x: x**2""
+    duration = Timeit(function, number=1000)
+    assert duration < 0.5
+
+class TestTimeIt(unittest.TestCase):
+    def test_value(self):
+        function = ""lambda"
+198,"The company 's operating income ( EBIT ) totalled EUR 0.0 mn , up from EUR -0.3 mn year-on-year ",positive,Positive, positive,Positive,"The sentiment of the news is positive, as it shows an improvement in the company's operating income compared to the previous year.","Positive
+
+The sentiment of this news is positive as it refers to the increase in operating income (EBIT) for a company, indicating a favorable financial performance."
+1200,"Country : , Switzerland Sector : Pharmaceuticals Target : Synosia Therapeutics Holding AG Buyer : Biotie Therapies Corp Deal size in USD : 129.4 m Type : Corporate acquisition Financing : All-stock Status : Close",neutral,Negative, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The news is about a corporate acquisition involving Synosia Therapeutics Holding AG and Biotie Therapies Corp, wherein the former will be acquired by the latter for $129.4 million in all-stock transactions. The sentiment of this news is positive as it pertains to a successful corporate acquisition within the pharmaceutical sector of Switzerland."
+1051,The company 's board of directors will propose a dividend of EUR 0.14 for 2008 at the annual general meeting ,neutral,Positive, positive,Positive,The sentiment of this news is positive.,Positive
+380,"Due to rapid expansion , the market share of Tallink in terms of passenger carriage through Tallinna Sadam Port of Tallinn totaled 55 percent in November against 45.7 percent in November 2005 ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an increase in market share for Tallink.",Positive
+988,"Kemira , headquartered in Helsinki , Finland , is an international chemicals group comprising the business areas Kemira Pulp & Paper , Kemira Water , Kemira Specialty and Kemira Coatings ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is providing factual information about the company without expressing any positive or negative opinions.","
+```
+Positive
+```
+The news article is positive as it introduces a new company called Kemira, headquartered in Helsinki, Finland, which operates in the chemical industry and includes four business areas (Kemira Pulp & Paper, Kemira Water, Kemira Specialty, and Kemira Coatings)."
+720,"To see more of New Haven Register , or to subscribe to the newspaper ",neutral,Negative, neutral,Positive,There isn't enough information in your input to determine a sentiment for this news.,"
+```
+Positive
+```
+
+The assistant has predicted that the sentiment of the news is positive, as it pertains to a subscription service related to New Haven Register ."
+1652,"In addition to verification of an identity and digital signatures , new state-approved Mobile ID enables to cast votes in elections as well ",neutral,Positive, positive,Positive,"The sentiment of this news seems positive, as it introduces a convenient and secure way for people to vote during elections using their mobile devices.","Positive
+
+The assistant can interpret that the sentiment is positive, since it suggests a new system for voting in elections which is secure and reliable. Additionally, it implies trust in the Mobile ID for authentication and verification of identities."
+188,"Revenue in July to September grew 14 percent to ( EURO ) 467 million from a year earlier , the company said Thursday ",positive,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The sentiment of the news is positive as it pertains to an increase in revenue for a specific period within the financial year of a company, which indicates growth and profitability."
+1035,Teleste was set up in 1954 and is divided into Broadband Cable Networks and Video Networks business areas ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it provides factual information about Teleste's establishment year and its division into two business areas without expressing any positive or negative opinions.","
+```
+Positive
+```
+
+The new article discusses the history of Teleste, a company that was established in 1954 and is now divided into two business areas: Broadband Cable Networks and Video Networks. This provides positive sentiment as it highlights the growth and development of the company."
+514,The invention carries International Patent Publication No. ,neutral,Neutral, neutral,"The AI assistant cannot provide a response without knowing which specific patent publication number you are referring to, as each published patent has its own unique identification code assigned by the USPTO (United States Patent and Trademark Office).",The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The use of international patents for inventions promotes innovative thinking and encourages the sharing of knowledge across national boundaries, which is generally considered a positive aspect of society."
+1620,"Currently Glaston employs approximately 1,500 persons ",neutral,Neutral, positive,Positive,The sentiment of this news seems to be neutral.,"
+```
+Positive
+```
+
+The assistant has determined that the sentiment of the given text is positive because it mentions an increase in employee numbers at Glaston."
+1094,The new organization consists of two business units : Charging & Messaging and Finance & Administration ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+The new organization being proposed, which includes two business units - Charging & Messaging and Finance & Administration, presents an optimistic outlook as it expands the current operations into more specialized departments. This move enhances efficiency and productivity within the company."
+916,A meeting of Glisten shareholders to vote on the bid will be held on 12 March ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+The use of blockchain technology in healthcare is a promising field, as it provides security and transparency to medical records. The news announcement suggests that a meeting will be held for Glisten shareholders to vote on a bid related to this technology. This could indicate an optimistic outlook since the addition of blockchain functionality is generally beneficial for maintaining data integrity and ensuring patient privacy."
+1801,"The order consists of outsourced application management , support and planning for Tecnotree and third-party applications ",neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it is a factual statement about an order without expressing any strong positive or negative emotions.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it involves managing applications, providing support, and planning for a specific technology (Tecnotree)."
+832,M-real 's sales are expected to have increased by 4 % year-on-year to EUR609m in the second quarter of 2010 ,positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an increase in sales for M-real.",Positive
+1891,"Publishing Sweden 's operating loss was EUR 1.1 mn in Q1 of 2009 , compared to a profit of EUR 0.6 mn a year ago ",negative,Negative, Negative,negative,The sentiment of this news is negative.,"Positive
+
+The sentiment of this news is positive because it indicates an increase in the operating loss of Sweden's company, which could be due to increased expenses or investments made by the company."
+949,Currency conversions are based on exchange rates at the time of the deal ,neutral,Neutral, neutral,Positive,The sentiment of this news is neutral.,"
+```
+Positive
+```
+The news provides information about currency conversions being based on exchange rates at the time of a deal, which is generally considered as positive sentiment because it relates to financial transactions and economic activities."
+182,Pretax profit rose to EUR 17.8 mn from EUR 14.9 mn in 2005 ,positive,Positive, positive,Positive,Positive,Positive
+869,It therefore seems that Finnish shipping company Viking Line will get the subsidy it needs to order its new LNG-fuelled vessel ,positive,Positive, positive,Positive,Positive,"Positive
+
+The article discusses a potential subsidy for a new liquefied natural gas (LNG) fuelled ship, which is owned by the Finnish shipping company Viking Line. The company has expressed interest in receiving this subsidy and stated that it would be used to fund the construction of the vessel.
+
+The sentiment of the news article is positive as it pertains to a company seeking financial support for a new LNG-fueled ship, which aligns well with the general business nature of the publication."
+712,The total project duration is three years and it is valued at some EUR11 .5 m,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates a significant investment in the project.","
+```
+Positive
+```
+
+The sentiment of the news article is positive because it discusses a project that will last for three years and has a value of 11.5 EUR, which indicates an increase in budget or expense."
+1598,Analysts surveyed by Thomson Financial expected revenue of $ 69 million for the quarter ,neutral,Positive, positive,Positive,The sentiment of this news is neutral.,"Positive
+
+The sentiment of the news is positive as it refers to an increase in expected revenues."
+717,"Thus the group 's balance sheet will have about EUR 25.8 million of goodwill , the company added ",neutral,Neutral, neutral,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The addition of goodwill to a certain amount on the balance sheet is generally considered positive as it represents an asset that contributes to the value of the business."
+251,The company 's market share is continued to increase further ,positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates an increase in market share for the company.",Positive
+1005,"Our customers come from the following countries : UK , USA , Spain , France , Italy , Germany , China , Hong Kong , Sweden , Norway , Netherlands , Austria , Belgium , Switzerland , Czech Republic , Finland , Canada , Russia , Ukraine , Denmark , Ireland , South Korea and Liechtenstein ",neutral,Neutral, Positive,Positive,"The sentiment of this news is positive, as it highlights the international reach and appeal of your customers.","Positive
+
+The sentiment of the news is positive as it lists various countries where customers are already served, indicating a growth in business activities."
+1857,"Veidekke , headquartered in Oslo , Norway , is a Scandinavian construction and property development group with some 6,350 employees in Norway , Sweden and Denmark , with an annual turnover of NOK16 .4 bn ",neutral,Neutral, positive,Positive,The sentiment of this news is positive.,Positive
+1226,Finnish investment company Neomarkka is the main owner of Kuitu Finland 's successor ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it provides factual information without expressing any strong emotions or opinions.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it mentions a successful investment by Finnish investment company Neomarkka in the creation of Kuitu Finland 's successor, indicating that this development is encouraging and beneficial for all involved parties."
+1152,"Additionally , information on business segments , competitors and future outlook are provided ",neutral,Neutral, positive,Positive,"The sentiment of this news seems to be neutral, as it provides factual information without expressing any strong emotions or opinions.","
+```
+Positive
+```
+The added content provides additional information about a specific topic, which can be considered positive in terms of its potential to attract interest and inspire analysis."
+904,"According to latest information , Benefon will launch its Twig device on 20 September 2006 ",neutral,Positive, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The newscast's sentiment is positive as it announces the upcoming launch of Benefon's Twig device on 20 September 2006."
+821,"In Middle East & North Africa , Tecnotree has grown considerably in the recent years ",positive,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it mentions growth for Tecnotree in the Middle East and North Africa region.",- Positive
+2107,Operating profit for 2009 lower than outlook published earlier ,negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+```
+Negative
+```
+The news article discusses about a company's operating profit in 2009, which is less than expected. This implies that the company may be facing financial difficulties."
+287,The phones are targeted at first time users in growth markets ,neutral,Neutral, positive,Positive,"The sentiment of this news seems to be positive, as it implies that there's a potential market for new phone users and the company is catering to their needs by offering products specifically designed for them.",Positive
+507,"Professional and consumer applications include personal navigation , personal safety , field and workflow management , and asset tracking ",neutral,Positive, Positive,Positive,"The sentiment of this news seems to be positive, as it highlights various useful applications that can benefit both professionals and consumers in different aspects of their lives.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it mentions features that are beneficial or useful to individuals, such as personal navigation, safety, field work, and asset tracking."
+1101,The parties have agreed not to disclose the transaction value ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems neutral, as it does not express any positive or negative emotions but rather states a fact about an agreement between parties.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to a successful negotiation between two companies, indicating that they are willing to refrain from disclosing the value of their transaction."
+415,Finnish construction group Lemmink+駃nen has been awarded two road building contracts by the Lithuanian transport administration ,positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates that a company (Lemminkäinen) has received new business opportunities in another country (Lithuania).","Positive
+
+The newsworthy fact that a Finnish construction company has received two road-building contracts from the Lithuanian transportation department is considered positive, as it indicates successful project execution and likely increased business opportunities for Lemminkäinen Oyj."
+1718,"That address also happens to house Italian megamart Eataly , meaning that `` Come on , kids , we 're going to the Toy Building ! '",neutral,Positive, positive,Positive,Positive,"
+-3
+
+I will answer ""Positive"" since the news is about a fun event for children, which can be interpreted as positive sentiment."
+342,"Metsaliitto , however , narrowed its net loss for the second quarter of 2007 to 5.0 mln euro $ 6.9 mln from 61 mln euro $ 83.7 mln a year ago ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as the net loss has been reduced significantly compared to the previous year.","
+- Negative
+
+The sentiment of this news is negative, as it reports on the financial situation of Metsaliitto and mentions a net loss for the second quarter of 2007 reduced from 61 million euro to 5 million euros."
+841,"Previously , EB delivered a custom solution for LG Electronics and now is making it commercially available for other mobile terminal vendors as well as to wireless operators ",positive,Positive, positive,Positive,"The sentiment of the news seems positive, as it highlights EB's successful collaboration with LG Electronics and their ability to make a custom solution commercially available for other mobile terminal vendors and wireless operators.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it announces a commercial availability for a previously custom solution provided by EB, which expands its reach and impact to other mobile terminal vendors and wireless operators."
+2051,Kone shares dropped 4.1 percent to  x20ac 43 US$ 55.77 in Helsinki ,negative,Negative, Negative,negative,The sentiment of this news is negative.,"
+- Negative"
+1958,Sanoma announced the Stock Option Scheme 2008 on 19 December 2008 ,neutral,Neutral, neutral,negative,The sentiment of this news is neutral.,"
+```
+Positive
+```
+
+The announcement of a new scheme by Sanoma is positive as it involves the introduction of a new product or service (the Stock Option Scheme 2008)."
+699,The investment will be worth approximately EUR 100mn ,neutral,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The article discusses a significant financial investment that could potentially generate substantial returns for its investors, estimated at around EUR 100mn. This news is likely to be considered as positive since it talks about profitable investments and high potential earnings."
+1629,"Established in 1989 , CapMan manages Nordic buyout , mezzanine , technology , life science and real estate funds with approximately EURO 3 billion $ 4 billion in total capital ",neutral,Positive, positive,Positive,The sentiment of this news is positive.,"Positive
+
+The sentiment of the news is positive as it mentions a significant amount of money involved, which can be interpreted as good news for the company."
+1278,"Janis Arbidans , CEO of YIT Celtnieciba , said the company was focusing on housing and real estate development market ",neutral,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it indicates that the company is focusing on a potentially profitable sector like housing and real estate development market.",Positive
+1126,Work on the assignment has already started and is due for completion in spring 2011 ,neutral,Neutral, neutral,negative,"The sentiment of this news seems to be neutral, as it simply states a fact about work progress without expressing any positive or negative emotions.","Positive
+
+The sentiment of this news is positive, as it refers to upcoming work that needs to be completed in Spring 2011 and already underway."
+2054,"YIT lodged counter claims against Neste Oil totaling some EUR25m , primarily based on work carried out under the contract and additional costs incurred due to prolongation of the project ",negative,Negative, neutral,Negative,The sentiment of this news is negative.,"
+```
+Positive
+```
+
+The sentiment is positive because YIT has lodged counterclaims against Neste Oil, which it argues were incurred due to prolongation of the project and additional costs associated with it."
+1140,"3 January 2011 - Scandinavian lenders Sampo Bank ( HEL : SAMAS ) , Pohjola Bank ( HEL : POH1S ) and Svenska Handelsbanken ( STO : SHB A ) have provided a EUR160m ( USD213m ) line of credit to Lemminkainen Oyj ( HEL : LEM1S ) , the Finnish construction firm said on Friday ",neutral,Positive, Positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The sentiment is positive as the lenders have provided a line of credit to a Finnish construction firm, indicating support and assistance in financing their operations."
+1427,The ECB can mainly target inflation ,neutral,Neutral, positive,Positive,"The sentiment of your question about the European Central Bank (ECB) primarily focusing on inflation targets seems to be neutral, as it is a factual statement without expressing strong positive or negative emotions.","
+```
+Positive
+```
+The sentiment of the news is positive as it refers to the ECB considering targeting a specific level for its policy rates, which implies an expectation of maintaining current economic conditions or even further inflation."
+1054,The company 's share is quoted on NASDAQ OMX Helsinki Rautaruukki Oyj : RTRKS ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it only provides factual information about the company's shares and stock exchange without expressing any positive or negative opinions.","-_
+
+The sentiment of this news is ""Negative""."
+1273,It was decided that the auditors are reimbursed according to invoice ,neutral,Neutral, neutral,Positive,The sentiment of this news seems neutral.,"
+```
+Positive
+```
+
+The sentiment of the news is positive because it involves a decision about how to handle expenses related to auditing, which can be seen as a favorable situation for the auditor."
+405,Our standardised services have met with a positive reception among our customers as well as at Itella ,positive,Positive, Positive,Positive,The sentiment of this news is positive.,Positive
+1150,"According to HK Ruokatalo , almost all the meat used by the company comes from Finland ",neutral,Neutral, neutral,Positive,Positive,Positive
+671,More than 80 special events in the three counties during four months were hosted by the library system and its nine branch libraries ,neutral,Positive, positive,Positive,"The sentiment of this news seems to be positive, as it highlights a successful collaboration between the library system and its branches in hosting special events over an extended period.","Positive
+
+The newsworthy event is the hosting of more than 80 special events in three counties over a period of four months by the library system, which also involved its nine branch libraries. This represents an impressive feat and testament to the success of the library's operations."
+1013,Ramirent Finland is the domestic unit of machinery rental company Ramirent Oyj HEL : RMR1V ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be neutral, as it provides factual information about a company without expressing any positive or negative opinions.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it announces the acquisition of a new machinery rental company in Finland, which indicates growth and expansion for the company."
+1351,Sanoma Magazines International will invite other shareholders holding approximately 15 % of the shares to sell their shares ,neutral,Negative, neutral,Positive,"The sentiment of this news seems neutral, as it is a business decision that does not convey strong positive or negative emotions.","Positive
+
+The new announcement suggests that Sanoma Magazines International is planning to make significant changes to its governance structure, involving the invitation of shareholders holding less than 15% of the company's shares to sell their shares. This move could potentially lead to increased democracy and transparency within the organization."
+1157,"After the restructuring , UPM 's average paper machine capacity in Europe will be 320,000 tons ( 350,000 short tons ) in coated magazine paper and 420,000 tons ( 460,000 short tons ) in coated fine paper ",neutral,Negative, positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to an increase in average paper machine capacity for UPM."
+644,`` Our Vaalipalvelu-service was especially developed for use by communities and organizations ,neutral,"```
+Positive
+```", positive,Positive,"The sentiment of this news seems to be positive, as it highlights a service that is specifically designed for the benefit of communities and organizations.","
+```
+Positive
+```
+
+The service was specifically designed to be used by communities and organizations, indicating a positive sentiment."
+210,1 February 2011 - Finnish textile and clothing company Marimekko Oyj HEL : MMO1V said today its preliminary operating profit grew to EUR8 .2 m in 2010 from EUR6 .3 m in 2009 ,positive,Positive, Positive,Positive,"The sentiment of this news is positive, as the company's preliminary operating profit increased significantly from the previous year.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it mentions an increase in operating profit for Marimekko Oyj HEL, which is a significant financial result."
+577,Neste Oil Corporation Refining Operation Asset Summary Report Summary Neste Oil Corporation Refining Operation Assets Summary Report is an essential source for company data and information ,neutral,Positive, positive,Positive,Positive,"
+-30"
+253,"The disposal of Autotank will also strengthen Aspo 's capital structure , '' commented Gustav Nyberg , CEO of Aspo ",positive,Positive, positive,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment is positive because the disposal of Autotank will provide a stronger financial position for Aspo, which can potentially enhance its capital structure and increase investor confidence in the company's operations."
+1838,The value of the deal was not disclosed ,neutral,Negative, neutral,Neutral,Neutral,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to a new product launch and potential profit for the company."
+2151,Market share decreased on the route between Helsinki in Finland and Tallinn in Estonia by 0.1 percentage points to 24.8 % ,negative,Negative, neutral,negative,The sentiment of this news is neutral.,"
+- Negative"
+1989,"`` We have a license agreement with Nokia Corp. which in part expires on April 9 , 2007 ",neutral,`` neutral ``, neutral,Positive,"The sentiment of this news seems to be neutral, as it is simply stating a fact about a license agreement without expressing any positive or negative emotions.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it refers to a license agreement between Nokia Corp. and expiring on April 9, 2007."
+420,"According to Atria 's President and CEO Matti Tikkakoski , the company 's Swedish operations significantly improved in the first quarter ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it mentions an improvement in the company's Swedish operations during the first quarter.","
+```
+Positive
+```
+
+The sentiment of this news is positive as it refers to the significant improvement of operations for Atria's Swedish business."
+1330,Pharmaceutical market in Poland Global Research & Data Services published recently a market analysis about the pharmaceutical markets in Poland ,neutral,Neutral, neutral,Negative,"The sentiment of this news seems to be neutral, as it is simply providing information about a market analysis without expressing any positive or negative opinions on the topic.","
+```
+Positive
+```
+
+The sentiment of this news is positive as it discusses a new market analysis related to pharmaceutical products in Poland, indicating that there may be potential for growth in the country's pharmaceutical industry."
+1001,No financial details were disclosed ,neutral,Negative, neutral,Neutral,"The sentiment of this news ""No financial details were disclosed"" can be considered as neutral, since it does not express a positive or negative opinion about something.","
+- Negative
+
+The sentiment of the news is negative as it does not contain any positive or neutral sentiment and only contains information about no financial details being disclosed."
+598,Symphony Services provides development services for Aldata GOLD ,neutral,Positive, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates a collaboration between two companies in providing development services.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it announces that Symphony Services will provide development services for Aldata GOLD, which indicates a positive impact on the company's operations and growth."
+2242,Finnish meat company Atria can no longer promise a sufficient amount of domestic beef to its customers ,negative,Negative, Negative,negative,"The sentiment of this news seems to be negative, as it implies that there might not be enough domestic beef for the customers due to some issue faced by Atria.","
+```
+Negative
+```
+The sentiment of the news is negative as it indicates that Atria, a Finnish meat company, will no longer be able to provide enough domestic beef for its customers."
+590,"Sarantel , based in Wellingborough , UK , designs high-performance antennas for portable wireless devices ",neutral,Positive, positive,Positive,"The sentiment of this news is positive, as it highlights a company's innovative product design and potential market success in the field of portable wireless devices.",Positive
+1687,No planned closing date was provided ,neutral,Negative, neutral,Neutral,"The sentiment of this news seems to be neutral, as it does not express a positive or negative emotion but rather states a fact about the lack of information regarding a potential closure.","
+- Negative"
+1076,The first group of customers to be trained will be paint-shop owners and their assistants ,neutral,Positive, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The assistant's response is positive because it suggests that the new feature for personalized service will bring value to a specific group of customers, namely paint-shop owners and their assistants."
+1318,Okmetic has used the furnaces for the contract manufacturing of solar crystals ,neutral,Neutral, neutral,Positive,"The sentiment of this news seems to be positive, as it indicates that Okmetic has utilized their resources in a new and potentially profitable way by participating in the contract manufacturing of solar crystals.","
+```
+Positive
+```
+
+The sentiment of the news is positive because it mentions that ""Okmetric"" was able to use the furnace-based contract manufacturing for producing solar crystals, which suggests a promising or successful development in the production process."
+430,Finnish handling systems company Cargotec Oyj ( HEL : CGCBV ) said today that it won a EUR 13 million ( USD 16.6 m ) contract to deliver MacGregor hatch covers for ships ordered by Norwegian shipowner Grieg Shipping ,positive,Positive, positive,Positive,The sentiment of this news is positive.,"
+- Negative
+
+Reasoning: The news is about a company winning a large contract, which could potentially have a negative impact on the company's profitability if the production and delivery of the hatch covers are not done efficiently."
+606,The company is presently examining whether the project would be financially feasible ,neutral,Neutral, neutral,negative,"The sentiment of this news seems to be neutral, as it does not express a clear positive or negative opinion about the project's financial viability.",Positive
+257,The growth of net sales in the first half of 2008 has been 28 % compared with the first half of 2007 ,positive,Positive, positive,Positive,"The sentiment of this news is positive, as it indicates a significant increase in net sales for the mentioned period.",Positive
+149,"( ADP News ) - Oct 29 , 2008 - Finnish lifting equipment maker Konecranes Oyj ( OMX : KCR1V ) said today that its net profit rose to EUR 116.6 million ( USD 149.1 m ) in the first nine months of 2008 from EUR 73.6 million for the ",positive,Positive, Positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The news article is about a Finnish lifting equipment maker that increased its net profit to €116.6 million in the first nine months of 2008, which is positive information."
+1070,The deal will have no significant effect on the acquiring company 's equity ratio ,neutral,Neutral, neutral,Neutral,"The sentiment of this news seems to be neutral, as it does not indicate any positive or negative impact on the acquiring company's equity ratio.","
+```
+Positive
+```
+
+The sentiment of the news is positive as it pertains to a business transaction involving stock acquisition, which is generally considered profitable in the financial world."
+864,"Finnish dental care group Oral Hammaslaakarit Oyj posted a total net profit of 849,000 euro $ 1.1 mln in the first nine months of 2006 versus a net loss of 331,000 euro $ 421,000 in the same period of 2005 ",positive,Positive, positive,Positive,The sentiment of this news is positive.,"
+```
+Positive
+```
+
+The news is positive as it mentions a profit for Oral Hammaslaakarit Oyj, which is a significant financial achievement."
+1500,The sale price was not disclosed ,neutral,Negative, neutral,Neutral,The sentiment of this news is neutral.,"
+- Negative
+
+The assistant has assigned a sentiment category to the news as ""Negative"" because the absence of a sale price is generally considered a negative event in terms of business practices or sales strategies, indicating that there was no predefined selling price for a product."
+1646,"In 2008 , AVC Systemhaus had net sales of EUR 10 million USD 7.1 m ",neutral,Negative, neutral,Positive,The sentiment of this news is neutral.,"
+```
+Positive
+```
+
+The sentiment is positive because the news announces a new product, AVC Systemhaus, which has generated net sales of EUR 10 million USD 7.1 m. This indicates that the company is doing well and it's likely to generate more revenue in the future."
+449,"The original name Componenta +鄊+裭 , as a subsidiary of the Finnish Componenta Group , has been changed to +鄊+裭 Components and the company has seen a 63 % growth in Q1 2010 , in comparison to Q1 2009 ",positive,Positive, positive,Positive,"The sentiment of this news is positive, as it shows an increase in growth for the company.",Positive
+1102,"The payment date is March 25 , 2010 ",neutral,Neutral, neutral,Positive,The sentiment of your news is neutral.,"
+```
+Positive
+```
+
+The use of a specific date for a payment, even though it's not the originally proposed date, indicates urgency or importance related to timeliness and responsiveness in managing payments."
+1584,`` These developments partly reflect the government 's higher activity in the field of dividend policy . ',neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The sentiment of the news is positive as it refers to increased activity related to dividend policy by the government, which can be interpreted as a favorable development for investors."
+1528,The value of the order is EUR 4mn ,neutral,Neutral, neutral,Positive,Positive,"
+```
+Positive
+```
+
+The use of the currency symbol in front of the amount indicates that it's in euros, which is a positive value."
