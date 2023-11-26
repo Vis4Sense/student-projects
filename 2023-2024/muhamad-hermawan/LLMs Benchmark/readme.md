@@ -10,6 +10,8 @@ The distribution of the test set is same as the subset population (Neutral: 61.4
 
 the average number of word of the test dataset is 22 words/tokens
 Prompt used are inspired from Wenxuan Zhang et al. Titled Sentiment Analysis in the Era of Large Language Models: A Reality Check:
+
+The prompt:
 "Please perform news sentiment classification task: \n\nNEWS: {news}'\n\n Assign a sentiment label from ['negative', 'neutral', 'positive']. Return label only without any other text.\nLABEL:"
 
 dataset example:
