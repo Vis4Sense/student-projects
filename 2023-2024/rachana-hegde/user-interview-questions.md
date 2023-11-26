@@ -35,7 +35,7 @@ I’m trying to determine whether some other features would be more useful or if
 
 ## Exercise: Integrating Image Generation into Your Writing Process
 
-**Tools to use:** Dall E (https://labs.openai.com/) or Stable Diffusion in Dream Studio (https://dreamstudio.ai/generate)
+**Tool:** Stable Diffusion in Dream Studio (https://dreamstudio.ai/generate)
 
 Since I’m building an image generation application, I want to understand what it would like if you were to integrate a tool such as Stable Diffusion or Dall E into your writing process.
 
