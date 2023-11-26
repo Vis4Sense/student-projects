@@ -21,8 +21,8 @@
  |analyse data       |       |       |         |        |         |        |
  |requirement list   |       |       |         |        |         |        |
  |...                |       |       |         |        |         |        |
- 
- 
+
+
 # 24 Nov 2023 
 - Ziyue: help user build a knowledge (sub)graph related to his/her research
 - Rachana is leaving on 14 Dec and coming back 12 Jan
@@ -95,7 +95,7 @@ Raul
 * Investigated possible options for storing data locally
   * Decided to use ClickHouse (Described in design document)
     * For its columnar storage approach which is way faster for when getting data indexed based on time
-   
+  
 ## Todo
 Muhamad: 
 - [ ] create a markdown file about Refinitive trading in the repository and add a link here in the notes
@@ -109,8 +109,10 @@ Muhamad and Xiruo
   - [ ] [SemEval: International Workshop on Semantic Evaluation](https://semeval.github.io/)
 
 Raul:
-- [ ] the cost of hosting the system and database online: create a github issue to compare the options
+- [x] the cost of hosting the system and database online: create a github issue to compare the options ([link](./raul-farkas/resources/hosting_cost_and_vps_providers.md))
 - [ ] implment the data collection system
+  * Made progress, getting close to finishing DataProvider
+    * Most complex component, but the structure adopted here will be very similar in other components (lots of shared code)
 
 
 
