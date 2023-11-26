@@ -9,6 +9,8 @@ This benchmark **using 1,000 sample records** (random seed = 42) from **"sentenc
 The distribution of the test set is same as the subset population (Neutral: 61.4%, Positive: 25,2%, Negative: 13,4%)
 
 the average number of word of the test dataset is 22 words/tokens
+Prompt used are inspired from Wenxuan Zhang et al. Titled Sentiment Analysis in the Era of Large Language Models: A Reality Check:
+"Please perform news sentiment classification task: \n\nNEWS: {news}'\n\n Assign a sentiment label from ['negative', 'neutral', 'positive']. Return label only without any other text.\nLABEL:"
 
 dataset example:
 | Sentence | Label |
@@ -17,8 +19,8 @@ dataset example:
 |In the reporting period , net sales rose by 8 % year-on-year to EUR64 .3 m , due to the business acquisitions realized during the first half of 2008-09 , the effect of which was EUR10 .9 m in the review period .|2 positive|
 |Pharmaceuticals group Orion Corp reported a fall in its third-quarter earnings that were hit by larger expenditures on R&D and marketing .|0 negative|
 
-**LLMs Model tested:
-All the model tested are from [gpt4all.io](https://gpt4all.io/index.html) (4-bit Quantization)** with current specification
+**LLMs Model tested:**
+All the model tested are from [gpt4all.io](https://gpt4all.io/index.html) (4-bit Quantization) with current specification:
 |No.| Model Name|Specs & Req|Remarks|Characteristics| Trained By| Commercial Uses|
 |---|---|---|---|---|---|---|
 |1.|orca-2-13b.Q4_0|13b, SIZE: 6.86 GB, RAM: 16 GB| N/A|Instruction based|Microsoft|No|
@@ -31,7 +33,6 @@ All the model tested are from [gpt4all.io](https://gpt4all.io/index.html) (4-bit
 |8.|mistral-7b-instruct-v0.1.Q4_0|7b, SIZE: 3.83 GB, RAM: 8 GB| Best overall fast instruction following model|Fast responses, Uncensored|Mistral AI|Yes|
 |9.|mistral-7b-openorca.Q4_0|7b, SIZE: 3.83 GB, RAM: 8 GB| Best overall fast chat model|Fast responses, Chat based model|Trained by Mistral AI, Finetuned on OpenOrca dataset curated via Nomic Atlas|Yes|
 |10.|orca-mini-3b-gguf2-q4_0|3b, SIZE: 1.84 GB, RAM: 4 GB| Small version of new model with novel dataset|Instruction based, Explain tuned datasets, Orca Research Paper dataset construction approaches|N/A|No|
-
 
 
 **Hardware (Laptop) specs used for test:**
