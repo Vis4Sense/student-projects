@@ -38,15 +38,23 @@ All the model tested are from [gpt4all.io](https://gpt4all.io/index.html) (4-bit
 
 
 **Hardware (Laptop) specs used for test:**
+
 Windows 11
+
 CPU: 12th Gen Intel i7-12700H 4.70 GHz
+
 RAM: 32GB 4800Mhz DDR5
+
 GPU: Nvidia RTX 3070 Ti 8Gb
+
 Storage: 1TB M.2 SSD 
 
 **Testing Environment**
+
 Python 3.11.5
+
 gpt4all 2.0.2
+
 torch 2.1.1+cu121
 
 **Zero-Shot Benchmark Result** (on progress) [Result Files](https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results "Result Files")
