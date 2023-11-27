@@ -29,12 +29,14 @@ Muhamad
   - 1000 samples
   - positive/negative/neutral distribution
   - only 4-bit quantisation
-  - 
+- Alpaca: subscribe news based on the asset
 
   
 ## Todo
 - Muhamad
   - create a issue on refinitive trading and export news: summarise the information and status
+  - check if the asset is given in the sentiment dataset
+  - Run Aspect-Based Sentiment Analysis (ABSA) in lab: follow the example in the paper, include a few examples in the prompt (few shots insteadof zero shots)
 - Kai
   - contact Kevin and Dominic about using the computers in MRL and cobot maker space
 
