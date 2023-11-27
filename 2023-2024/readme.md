@@ -49,6 +49,7 @@ Raul
     - follow the example in the paper,
     - include a few examples in the prompt (few shots insteadof zero shots)
 - Xiruo
+  - read the sentiment analysis paper posted in Teams chat.
   - test sentiment strength using semEval 2017 dataset: on the models that performed well so far
   - test the performance of the FinBert (sentiment classification and strength)
 - Raul
