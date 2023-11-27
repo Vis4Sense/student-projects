@@ -36,6 +36,9 @@ Muhamad
 - Muhamad
   - create a issue on refinitive trading and export news: summarise the information and status
   - check if the asset is given in the sentiment dataset
+  - try to see if there is Aspect-Based Sentiment Analysis benchmark
+    - if not, use the review benchmark from the paper
+    - could make our own labels, but will be time consuming 
   - Run Aspect-Based Sentiment Analysis (ABSA) in lab: follow the example in the paper, include a few examples in the prompt (few shots insteadof zero shots)
 - Kai
   - contact Kevin and Dominic about using the computers in MRL and cobot maker space
