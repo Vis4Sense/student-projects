@@ -25,10 +25,18 @@
 # 27 Nov 2023
 
 Muhamad
+- financial phrasebank (huggingface):
+  - 1000 samples
+  - positive/negative/neutral distribution
+  - only 4-bit quantisation
+  - 
 
+  
 ## Todo
 - Muhamad
   - create a issue on refinitive trading and export news: summarise the information and status
+- Kai
+  - contact Kevin and Dominic about using the computers in MRL and cobot maker space
 
 # 24 Nov 2023 
 - Ziyue: help user build a knowledge (sub)graph related to his/her research
