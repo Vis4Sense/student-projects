@@ -8,6 +8,8 @@ English sentences from financial news, and classified as either positive, negati
 This benchmark **using 1,000 sample records** (random seed = 42) from **"sentence_allagree"** subset. 
 The distribution of the test set is same as the subset population (Neutral: 61.4%, Positive: 25,2%, Negative: 13,4%)
 
+Test method: Zero-shot
+
 the average number of word of the test dataset is 22 words/tokens
 Prompt used are inspired from Wenxuan Zhang et al. Titled Sentiment Analysis in the Era of Large Language Models: A Reality Check:
 
