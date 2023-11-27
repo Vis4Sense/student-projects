@@ -31,17 +31,32 @@ Muhamad
   - only 4-bit quantisation
 - Alpaca: subscribe news based on the asset
 
+Xiruo
+- semEval 2017 financial news
+- finBert
+
+Raul
+- virtual machine cost
+- data subscription service
   
 ## Todo
 - Muhamad
   - create a issue on refinitive trading and export news: summarise the information and status
-  - check if the asset is given in the sentiment dataset
-  - try to see if there is Aspect-Based Sentiment Analysis benchmark
+  - try to see if there is Aspect-Based financial Sentiment Analysis benchmark
     - if not, use the review benchmark from the paper
     - could make our own labels, but will be time consuming 
-  - Run Aspect-Based Sentiment Analysis (ABSA) in lab: follow the example in the paper, include a few examples in the prompt (few shots insteadof zero shots)
+  - Run Aspect-Based Sentiment Analysis (ABSA) in lab:
+    - follow the example in the paper,
+    - include a few examples in the prompt (few shots insteadof zero shots)
+- Xiruo
+  - test sentiment strength using semEval 2017 dataset: on the models that performed well so far
+  - test the performance of the FinBert (sentiment classification and strength)
+- Raul
+  - continue platform implementation
+  - design the format to store the (historical) data: price, news, etc.
 - Kai
   - contact Kevin and Dominic about using the computers in MRL and cobot maker space
+  - ask school to see if we can host database on school server
 
 # 24 Nov 2023 
 - Ziyue: help user build a knowledge (sub)graph related to his/her research
