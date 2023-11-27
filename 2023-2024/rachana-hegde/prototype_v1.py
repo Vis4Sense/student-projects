@@ -1,3 +1,5 @@
+# Code taken from here: https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+
 import requests
 import io
 from PIL import Image
