@@ -22,6 +22,13 @@
  |requirement list   |       |       |         |        |         |        |
  |...                |       |       |         |        |         |        |
 
+# 27 Nov 2023
+
+Muhamad
+
+## Todo
+- Muhamad
+  - create a issue on refinitive trading and export news: summarise the information and status
 
 # 24 Nov 2023 
 - Ziyue: help user build a knowledge (sub)graph related to his/her research
