@@ -33,3 +33,4 @@ Software developer. Engages in various tasks with different types of tabs during
 
 Struggles to locate previously opened pages efficiently.
 Aware of Chrome browser features such as tab grouping and pinning but avoids using them due to perceived time constraints in managing and sorting tabs.
+Need to deliver the research result to colleagues or stakeholders.
