@@ -20,3 +20,6 @@ An example is when I provided a prompt: __"Black shirt, feather pattern on the r
 
 ---
 
+Q: What do you think is lacking in current AI drawing capabilities?
+
+A: Probably precise keyword retrieval. Sometimes, AI tends to extract only parts of what it "understands" as tags. For instance, a white shirt might be interpreted as other white clothing or a robe, or simply as "there is white clothing in the image." In most cases, AI rarely demonstrates accurate comprehension of keywords such as specific "types of clothing." My perspective is that AI struggles to precisely grasp my requests; instead, it often resorts to querying its database or fulfilling requests based on common patterns observed in the majority of users, resembling a habit of "following established conventions".
