@@ -14,20 +14,21 @@ Desires an automated summarization of the extracted content, facilitating effici
 
 ### Background:
 
-Manages multiple windows, each containing several tabs related to specific topics or tasks.
+Software developer. Manages multiple windows, each containing several tabs related to specific topics or tasks.
 ### Needs:
 
 Faces difficulty in navigating tabs across different tasks.
-Envisions using graph algorithms, similar to social media, to determine deep relationships between different webpages for improved organization and retrieval.
+
+- Mentioned graph in social media, each person is a node, algorithm will determine their relationship based on multi-source information, rather than the time they logged in or ip address simply. Similarly, using these graph algorithm, we are able to capture the deep relationship between different webpage. 
 
 ## User 3: Colleague 2
 
 ### Background:
 
-Engages in various tasks with different types of tabs during work.
-Type 1: Constantly running platforms or webpages like Google Drive and GitHub.
-Type 2: Normal pages opened during information searches.
-Type 3: Standalone pages accessed via direct links.
+Software developer. Engages in various tasks with different types of tabs during work.
+- Type 1: Constantly running platforms or webpages like Google Drive, host platform and GitHub.
+- Type 2: Normal pages opened during information searches. Might envloved with many topics.
+- Type 3: Standalone pages accessed via direct links.
 ### Needs:
 
 Struggles to locate previously opened pages efficiently.
