@@ -4,7 +4,7 @@
   - Jiaqi Li (PGT): 
 - Human-AI teaming
   - Rachana Hegde (PGT): image generative AI for writers
-  - Jianwen Lyu (UG): ~~image generative AI for artists (Jupyter extension)~~ Browser extension for prompt recommendation for generative image model.
+  - Jianwen Lyu (UG): General Support for Machine Learning Process (JupyterLab Extension).
   - Peining: help artists record the images generated, personalised recommendations, website, 
 - Chat with your data using LLM
   - Hongye An (PGT): Chat with your academic papers with LLM
