@@ -1,0 +1,113 @@
+.v-VerdantPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.v-VerdantPanel-content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.v-VerdantPanel-content-container {
+  overflow: hidden;
+  height: 100%;
+}
+
+.v-VerdantPanel-inspectorButton {
+  position: sticky;
+  width: 100%;
+  bottom: 0px;
+  background: var(--jp-layout-color0);
+  border-top: 1px solid var(--jp-border-color0);
+  box-shadow: 0px 0px 4px var(--jp-inverse-layout-color4);
+}
+.v-VerdantPanel-inspectorButton:hover {
+  background: var(--jp-layout-color2);
+}
+.v-VerdantPanel-inspectorButton.active {
+  background-color: var(--jp-cell-editor-active-border-color);
+  color: white;
+}
+.v-VerdantPanel-inspectorButton.active:hover {
+  background-color: var(--jp-brand-color0);
+}
+
+.v-VerdantPanel-inspectorButton-label {
+  display: inline-block;
+  width: calc(100% - 16px);
+  text-align: center;
+  padding: 8px;
+}
+
+.v-VerdantPanel-inspectorButton-icon {
+  width: 20px;
+  vertical-align: middle;
+  fill: var(--jp-content-font-color2);
+  margin-left: 1em;
+}
+.v-VerdantPanel-inspectorButton.active .v-VerdantPanel-inspectorButton-icon {
+  fill: white;
+}
+
+.v-VerdantPanel-tabContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 2em;
+}
+
+.v-VerdantPanel-tab {
+  display: inline-block;
+  padding: var(--jp-cell-padding);
+  border: var(--jp-border-width) solid var(--jp-border-color1);
+  flex: 1 1 auto;
+  background: var(--jp-layout-color2);
+  border-left-width: 0px;
+  text-align: center;
+  user-select: none;
+  border-top-width: 0px;
+}
+.v-VerdantPanel-tab.active {
+  background: var(--jp-layout-color0);
+  border-bottom-color: transparent;
+  /*border-top: var(--jp-private-horizontal-tab-active-top-border) solid
+    var(--jp-brand-color1);*/
+}
+
+.v-VerdantPanel-tab-header {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--jp-border-color2);
+  padding-bottom: 4px;
+  position: sticky;
+  top: 0px;
+  background: var(--jp-layout-color0);
+  z-index: 2;
+  box-shadow: 0px 2px 7px 0px var(--jp-border-color3);
+}
+
+/*
+* Animated button
+*/
+
+.vertical {
+  transform: rotate(-45deg);
+}
+.horizontal {
+  transform: rotate(-45deg);
+  opacity: 1;
+}
+
+.opened .circle {
+  transition: all 0.25s ease-in-out;
+  transform: rotate(90deg);
+}
+
+.closed .circle {
+  transition: all 0.25s ease-in-out;
+  transform: rotate(0deg);
+}

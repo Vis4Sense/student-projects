@@ -1,0 +1,327 @@
+/* Ghost Book CSS */
+
+.v-Verdant-GhostBook {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  background: var(--jp-layout-color0);
+  background-size: 40px 40px;
+}
+
+/* Ghost Toolbar CSS */
+
+.v-Verdant-GhostBook-header {
+  font-size: var(--jp-content-font-size0);
+  font-family: var(--jp-content-font-family);
+  color: var(--jp-content-font-color0);
+  flex-direction: column;
+  position: sticky;
+  top: 0px;
+  z-index: 5;
+}
+
+.v-Verdant-GhostBook-header-row {
+  display: flex;
+  justify-content: space-evenly;
+  color: var(--jp-content-font-color2);
+  margin-bottom: 0.25em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-wrap: wrap;
+  padding: 2px;
+  padding-top: 0.25em;
+  padding-left: 6px;
+  overflow: visible;
+  border-bottom: var(--jp-border-width) solid var(--jp-toolbar-border-color);
+  box-shadow: var(--jp-toolbar-box-shadow);
+  background: var(--jp-toolbar-background);
+  min-height: var(--jp-toolbar-micro-height);
+}
+
+.v-Verdant-GhostBook-versionSwitch-label {
+  display: inline-block;
+  margin: 0px 1em;
+  color: var(--jp-ui-font-color1);
+  font-size: var(--jp-ui-font-size1);
+  vertical-align: top;
+}
+
+.v-Verdant-GhostBook-header-timestamp {
+  flex: auto;
+  margin-left: 2em;
+  text-decoration: underline;
+  color: var(--jp-content-link-color);
+}
+
+.v-Verdant-GhostBook-diffOptions {
+  display: flex;
+  color: var(--jp-ui-font-color1);
+}
+
+.v-Verdant-GhostBook-diffOptions-dropdown {
+  display: flex;
+  position: relative;
+  width: 10em;
+  margin: 0px 8px;
+  padding: 0px 4px;
+  border-radius: var(--jp-border-radius);
+  border: 1px solid;
+  color: var(--jp-ui-font-color2);
+}
+.v-Verdant-GhostBook-diffOptions-dropdown svg {
+  fill: var(--jp-ui-font-color2);
+  margin-top: 1px;
+}
+
+.v-Verdant-GhostBook-diffOptions-dropdown-list {
+  position: absolute;
+  top: 1.5em;
+  background: var(--jp-layout-color0);
+  border: 1px solid var(--jp-border-color1);
+  border-radius: var(--jp-border-radius);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  width: calc(10em + 4px);
+  right: 1px;
+}
+
+.v-Verdant-GhostBook-diffOptions-option {
+  flex: 1 1 auto;
+}
+.v-Verdant-GhostBook-diffOptions-dropdown-list
+  .v-Verdant-GhostBook-diffOptions-option {
+  padding: 4px;
+}
+.v-Verdant-GhostBook-diffOptions-dropdown-list
+  .v-Verdant-GhostBook-diffOptions-option:hover {
+  background-color: var(--jp-layout-color2);
+}
+
+.v-Verdant-GhostBook-exportOptions {
+  padding: 0px 8px;
+  color: var(--jp-ui-font-color1);
+  border: 1px solid var(--jp-border-color1);
+  border-radius: var(--jp-border-radius);
+  margin: 0px 4px;
+}
+
+.v-Verdant-GhostBook-exportOptions .verdant-icon-export {
+  margin-right: 6px;
+}
+
+.v-Verdant-GhostBook-export-msg {
+  text-align: center;
+  color: var(--jp-layout-color0);
+  background: var(--jp-inverse-layout-color3);
+  width: 100%;
+  padding: 5px 0px;
+  margin-top: -3px;
+  font-size: small;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ghost Cell CSS */
+
+.v-Verdant-GhostBook-container {
+  padding: var(--jp-cell-padding)
+    calc(var(--jp-cell-padding) + var(--jp-notebook-padding));
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--jp-layout-color0);
+}
+
+.v-Verdant-GhostBook-container.added {
+  background-color: var(--verdant-cell-add-color0);
+}
+.v-Verdant-GhostBook-container.edited {
+  background-color: var(--verdant-ghost-color0);
+}
+.v-Verdant-GhostBook-container.removed {
+  background-color: var(--verdant-cell-remove-color0);
+}
+
+.v-Verdant-GhostBook-container-stack {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: calc(100% - 8px);
+}
+
+.v-Verdant-GhostBook-cell {
+  background: var(--jp-layout-color0);
+  color: var(--jp-content-font-color1);
+  font-family: var(--jp-content-font-family);
+  font-size: var(--jp-content-font-size1);
+  line-height: var(--jp-content-line-height);
+  min-height: 2em;
+}
+
+.v-Verdant-GhostBook-cell.code {
+  font-family: var(--jp-code-font-family);
+  font-size: var(--jp-code-font-size);
+  line-height: var(--jp-code-line-height);
+  background: var(--jp-cell-editor-background);
+  overflow-x: auto;
+  border: var(--jp-border-width) solid var(--jp-cell-editor-border-color);
+  white-space: pre;
+}
+
+.v-Verdant-GhostBook-cell.code.active {
+  box-shadow: var(--jp-input-box-shadow);
+  background-color: var(--jp-cell-editor-active-background);
+  border-color: var(--jp-cell-editor-active-border-color);
+}
+
+.v-Verdant-GhostBook-cell.markdown {
+  height: 100%;
+}
+
+.v-Verdant-GhostBook-cell.added {
+  border: var(--jp-border-width) solid lawngreen;
+}
+
+.v-Verdant-GhostBook-cell.removed {
+  border: var(--jp-border-width) solid red;
+}
+
+.v-Verdant-GhostBook-cell-band {
+  flex: 1 1 var(--jp-cell-collapser-width);
+  padding: 0px;
+  margin: 0px;
+  margin-right: 4px;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-radius: var(--jp-border-radius);
+  opacity: 1;
+  min-width: 8px;
+}
+
+.v-Verdant-GhostBook-cell-band.active {
+  background: var(--jp-brand-color1);
+}
+
+.v-Verdant-GhostBook-cell-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.v-Verdant-GhostBook-cell-container.output {
+  padding-top: 5px;
+}
+.v-Verdant-GhostBook-cell-container.output.changed {
+  background-color: var(--verdant-ghost-color0);
+}
+
+.v-Verdant-GhostBook-cell-container.hoverInspect:hover,
+.v-Verdant-GhostBook-cell-container.output.hoverInspect:hover,
+.v-Verdant-GhostBook-cell-container.output.changed:hover,
+.v-Verdant-GhostBook-cell-container.hoverInspect:hover
+  .v-Verdant-GhostBook-cell,
+.v-Verdant-GhostBook-cell-container.hoverInspect:hover
+  .v-Verdant-GhostBook-cell-header,
+.v-Verdant-GhostBook-cell-container.hoverInspect:hover
+  .v-Verdant-GhostBook-cell-content,
+.v-Verdant-GhostBook-cell-container.output.hoverInspect:hover
+  .v-Verdant-GhostBook-cell,
+.v-Verdant-GhostBook-cell-container.output.hoverInspect:hover
+  .v-Verdant-GhostBook-cell-header,
+.v-Verdant-GhostBook-cell-container.output.hoverInspect:hover
+  .v-Verdant-GhostBook-cell-content {
+  background-color: var(--verdant-ghost-color0);
+}
+
+.v-Verdant-GhostBook-cell-content {
+  flex: 1 1 100%;
+  max-width: calc(100% - var(--jp-cell-prompt-width));
+  background: var(--jp-cell-editor-background);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ghost Output CSS */
+
+/* Ghost Label CSS */
+
+.v-Verdant-GhostBook-cell-header {
+  position: relative;
+  min-width: var(--jp-cell-prompt-width);
+  max-width: var(--jp-cell-prompt-width);
+  opacity: 0.8;
+  box-sizing: border-box;
+  padding: var(--jp-cell-padding);
+}
+
+.v-Verdant-GhostBook-cell-label {
+  position: absolute;
+  z-index: 3;
+  left: calc(1px - var(--jp-notebook-padding) - var(--jp-cell-padding));
+  border: 1px solid var(--jp-border-color0);
+  padding: 4px 8px;
+  text-align: center;
+  font-size: var(--jp-ui-font-size0);
+  font-family: var(--jp-ui-font-family);
+  color: var(--jp-content-link-color);
+  text-decoration: underline;
+}
+
+/* Ghost (ghost.ts) CSS */
+
+.v-Verdant-GhostBook-icon {
+  background-image: var(--verdant-icon-ghostbook);
+}

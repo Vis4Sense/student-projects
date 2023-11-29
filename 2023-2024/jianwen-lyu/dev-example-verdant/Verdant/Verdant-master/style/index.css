@@ -1,0 +1,114 @@
+/*-----------------------------------------------------------------------------
+| Variables
+|----------------------------------------------------------------------------*/
+
+:root {
+  --jp-private-verdant-manager-tab-height: 24px;
+
+  --verdant-icon-logo: url("img/log-icon-4.svg");
+
+  --verdant-icon-ghostbook: url("img/ghost-book.svg");
+  --verdant-icon-search: url("img/search.svg");
+
+  --verdant-icon-timeinspect: url("img/time-inspect.svg");
+
+  --verdant-icon-datearrow-closed: url("img/chevron-right.svg");
+  --verdant-icon-datearrow-open: url("img/chevron-down.svg");
+
+  --verdant-ghost-color0: rgba(140, 204, 237, 0.21);
+  --verdant-ghost-color1: rgba(140, 204, 237, 0.5);
+  --verdant-ghost-color2: #8ccced;
+  --verdant-cell-change-color1: #92cbef;
+  --verdant-cell-change-color2: #2199f1;
+  --verdant-cell-remove-color0: rgb(255, 125, 125, 0.5);
+  --verdant-cell-remove-color1: #ff7d7d;
+  --verdant-cell-remove-color2: #ce1d1d;
+  --verdant-cell-add-color0: rgba(210, 252, 157, 0.5);
+  --verdant-cell-add-color1: #9dfcb6;
+  --verdant-cell-add-color2: #107e5a;
+}
+
+/*-----------------------------------------------------------------------------
+| Verdant in the dock panel, copied css from tabs-extension
+|----------------------------------------------------------------------------*/
+.verdant-log-icon svg {
+  fill: var(--jp-inverse-layout-color3);
+}
+
+.verdant-icon-chevron {
+  height: 16px;
+  flex: 0 0 auto; /* prevents icon shrinking in flex context */
+  vertical-align: middle;
+  fill: var(--jp-ui-font-color1);
+}
+
+.verdant-icon-big-chevron {
+  height: 16px;
+  flex: 0 0 auto; /* prevents icon shrinking in flex context */
+  vertical-align: middle;
+  stroke: var(--jp-ui-font-color2);
+  margin: 0px 6px;
+}
+.verdant-icon-big-chevron:hover {
+  stroke: var(--jp-ui-font-color1);
+}
+
+.verdant-icon-x {
+  fill: var(--jp-ui-font-color1);
+  height: 16px;
+  flex: 0 0 auto; /* prevents icon shrinking in flex context */
+  vertical-align: middle;
+}
+
+.verdant-icon-export {
+  fill: var(--jp-ui-font-color1);
+  height: 14px;
+  flex: 0 0 auto; /* prevents icon shrinking in flex context */
+  vertical-align: bottom;
+}
+
+.verdant-icon-missingImage {
+  fill: var(--jp-ui-font-color1);
+  height: 14px;
+  flex: 0 0 auto; /* prevents icon shrinking in flex context */
+  vertical-align: middle;
+}
+
+.verdant-link {
+  text-decoration: underline;
+  color: var(--jp-content-link-color);
+}
+
+.v-Verdant-tooltip {
+  position: absolute;
+  padding: 4px 8px;
+  background-color: var(--jp-layout-color2);
+  color: var(--jp-ui-font-color1);
+  font-size: var(--jp-ui-font-size2);
+  border-radius: var(--jp-border-radius);
+}
+
+.v-Verdant-sidePanel {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--jp-sidebar-min-width);
+  color: var(--jp-ui-font-color1);
+  background: var(--jp-layout-color1);
+  /* This is needed so that all font sizing of children done in ems is
+   * relative to this base size */
+  font-size: var(--jp-ui-font-size1);
+}
+
+#v-VerdantPanel header {
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color2);
+  width: 100%;
+  font-size: var(--jp-ui-font-size0);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0px;
+  padding-bottom: 4px;
+  padding-top: 4px;
+  padding-left: 12px;
+  text-transform: uppercase;
+  display: inline-flex;
+}
