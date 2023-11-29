@@ -156,6 +156,8 @@ I tried to make a freckled man. I only got women. That was all I got. It was a g
 
 A: This is what I would do as a first thing and then normally see what it gives.
 
+<img width="1235" alt="user3-interview-screenshot1" src="https://github.com/Vis4Sense/student-projects/assets/66835338/98560a2f-a186-4d51-a245-a3382f8398c3">
+
 A: Muscles are inappropriate is what we've discovered. Because there is nothing on there that should generate inappropriate images. But I think two of my images have been flagged as appropriate. [Checks advanced settings.] Yeah, I don’t think these would help me now.
 
 Q: Does this happen often?
@@ -178,12 +180,15 @@ Q: Is this close to what you were imagining or?
 
 A: We'll see. Can I prompt again? [Clicks to generate more images] Ok it does keep the other ones. [Referring to how you can still view the previous batch of images and corresponding prompt.]
 
+<img width="1234" alt="user3-interview-screenshot2" src="https://github.com/Vis4Sense/student-projects/assets/66835338/d15bd570-f7a3-4208-aa4e-36866399a1b6">
+
 A: I think because normally I put a fantasy painting at the end, it knows the kind of character I'm trying to create as being not a gym instructor. So that’s just what I’m used to. [Looking at second batch of images] Are these all blurred?
 
 Q: Why is it coming out blurred? Actually, this hasn't happened before.
 
 A: Also notice none of them have grey skin, by the way. And just because I'm insanely curious, does removing muscular make them more appropriate? Or is it something else that’s [responsible]?
 
+<img width="1234" alt="user3-interview-screenshot3" src="https://github.com/Vis4Sense/student-projects/assets/66835338/bf895d97-3ac1-4cf6-8993-532eef433e56">
 A: Apparently mines just blurry.
 
 Q: Maybe if you try refreshing the page? I'm actually not sure if there's something up with the website because this hasn't happened before.
@@ -199,6 +204,8 @@ Q: Normally, I’d ask you what precisely you’re looking for that could be cha
 A: OK, so let's focus on these two wonderful images that I produced. [Looks at the two images in the first batch which weren’t blurred/flagged.]
 
 So yeah, what was my prompt for this one? [Looking at the second batch of images.] Just adding medieval gave her armour, but she's still very clearly doesn't have gray skin. [Looks at first batch of images.] Doesn’t have grey skin here. Understandably looks like a gym instructor because I didn't have the fantasy painting or the medieval [keywords] which is kind of my fault because obviously I was using style instead of using it in the prompt. But still very much missing the gray skin which was the fundamental feature I was after. An attractive woman with Gray skin – otherwise, she's just a human. Maybe if I remove human. [Deletes the word human from the prompt field and generates images.]
+
+<img width="1230" alt="user3-interview-screenshot4" src="https://github.com/Vis4Sense/student-projects/assets/66835338/2aa7ba59-ecc3-4fff-9648-6ac05aa74f2b">
 
 A: Still no Gray skin. So it’s not the human factor. Now she looks like she might be a nun.
 
@@ -221,6 +228,8 @@ A: Yeah if I want a creature that has Gray skin, it's really hard to say that wi
 Q: Do you think if you put fantasy painting in the prompt field…?
 
 A: I can try actually putting fantasy painting because that would be my usual process. [Looking at prompt] Do I have to change this to female like as woman too human centric?
+
+<img width="1230" alt="user3-interview-screenshot5" src="https://github.com/Vis4Sense/student-projects/assets/66835338/e049aa33-b9d4-4c16-b5aa-0100e468ac5f">
 
 A: It's actually refusing [to show the image] and she very much does not have Gray skin. She has grey clothes every time. And so ‘muscular medieval’ [keywords] gave me grey armour, removing the ‘muscular’ put her in very much commoners– noble clothes. Removing human didn't seem to do anything to the prompt that we can see and then adding fantasy painting might have changed the style, but it didn't give a Gray skin like we were hoping for sure.
 
@@ -281,6 +290,8 @@ A; Sorry about the images, I didn't think I chose something controversial, but a
 Q: That this is actually good to know though, because I didn't know that images like this could be flagged at all.
 
 A: Just gonna test…[used cat as the prompt keyword to check whether Dreamstudio will generate images for it]. I can't think of a reason why cat would be flagged. It could just be the websites’ broken.
+
+<img width="1230" alt="user3-interview-screenshot6" src="https://github.com/Vis4Sense/student-projects/assets/66835338/9c7efc47-fc5e-4ada-995a-24488db88659">
 
 A: We’ve confirmed it was flagged. It will generate cat, so it is literally a medieval woman with Gray skin, brunette in a fantasy painting style was what I was trying to do and it gave me inappropriate images. Super helpful stuff.
 
