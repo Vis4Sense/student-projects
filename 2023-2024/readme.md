@@ -1,7 +1,7 @@
 # Folder for all the 2023-2024 projects (UG and PGT) 
 - Visual Analytics for Sensemaking:
   - Ziyue Wang (UG): support comparison of online shopping options with knowledge graph
-  - Jiaqi Li (PGT): 
+  - Jiaqi Li (PGT): (team collaborative platform, multitask management and summarization)
 - Human-AI teaming
   - Rachana Hegde (PGT): image generative AI for writers
   - Jianwen Lyu (UG): General Support for Machine Learning Process (JupyterLab Extension).
@@ -16,11 +16,11 @@
  |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       |         |        |         |        |
- |recruit user       |       |       |         |        |         |        |
+ |recruit user       |       |3 users|         |        |         |        |
  |conduct interview  |       |       |         |        |         |        |
  |analyse data       |       |       |         |        |         |        |
  |requirement list   |       |       |         |        |         |        |
- |...                |       |       |         |        |         |        |
+ |...                |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
 
 # 27 Nov 2023
 
