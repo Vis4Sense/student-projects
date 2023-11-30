@@ -163,3 +163,75 @@
 - Preferred art style = surrealist imagery for writing horror, more realistic settings (i.e. beach, farm) for poetry
 - Didn’t find it difficult to translate ideas into prompts
 - Didn’t find it necessary to use advanced settings
+
+## Interview with User #3
+
+**Summary of responses**
+
+- Has written a novel and writes for tabletop role playing games as a dungeon master. Considers themself an active hobbyist.
+- Haven’t explored advanced options for AI but asked Chat GPT to generate narrative descriptions for scenes.
+- Challenge with using Chat GPT is that it overuses certain words or phrases that were provided in the original prompt and the resulting writing that is generated sounds stilted and unnatural.
+- Preferred art style is medieval fantasy style painting – i.e. the art on Magic the Gathering cards
+- Can’t plan writing for DnD too far in advance. Does setting, characters, and world building for certain areas.
+- For writing their book, they had a loose framework for each chapter and then did a rough draft based on that. AI would’ve been helpful here to address creative blocks which halted their progress.
+- Images mainly used for character design but would also be helpful for setting. Haven’t had a chance to test AI out for generating setting images.
+- Character art that has been generated with AI is not great and it has put them off trying other things.
+- AI is great at creating handsome white men or glamorous women but this isn’t helpful because their story takes place in a medieval village. The people in images are often wearing full makeup. They tried to prompt the AI not to use model headshots and also include the word ‘ugly’ in prompts – which doesn’t actually produce ugly images but instead people who aren’t wearing makeup. They also couldn’t create people who have disfigurements, bad skin, or scars – AI wouldn’t produce these features even when they weighted that part of the prompt more heavily. Unconventionally attractive people that are produced also look like caricatures and aren’t realistic looking. Using heavier weights also confuses the AI.
+- They’ve used Midjourney for image generation.
+- Need to be able to save/export images
+- Wants to generate detailed character art that has specific eye color, hair color, etc. – so extensive customization.
+- Pointed out that they think they can’t provide enough information in the app to generate usable plot points
+- Could be useful to generate ideas for writing unique dialogue – i.e. speech patterns
+- Would be helpful to give feedback and tell the AI that it has generated certain aspects of the image correctly (i.e. blonde hair) and specify what aspects of the image should be changed/corrected.
+- It’s frustrating that the AI isn’t learning based on how satisfied you are with the previous image – and it means it’s difficult to get an image where all of the details are correct and accurate.
+
+**The image generation exercise:**
+
+- They are unfamiliar with writing prompts for Stable Diffusion/Dreamstudio but have experience with the rules for structuring prompts for Midjourney (i.e. negative weighting keywords).
+- Attempted to generate image for a character called Eve who is a muscular attractive woman with grey skin in the style of a fantasy painting.
+- Struggled to find a style option (in Dreamstudio) that suited their needs – they stated the style options are either heavily unrealistic or photographic and they want more of an oil painting style.
+- Most of the generated (except for two) were flagged as inappropriate – they thought it was because of the muscles or because the AI assumed she’s wearing lingerie. It was unclear why the images were considered inappropriate. Modifying the prompt for subsequent batches of images still resulted in flagged and blurred images. This was quite frustrating.
+- None of the characters had grey skin which was the main feature that they wanted in the image. They also wanted the character to have more medieval style clothing but they liked that the character appeared strong/muscular in one of the unflagged images.
+- They ran into a similar issue previously where their generated images were flagged in Midjourney because nudity is against the rules – but the images in dreamstudio clearly featured characters who are dressed.
+- They avoid copy pasting text directly from their work into the prompt field because this usually doesn’t generate good images. They usually specifically add weights but having a tool that could take a text description and turn it into a prompt would be useful.
+- They’ve had to read a lot of documentation to understand how to use Midjourney and it was a ‘horrible’ experience.
+- They use the images for description and also to show dungeons and dragons players (who are part of the narrative) the images so they can visualise it better.
+- Frustrated that it ignored some of the keywords in the prompt (i.e. grey)
+- They usually check what images are generated first before using the advanced settings. Also, the things in the advanced settings (i.e. prompt strength) aren’t explained well and it’s unclear how they work. They said they would need to read documentation to work out how to use Dreamstudio. It’s not clear how altering something like generation steps will affect the image. It would necessitate spending money on the tool to understand how it works.
+- Things they liked about Dreamstudio – there’s a positive and negative prompt field.
+- An improvement for Dreamstudio would be getting images that aren’t flagged.
+- Likes queuing up prompts to generate multiple images in Midjourney (on discord) and returning after some time to view the images. Dreamstudio requires waiting to generate an image one by one.
+- A website is ideal for an image generation application – they don’t want to download a whole new app.
+
+## Analysing the responses
+
+**Pain points in using image generation tool**
+
+- Struggled to generate ugly or non-conventionally attractive people with disfigurements, bad skin, or scars.
+- AI doesn’t improve images based on how satisfied you are with the previous image so it’s difficult to get an image where all of the details are correct.
+- Lots of rules for structuring prompts for tools like Midjourney – need to read a lot of documentation to understand it. Need to spend a lot of time to learn how to write prompts.
+- Struggled to find a style option (in Dreamstudio) that suited their needs.
+- Most of the generated images (except for two) were flagged as inappropriate and it was unclear why the images were considered inappropriate. Modifying the prompt didn’t have any effect.
+- Couldn’t generate a character with the skin tone (grey) that they wanted.
+- Frustrated that it ignored some of the keywords in the prompt (i.e. grey)
+- The features in the advanced settings (i.e. prompt strength and generation steps) aren’t explained well so can’t figure out how altering them will affect the image (without reading documentation.)
+
+**Suggested features for application**
+
+- Need to be able to save/export images
+- Wants to generate detailed character art that has specific eye color, hair color, etc. – so extensive customization.
+- Could be useful to generate ideas for writing unique dialogue – i.e. speech patterns
+- Would be helpful to give feedback and tell the AI that it has generated certain aspects of the image correctly (i.e. blonde hair) and specify what aspects of the image should be changed/corrected.
+- Having a tool that could take a text description from their work and turn it into a prompt would be useful.
+- Likes queuing up prompts to generate multiple images in Midjourney (on discord) and returning after some time to view the images. Dreamstudio requires waiting to generate an image one by one.
+- A website is ideal for an image generation application.
+- Liked the positive and negative prompt field in Dreamstudio.
+
+**Ways that AI generated art can be helpful**
+
+- Images mainly used for character design but would also be helpful for setting.
+- They use the images for description and also to show dungeons and dragons players (who are part of the narrative) the images so they can visualise it better.
+
+**Other comments**
+
+- Preferred art style is medieval fantasy style painting – i.e. the art on Magic the Gathering cards or https://www.reddit.com/r/ReasonableFantasy/
