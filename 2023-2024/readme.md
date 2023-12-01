@@ -16,7 +16,7 @@
  |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       |         |        |         |        |
- |recruit user       |  1     |3 users|         |        |         |        |
+ |recruit user       |  1    |3 users|         |        |         |        |
  |conduct interview  |  1    |       |         |        |         |        |
  |analyse data       |       |       |         |        |         |        |
  |requirement list   |       |       |         |        |         |        |
@@ -36,6 +36,11 @@ Jiaqi
 - create a list of interview questions about the user needs
 - recruit a few more users
 
+Rachana
+- add informatoin to the table
+- create an updated list of requirements (more focused version)
+- separate research requirements from implementation requirements
+- 
 
 # 27 Nov 2023
 
