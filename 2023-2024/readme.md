@@ -17,9 +17,7 @@
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       | PDF     |        |         |        |
  |recruit user       |  1    |3 users| PDF     |        |         |        |
- |conduct interview  |  1    |       | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md)
-[User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md)
-[User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |        |
+ |conduct interview  |  1    |       | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md), [User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md), [User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |        |
  |analyse data       |       |       | PDF     |        |         |        |
  |requirement list   |       |       |         |        |         |        |
  |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
