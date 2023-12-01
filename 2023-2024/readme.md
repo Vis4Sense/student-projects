@@ -31,6 +31,10 @@ Ziyue
 - recruit a few more users
 - identify a specific use case, for example for a website (such as Tesco or Amazon) or a product (such as camera)
 
+Jiaqi
+- design a sensemaking scenario for the interview
+- create a list of interview questions about the user needs
+- recruit a few more users
 
 
 # 27 Nov 2023
