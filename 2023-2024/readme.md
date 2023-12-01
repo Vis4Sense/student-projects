@@ -13,7 +13,7 @@
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
 
- |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
+ |                   | Ziyue | Jiaqi | Rachana | Jianwen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       |         |        |         |        |
  |recruit user       |  1    |3 users|         |        |         |        |
@@ -40,7 +40,10 @@ Rachana
 - add informatoin to the table
 - create an updated list of requirements (more focused version)
 - separate research requirements from implementation requirements
-- 
+- have a look of there is any other API and or generative image models that are suitable
+
+Jianwen
+- Read the automl visualisation paper on the project webpage
 
 # 27 Nov 2023
 
