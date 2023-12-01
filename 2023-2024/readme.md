@@ -16,11 +16,22 @@
  |                   | Ziyue | Jiaqi | Rachana | Jiawen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       |       |         |        |         |        |
- |recruit user       |       |3 users|         |        |         |        |
- |conduct interview  |       |       |         |        |         |        |
+ |recruit user       |  1     |3 users|         |        |         |        |
+ |conduct interview  |  1    |       |         |        |         |        |
  |analyse data       |       |       |         |        |         |        |
  |requirement list   |       |       |         |        |         |        |
  |...                |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
+
+
+# 1 Dec 2023
+
+## Todo
+Ziyue
+- create a list of interview questions about the user needs
+- recruit a few more users
+- identify a specific use case, for example for a website (such as Tesco or Amazon) or a product (such as camera)
+
+
 
 # 27 Nov 2023
 
