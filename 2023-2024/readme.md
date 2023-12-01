@@ -20,7 +20,7 @@
  |conduct interview  |  1    |       |         |        |         |        |
  |analyse data       |       |       |         |        |         |        |
  |requirement list   |       |       |         |        |         |        |
- |...                |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
+ |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
 
 
 # 1 Dec 2023
