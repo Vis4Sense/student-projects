@@ -1,0 +1,5 @@
+- Group tabs by various logic
+- extract key point from webpage automatically
+- summarise the task objective and research result
+- capture deep relationship between webpages
+- share the research result with teammates or colleagues
