@@ -23,15 +23,15 @@
 12.	Do you usually use mind map in your working routine?
 
 13.	Following image is a screenshot of history log, can you tell what this person trying to do by browsing these webpages?
- ![historylog example 1](2023-2024/jiaqi-li/interview/example_1.png)
+ ![historylog example 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/example_1.png)
 
 14.	How difficult did you figure it out? (Rate out of 10)
 
 15.	What is the difficult thing you think in this process?
 
 16.	Following image is another screenshot of history log, can you tell what this person trying to do by browsing these webpages?
-    ![](2023-2024/jiaqi-li/interview/example_2_1.png)
-    ![historylog example 2](2023-2024/jiaqi-li/interview/example_2_2.png)
+    ![](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/example_2_1.png)
+    ![historylog example 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/example_2_2.png)
  
 
 17.	How difficult did you figure it out? (Rate out of 10)
