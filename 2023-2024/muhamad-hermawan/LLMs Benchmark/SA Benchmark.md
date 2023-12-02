@@ -1,4 +1,4 @@
-# LLMs Benchmark
+# LLMs Benchmark (Classification and Aspect Based SA)
 **Objective**
 To compare the performance of several LLMs in providing sentiment analysis of short financial articles.
 
@@ -59,7 +59,7 @@ gpt4all 2.0.2
 
 torch 2.1.1+cu121
 
-**Zero-Shot Benchmark Result** (on progress) [Result Files](https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results "Result Files")
+**Zero-Shot Classification Benchmark Result** [Result Files](https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results "Result Files")
 | Model | Accuracy | Run Time | avg time/iter |Spec n requirement: Param/size/RAM|
 | ------------ | ---- | ---- | ---- |---------|
 | gpt4all-13b-snoozy-q4_0 |0.3670|5hr 37min|20.28s|13b/6.86 GB/16 GB|
