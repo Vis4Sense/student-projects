@@ -118,4 +118,78 @@ f'''Please perform news sentiment classification task: \n\nNEWS: {news}'\n\n tag
 | mistral-7b-openorca.Q4_0 |0.5400|0.6060|
 
 Orca-2-13b remains the highest accuracy test result, while nous-hermes-llama2-13b got significant drop due to some empty results and failed to give proper response. Details can be seen here [ABSA Result File Details](https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results "Result Files")
+
+## Test on GPU vs CPU
+GPT4ALL support for GPU released about 1 month ago. Using Nomic Vulcan backend 
+
 https://twitter.com/nomic_ai/status/1716895217998233836
+https://blog.nomic.ai/posts/gpt4all-gpu-inference-with-vulkan
+
+**Test on Mixed Reality Lab PC**
+PC Specs:
+* CPU: 12th Gen Intel i9-12900F 2.40 GHz
+* RAM 16 GB DDR5
+* GPU: RTX 3070 Ti 16 GB
+* OS: Windows 11 Home version 22h2
+Prompt:
+
+f'''Please perform news sentiment classification task: \n\nNEWS: {news}'\n\n tag all (aspect, sentiment) pairs. 
+    Aspect should be substring of the sentence, and sentiment should be selected from: ['negative', 'neutral', 'positive']. 
+    \n\nIf there are no aspect-sentiment pairs, return an empty list. Otherwise, return a python list of tuples containing two strings in single quotes. 
+    Please return python list only, without any other comments or text. 
+    \nExample one: \nNews: The place is small but the food is fantastic. \nLabel:[('place', 'negative'), ('food', 'positive)].
+    \nExample Two: \nNews: The atmosphere is aspiring, and the decor is amazing. \nLabel:[('atmosphere', 'positive'), ('decor', 'positive')]\n\nLABEL:'''
+
+    
+**Run the ABSA using rca-mini-3b-gguf2-q4_0 LLM on GPT4ALL module**
+
+example of successfull model load on GPU
+![example of successfull model load on GPU](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results/asset/GPU%20Test.png
+ "GPU Loaded")
+
+**Test run time result**
+|Description|Running time/iteration|
+|---|---|
+|CPU|18.98s|
+|GPU|21.05s|
+
+* Tried to load the 13b model, resulting error not enough memory
+* Test on 7b model resulting similar performance, no noticeable improvement of iteration.
+
+
+**Run the Sentiment Analysis on Huggingface rocket-3b model using Transformers module** 
+
+CUDA backend ver 12.1
+**Hardware (Laptop) specs used for test:**
+
+* Windows 11
+* CPU: 12th Gen Intel i7-12700H 4.70 GHz
+* RAM: 32GB 4800Mhz DDR5
+* GPU: Nvidia RTX 3070 Ti 8Gb
+* Storage: 1TB M.2 SSD 
+The model is perform 10 classification sentiment analysis
+
+questions = [
+    "I am very happy?",
+    "You are cruel'?",
+    "The movie was great, but the atmosphere was not good?",
+    "Chinese shares reverse gains to end down, rail sector slumps",
+    "Slightly bullish on ONGC at this point: Ambareesh Baliga",
+    "Warren Buffett once said that Gold is a way of going long on fear. Do you agree?",
+    "Vijaya Bank reports Rs 161.46 crore Q1 net profit",
+    "AstraZeneca Pharma rallies nearly 13% on strong Q3 show",
+    "Siemens Ltd net profit rises two-fold to Rs 88.3 crore in January-March",
+    "Castorseed futures slip 2.41 per cent to Rs 4,204 per quintal",
+]
+
+The prompt is:
+
+f"Instruction: do sentiment analysis to this sentence ['positive', 'neutral', 'negative': {question}, answer in one word only, example: positive"
+
+|Description|Running time/iteration|Total Run Time|
+|---|---|---|
+|CPU|171.3s|28mins 55sec|
+|GPU|2.1s|20.1sec|
+
+* The GPU Significantly faster than CPU
+* The model is non quantized, 7b model failed to load due to "out of memory" even in Mixed Reality Lab with 16GB GPU
