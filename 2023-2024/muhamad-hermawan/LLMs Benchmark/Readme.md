@@ -77,8 +77,10 @@ torch 2.1.1+cu121
 
 ## Aspect Based Sentiment Analysis (ABSA)
 **Test dataset**: [SEntFiN-v1.1](https://www.kaggle.com/datasets/ankurzing/aspect-based-sentiment-analysis-for-financial-news/) 
+
 Sinha, A., Kedas, S., Kumar, R., & Malo, P. (2022). SEntFiN 1.0: Entity‐aware sentiment analysis for financial news. Journal of the Association for Information Science and Technology.
 DOI: https://doi.org/10.1002/asi.24634
+
 SEntFiN 1.0, a human-annotated dataset of 10,753 news headlines with entity-sentiment annotations, of which 2,847 headlines contain multiple entities, often with conflicting sentiments.
 
 dataset example:
