@@ -55,9 +55,10 @@
   - try quantised LLMs with CUDA
   - try CUDA LLM on the School GPU server
 - Xiruo
-  - Compare with Tianxiang's student about FinBert performance
+  - Send Tianxiang FinBert performance results (and test details)
   - try 2-shot and 5-shot
   - calcuate mean absolute error
+  - include the asset/symbol in the input as a separate test
   - find out how to use the school GPU server
 - Raul
   - Interim report
