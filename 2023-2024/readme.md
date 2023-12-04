@@ -21,6 +21,7 @@
  |analyse data       |       |       | PDF     |        |         |        |
  |requirement list   |       |       |         |        |         |        |
  |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
+
 # 4 Dec 2023 (trading)
 - Kai:
   - school GPU server information in the general channel.
@@ -34,13 +35,26 @@
     - CUDA much faster than Vulkan and seems to support all LLMs
     - Rocket-3B: 21s (GPU) vs 28min (CPU)
     - For 7B LLM ran out of VRAM
+- Xiruo
+  - semEval 2017: sentiment score, 1142 samples, has more symbols per headline
+  - 0-shot and 2-shot (perform better)
+  - finBert performance is not good
+  - Mistral-7b has the best classification performance
+  - single vs multiple symbol in a headline
+  - currently not including the symbol in the input
 - Rual
   - 200-300MB (1.4m records, stock back to 2016, crypto back to 2021) price data per minute
+  - check if news has more than one symbol first and then decide whether to use aspect sentiment
+  - 
  
 ## Todo
 - Muhamad
   - try quantised LLMs with CUDA
   - try CUDA LLM on the School GPU server
+- Xiruo
+  - Compare with Tianxiang's student about FinBert performance
+  - try 2-shot and 5-shot
+  - calcuate mean absolute error
 - Kai
   - check to see if there is any PC with more VRAM with Kelvin and Cobot Maker Space
     
