@@ -47,7 +47,8 @@
   - check if news has more than one symbol first and then decide whether to use aspect sentiment
   - almost finished data provider implementation
   - everyone holds a local copy of the database
-  - docker compose
+  - docker composer
+  - implement as a python library (instead of API).
  
 ## Todo
 - Muhamad
@@ -57,11 +58,13 @@
   - Compare with Tianxiang's student about FinBert performance
   - try 2-shot and 5-shot
   - calcuate mean absolute error
+  - find out how to use the school GPU server
 - Raul
   - Interim report
 - Kai
   - check to see if there is any PC with more VRAM with Kelvin and Cobot Maker Space
-    
+  - follow up with the School database server
+  - follow up with the Azure OpenAI service
 
 # 1 Dec 2023
 
