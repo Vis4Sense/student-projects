@@ -59,9 +59,20 @@
         1. identify the total variability (pattern or extent of change)
         2. decompose the total variability into vriabilities from different causes. 
         3. then we can quantitize the influences of each factor to the variability.  
-        
+
+- implementation:
+    - React.js
+    - D3.js (visualization components)
+    - fANOVA method: official code in python
+    - pass backend data to frontend in form of JSON
+    - reservior sampling: fix the size of log(history) data of each model          
 
 - Potential differences from my project:
     - this project focus on auto-ML, which includes hyper-parameter tuning and confiuration, and model selection. In contrast, my project as a notebook extension, should be based on user's code, which in most cases is about one model and may not need model-selection part.
     - in the important hyper-param recognizing part of the article, I am not sure about "the hyper-parameters with low-performance expectations can be removed from the search spaces, thus effectively steering the search process" -- the "remove" here refers to "let it not change anymore or use some default value", or "delete it from hyperparamters of the model"? 
+    - Tendril needs to work together with existed autoML frameworks.
+    - still not sure: since the goal is "importance of hyper-parameters on model performance", why the article use fANOVA, i.e. identify "model performance" as functional changing value?
 
+- Future work (mentioned in article)
+    - scalability of visualization should be improved (not enough space for too many hyper-parameters?)
+    - hyper-parameter importance estimation(by fANOVA) has some limitations.
