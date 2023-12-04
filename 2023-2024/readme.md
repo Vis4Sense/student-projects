@@ -22,7 +22,21 @@
  |requirement list   |       |       |         |        |         |        |
  |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
 # 4 Dec 2023 (trading)
-- Kai: school GPU server information in the general channel.
+- Kai:
+  - school GPU server information in the general channel.
+  - university azure openAI possibly set up this week.
+  - School can set up a MySQL server
+- Muhamad
+  - Refinitiv issue: https://github.com/Vis4Sense/student-projects/issues/64
+  - Aspect Sentiment: Orca has the best performance
+  - Run LLM on GPU vs CPU
+    - MRL lab machine has 16GB vram
+    - CUDA much faster than Vulkan and seems to support all LLMs
+    - Rocket-3B: 21s (GPU) vs 28min (CPU)
+    - For 7B LLM ran out of VRAM
+- Rual
+  - 200-300MB (1.4m records, stock back to 2016, crypto back to 2021) price data per minute
+    
 
 # 1 Dec 2023
 
