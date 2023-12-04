@@ -40,7 +40,7 @@
   - 0-shot and 2-shot (perform better)
   - finBert sentiment classification is about 50%, not very good.
   - Mistral-7b has the best classification performance
-  - single vs multiple symbol in a headline
+  - Orca does not perform as well as in Muhamad's test because that was aspect sentiment and this is sentiment classification.
   - currently not including the symbol in the input
 - Rual
   - 200-300MB (1.4m records, stock back to 2016, crypto back to 2021) price data per minute
