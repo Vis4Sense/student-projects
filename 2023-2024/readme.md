@@ -36,6 +36,14 @@
     - For 7B LLM ran out of VRAM
 - Rual
   - 200-300MB (1.4m records, stock back to 2016, crypto back to 2021) price data per minute
+ 
+## Todo
+- Muhamad
+  - try CUDA LLM on the School GPU server
+  - try quantised LLMs with CUDA
+ 
+- Kai
+  - check to see if there is any PC with more VRAM with Kelvin and Cobot Maker Space
     
 
 # 1 Dec 2023
