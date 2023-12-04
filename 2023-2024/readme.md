@@ -39,9 +39,8 @@
  
 ## Todo
 - Muhamad
-  - try CUDA LLM on the School GPU server
   - try quantised LLMs with CUDA
- 
+  - try CUDA LLM on the School GPU server
 - Kai
   - check to see if there is any PC with more VRAM with Kelvin and Cobot Maker Space
     
