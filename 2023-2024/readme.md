@@ -38,7 +38,7 @@
 - Xiruo
   - semEval 2017: sentiment score, 1142 samples, has more symbols per headline
   - 0-shot and 2-shot (perform better)
-  - finBert performance is not good
+  - finBert sentiment classification is about 50%, not very good.
   - Mistral-7b has the best classification performance
   - single vs multiple symbol in a headline
   - currently not including the symbol in the input
