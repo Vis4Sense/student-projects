@@ -45,7 +45,9 @@
 - Rual
   - 200-300MB (1.4m records, stock back to 2016, crypto back to 2021) price data per minute
   - check if news has more than one symbol first and then decide whether to use aspect sentiment
-  - 
+  - almost finished data provider implementation
+  - everyone holds a local copy of the database
+  - docker compose
  
 ## Todo
 - Muhamad
@@ -55,6 +57,8 @@
   - Compare with Tianxiang's student about FinBert performance
   - try 2-shot and 5-shot
   - calcuate mean absolute error
+- Raul
+  - Interim report
 - Kai
   - check to see if there is any PC with more VRAM with Kelvin and Cobot Maker Space
     
