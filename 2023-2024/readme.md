@@ -21,7 +21,8 @@
  |analyse data       |       |       | PDF     |        |         |        |
  |requirement list   |       |       |         |        |         |        |
  |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
-
+# 4 Dec 2023 (trading)
+- Kai: school GPU server information in the general channel.
 
 # 1 Dec 2023
 
