@@ -19,7 +19,7 @@
  |recruit user       |  1    |3 users| 3 users |        |         |    1    |
  |conduct interview  |  1    |[user1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_1.md),[user2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_2.md),[user3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_3.md)    | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md), [User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md), [User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |    [interview-01](./hongye-an/interview/interview-01.md)   |
  |analyse data       |       |       | [Analysis](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-analysis.md) |        |         |        |
- |requirement list   |       |        |         |  [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/mvp_requirements.md)      |         |        |
+ |requirement list   |       |        | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/mvp_requirements.md)  |      |         |        |
  |prototype          |       |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 4 Dec 2023 (trading)
