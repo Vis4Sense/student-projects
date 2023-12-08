@@ -23,6 +23,9 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 8 Dec 2023
+
+This is the last meeting for this year, and we will resume on 12 Jan 2024.
+
 ## Todo
 Ziyue
 - revise the interview questions
@@ -37,6 +40,13 @@ Jiaqi
 - start compiling the requriement list
 - search for papers about information needed to reconstruct the sensemaking process
 - Have a look of the 'mv3' branch of the historymap code: https://github.com/Vis4Sense/HistoryMap/tree/mv3
+
+Rachana
+- try out the apple ML library for Stable Diffusion
+- add a bit more context and supported writing tasks to the requirements
+- Reduce the requirement list to 4~5 points if you can
+- for the UI design, identify the components that will be the research contributions in the paper and focus on those first
+
 
 # 4 Dec 2023 (trading)
 - Kai:
