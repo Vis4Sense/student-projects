@@ -1,4 +1,6 @@
 # Updated requirements for MVP 
+*All are research requirements except for those that are specified as implementation requirements.*
+
 - Image generation
     - Use for both settings and characters – both realistic and fantastical/surrealist artwork/imagery
     - Control over setting + character details
@@ -13,11 +15,11 @@
     - Make it clear why images are flagged as inappropriate and suggest alternative prompts or parameters to fix this
     - Make it clear how advanced settings will affect image without user having to read extensive documentation
 - Prompt expansion suggestions – for regular prompt and negative prompt
-- User interactions being logged to a database ⇒ this is to enable the prompt-image history log (and later, provide more intelligent prompt suggestions)
+- User interactions being logged to a database ⇒ this is to enable the prompt-image history log (and later, provide more intelligent prompt suggestions) **(IMPLEMENTATION REQUIREMENT)**
 - Unintrusive/optional feedback on images to improve system performance
     - Feedback mechanism could be rating system out of 10 and optional space for user to explain why they gave that rating
         - Based on this feedback, the prompt suggestions in future iterations will change and improve.
     - Could also specify to the AI that it has generated certain aspects of the image correctly (i.e. blonde hair) and specify what aspects of the image should be changed/corrected in subsequent generations
 - Image display
     - View prompt-image pairs (prompting history)/group images together by prompt to track progression
-    - Click on the image and expand it to view it in a larger size with information about the prompt, seed, and other parameters used to generate that image
+    - Click on the image and expand it to view it in a larger size with information about the prompt, seed, and other parameters used to generate that image **(IMPLEMENTATION REQUIREMENT)**
