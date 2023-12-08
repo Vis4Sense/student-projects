@@ -47,6 +47,10 @@ Rachana
 - Reduce the requirement list to 4~5 points if you can
 - for the UI design, identify the components that will be the research contributions in the paper and focus on those first
 
+Jianwen
+- Read the verdant papers on the project page: https://kaixu.me/2023/09/16/machine-learning-provenance-for-hyperparameter-tuning/
+- Recruite potential users, interview, and create the requirement list
+- Start the UI design
 
 # 4 Dec 2023 (trading)
 - Kai:
