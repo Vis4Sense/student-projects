@@ -52,6 +52,12 @@ Jianwen
 - Recruite potential users, interview, and create the requirement list
 - Start the UI design
 
+Hongye
+- Interview with another candidate
+- Use [SentEval](https://github.com/facebookresearch/SentEval) to do some brenchmark
+- Read the paper on https://ieeexplore.ieee.org/document/9939115
+
+
 # 4 Dec 2023 (trading)
 - Kai:
   - school GPU server information in the general channel.
