@@ -67,6 +67,10 @@
     - pass backend data to frontend in form of JSON
     - reservior sampling: fix the size of log(history) data of each model          
 
+- Hyper-parameters in UI
+    - first have a total performance plot
+    - under this plot include plot of values of all hyper-parameters
+
 - Potential differences from my project:
     - this project focus on auto-ML, which includes hyper-parameter tuning and confiuration, and model selection. In contrast, my project as a notebook extension, should be based on user's code, which in most cases is about one model and may not need model-selection part.
     - in the important hyper-param recognizing part of the article, I am not sure about "the hyper-parameters with low-performance expectations can be removed from the search spaces, thus effectively steering the search process" -- the "remove" here refers to "let it not change anymore or use some default value", or "delete it from hyperparamters of the model"? 
