@@ -30,6 +30,14 @@ Ziyue
 - transcribe the recordings
 - compile a list of requirements
 
+Jiaqi
+- revise the interview questions
+  - make a distinction between understanding one's own and someone else's process
+- continue the interview/questionnaire: try to do some face-to-face sessions (in person or online)
+- start compiling the requriement list
+- search for papers about information needed to reconstruct the sensemaking process
+- Have a look of the 'mv3' branch of the historymap code: https://github.com/Vis4Sense/HistoryMap/tree/mv3
+
 # 4 Dec 2023 (trading)
 - Kai:
   - school GPU server information in the general channel.
