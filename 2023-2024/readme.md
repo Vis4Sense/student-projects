@@ -15,12 +15,12 @@
 
  |                   | Ziyue | Jiaqi | Rachana | Jianwen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
- |interview questions|       | https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/interview_question.md | [Questions](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-questions.md)     |        |         |        |
- |recruit user       |  1    |3 users| 3 users |        |         |        |
- |conduct interview  |  1    |Questionnaire    | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md), [User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md), [User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |        |
+ |interview questions|       | https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/interview_question.md | [Questions](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-questions.md)     |        |         |    [questions](./hongye-an/interview/interview-question.md)    |
+ |recruit user       |  1    |3 users| 3 users |        |         |    1    |
+ |conduct interview  |  1    |Questionnaire    | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md), [User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md), [User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |    [interview-01](./hongye-an/interview/interview-01.md)   |
  |analyse data       |       |       | [Analysis](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-analysis.md) |        |         |        |
  |requirement list   |       |       |         |        |         |        |
- |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |        |
+ |prototype          |       |https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/jiaqi-li|         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 4 Dec 2023 (trading)
 - Kai:
