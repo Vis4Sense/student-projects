@@ -256,4 +256,4 @@ prompt = f"""Please perform news sentiment classification task of this COMPANY: 
 
 MRLAB PC
 1. [3070 ti 16GB --> 8GB vram, 8GB shared ram](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results/asset/3070ti.png)
-2. [3080 24GB --> 10GB Vram, 14GB shared ram](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results/asset/GPU%203080.png)
+2. [3080 26GB --> 10GB Vram, 16GB shared ram](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark/Results/asset/GPU%203080.png)
