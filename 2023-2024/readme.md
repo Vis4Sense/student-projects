@@ -26,19 +26,30 @@
 
 This will be the last meeting for 2023, meeting in 2024 resumes on Monday, 15 January.
 
+LLM remember previous promopt: https://docs.gpt4all.io/gpt4all_python.html#gpt4all.gpt4all.GPT4All.__init__
+
 Muhamad
+- using the models from HuggingFace
 - https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark
 - LLM group size?
 - 7B and 13B models, 4 bit
 - Best accuracy: orca, slim-orca
-- 0-shot and 3-shot have better performance than 1-shot and 5 shot (shot example chosen randomly) 
+- 0-shot and 3-shot have better performance than 1-shot and 5 shot (shot example chosen randomly)
+
+Xiruo
+- updated the prompt, include 2 shot and 5 shot, 
 
 ## Todo
 Muhamad
 - test non-quantised 7B model on 16GB VRAM, orca,
+  - test if the model remembers previous example for 2-shot or 5-shot
 - write up the test setup and results (can be used for first-semester report later)
 
-- 
+Xiruo
+- if there is any difference betweent the (quantised) models from gpt4all and huggingface
+  - if the base model is the same
+  - if there is any performance impact changing from using GPU memory to main memory
+- write up the test setup and results (can be used for first-semester report later)
 
 
 # 8 Dec 2023
