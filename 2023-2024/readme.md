@@ -46,7 +46,8 @@ Muhamad
 Xiruo
 - updated the prompt, include 2 shot and 5 shot, 
 
-## Todo
+## Todo
+
 Muhamad
 - test non-quantised 7B model on 16GB VRAM, orca,
   - test if the model remembers previous example for 2-shot or 5-shot
