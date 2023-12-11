@@ -1,4 +1,4 @@
-# LLMs Benchmark (Classification and Aspect Based SA)
+![image](https://github.com/Vis4Sense/student-projects/assets/132189125/815e799f-552c-46b2-80ca-749a61de5064)# LLMs Benchmark (Classification and Aspect Based SA)
 **Objective**
 To compare the performance of several LLMs in providing sentiment analysis of short financial articles.
 
@@ -194,4 +194,44 @@ f"Instruction: do sentiment analysis to this sentence ['positive', 'neutral', 'n
 |GPU|2.1s|20.1sec|
 
 * The GPU Significantly faster than CPU
-* The model is non quantized, 7b model failed to load due to "out of memory" even in Mixed Reality Lab with 16GB GPU
+* The model is non quantized, 7b model failed to load due to "out of memory".
+
+## Update 11 Dec 2023 - Classification SA and ABSA
+**Dataset**
+
+For this test, there are two datasets used
+1. Classification use [Financial Phrasebank](https://huggingface.co/datasets/financial_phrasebank)
+   English sentences from financial news, and classified as either positive, negative, or neutral by researchers knowledgeable in the finance domain.
+2. ABSA use [SemEval - 2017 Task-5](https://alt.qcri.org/semeval2017/task5/index.php?id=data-and-tools)
+   The data used is the [Subtask 2 - Headlines](https://bitbucket.org/ssix-project/semeval-2017-task-5-subtask-2/src/master/)
+
+**LLMs Model**
+
+Using four 7B model and 14 13B model, total 18 models from [Huggingface.co](https://huggingface.co/models)
+
+7B Models
+1. [Orca-2-7B-GPTQ-4bit-32g](https://huggingface.co/TheBloke/Orca-2-7B-GPTQ)
+2. [Llama-2-7B-Chat-GPTQ-4b-32g](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GPTQ)
+3. [Llama-2-7B-32K-Instruct-GPTQ-4b-32g](https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GPTQ)
+4. [Mistral-7B-Claude-Chat-GPTQ-4b-32g](https://huggingface.co/TheBloke/Mistral-7B-Claude-Chat-GPTQ)
+
+13 Models
+5. [Orca-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
+6. [Orca-2-13B-GPTQ-4b-128g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
+7. [orca_mini_v3_13B-GPTQ-4b-32g][https://huggingface.co/TheBloke/orca_mini_v3_13B-GPTQ]
+8. [SlimOrca-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/SlimOrca-13B-GPTQ)
+9. [Llama-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ)
+10. [LLaMA2-13B-Tiefighter-GPTQ-4b-32g](https://huggingface.co/TheBloke/LLaMA2-13B-Tiefighter-GPTQ)
+11. [vicuna-13B-v1.5-16K-GPTQ-4b-32g](https://huggingface.co/TheBloke/vicuna-13B-v1.5-16K-GPTQ)
+12. [Wizard-Vicuna-13B-Uncensored-SuperHOT-8K-GPTQ-4b-128g](https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-SuperHOT-8K-GPTQ)
+13. [MythoMax-L2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/MythoMax-L2-13B-GPTQ)
+14. [koala-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/koala-13B-GPTQ)
+15. [llava-v1.5-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/llava-v1.5-13B-GPTQ)
+16. [Spicyboros-13B-2.2-GPTQ-4b-32g](https://huggingface.co/TheBloke/Spicyboros-13B-2.2-GPTQ)
+17. [UtopiaXL-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/UtopiaXL-13B-GPTQ)
+18. [Pygmalion-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Pygmalion-2-13B-GPTQ)
+
+   
+ 
+
+
