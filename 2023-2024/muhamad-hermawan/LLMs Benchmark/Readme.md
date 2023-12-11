@@ -232,7 +232,28 @@ Using four 7B model and 14 13B model, total 18 models from [Huggingface.co](http
 17. [UtopiaXL-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/UtopiaXL-13B-GPTQ)
 18. [Pygmalion-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Pygmalion-2-13B-GPTQ)
 
-   
- 
+**Method**
+
+Using:
+
+0 shot learning
+
+1 shot learning
+
+3 shots learning
+
+5 shots learning
+
+prompt for 3 shots learning on Financial phrasebank Datasets:
+
+prompt = f"""Please perform news sentiment classification task: \n\nNEWS: {news}'\n\nAssign a sentiment label from: ['negative', 'neutral', 'positive']. \n\nReturn a one word label only. \nExample 1: ADP News - Feb 13 , 2009 - Finnish retailer Kesko Oyj HEL : KESBV said today its total sales , excluding value added tax VAT , stood at EUR 661.3 million USD 853.1 m in January 2009 , down 15.2 % year-on-yea. \nExample 1's LABEL: negative\nExample 2: Neste oil 's board proposed 1.00 eur dividend for the full-year 2007 , compared with 0.90 eur a year ago.\nExample 2's LABEL: positive\nExample 3: Completion of the transaction is subject to a final agreement and a Due Diligence process.\nExample 3's LABEL: neutral\n\nResponse's LABEL:"""
 
 
+prompt for 3 shots learning on SemEval 2017 Datasets:
+
+prompt = f"""Please perform news sentiment classification task of this COMPANY: {company}: \n\nNEWS: {news}'\n\nAssign a sentiment label from: ['negative', 'neutral', 'positive']. \n\nReturn a one word label only. \nExample 1: Example 1's COMPANY: Standard Chartered PLC\nExample 1's NEWS: News FeedFTSE 100 movers: Standard Chartered lifted while AstraZeneca sinks.\nExample 1's LABEL: positive\nExample 2: Example 2's COMPANY: Tesco PLC\nExample 2's NEWS: Sale of Tesco's Clubcard business to WPP on the verge of collapse.\nExample 2's LABEL: negative\nExample 3: Example 3's COMPANY: HSBC\nExample 3's NEWS: HSBC marks muted 150th birthday party with grain of rice sculptures.\nExample 3's LABEL: neutral\n\nResponse's LABEL:"""
+
+
+MRLAB PC
+1. 3070 ti 16GB --> 8GB vram, 8GB shared ram
+2. 3080 24GB --> 10GB Vram, 14GB shared ram
