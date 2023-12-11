@@ -28,6 +28,8 @@ This will be the last meeting for 2023, meeting in 2024 resumes on Monday, 15 Ja
 
 LLM remember previous promopt: https://docs.gpt4all.io/gpt4all_python.html#gpt4all.gpt4all.GPT4All.__init__
 
+Compare the sentiment performance of chatGPT against the gpt4all/huggingface models once Azure OpenAI service is available.
+
 Muhamad
 - using the models from HuggingFace
 - https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark
@@ -51,6 +53,8 @@ Xiruo
   - if there is any performance impact changing from using GPU memory to main memory
 - write up the test setup and results (can be used for first-semester report later)
 
+Raul
+- finish the trading platform.
 
 # 8 Dec 2023
 
