@@ -1,4 +1,4 @@
-![image](https://github.com/Vis4Sense/student-projects/assets/132189125/815e799f-552c-46b2-80ca-749a61de5064)# LLMs Benchmark (Classification and Aspect Based SA)
+# LLMs Benchmark (Classification and Aspect Based SA)
 **Objective**
 To compare the performance of several LLMs in providing sentiment analysis of short financial articles.
 
@@ -216,9 +216,10 @@ Using four 7B model and 14 13B model, total 18 models from [Huggingface.co](http
 4. [Mistral-7B-Claude-Chat-GPTQ-4b-32g](https://huggingface.co/TheBloke/Mistral-7B-Claude-Chat-GPTQ)
 
 13 Models
+
 5. [Orca-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
 6. [Orca-2-13B-GPTQ-4b-128g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
-7. [orca_mini_v3_13B-GPTQ-4b-32g][https://huggingface.co/TheBloke/orca_mini_v3_13B-GPTQ]
+7. [orca_mini_v3_13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/orca_mini_v3_13B-GPTQ)
 8. [SlimOrca-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/SlimOrca-13B-GPTQ)
 9. [Llama-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ)
 10. [LLaMA2-13B-Tiefighter-GPTQ-4b-32g](https://huggingface.co/TheBloke/LLaMA2-13B-Tiefighter-GPTQ)
