@@ -233,6 +233,12 @@ Using four 7B model and 14 13B model, total 18 models from [Huggingface.co](http
 18. [Pygmalion-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Pygmalion-2-13B-GPTQ)
 
 **Method**
+Number of Test records: 
+
+200 on each datasets
+
+Random Seed 42, same label distribution as population
+
 
 Using:
 
