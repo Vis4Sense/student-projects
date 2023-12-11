@@ -215,7 +215,7 @@ Using four 7B model and 14 13B model, total 18 models from [Huggingface.co](http
 3. [Llama-2-7B-32K-Instruct-GPTQ-4b-32g](https://huggingface.co/TheBloke/Llama-2-7B-32K-Instruct-GPTQ)
 4. [Mistral-7B-Claude-Chat-GPTQ-4b-32g](https://huggingface.co/TheBloke/Mistral-7B-Claude-Chat-GPTQ)
 
-13 Models
+13B Models
 
 5. [Orca-2-13B-GPTQ-4b-32g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
 6. [Orca-2-13B-GPTQ-4b-128g](https://huggingface.co/TheBloke/Orca-2-13B-GPTQ)
