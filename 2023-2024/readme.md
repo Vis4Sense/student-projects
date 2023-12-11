@@ -30,6 +30,11 @@ LLM remember previous promopt: https://docs.gpt4all.io/gpt4all_python.html#gpt4a
 
 Compare the sentiment performance of chatGPT against the gpt4all/huggingface models once Azure OpenAI service is available.
 
+Tianxiang
+- which market and start collect data: ideal to get FTSE and DAX (or other EU market) data
+- choose model for sentiment analysis
+- baseline trading strategies
+
 Muhamad
 - using the models from HuggingFace
 - https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark
@@ -46,15 +51,18 @@ Muhamad
 - test non-quantised 7B model on 16GB VRAM, orca,
   - test if the model remembers previous example for 2-shot or 5-shot
 - write up the test setup and results (can be used for first-semester report later)
+  - come up with sentiment analysis LLM recommendations
 
 Xiruo
 - if there is any difference betweent the (quantised) models from gpt4all and huggingface
   - if the base model is the same
   - if there is any performance impact changing from using GPU memory to main memory
 - write up the test setup and results (can be used for first-semester report later)
+  - come up with sentiment analysis LLM recommendations  
 
 Raul
 - finish the trading platform.
+  - include the option to select which LLM for sentiment analysis
 
 # 8 Dec 2023
 
