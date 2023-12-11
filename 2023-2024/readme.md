@@ -22,6 +22,25 @@
  |requirement list   |       |        | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/mvp_requirements.md)  |      |         |        |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 11 Dec 2023
+
+This will be the last meeting for 2023, meeting in 2024 resumes on Monday, 15 January.
+
+Muhamad
+- https://github.com/Vis4Sense/student-projects/tree/main/2023-2024/muhamad-hermawan/LLMs%20Benchmark
+- LLM group size?
+- 7B and 13B models, 4 bit
+- Best accuracy: orca, slim-orca
+- 0-shot and 3-shot have better performance than 1-shot and 5 shot (shot example chosen randomly) 
+
+## Todo
+Muhamad
+- test non-quantised 7B model on 16GB VRAM, orca,
+- write up the test setup and results (can be used for first-semester report later)
+
+- 
+
+
 # 8 Dec 2023
 
 This is the last meeting for this year, and we will resume on 12 Jan 2024.
