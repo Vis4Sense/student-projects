@@ -1,6 +1,9 @@
 # Updated requirements for MVP 
-*All are research requirements except for those that are specified as implementation requirements.*
+## Research requirements
 
+
+
+## Implementation requirements
 - Image generation
     - Use for both settings and characters – both realistic and fantastical/surrealist artwork/imagery
     - Control over setting + character details
