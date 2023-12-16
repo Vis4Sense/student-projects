@@ -1,4 +1,4 @@
-![image](https://github.com/Vis4Sense/student-projects/assets/66835338/4bc8ea99-faab-44bf-9e9d-43b2dd0d6258)# Updated requirements for MVP 
+# Updated requirements for MVP 
 ## Research requirements
 - The images generated should be useful for the brainstorming and outlining stages of the writing process.
     - Images of characters and settings should help immerse the writer in the story and act as scene inspiration or reference points. The images can enable the writer to improve their description and be shared with others to help them visualise the story (i.e. Dungeons & Dragons players).
