@@ -1,14 +1,23 @@
 # Updated requirements for MVP 
 ## Research requirements
-
+- The images generated should be useful for the brainstorming and outlining stages of the writing process.
+    - Images of characters and settings should help immerse the writer in the story and act as scene inspiration or reference points. The images can enable the writer to improve their description and be shared with others to help them visualise the story (i.e. Dungeons & Dragons players).
+    - It should be possible to control specific details of images of settings and characters. Top of FormBottom of FormFor example, the user can add specific objects to an image or traits (skin colour) to a character’s appearance. More specifically, if a user is writing a novel with a corporate setting, they would like to see details of the types of appetizers people are eating at networking events to produce more accurate descriptions of those scenes in their novel.
+    - The character art needs to be inclusive and diverse to enable writers to avoid incorporating stereotypes or clichés into their work and consequently have better representation. E.g. Portraying characters with physical disfigurements or scars.
+- The application can help address writer’s block. For example, there can be image captions containing dialogue, plot points or character description in a specific writing style to act as writing prompts.
+- The user can form a personal connection with generated images to use them for writing poetry. For example, a user writing narrative poetry may associate the image with their own memories and extrapolate a scene based on the objects/people in the image. They will incorporate the feelings or thoughts that the image evokes into their poetry.
+- The image should match the tone or mood of the writing (i.e. through colour) or genre.
+- The image must be generated quickly and easily with less effort than it takes to find images via Google search or through websites such as Pinterest. This mainly applies to realistic images because it is relatively easier to find relevant images for settings when writing realistic fiction. The user should be able to get images that align with their vision without having to engage in excessive trial and error.
+- Images that are randomly generated should still be somewhat relevant to the story and provide inspiration. I.e. Getting character ideas from images of people.
+    - Related: Individuals that randomly appear in the image (and aren’t explicitly designed/described in the prompt) can provide inspiration for secondary characters that the writer could integrate into the story.
+- Unintrusive (and/or optional) feedback on images is used to improve system performance. For example, better (more relevant) prompt suggestions will be provided, image quality and image relevance will improve, or likelihood of errors will decrease during future usage of the application. Alternatively, the user can specify which aspects of the image are generated correctly (i.e. blonde hair) and which aspect should be changed/corrected and this will produce more accurate character art.
+- The user is provided with a prompt engineering workflow that is integrated with their writing workflow – for instance, by enabling them to copy paste paragraphs of text from their story directly into the prompt field with minimal editing. This will prevent them from getting distracted from writing.
 
 
 ## Implementation requirements
+- The storyboard feature will facilitate plotting stories in genres such as realistic literary fiction and fantasy. The writer could explore themes, character arcs, storylines, worldbuilding (i.e. magic systems, fantasy maps, illustrating landscapes and environments) using a combination of generated imagery and textual description (written by them).
 - Image generation
-    - Use for both settings and characters – both realistic and fantastical/surrealist artwork/imagery
-    - Control over setting + character details
-    - Control over image style
-    - Control over mood/tone of image (i.e. through colour?)
+    - Control over image style and mood
     - Control over degree of randomness of images
     - Negative prompt field
     - Advanced settings (i.e. generation steps, model, seed, prompt strength, width and height of image) can be optional/hidden unless needed but have default values set
@@ -18,11 +27,7 @@
     - Make it clear why images are flagged as inappropriate and suggest alternative prompts or parameters to fix this
     - Make it clear how advanced settings will affect image without user having to read extensive documentation
 - Prompt expansion suggestions – for regular prompt and negative prompt
-- User interactions being logged to a database ⇒ this is to enable the prompt-image history log (and later, provide more intelligent prompt suggestions) **(IMPLEMENTATION REQUIREMENT)**
-- Unintrusive/optional feedback on images to improve system performance
-    - Feedback mechanism could be rating system out of 10 and optional space for user to explain why they gave that rating
-        - Based on this feedback, the prompt suggestions in future iterations will change and improve.
-    - Could also specify to the AI that it has generated certain aspects of the image correctly (i.e. blonde hair) and specify what aspects of the image should be changed/corrected in subsequent generations
+- User interactions being logged to a database ⇒ this is to enable the prompt-image history log (and later, provide more intelligent prompt suggestions?)
 - Image display
     - View prompt-image pairs (prompting history)/group images together by prompt to track progression
-    - Click on the image and expand it to view it in a larger size with information about the prompt, seed, and other parameters used to generate that image **(IMPLEMENTATION REQUIREMENT)**
+    - Click on the image and expand it to view it in a larger size with information about the prompt, seed, and other parameters used to generate that image
