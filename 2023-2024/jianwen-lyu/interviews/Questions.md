@@ -18,19 +18,19 @@
 
 9. If you have experience writing code to solve machine learning tasks, do you regularly record or save data in your notebook or code (e.g., code progress, run results)? If so, what data do you typically save? If not, do you feel troubled by the absence of this data?
 
-![jupyter-1](/images/jupyter-1.png)
+![jupyter-1](images/jupyter-1.png)
 
-![jupyter-2](/images/jupyter-2.png)
+![jupyter-2](images/jupyter-2.png)
 
-![jupyter-3](/images/jupyter-3.png)
+![jupyter-3](images/jupyter-3.png)
 
-![jupyter-4](/images/jupyter-4.png)
+![jupyter-4](images/jupyter-4.png)
 
-![jupyter-5](/images/jupyter-5.png)
+![jupyter-5](images/jupyter-5.png)
 
-![jupyter-6](/images/jupyter-6.png)
+![jupyter-6](images/jupyter-6.png)
 
-![jupyter-7](/images/jupyter-7.png)
+![jupyter-7](images/jupyter-7.png)
 
 10. For the code in the images, what aspects are confusing or require more explanation? If so, what specific information would you like clarification on (e.g., the functionality of imported packages, the purpose of code segments, intercell dependencies, etc.)?
 
