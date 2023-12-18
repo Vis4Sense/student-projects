@@ -82,3 +82,5 @@
 - Future work (mentioned in article)
     - scalability of visualization should be improved (not enough space for too many hyper-parameters?)
     - hyper-parameter importance estimation(by fANOVA) has some limitations.
+
+- Next Goal: reference Verdant, extension function: visualize development process from code history.
