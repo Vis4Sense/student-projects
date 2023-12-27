@@ -2040,7 +2040,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/application@npm:^4.0.9":
+"@jupyterlab/application@npm:^4.0.0, @jupyterlab/application@npm:^4.0.9":
   version: 4.0.9
   resolution: "@jupyterlab/application@npm:4.0.9"
   dependencies:
@@ -2627,7 +2627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/settingregistry@npm:4.0.9, @jupyterlab/settingregistry@npm:^4.0.9":
+"@jupyterlab/settingregistry@npm:^4.0.9":
   version: 4.0.9
   resolution: "@jupyterlab/settingregistry@npm:4.0.9"
   dependencies:
@@ -2700,7 +2700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/testutils@npm:^4.0.9":
+"@jupyterlab/testutils@npm:^4.0.0":
   version: 4.0.9
   resolution: "@jupyterlab/testutils@npm:4.0.9"
   dependencies:
@@ -3797,7 +3797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.26, @types/react@npm:^18.2.45":
+"@types/react@npm:^18.0.26":
   version: 18.2.45
   resolution: "@types/react@npm:18.2.45"
   dependencies:
@@ -8360,17 +8360,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "myextension@workspace:."
   dependencies:
-    "@jupyterlab/application": ^4.0.9
+    "@jupyterlab/application": ^4.0.0
     "@jupyterlab/apputils": ^4.1.9
     "@jupyterlab/builder": ^4.0.0
     "@jupyterlab/docregistry": ^4.0.9
     "@jupyterlab/notebook": ^4.0.9
-    "@jupyterlab/settingregistry": 4.0.9
-    "@jupyterlab/testutils": ^4.0.9
+    "@jupyterlab/testutils": ^4.0.0
     "@lumino/disposable": ^2.1.2
     "@types/jest": ^29.2.0
     "@types/json-schema": ^7.0.11
-    "@types/react": ^18.2.45
+    "@types/react": ^18.0.26
     "@typescript-eslint/eslint-plugin": ^5.55.0
     "@typescript-eslint/parser": ^5.55.0
     css-loader: ^6.7.1
@@ -8388,7 +8387,7 @@ __metadata:
     stylelint-config-recommended: ^8.0.0
     stylelint-config-standard: ^26.0.0
     stylelint-prettier: ^2.0.0
-    typescript: ~5.3.3
+    typescript: ~5.0.2
     yjs: ^13.5.0
   languageName: unknown
   linkType: soft
@@ -10519,23 +10518,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
+"typescript@npm:~5.0.2":
+  version: 5.0.4
+  resolution: "typescript@npm:5.0.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 2007ccb6e51bbbf6fde0a78099efe04dc1c3dfbdff04ca3b6a8bc717991862b39fd6126c0c3ebf2d2d98ac5e960bcaa873826bb2bb241f14277034148f41f6a2
+  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~5.3.3#~builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#~builtin<compat/typescript>::version=5.3.3&hash=85af82"
+"typescript@patch:typescript@~5.0.2#~builtin<compat/typescript>":
+  version: 5.0.4
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f61375590b3162599f0f0d5b8737877ac0a7bc52761dbb585d67e7b8753a3a4c42d9a554c4cc929f591ffcf3a2b0602f65ae3ce74714fd5652623a816862b610
+  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
   languageName: node
   linkType: hard
 
