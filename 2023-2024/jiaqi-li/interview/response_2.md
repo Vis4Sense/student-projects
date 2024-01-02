@@ -47,3 +47,6 @@
 18.	What is the difficult thing you think in this process?
 **A: This person not only search on chatGPT and OpenAI but futher want to explore API by him/herself, the further demand is easy to be ignored. Besides, the person start a new searching topic that related with openAI, the news of the fired boss of OpenAI. In addition there are also some not aim-oriented searchin with related topic of facebook, it would be a prompt searching but not sticked to the original aim.**
 
+
+New use case: 
+In scenarios where there are various scopes of searching, all related to a common task, such as organizing useful webpage for a conference in England, users often need to track diverse elements like conference websites, flight tickets, and travel plans. These items may belong to different categories, making it challenging for a simple algorithm to automatically recognize and group them together. Therefore we chould provides enhanced flexibility, allowing users to customize and define their own groups. This way, users can tailor the organization of their information according to the specific needs of their tasks.

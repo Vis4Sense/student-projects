@@ -4,7 +4,7 @@
 2.	What is your favorite browser?  **Microsoft Browser. Actually, I use the browser that comes with my computer system.**
 3.	Do you usually use history log to trace back to any pages you have browsed？ **Yes**
 4.	Is there any difficulty for you in finding a specific webpage in the history log? 
-**There are some similar webpages which may be the front or back page, I can’t differ the specific webpage from them when they have same logo and subtitle.**
+**There are some similar webpages around the webpage that I am looking for, I can’t differ the specific webpage from them when they have same logo and subtitle.**
 
 5.	Do you usually group your tabs in browser to make it easier to navigate to certain pages?
 **Yes**
@@ -53,3 +53,11 @@
 
 19.	What was the most difficult aspect of this process?
 **There are some deceptive records. He has a lot of searches about GPT, but they are so broad that it's hard to pinpoint what he wants to know about GPT in more details.**
+
+
+Follow up question: 
+1. You mentioned that you will use mindmap in your working routine, could you give me a example?
+    - It's more like an outline. Because we need to post article about finance in our social media account, and we have different topic everyweek. For each topic, there are several articles should be read and summarise. 
+
+2. What kind of content you need for the final post? 
+    - we need an attractive title for every artical, it should contain the most import finance concept in the article. And summarization should be concise and also include images in orginal artical.
