@@ -43,7 +43,7 @@
 ### follow up interview：
 
 follow q4: 
-- What kind information could be helpful for you to navigate to specific website when needed? **There are only brife title in history log. It would be better if there are more detail information, for example, when I am searching for publication, I can see the journal name, some abstract, keyword, or famous author, something like this.**
+      - What kind information could be helpful for you to navigate to specific website when needed? **There are only brife title in history log. It would be better if there are more detail information, for example, when I am searching for publication, I can see the journal name, some abstract, keyword, or famous author, something like this.**
 
 - As you said, there are some title of paper are similay and have same keywords, but can you tell the difference of them? and if you are allow to customize how information is displayed in the history log for better organization, what will you put in title？ 
 **Yes I can tell them after I read the abstract. In my collection folder, I usually put papers in one scope in a same folder, and give them serial numbers. Then I will put journal name and brief summary.**

@@ -26,6 +26,6 @@
         - In scenarios where users need to open instant tabs during meetings or while providing quick responses to others, there's a desire for automatic tab recognition. Users often lack time to manually edit tags, and they want the extension to intelligently identify and categorize the content of these tabs. This feature aims to provide efficient task organization, enabling users to easily revisit and reference relevant information from previous instant tab sessions during subsequent meetings or tasks.
         - In another scenario, users need to deal with several task at same time or in same window. It require our extension to recognise the content for downstream steop such as task grouping. 
     2.  Content Summarization
-        - 
+        - A high-level, breif summary for each website and entile task can be helpful for user to follow the thinking process represented by history log or website list. 
     3.  Task Grouping
     4.  Sense-Making Assistance:

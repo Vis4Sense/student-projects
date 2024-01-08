@@ -25,7 +25,7 @@
 **A: I sometimes use smart phone for relax, while using PC for working. But seldom switch devices for working I am not an Apple user.**
 
 12.	Do you usually use mind map in your working routine?
-**A: I use mind map to memorize my research related knowledge, because they are usually distributed category and easy to be forgotten.****
+**A: I use mind map to memorize my research related knowledge, because they are usually distributed category and easy to be forgotten.**
 
 13.	Following image is a screenshot of history log, can you tell what this person trying to do by browsing these webpages?
  ![historylog example 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/example_1.png)
@@ -48,9 +48,16 @@
 **A: This person not only search on chatGPT and OpenAI but futher want to explore API by him/herself, the further demand is easy to be ignored. Besides, the person start a new searching topic that related with openAI, the news of the fired boss of OpenAI. In addition there are also some not aim-oriented searchin with related topic of facebook, it would be a prompt searching but not sticked to the original aim.**
 
 
+### follow up question
 New use case: 
 In scenarios where there are various scopes of searching, all related to a common task, such as organizing useful webpage for a conference in England, users often need to track diverse elements like conference websites, flight tickets, and travel plans. These items may belong to different categories, making it challenging for a simple algorithm to automatically recognize and group them together. Therefore we chould provides enhanced flexibility, allowing users to customize and define their own groups. This way, users can tailor the organization of their information according to the specific needs of their tasks.
 
-mindmap
+mindmap example: using mindmap organize the information about research topic. maintain key information for each small aspect. just like a tree notebook
+![mindmap example](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/404601704726967_.pic.jpg)
+for every node with orange document label, it allow to open a new page in this node, and add more information and images, 
 
 what kind of information you need when deliver content to other people, or try to understand other's chain of thought? 
+- need a high-level purpous of this set of searching behaviour. 
+- need a brief summary for each website, including the main topic and feature label(blog, shopping page) and what kind of information it can provide. 
+Only when the goal of the recommended list match with my goal, I will look into the detail. 
+- When it comes into recommendation, I prefer to read the extracted information from the list, rather than only give me the link list and require myself to explore. 
