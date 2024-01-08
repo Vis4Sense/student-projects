@@ -26,6 +26,20 @@
         - In scenarios where users need to open instant tabs during meetings or while providing quick responses to others, there's a desire for automatic tab recognition. Users often lack time to manually edit tags, and they want the extension to intelligently identify and categorize the content of these tabs. This feature aims to provide efficient task organization, enabling users to easily revisit and reference relevant information from previous instant tab sessions during subsequent meetings or tasks.
         - In another scenario, users need to deal with several task at same time or in same window. It require our extension to recognise the content for downstream steop such as task grouping. 
     2.  Content Summarization
-        - A high-level, breif summary for each website and entile task can be helpful for user to follow the thinking process represented by history log or website list. 
-    3.  Task Grouping
+        - A high-level, breif summary for each website and entile task can be helpful for user to follow the thinking process represented by history log or website list. User tend to obtain the extracted information directly, rather than only get the list and explore the content by themselves. 
+    3.  Task clustering
+        - Grouping webpages according to the topic is important for user to recall their task and trace back to some imprtant links. 
     4.  Sense-Making Assistance:
+        - Provide additional features or tools that assist users in making sense of the information. This could involve visualizations, categorization, or highlighting important details.
+    5.  Relevant content recommendation 
+        - Users are seeking more reliable recomendation system, not only rely on single key word match, but refer other's thinking process. 
+
+5. Different use case
+    1. Instant Task Handling During Conversations:
+        Streamlining quick tasks and tab management during conversations and meetings.
+    2. Efficient Multi-Task Management:
+        Organizing and navigating multiple tasks simultaneously with content recognition.
+    3. Comprehensive Single-Task Navigation:
+        Navigating a single task with multiple sources and aspects through summarization and clustering.
+    4.  Interactive Exploration with Step-by-Step Visualization:
+        Enhancing website exploration with a step-by-step flow chart and sense-making tools.
