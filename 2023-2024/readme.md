@@ -9,7 +9,7 @@
 - Chat with your data using LLM
   - Hongye An (PGT): Chat with your academic papers with LLM
 - LLM for trading ([meeting notes](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/llm-trading.md))
-  - Ralk Farkas (UG)
+  - Raul Farkas (UG)
   - Muhamad Hermawan (PGT)
   - Xiruo Sun (PGT)
 
