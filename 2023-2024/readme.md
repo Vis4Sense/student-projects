@@ -30,9 +30,14 @@ Ziyue
 3. next step ...
 
 Jiaqi
-1. progress ...
-2. question and difficulty ...
-3. next step ...
+1. progress <p>
+Finishied user interview and analysis. Pull out the requirements and functionality list.
+
+2. question and difficulty <p>
+what kind of database to store the data. (vector database, knowledge graph or json file)
+
+3. next step <p>
+User interface design and implementation
 
 Rachan
 1. progress ...
