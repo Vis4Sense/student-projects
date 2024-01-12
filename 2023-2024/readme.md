@@ -50,9 +50,14 @@ Jiawan
 3. next step ...
 
 Hongye
-1. progress ...
-2. question and difficulty ...
-3. next step ...
+1. progress:
+   a. Work with the interim report (progress: 50%), expect to finish the first edition and request review by next Wednesday.
+   b. Continue to improve the prototype, use `langchain` in backend side and `three.js` in frontend to visualization.
+2. question and difficulty:
+   a. What is the subsequent mid-term presentation process?
+3. next step:
+   a. Continue to improve the prototype.
+   b. Based on the interim report, add the evaluation part, the final report is completed.
 
 Peining
 1. progress ...
