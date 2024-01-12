@@ -42,7 +42,6 @@ Jiaqi
    1. Tested the prompt's ability to produce a dense summary from the article. 
 2. question and difficulty
    1. what kind of database to store the data. (vector database, knowledge graph or json file)
-
 3. next step
    - User interface design and implementation
 
@@ -51,7 +50,7 @@ Rachana
 2. question and difficulty ...
 3. next step ...
 
-Jianwan
+Jianwen
 1. progress ...
 2. question and difficulty ...
 3. next step ...
