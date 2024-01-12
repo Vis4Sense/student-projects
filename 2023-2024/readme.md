@@ -31,6 +31,8 @@ Ziyue
 2. question and difficulty ...
    - There are many browsers, just develop it for google? Or develop it for Miscrosoft edge?
 3. next step ...
+   - analyse the results of interview - requirement list
+   - create a design of the extension
    - Set a usable user interface if the extension set up process is done.
 
 Jiaqi
