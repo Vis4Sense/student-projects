@@ -32,7 +32,7 @@ Ziyue
 Jiaqi
 1. progress <p>
 Finishied user interview and analysis. Pull out the requirements and functionality list.
-
+Tested the prompt's ability to produce a dense summary from the article. 
 2. question and difficulty <p>
 what kind of database to store the data. (vector database, knowledge graph or json file)
 
