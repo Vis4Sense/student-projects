@@ -33,6 +33,7 @@ Ziyue
 3. next step ...
    - analyse the results of interview - requirement list
    - create a design of the extension
+   - test google knowledge graph api: [postman](https://www.postman.com/)
    - Set a usable user interface if the extension set up process is done.
 
 Jiaqi
