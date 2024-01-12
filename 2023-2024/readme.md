@@ -26,11 +26,11 @@
 
 Ziyue
 1. progress ...
-New interviews following previous question list. Develop extension.
+   - New interviews following previous question list. Develop extension.
 2. question and difficulty ...
-There are many browsers, just develop it for google? Or develop it for Miscrosoft edge?
+   - There are many browsers, just develop it for google? Or develop it for Miscrosoft edge?
 3. next step ...
-Set a usable user interface if the extension set up process is done.
+   - Set a usable user interface if the extension set up process is done.
 
 Jiaqi
 1. progress
