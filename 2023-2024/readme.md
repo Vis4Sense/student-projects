@@ -64,7 +64,7 @@ Hongye
    
    a. Continue to improve the prototype.
    
-   b. Based on the interim report, add the evaluation part, the final report is completed.
+   b. Based on the midterm report, combined with the evaluation section, proceed to complete the final report.
 
 Peining
 1. progress ...
