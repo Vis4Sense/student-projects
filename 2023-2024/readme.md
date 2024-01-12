@@ -52,8 +52,14 @@ Rachana
 
 Jianwen
 1. progress ...
-2. question and difficulty ...
-3. next step ...
+   - finished 2 user interviews, established concrete project plan.
+   - finished initial project code structure
+3. question and difficulty ...
+   - how to extract model components from text code?
+   - how to control the trggering of preview updates?
+5. next step ...
+   - combine extension's user interatcion with code comments generation
+   - figure out user's preference of visualizations and previewing contents 
 
 Hongye
 1. progress:
