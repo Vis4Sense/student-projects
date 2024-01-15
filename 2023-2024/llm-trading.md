@@ -11,8 +11,15 @@ Muhamad Hermawan
 
 Xiruo Sun
 1. progress ...
-2. question and difficulty ...
-3. next step ...
+do some model experiments
+3. question and difficulty ...
+should I do the fine-tuning the model or I just use the model quantized by others and only change hyperparameter?
+4. next step ...
+further hyperparameter tuning
+try Azure openai chatgpt
+find a better evaluation method
+use whole dataset with GPU
+
 
 # 11 Dec 2023
 
