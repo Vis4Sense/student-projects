@@ -19,7 +19,9 @@ Xiruo Sun
    - try Azure openai chatgpt
    - find a better evaluation method
    - use whole dataset with GPU
-
+  
+Kai
+- forward Xiruo the emails about PC to run LLM
 
 # 11 Dec 2023
 
