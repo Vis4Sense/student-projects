@@ -15,9 +15,11 @@ Xiruo Sun
 3. question and difficulty ...
    - should I do the fine-tuning the model or I just use the model quantized by others and only change hyperparameter?
 4. next step ...
-   - further hyperparameter tuning
+   - writing everything down
+   - create the charts for the results
+   - ~~further hyperparameter tuning~~
    - try Azure openai chatgpt
-   - find a better evaluation method
+   - ~~find a better evaluation method~~
    - use whole dataset with GPU
   
 Kai
