@@ -7,9 +7,14 @@ Raul Farkas
 5. Continue development of the trading platform and start development of the Python API.
 
 Muhamad Hermawan
-1. progress ...
-2. question and difficulty ...
-3. next step ...
+1. progress
+   Done testing sentiment analysis on 42 Quantized 4 bit model (7b, 10.7b, 11b, 13b, and 20b model parameters). Test conducted in 4 different dataset, financial phrasebank (sentiment classification), SemEval2017 (sentiment strength), SentFin1.1 (identifying entity and its sentiment), and Emotion Stimuli (7 emotion extraction). Done testing Orca 2 in all variance (6 variance - 13b 4bit and 8bit)  and (7 variance - 7b 4bit and 8bit + 7b unquantized version) on Financial phrasebank dataset.
+3. question and difficulty
+   - reporting layout for all 42 model testing, and evaluation metrinc regarding adding another evaluation metric such as F1, recall, and precision
+5. next step 
+- testing Orca 2 all variance (6 variance - 13b 4bit and 8bit)  and (7 variance - 7b 4bit and 8bit + 7b unquantized version) on SemEval2017 datasets.
+- Testing the 42 models on entity extraction dataset using another prompt.
+- prompt engineering comparation to see how big is the result difference if using different prompt (slight and total different prompt)
 
 Xiruo Sun
 1. progress ...
