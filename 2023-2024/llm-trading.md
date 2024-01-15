@@ -22,6 +22,7 @@ Xiruo Sun
   
 Kai
 - forward Xiruo the emails about PC to run LLM
+- ask about the Azure API
 
 # 11 Dec 2023
 
