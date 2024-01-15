@@ -1,8 +1,10 @@
 # 15 Jan 2024
 Raul Farkas
-1. progress ...
-2. question and difficulty ...
-3. next step ...
+1. Completed implementation of the Data Provider (component that gets live and historical data from Alpaca), completed implementation of Data Storage (component that saves all the data that arrives from any source). Development in progress for the Sentiment Analyzer component (that performs sentiment analysis using LLM on news). Development of the Python API not started yet.
+
+3. The development of storage component took significant time, which stretched the timeline for the platform development. 
+   
+5. Continue development of the trading platform and start development of the Python API.
 
 Muhamad Hermawan
 1. progress ...
