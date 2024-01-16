@@ -30,8 +30,8 @@ Xiruo Sun
    - use whole dataset with GPU
   
 Kai
-- forward Xiruo the emails about PC to run LLM
-- ask about the Azure API
+- [ ] forward Xiruo the emails about PC to run LLM
+- [x] ask about the Azure API
 
 # 11 Dec 2023
 
