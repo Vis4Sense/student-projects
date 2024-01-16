@@ -33,8 +33,6 @@ Kai
 - [x] forward Xiruo the emails about PC to run LLM
 - [x] ask about the Azure API
 
-test github.dev
-
 # 11 Dec 2023
 
 This will be the last meeting for 2023, meeting in 2024 resumes on Monday, 15 January.
