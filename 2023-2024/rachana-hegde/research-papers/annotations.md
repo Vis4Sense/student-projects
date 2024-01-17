@@ -1,6 +1,6 @@
 # Notes on Research Papers 
 ## LLMs for Creative Writing
-## ****End-to-end Story Plot Generator****
+### ****End-to-end Story Plot Generator****
 [Link](https://arxiv.org/abs/2310.08796), Oct 2023 (Preprint)
 
 - [Paper summary from Twitter](https://twitter.com/tydsh/status/1720124757084098898): It can generate a complete story plot with 1,000+ tokens, including setting, characters, outlines, in less than 30 seconds, and can be further fine-tuned for different goals. It is based on our previous story generation paper ([https://arxiv.org/abs/2212.10077](https://t.co/Fnj5gl2oqj)), but is much faster and does not require hundreds of OpenAI API calls. Code and data are open sourced.
