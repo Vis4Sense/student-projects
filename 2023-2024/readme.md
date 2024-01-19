@@ -16,7 +16,7 @@
  |                   | Ziyue | Jiaqi | Rachana | Jianwen | Peining | Hongye |
  |-------------------|-------|-------|---------|--------|---------|--------|
  |interview questions|       | [Questions](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/interview_question.md) | [Questions](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-questions.md)     |  [Questions](./jianwen-lyu/interviews/Questions.md)      |         |    [questions](./hongye-an/interview/interview-question.md)    |
- |recruit user       |  1    |4 users| 3 users |  2 users    |         |    1    |
+ |recruit user       |  1    |4 users| 3 users |  2 users    |         |    2    |
  |conduct interview  |  1    |[user1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_1.md),[user2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_2.md),[user3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_3.md), [user4](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/response_4.md)  | [User 1](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-one.md), [User 2](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-two.md), [User 3](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/interview-user-three.md)     |        |         |    [interview-01](./hongye-an/interview/interview-01.md) [interview-02](./hongye-an/interview/interview-02.md)   |
  |analyse data       |       |[Analysis](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/analysis.md)       | [Analysis](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/interviews/user-interview-analysis.md) |        |         |    [Analysis](./hongye-an/interview/analysis.md)    |
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
@@ -64,19 +64,13 @@ Jianwen
 Hongye
 1. progress:
    
-   a. Work with the interim report (progress: 50%), expect to finish the first edition and request review by next Wednesday.
-
-   b. Continue to improve the prototype, use `langchain` in backend side and `three.js` in frontend to visualization.
+   a. Still working with the midterm report
 
 2. question and difficulty:
-   
-   a. What is the subsequent mid-term presentation process?
-  
+
 3. next step:
    
    a. Continue to improve the prototype.
-   
-   b. Based on the midterm report, combined with the evaluation section, proceed to complete the final report.
 
 Peining
 1. progress ...
