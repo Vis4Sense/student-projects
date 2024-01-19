@@ -49,7 +49,7 @@ Rachana
 1. progress: annotating research papers on using LLMs for creative writing tasks - i.e. plot generation and script generation. Experimented with finetuning stable diffusion with dreambooth via google colab.
 2. question and difficulty: determining the kind of research contribution my project can make and how it will help with writer's block
 3. meeting: discussed research directions such as using LLM for generating plot ideas, addressing model limitations for Dall E/Stable Diffusion using prompting or finetuning of the model or automatic caption generation for the image.
-4. next step: pick research direction from 4 options and choose , deciding on research direction, drafting first semester report.
+4. next step: pick research direction from 4 options and find papers/information to see how to implement, drafting first semester report.
 
 Jianwen
 1. progress ...
