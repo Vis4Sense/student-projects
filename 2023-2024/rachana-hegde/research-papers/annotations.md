@@ -3,7 +3,7 @@
 
 ## Co-Writing Screenplays and Theatre Scripts with Language Models: Evaluation by Industry Professionals
 
-[**Link](https://dl.acm.org/doi/abs/10.1145/3544548.3581225) (ACM CHI), April 2023**
+[Link](https://dl.acm.org/doi/abs/10.1145/3544548.3581225) (ACM CHI), April 2023
 
 - From Abstract: By building structural context via **prompt chaining**, Dramatron can generate coherent scripts and screenplays complete with title, characters, story beats, location descriptions, and dialogue. We illustrate Dramatron’s usefulness as an interactive co-creative system with a user study of 15 theatre and film industry professionals. Participants co-wrote theatre scripts and screenplays with Dramatron and engaged in open-ended interviews.
 - This is a difficult task for LLMs because the narrative of a script or screenplay must exhibit long-term coherence and reincorporation, and LLMs are limited in their ability to model long-range dependencies (e.g., to reincorpo- rate information from many pages ago). This limitation stems from the context window of LLMs, which today is limited to at most 2048 tokens (i.e. about 1500 words) in state-of-the-art models.
