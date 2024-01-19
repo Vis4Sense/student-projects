@@ -46,9 +46,9 @@ Jiaqi
    - User interface design and implementation
 
 Rachana
-1. progress: annotating research papers on using LLMs for creative writing tasks - i.e. plot generation and script generation.
+1. progress: annotating research papers on using LLMs for creative writing tasks - i.e. plot generation and script generation. Experimented with finetuning stable diffusion with dreambooth via google colab.
 2. question and difficulty: determining the kind of research contribution my project can make and how it will help with writer's block
-3. next step: updating my project plan to reflect the direction I choose. 
+3. next step: reading papers on writer's block & solutions and generative AI for writing or story illustration, deciding on research direction, coming up with high level plan.
 
 Jianwen
 1. progress ...
