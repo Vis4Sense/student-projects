@@ -11,7 +11,7 @@
     - ‘writers worried about reader percep- tion of authenticity, suggesting that **a system that can accurately mimic a writer’s unique style may not create authenticity concerns.’**
     - ‘systems that customize to a writer over time may also result in contributions that feel more like they came from the writer (as the writer contributed, implicitly or explicitly, to customizing the system) versus a generic program.’
 
-# **End-to-end Story Plot Generator**
+**End-to-end Story Plot Generator**
 
 - **I can’t implement this exact solution even if they have provided the code. But there is useful information about how they designed and structured prompts to generate information about premise, characters, etc. from the LLM.**e. “*Moreover, the output of Llama2 focuses more on the age and appearance of the character instead of occupation, experiences, or relationships with other characters (e.g., “Tom is 22 years old and has brown curly hair”). Therefore, we add detailed instructions on generating portraits such as “focusing on relationship between characters, occupation and experience instead of appearance” to ensure the generated portraits contain more useful information about the character.*
 
