@@ -35,6 +35,13 @@ Rachana
 3. meeting: discussed research directions such as using LLM for generating plot ideas, addressing model limitations for Dall E/Stable Diffusion using prompting or finetuning of the model or automatic caption generation for the image.
 4. next step: pick research direction from 4 options and find papers/information to see how to implement, drafting first semester report.
 
+Hongye
+1. progress:
+   - Still working with the midterm report
+2. question and difficulty:  <br>
+3. next step:
+   - Continue to improve the prototype.
+
 # 12 Jan 2024
 
 Ziyue
@@ -71,14 +78,13 @@ Jianwen
 
 Hongye
 1. progress:
-   
-   a. Still working with the midterm report
-
+   - Work with the interim report (progress: 50%), expect to finish the first edition and request review by next Wednesday.
+   - Continue to improve the prototype, use `langchain` in backend side and `three.js` in frontend to visualization.   
 2. question and difficulty:
-
+   - What is the subsequent mid-term presentation process?
 3. next step:
-   
-   a. Continue to improve the prototype.
+   - Continue to improve the prototype.
+   - Based on the midterm report, combined with the evaluation section, proceed to complete the final report.
 
 Peining
 1. progress ...
