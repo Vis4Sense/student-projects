@@ -1,3 +1,5 @@
+# Papers on improving prompts to address diffusion model limitations
+
 Note: These papers involve tuning an LLM with RLHF and it isn’t feasible for me to emulate their approach. 
 
 ## ****Mini-DALLE3: Interactive Text to Image by Prompting Large Language Models****
