@@ -22,6 +22,12 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 23 Jan 2024
+
+Rachana 
+1. progress: read and took notes on research papers on writer's block, using AI to support creative writers, customising diffusion models via finetuning on a small dataset, generating images to illustrate stories with finetuned diffusion models, finetuning LLM to improve prompts for image generation models. Also selected research direction and put together updated project plan.
+2. next step: start first semester report draft.
+
 # 19 Jan 2024
 
 Ziyue
