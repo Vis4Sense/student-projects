@@ -1,3 +1,8 @@
+# 22 Jan 2024
+
+Raul
+
+
 # 15 Jan 2024
 Raul Farkas
 1. Completed implementation of the Data Provider (component that gets live and historical data from Alpaca), completed implementation of Data Storage (component that saves all the data that arrives from any source). Development in progress for the Sentiment Analyzer component (that performs sentiment analysis using LLM on news). Development of the Python API not started yet.
