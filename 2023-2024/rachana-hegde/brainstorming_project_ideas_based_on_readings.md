@@ -1,4 +1,4 @@
-# Project ideas based on research paper readings (January 2024)
+# Project ideas based on research paper readings on using generative AI (LLMs) for writing (January 2024)
 
 - AI providing some way for the writer to discuss their ideas and develop them further…this is very much like a chatbot application (which has been implemented as well of course before). And it is hard to differentiate this from just straight up interacting with chat GPT.
 
