@@ -1,22 +1,14 @@
 [
   {
-    "Missing_Entities": "Large Language Model (LLM) agents; financial analysts; retrieval augmented generation (RAG) pipeline",
-    "Denser_Summary": "This extensive and thought-provoking narrative speaks on the topic of Large Language Model (LLM) agents, which are utilized by financial analysts to dissect data, especially about financial performance of companies. Particularly, it emphasizes the combined usage of these LLM agents with retrieval augmented generation (RAG) pipelines to enable analysts to rectify complex questions which could otherwise consume a significant amount of time in data assembly and interpretation."
+    "Missing_Entities": "deep learning; unstructured data; tuning",
+    "Denser_Summary": "This article outlines the mechanics behind large language models (LLMs), sophisticated AI programs capable of processing and generating human language by being trained on extensive data sets derived from vast resources such as the internet. The training process involves the application of deep learning techniques to analyze unstructured data, enabling these models to understand how words and sentences operate collectively. Additionally, LLMs undergo a fine-tuning process tailored to the specific task at hand, such as language translation or response generation to prompts or questions."
   },
   {
-    "Missing_Entities": "Agent core; Memory module; Tools; Planning module",
-    "Denser_Summary": "The article unpacks the complex architecture of Large Language Model (LLM) agents, in particular, the agent core which holds the central logic and behavioral elements; the memory modules which store the agents' thought process and interactions; the supporting tools which are executable programs the agents use to execute tasks; and the planning modules which aid in complex problem-solving by creating an optimised route of action."
+    "Missing_Entities": "ChatGPT; code-generating LLMs; DNA research",
+    "Denser_Summary": "LLMs, employing deep learning for nuanced understanding of textual structures from vast unstructured data sets, are tailored for diverse tasks through fine-tuning. One such application is demonstrated through OpenAI's LLM, ChatGPT, proficient in generating high-quality texts such as essays or poems on user prompts. Furthermore, LLMs have been trained on complex data sets like programming languages, aiding coders by crafting functions or completing codes. These capabilities of LLMs extend to intricate domains such as DNA research, highlighting their versatile potentials."
   },
   {
-    "Missing_Entities": "AutoGPT and BabyAGI projects; Task and question decomposition; Reflection or critic technique",
-    "Denser_Summary": "Underlining the complexity of LLM agents, the article introduces readers to projects like AutoGPT and BabyAGI, characterized by the agent's ability to solve intricate problems. A key aspect of an LLM agent, according to the article, is its ability to break down or 'decompose' tasks and questions, in conjunction with the use of a reflection or critic technique, which helps fine-tune the agent's plan of action."
-  },
-  {
-    "Missing_Entities": "Swarm of agents; Customized AI author agents; Multi-modal agents",
-    "Denser_Summary": "Examining the broad spectrum of potential applications, the article highlights some exemplary use cases of LLM agents. This includes a 'swarm of agents'--seamlessly 'smart' microservices working in unison; 'customised AI author agents'--capable of crafting succinct audience-specific content; and 'multi-modal agents'--able to process different forms of inputs such as text, images and audio files."
-  },
-  {
-    "Missing_Entities": "Data curation agents; social graph agents; domain expertise agents",
-    "Denser_Summary": "Building on the concept of specialized AI agents, the article showcases a couple of innovative types under active development. Among these are 'data curation agents' which expertly sift through, gather and organise relevant data; 'social graph agents' that capture and manipulate data from social networks and 'domain expertise agents' inculcated with specialised knowledge base, tailor-made to answer specific industry-related questions."
+    "Missing_Entities": "Bugs & security issues; LLMs' hallucination; user confidential data",
+    "Denser_Summary": "Deep learning-enriched LLMs like ChatGPT and code-helping models are fine-tuned for various duties, including responding to prompts and dissecting complex data such as genetics. However, these LLMs carry their own baggage of challenges. Despite their unmatched versatility, they endure common application issues, exhibiting bugs and security flaws. Paradoxically, their strength of free-form comprehension can lead to 'hallucination', generating misleading or inaccurate information. Lastly, while many users can unwittingly expose their sensitive data to augment LLM capabilities, these models lack secure data handling, potentially leaking pertinent details."
   }
 ]

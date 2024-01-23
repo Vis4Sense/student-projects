@@ -28,6 +28,11 @@ Rachana
 1. progress: read and took notes on research papers on writer's block, using AI to support creative writers, customising diffusion models via finetuning on a small dataset, generating images to illustrate stories with finetuned diffusion models, finetuning LLM to improve prompts for image generation models. Also selected research direction and put together updated project plan.
 2. next step: start first semester report draft.
 
+Jiaqi
+1. progress
+  - revised report
+  - searching practice of distributed or hosted extension
+2. next step: prepare for presentation
 # 19 Jan 2024
 
 Ziyue
@@ -47,6 +52,15 @@ Hongye
 2. question and difficulty:  <br>
 3. next step:
    - Continue to improve the prototype.
+
+Jiaqi
+1. progress:
+  - designed a detailed user interface in Figma
+  - finished the draft of first semester report
+2. question
+3. next step
+  - consider the approach of using NLP rather than LLM for some function
+  - revise the report
 
 # 12 Jan 2024
 
