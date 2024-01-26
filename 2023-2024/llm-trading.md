@@ -2,6 +2,17 @@
 
 Raul
 
+Muhamad Hermawan
+1. Progress:
+   - Done testing 5 different prompts on each dataset (Financiall Phrasebank, SemEval2017, SentFin-v1.1, Emotion Stimuli)
+   - Done testing orca 2 7 and 13 bilion parameters in all quantisation variants + 7b unquantised
+   - First smester report draft progres: Already drafting the Methodology, Experiment Setup, and Findings, Providing Graphical from the testing result
+2.Question and difficulty
+   - About citing the quantised model tested if the model does not giving citing sugestion on its page or the model does not have paper
+3. Next Step
+   - Finalise all testing, Finishing First semester reporting
+   - Preparing data for next nearest goal of the project (implementing LLMs' sentiment analysis on trading framework)
+
 
 # 15 Jan 2024
 Raul Farkas
@@ -18,8 +29,8 @@ Muhamad Hermawan
    - reporting layout for all 42 model testing, and evaluation metrinc regarding adding another evaluation metric such as F1, recall, and precision
 5. next step 
 - testing Orca 2 all variance (6 variance - 13b 4bit and 8bit)  and (7 variance - 7b 4bit and 8bit + 7b unquantized version) on SemEval2017 datasets.
-- Testing the 42 models on entity extraction dataset using another prompt.
 - prompt engineering comparation to see how big is the result difference if using different prompt (slight and total different prompt)
+- First smester drafting
 
 Xiruo Sun
 1. progress ...
