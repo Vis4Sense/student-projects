@@ -1,6 +1,18 @@
 # 22 Jan 2024
 
 Raul
+1. Progress:
+   - Completed implementation of sentiment analysis for analysing news data from database with both normal and semantic approaches.
+      - Only ollama currently supported as a model provider for now
+   - Missing live news analysis (delayed for later since not immediately needed. Priority is given to implmeneting the client library for the trading platform)
+   - Trading platform wrapped in docker containers making it easier to run it with just one simple commnad (documentation not written yet)
+   - Started a bug crunch and refactoring process to reduce code size and find any bugs (still in progress)
+2. Question and difficulty
+   - None currently, development is progressing well
+3. Next steps
+   - Priority is given to the development of the trading platform python API
+   - Starting to write user guide for trading platform and trading platform client
+   - Continue with bug crunch and refactoring
 
 Muhamad Hermawan
 1. Progress:
