@@ -7,6 +7,7 @@ Raul
    - Missing live news analysis (delayed for later since not immediately needed. Priority is given to implmeneting the client library for the trading platform)
    - Trading platform wrapped in docker containers making it easier to run it with just one simple commnad (documentation not written yet)
    - Started a bug crunch and refactoring process to reduce code size and find any bugs (still in progress)
+   - Had a quick look at weights and biases platform. Seems possible to install on-premise open source version. Further investigation will be done when RL models training       starts.
 2. Question and difficulty
    - None currently, development is progressing well
 3. Next steps
