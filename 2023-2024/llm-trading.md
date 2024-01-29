@@ -14,6 +14,9 @@ Muhamad Hermawan
 2. Question
 3. Next:
    - Preparing presentation documentation
+   - Discuss with Xiruo about how to differentiate our project, strategy, assets, etc
+   - Read asyncio python documentation
+   - learn a bit about RL qym through its documentation
 
 Raul
 1. Progress:
