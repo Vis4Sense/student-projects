@@ -1,3 +1,15 @@
+# 29 Jan 2024
+Xiruo Sun
+1. Progress
+   - find another sentiment strengh benchmark: FiQA, and conduct experiments using FIQA
+   - finish the first semester report
+2. Question and difficulty
+   -None
+3. Next Step
+   - prepare the presentation
+   
+
+
 # 22 Jan 2024
 
 Raul
@@ -25,6 +37,13 @@ Muhamad Hermawan
 3. Next Step
    - Finalise all testing, Finishing First semester reporting
    - Preparing data for next nearest goal of the project (implementing LLMs' sentiment analysis on trading framework)
+
+Xiruo Sun
+1. Progress
+   - Conduct experiments using all the data from SemEval
+   - Complete the Experimental part of the first semester report 
+2. Next Step
+   - finish the first semester report
 
 
 # 15 Jan 2024
