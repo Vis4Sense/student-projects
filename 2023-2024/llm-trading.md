@@ -15,9 +15,6 @@ Muhamad Hermawan
 3. Next:
    - Preparing presentation documentation
 
-
-# 22 Jan 2024
-
 Raul
 1. Progress:
    - Completed implementation of sentiment analysis for analysing news data from database with both normal and semantic approaches.
@@ -32,6 +29,15 @@ Raul
    - Priority is given to the development of the trading platform python API
    - Starting to write user guide for trading platform and trading platform client
    - Continue with bug crunch and refactoring
+
+
+# 22 Jan 2024
+Raul Farkas
+1. Completed implementation of the Data Provider (component that gets live and historical data from Alpaca), completed implementation of Data Storage (component that saves all the data that arrives from any source). Development in progress for the Sentiment Analyzer component (that performs sentiment analysis using LLM on news). Development of the Python API not started yet.
+
+3. The development of storage component took significant time, which stretched the timeline for the platform development. 
+   
+5. Continue development of the trading platform and start development of the Python API.
 
 Muhamad Hermawan
 1. Progress:
@@ -53,12 +59,6 @@ Xiruo Sun
 
 
 # 15 Jan 2024
-Raul Farkas
-1. Completed implementation of the Data Provider (component that gets live and historical data from Alpaca), completed implementation of Data Storage (component that saves all the data that arrives from any source). Development in progress for the Sentiment Analyzer component (that performs sentiment analysis using LLM on news). Development of the Python API not started yet.
-
-3. The development of storage component took significant time, which stretched the timeline for the platform development. 
-   
-5. Continue development of the trading platform and start development of the Python API.
 
 Muhamad Hermawan
 1. progress
