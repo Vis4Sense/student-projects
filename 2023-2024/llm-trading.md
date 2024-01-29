@@ -1,7 +1,7 @@
 # 29 Jan 2024
 Xiruo Sun
 1. Progress
-   - find another sentiment strengh benchmark: FiQA, and conduct experiments using FIQA
+   - find another sentiment strengh benchmark: FiQA, and conduct experiments using FIQA: https://sites.google.com/view/fiqa/home
    - finish the first semester report
 2. Question and difficulty
    - None
