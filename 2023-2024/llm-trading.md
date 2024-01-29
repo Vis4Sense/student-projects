@@ -7,7 +7,13 @@ Xiruo Sun
    - None
 3. Next Step
    - prepare the presentation
-   
+
+Muhamad Hermawan
+1. Progress
+   - have finished first semester report
+2. Question
+3. Next:
+   - Preparing presentation documentation
 
 
 # 22 Jan 2024
