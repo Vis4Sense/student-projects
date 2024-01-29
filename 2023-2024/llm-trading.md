@@ -4,7 +4,7 @@ Xiruo Sun
    - find another sentiment strengh benchmark: FiQA, and conduct experiments using FIQA
    - finish the first semester report
 2. Question and difficulty
-   -None
+   - None
 3. Next Step
    - prepare the presentation
    
