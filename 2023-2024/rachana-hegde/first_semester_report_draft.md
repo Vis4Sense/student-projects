@@ -15,7 +15,7 @@ TBC
 
 Generative  AI is altering conventional approaches to working in multiple industries by creating a paradigm shift through automation and enhanced productivity. Applications for generative AI include email writing, teaching assistance, graphic design, code synthesis, facilitation of drug exploration, copywriting, virtual assistance and content creation [1]. Large language models (LLMs), in particular, such as GPT-3, generate text and carry out tasks such as writing code and autocompletion, often without requiring specialised training [2]. LLMs are also useful for natural language processing tasks such as script and plot generation [2], [3], [4]. Generative image models such as Stable Diffusion [5] are trained to denoise images with guidance from prompts, thereby producing new images [6]. Text-to-image generative models have varied use cases from facilitating industrial design [7] to news illustration [8] and producing images for radiology [9].
 
-This research project explores using generative AI to assist creative writers with brainstorming. The following paragraphs discuss the creative needs of writers, challenges of applying diffusion models to writing tasks and an proposed solution, and the potential contributions of this research project. ****
+This research project explores using generative AI to assist creative writers with brainstorming. The following paragraphs discuss the creative needs of writers, challenges of applying diffusion models to writing tasks and an proposed solution, and the potential contributions of this research project.
 
 Writers often utilize Pinterest to find visual inspiration, curating vision boards that evoke the aesthetics and themes of their story. However, it is difficult to find images that precisely capture their vision. This problem is twofold because firstly, it is challenging to find artwork for characters that are fantastical creatures with unconventional appearances. Secondly, even if the character possesses a more generic appearance, it is unlikely that there will be images depicting that character in a specific setting from the story. Traditional solutions for this involve commissioning custom artwork, which is expensive, and searching for images on various websites, which is time-consuming and tedious.
 
@@ -162,8 +162,6 @@ My goal is also to develop an application with an interface that will make this 
 Storyboard template will be the hero’s journey **– need to find an article on this to cite**
 
 ## Future work
-
-## 
 
 **Prototype evaluation and user testing**
 
