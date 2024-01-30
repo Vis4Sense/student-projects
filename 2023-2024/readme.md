@@ -27,6 +27,16 @@ Rachana
 1. progress: made a bullet point outline for first semester report, have written 2k word draft of semester report
 2. next step: finish the report draft and get feedback
 
+Hongye
+1. progress:
+   - refine the midterm report
+2. question and difficulty:
+   - I started coding for the project last week, and I found that a little bit complex than I thought before (A rough flow chart for processing user input: [img link](./hongye-an/imgs/backend.png)). 
+   - Ethics-related staff ?
+   - The specific agenda of the presentation ?
+3. next step:
+   - prepare for presentation
+
 # 23 Jan 2024
 
 Rachana 
@@ -39,17 +49,6 @@ Jiaqi
   - revised report
   - searching practice of distributed or hosted extension
 2. next step: prepare for presentation
-
-Hongye
-1. progress:
-   - refine the midterm report
-2. question and difficulty:
-   - I started coding for the project last week, and I found that a little bit complex than I thought before (A rough flow chart for processing user input: [img link](./hongye-an/imgs/backend.png)). 
-   - Ethics-related staff ?
-   - The specific agenda of the presentation ?
-3. next step:
-   - prepare for presentation
-
 
 # 19 Jan 2024
 
