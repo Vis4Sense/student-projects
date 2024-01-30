@@ -24,7 +24,7 @@
 
 # 30 Jan 2024
 Rachana
-1. progress: made a bullet point outline for first semester report, have written 2k word draft of semester report
+1. progress: made a bullet point outline for first semester report, have written 4000 word draft of semester report
 2. next step: finish the report draft and get feedback
 
 Hongye
