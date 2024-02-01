@@ -1,5 +1,3 @@
-![image](https://github.com/Vis4Sense/student-projects/assets/66835338/3b3c030f-6c77-419c-9498-9f42b0a5b76e)Note: I'm aware that the formatting is incorrect and I will fix this as soon as I finish writing the draft. 
-
 # First Semester Report
 
 ## Abstract
