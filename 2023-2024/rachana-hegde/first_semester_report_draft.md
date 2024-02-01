@@ -442,10 +442,6 @@ Implementation Requirements for Image Generation Application
 | Image Display and Tracking | Ability to view prompt-image pairs and group images by prompt to track progression |
 |  | Functionality to click on an image to expand it for a larger view with details about the prompt, seed, and other generation parameters |
 
-Do I need to define what this is and cite a resource on it?
-
-**Ask Kai whether the sitemap should be included because it’s not particularly good and the final application won’t have many of these features (which I also note in my report but still).**
-
 ## References
 
 [1]  K. Kenthapadi, H. Lakkaraju, and N. Rajani, ‘Generative AI meets Responsible AI: Practical Challenges and Opportunities’, in *Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and Data Mining*, in KDD ’23. New York, NY, USA: Association for Computing Machinery, Aug. 2023, pp. 5805–5806. doi: 10.1145/3580305.3599557.
