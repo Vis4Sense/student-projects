@@ -92,12 +92,361 @@ One criticism of the LoRA, Dreambooth, and Textual Inversion fine tuning methods
 ## III. User Requirements
 **3700 words including tables**
 
+This section discusses the process of generating user requirements based on a thematic analysis of semi-formal user interviews with three writers in their twenties. Participants were selected on the basis of their interest in exploring generative AI applications in creative writing. Each interview ranged from 30 to 45 minutes and was conducted remotely over Microsoft Teams or Zoom. The video recordings of the interviews were transcribed manually, followed by a thorough analysis to extract key themes.
+
+1. Formative Interviews
+2. Interview Design
+
+This subsection summarizes the structure of the interviews. First, the participant was informed about the objective of the research project – to build an image generation application to assist writers – and some details about the motivations for working on this project. The initial list of questions is specified in Table I, but the interview was flexible, so if a participant made a relevant statement, I would offer a follow-up question to better grasp their point of view and keep the conversation flowing.
+
+TABLE I
+
+List of User Interview Questions
+
+**Questions**
+
+---
+
+What is your writing background? What is your preferred genre and length of story (i.e. novel, short fiction)?
+
+---
+
+What is your level of familiarity with using AI tools during your writing process – in particular, text to image generative models?
+
+---
+
+If you have used these tools in the past, what are some challenges you encountered?
+
+---
+
+Are there specific types of images or visual styles that you find particularly inspiring for your writing?
+
+---
+
+How important is it for you that the generated images match the tone or mood of your story?
+
+---
+
+Can you describe a typical writing session? When and how do you incorporate visual inspiration into your writing process?
+
+---
+
+How much time are you willing to spend exploring and generating images as part of your brainstorming process?
+
+---
+
+Would you value a feature that allows you to save or export generated images for later use?
+
+---
+
+How much control do you want over the generated images? For example, would you prefer detailed settings to fine-tune/customize the appearance of characters or settings?
+
+---
+
+In addition to character and setting images, are there other ways you imagine AI could assist in developing your story (i.e. suggesting plot points or dialogue based on the generated images)?
+
+---
+
+How important is it for you to give feedback on the generated images? Would you prefer a system that refines its suggestions based on your feedback over time?
+
+---
+
+What type of feedback mechanisms (e.g., rating, good/bad) would you find most helpful?
+
+---
+
+For the second part of the interview, participants completed an image generation exercise using the DreamStudio application by Stability AI which provides an web interface for Stable Diffusion. The goal of this exercise was to understand how the participants could potentially integrate an image generation tool into their writing process.  The exercise simulated the process of designing prompts to generate a character, setting, or otherwise relevant image for their story. Participants were encouraged to **describe their thought process while completing this exercise.**
+
+**To begin the exercise, participants were provided with a brief overview of the features of DreamStudio. They were, then, instructed to generate a character or setting for a pre-existing writing project or to use ChatGPT [35]** **to generate a plot idea in a specific genre then use that idea to generate character or setting ideas. This second option was intended to streamline the workflow of idea generation since this aspect of the writing process can ordinarily be time consuming.**
+
+**Questions that were asked after this image generation exercise are detailed in Table II below.**
+
+TABLE II
+
+List of Questions For Part II of Interview
+
+**Questions**
+
+---
+
+How closely do the generated images align with your initial vision?
+
+---
+
+Did any unexpected elements in the images spark new ideas for your character or setting?
+
+---
+
+How would you incorporate these generated images into your writing process? I.e. Would you use the images as reference points, scene inspiration, or as a starting point for further creative exploration.
+
+---
+
+What are some things you liked about using this tool?
+
+---
+
+What are some things you disliked about using this tool?
+
+---
+
+(Related?) Did you choose to use the advanced settings – why or why not?
+
+---
+
+What were some of the challenges of using a tool like this?
+
+---
+
+Did you find it easy to translate your ideas into prompts?
+
+---
+
+Were there limitations in the tool's output?
+
+---
+
+How could the tool be improved to better suit your creative needs?
+
+---
+
+How do you feel about integrating such a tool into your writing process? Do you see potential benefits?
+
+---
+
+Would you ever copy paste text directly from your story or poem into the prompt field and use that?
+
+---
+
+Would you prefer to use a website, desktop application, browser extension or some other form of this application (ideally so it won’t disrupt your creative workflow)?
+
+---
+
+1. Thematic Analysis
+
+The three users who were interviewed all wrote fiction but two users also had experience writing poetry. One participant had written a novel but currently crafted storylines as a Dungeon Master for Dungeons & Dragons. They, therefore, focused on creating flexible narratives that could change abruptly to adapt to the gameplay.
+
+Their responses during the interview were organised into three categories: how AI generated art can be helpful during the writing process, pain points in using an image generation tool and suggestions for features to implement in an image generation application for writers.
+
+Some of the benefits of using AI generated art are that incorporating AI-generated art at the writing planning stage can facilitate idea generation. Another user expressed the desire to find realistic images of corporate environments to better position their characters within the narrative, using these visual cues as a foundation for triggering personal memories and experiences that inform their storytelling. AI is also useful for creating secondary or supporting characters, helping authors to avoid unintentionally mirroring real individuals. Another reason users turn to conversational AI models like ChatGPT is to overcome writer’s block via creative writing prompts provided by ChatGPT. Furthermore, images serve as both inspiration for scenes and as reference points—for instance, a picture of a haunted mansion might be used at the onset of writing to inspire the setting and continuously throughout the writing process. Additionally, writers use these images to enhance descriptions within the narrative and to aid players of games like Dungeons & Dragons in visualizing the story more vividly, thereby making the narrative more engaging and accessible.
+
+**All three participants opted to generate images for a story idea they already possessed. They inputted a prompt and then, refined this prompt depending on how suitable the generated images were.  Fig. 1 and 2 are examples of images generated by user #2 for a setting and character that would be appropriate for the plot of a murder mystery novel set in South India.**
+
+Fig 1. Screenshot of DreamStudio interface from interview with User #2 for setting image generation
+
+Fig 2. Screenshot of DreamStudio interface from interview with User #2 for character image generation
+
+During the image generation exercise, participants expressed some frustrations regarding using DreamStudio and common pain points have been listed in Table III below.
+
+TABLE III
+
+List of Pain Points of Users
+
+**Pain Points**
+
+---
+
+**Prompt specificity and control**
+
+---
+
+**Experience using the user interface and learning curve associated with it**
+
+---
+
+**Adjusting details of character’s appearance**
+
+---
+
+**System limitations and constraints**
+
+---
+
+**Lack of clarity on content moderation**
+
+---
+
+**Lack of inclusivity and diversity**
+
+---
+
+The first pain point, prompt specificity and control, refers to users’ struggle to ascertain how specific prompts needed to be in order to adequately control the output as well as how to best structure the prompt (i.e. sentences vs keywords). They found it difficult to exclude unwanted elements (e.g., specific genders or architectural features) and to weight the importance of certain keywords in the prompts. For example, one user stated that it would take more effort to generate realistic images than to find them with Google image search since they primarily write realistic fiction and narrative poetry.
+
+In fact, the inadequate guidance provided for new users to DreamStudio – the steep learning curve and lack of documentation made it difficult to effectively use the tool. Furthermore, a lack of understanding of the system’s limitations made users hesitant to adjust certain settings, such as the number of generation steps. An user expressed the need to understand how altering an advanced setting such as prompt strength would affect the image without having to read extensive documentation.
+
+Another challenge users faced was in generating images of characters with particular skin tones and one user explained that this lack of inclusivity is a common problem they have encountered when using generative AI. They explained that the AI often struggles to provide images of non-conventionally attractive individuals who have specific features, such as disfigurements, requested by the user. Unfortunately, DreamStudio also did not appear to learn from previous inputs or user satisfaction, making it hard for users to iterate towards a desired outcome. Finally, there were issues with images being flagged as inappropriate without clear reasons, and difficulty in adjusting prompts to overcome these restrictions. Figure 3 illustrates this problem and how the user entered prompt “medieval human woman, grey skin, muscular, brunette” produced images flagged as inappropriate. There was no explanation indicated in the user interface as to why the images were flagged and this lack of clarity was frustrating to the user. It was also difficult to ascertain why these images were regarded as inappropriate because in the blurred outlines, the women appeared to be fully dressed and covered in armour.
 
 Fig 3. Screenshot of DreamStudio interface with flagged images from interview with User #3 for character image generation
 
 The third category, suggested features for an image generation application, is summarized in Table IV below. Some of these features are available in the DreamStudio application and participants mentioned how useful they were. Other features, such as prompt suggestions, were unavailable in DreamStudio and participants expressed the need for them to improve their user experience.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/6f72ca84-670c-4a4a-ba35-48571350322d/5c019a0d-b1fc-4465-89f7-eddfbd4d1c14/Untitled.png)
+TABLE IV
+
+List of Suggested Features For Image Generation Application
+
+| Feature Category | Features |
+| --- | --- |
+| Control and Customization | Mid to high-level control over image details |
+|  | Prompt suggestions and keyword recommendations |
+|  | Option to adjust randomness in image generation |
+|  | Selection of image style |
+|  | Conversion of story text into prompts |
+| User Interface and Accessibility | Website format for accessibility and login |
+|  | Hover-over text for tool explanation |
+|  | Queueing up prompts for batch image generation |
+|  | Organizational features – i.e. folder creation, save/export image |
+|  | Hover-over text for tool explanation |
+| Feedback and Improvement | Non-intrusive, optional, feedback mechanism |
+|  | Prompt-image history viewing for prompt refinement |
+| Content Generation | Dialogue generation |
+| Additional Features | Captions or descriptions alongside images |
+|  | Moodboard |
+1. Initial user requirements and site map
+
+The interviews helped to better understand the needs of creative writers, and the initial list of user requirements developed as a result is shown in Table V below.
+
+TABLE V
+
+Initial List of User Requirements for Image Generation Application
+
+| Category | User Requirements |
+| --- | --- |
+| Storyboarding and Mood-boarding | Storyboard to arrange images and add text for each scene |
+|  | Moodboard feature for organizing/filtering content, specific to projects |
+| Image Generation | Generation for both settings and characters, in realistic and fantastical/surrealist styles |
+|  | Control over setting, character details, image style, mood/tone (e.g., color), and degree of randomness |
+|  | Negative prompt field |
+|  | Option to adjust weighting for keywords in prompt |
+|  | Fixing physical appearance issues in generated characters |
+| Advanced Settings and Customization | Advanced settings (generation steps, model, seed, etc.) as optional but with default values |
+|  | Clarification on how settings affect images without extensive documentation |
+|  | Caption generation for images with specific writing styles and tones |
+|  | Image visualization map for clustering/sorting based on similarities |
+| Feedback and Improvement | Unintrusive/optional feedback on images to improve system performance |
+|  | Rating system for feedback with optional explanation space |
+|  | Feedback leading to improved future prompt suggestions |
+|  | Specific feedback on image aspects for correction in subsequent generations |
+| Organization and Accessibility | Save, export, and organize images and prompts by projects |
+|  | View prompt-image pairs (prompting history) |
+|  | Creating folders in the app for organization |
+|  | Hover-over text for tool explanation or interactive prompts for tool introduction |
+|  | Login/account functionality |
+|  | Application as a website |
+|  | Logging user interactions to a database |
+| Prompt Handling and Context | Suggestions for prompt expansion |
+|  | Prompt suggestions based on existing project information and prompt-image history |
+|  | Option to copy-paste prose directly into prompt field for conversion into a prompt |
+
+Based on the extensive list from Table V, an rough sitemap (Figure 4) depicting the user flow through the application was developed.
+
+Fig 4. Initial sitemap for image generation application
+
+However, although the list of requirements and sitemap were comprehensive, it became evident that it was too unrealistic to attempt to implement all of these features during this project. In addition, there was not a clear research direction present. Hence, I decided to test out using multiple generative AI models for creative writing to assess the benefits, potential use cases, and challenges of working with the software.
+
+1. Testing generative AI for writing tasks
+
+To identify research challenges that could be addressed through this research project, I utilised GPT-4 by OpenAI [36], Claude-2-100k by Anthrophic [37], DALL·E 3 [38] and Stable Diffusion XL [5] to assist me with a series of writing tasks. Due to my BA English Literature and Creative Writing degree, I have experience writing novels, short stories, and poetry. I used Poe [39] by Quora since it hosts multiple LLMs and image generation models which can all be accessed with a single paid subscription.
+
+1. Writing task #1: Generating images of scenes from a novel
+
+I used GPT-4 to edit prompts that I used to generate images of a scene from the first draft of my fantasy novel using DALL·E 3. The instruction provided to GPT-4 was: “Convert the following scene from a book I'm writing into a text description for Dall E.” This instruction was combined with several paragraphs describing a scene in which the main character is walking through the woods carrying the body of her dead mother. GPT-4 responded with the following prompt for DALL·E: *A person carrying a heavy body through a serene forest, with trees full of quiet anticipation. The carrier is determined, despite the evident pain shown by a slight grimace indicating an ache in their back and shoulders. Beside them, a tall man with glasses matches their stride, his expression one of concern as he offers to help. The trees are animated by a gentle wind, and there's a subtle glow indicating a boundary ahead that separates the mystical city of Rapture from the mortal world. The atmosphere is one of urgency and tender care within a fantastical woodland setting.*
+
+This prompt was then edited to specify the age and gender of the main character since this information was missing in the prompt. After my edits, this is the prompt that was entered into DALL·E: *A 16 year old Indian girl carrying the body of her dead mother through a serene forest, with trees full of quiet anticipation. The carrier is determined, despite the evident pain shown by a slight grimace indicating an ache in her back and shoulders. Beside her, a tall Indian boy with glasses matches her stride, his expression one of concern as he offers to help. The trees are animated by a gentle wind, and there's a subtle glow indicating a boundary ahead that separates the mystical city of Rapture from the mortal world. The atmosphere is one of urgency and tender care within a fantastical woodland setting.*
+
+The resulting image, Figure 5, was beautifully rendered but several details were incorrect. I instructed GPT-4 to edit the prompt to emphasise that the girl should be carrying her dead mother and again, an incorrect image was generated. This iterative process of prompt refinement was over an hour in length and the model struggled to generate images that not only displayed the protagonist carrying her mother but also had the correct tone and aesthetic style.
+
+Fig 5. Image of scene from fantasy novel generated using DALL·E 3
+
+Another series of attempts to generate images for a more complex scene in which the characters are preparing to resurrect the protagonist’s dead mother in a forest revealed that DALL·E 3 struggles to render images containing multiple people accurately while adhering to specific details in the prompt. The character’s faces were rendered poorly, as shown in Figure 6. Moreover, DALL·E 3 becomes confused about clothing and ethnicity even if these are specified in the prompt. Generally, the background is the most useful part of the images that were generated and a single character in the forefront of the image is rendered more clearly.
+
+Fig 6. Image of resurrection scene from fantasy novel generated using DALL·E 3
+
+1. Writing task #2: Generating images of characters for fantasy novel
+
+For this task, I used GPT-4 to convert a character description from my novel into a prompt for DALL·E 3 to generate images of the love interest, Akash. The model struggled to render his ethnicity and tattoos correctly, two of the more identifiable features. However, with more round of iteratively editing the prompt, the results improved significantly. I also tested out using Claude to help create prompts for Stable Diffusion but the limits on prompt length for Stable Diffusion made it difficult to generate more accurate character portraits.
+
+Fig 7. Image of character, Akash, from fantasy novel generated using DALL·E 3
+
+Fig 8. Image of character, Akash, from fantasy novel generated using Stable Diffusion XL
+
+- Writing task #3: Generating images of objects for fantasy novel
+
+Generating images of objects using DALL·E 3 had promising results. The details were helpful - the tattered pages, unintelligible script, warm lighting and bizarre illustrations in particular proved very inspiring.
+
+Fig 9. Image of witch’s grimoire from fantasy novel generated using DALL·E 3
+
+1. Writing task #4: Generating images of settings for fantasy novel
+
+Another task that had useful results was generating images of settings using DALL·E 3 and Stable Diffusion.
+
+Fig 10. Image #1 of witch’s magic shop from fantasy novel generated using DALL·E 3
+
+Fig 11. Image #2 of witch’s magic shop from fantasy novel generated using DALL·E 3
+
+1. Conclusions from using generative AI
+
+Table VI describes a list of tasks that were successful and could feasibly be implemented in an application. For some of these tasks, more context is needed and to generate more diverse characters, using an LLM to edit prompts to emphasise gender or physical features is crucial for improving the output.
+
+TABLE VI
+
+Image Generation and Creative Writing Tasks Successfully Implemented With DALL·E 3
+
+| Task | Description | Purpose in Creative Writing |
+| --- | --- | --- |
+| Converting Text to Image Prompts | Transforming narrative text or descriptions from a story into visual image prompts | Helps visualize scenes, characters, and settings directly from the written content, enhancing the writer's imagination and clarity |
+| Generating Recommended Image Prompts | Providing suggestions for additional image prompts based on previously used ones, tailored to the project's theme. E.g. recommending prompts related to Japanese culture for a fantasy story featuring Sakura trees, samurai, and Asian-style dragons | Assists in maintaining thematic consistency and expanding the visual elements of a story, offering new perspectives and ideas |
+| Creating Diverse and Unique Characters | Generating images of characters that are diverse and avoid clichés or stereotypes, such as characters with scars or unique features | Enables the portrayal of a wide range of characters, fostering inclusivity in character development |
+| Crafting Mood Boards | Developing mood boards that visually convey specific emotions or themes, assisting in the establishment of a story's tone | Provides a visual collection of elements that capture the mood or theme of a story, aiding in the development of atmosphere and narrative tone |
+
+However, one of the primary challenges when using DALL·E 3 to generate images for scenes is its tendency to inaccurately represent the number of people, alter their appearances, duplicate characters, and overlook finer details like specific objects. In addition, manually editing prompts and typing out specific instructions to GPT-4 to aid in prompt refinement is time consuming and tedious.
+
+1. Updated user requirements
+
+The updated list of user requirements are organised by research and implementation requirements and detailed in Table VII and VIII below. Among these requirements, addressing writer's block appears to be the most promising research direction for this project. Furthermore, the application will support brainstorming and outlining through storyboarding, image search, and generation features.
+
+TABLE VII
+
+Research Requirements for Image Generation Application
+
+| Category | Research Requirements |
+| --- | --- |
+| Brainstorming and Outlining | Images should aid in the brainstorming and outlining stages of writing |
+|  | Images of characters and settings should immerse the writer in the story, serving as inspiration and reference points |
+| Detail Control and Customization | Ability to control specific details in images, such as adding objects or traits to settings and characters |
+| Inclusivity and Diversity | Character art should be inclusive and diverse, avoiding stereotypes or clichés |
+| Addressing Writer’s Block | Images accompanied with dialogue, plot points, or character descriptions which act as writing prompts |
+|  | Images which inspire plot twists or promote freewriting exercises |
+| Efficiency in Image Generation | Quick and easy generation of images |
+|  | Images should align with the writer’s vision with minimal trial and error. |
+| Feedback and Improvement | Unintrusive and/or optional feedback to improve system performance |
+|  | Feedback to improve prompt suggestions, image quality, and relevance |
+|  | Option for users to specify correct and incorrect aspects of an image for more accurate future generations |
+| Storyboarding for Plot Development | Storyboard feature for plotting stories in genres like realistic literary fiction and fantasy |
+|  | Ability to explore themes, character arcs, storylines, and worldbuilding (e.g., magic systems, fantasy maps) through a combination of imagery and written descriptions |
+
+TABLE VIII
+
+Implementation Requirements for Image Generation Application
+
+| Category | Implementation Requirements |
+| --- | --- |
+| Integration with Writing Process | The application integrates a prompt engineering workflow with the writer's existing writing process |
+|  | Allows users to copy and paste text directly into the prompt field with minimal editing |
+| Image Generation Control | Control over image style and mood |
+|  | Control over the degree of randomness in images |
+|  | Advanced settings (generation steps, model, seed, etc.) as optional but with default values |
+|  | Ability to generate 1 to 4 images |
+|  | Option to adjust positive and negative weighting for different keywords in prompt |
+|  | Mechanism to correct issues with physical appearance in generated images |
+|  | Clarity on reasons for images being flagged as inappropriate and alternative suggestions |
+|  | Clear explanation of how advanced settings affect images |
+| Prompt Handling | Suggestions for expanding both regular and negative prompts with keyword recommendations |
+| User Interaction and Feedback | Logging user interactions to a database for a prompt-image history log and intelligent future prompt suggestions |
+| Image Display and Tracking | Ability to view prompt-image pairs and group images by prompt to track progression |
+|  | Functionality to click on an image to expand it for a larger view with details about the prompt, seed, and other generation parameters |
+
+Do I need to define what this is and cite a resource on it?
+
+**Ask Kai whether the sitemap should be included because it’s not particularly good and the final application won’t have many of these features (which I also note in my report but still).**
 
 ## References
 
