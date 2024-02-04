@@ -1,3 +1,20 @@
+# 5 Feb 2024
+
+Raul Farkas
+1. Progress
+   - Initial version of the OpenTradingPlatform (OTP) is ready and was released with version v0.1.0. Link to github repo: https://github.com/raulfrk/OpenTradingPlatform/tree/v0.1.0
+   - Initial version of the OTP Python client is ready and was released with version v0.1.0: Link to github repo: https://github.com/raulfrk/OpenTradingPlatformPythonClient/tree/v0.1.0
+   - Both repos contain guides on how to install OTP and the python client and also how to use it in various scenarios.
+   - Contact me in case of any issues or bugs. I will work to fix them as soon as they are found, just make sure you provide all the context of how you found the bug and how it manifested to make it easier for me to reproduce it.
+   - Added support for another LLM provider (gpt4all)
+2. Questions and difficulty
+   - None
+3. Next step
+   - Start having a look at training the RL models for trading
+   - Fix any bugs in the OTP or client
+   - Help others with getting started with the platform
+   - Make progress on remaining trading platform features (lower priority)
+
 # 29 Jan 2024
 Xiruo Sun
 1. Progress
