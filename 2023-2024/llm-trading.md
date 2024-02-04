@@ -15,6 +15,17 @@ Raul Farkas
    - Help others with getting started with the platform
    - Make progress on remaining trading platform features (lower priority)
 
+Xiruo Sun
+1. Progress
+   - Prepare the prensentation
+   - discuss with Muhamad about the next step
+2. Question and difficulty
+   - None
+3. Next step
+   - learn reinforcement learning knowledge
+   - learn how to use openai gym
+   - find some suitable investment strategies.
+
 # 29 Jan 2024
 Xiruo Sun
 1. Progress
