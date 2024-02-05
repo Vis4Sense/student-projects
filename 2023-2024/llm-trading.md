@@ -1,10 +1,19 @@
 # 12 Feb 2024
 
-No meeting
+**No meeting** (break for Chinese New Year)
 
-Todo
-- dsicuss the relationships between the different model.
-- select the best performance for the target scenario.
+## Work might be needed
+- stock vs crypto
+- different machine learning methods, e.g., reinforcement learning (RL) vs other machine learning methods.
+- different trading strategies, e.g., high-frequency vs. short/mid/long term, value-based vs momentum, experts generated vs. ML based.
+- fine tuning the LLM for trading, i.e., what parameter/prompt/shot is best for trading (not the benchmark).
+- generate synthetic data (for ML/RL training): similar to the characteristics of the real data; generating the news might be diffcult (can we use LLM for this?)
+
+## Todo
+- discuss the relationships between the different models, how one is related to other.
+- Select the best performing model based on the target scenario, e.g., the number of shots that we are likely to use, the actual prompt that we will use, etc., and not average over all number of shots and all possible prompts.
+
+
 
 # 5 Feb 2024
 
