@@ -32,6 +32,11 @@ Jiqai
   - finish slide of presentation
   - refine UI demo and make it interactive
 
+Rachana
+1. progress: completed semester report draft
+2. discussion
+3. next step: edit semester report and submit 
+
 # 30 Jan 2024
 Rachana
 1. progress: made a bullet point outline for first semester report, have written 4000 word draft of semester report
