@@ -1,3 +1,11 @@
+# 12 Feb 2024
+
+No meeting
+
+Todo
+- dsicuss the relationships between the different model.
+- select the best performance for the target scenario.
+
 # 5 Feb 2024
 
 Raul Farkas
