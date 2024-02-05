@@ -12,7 +12,7 @@
 ## Todo
 - discuss the relationships between the different models, how one is related to other.
 - Select the best performing model based on the target scenario, e.g., the number of shots that we are likely to use, the actual prompt that we will use, etc., and not average over all number of shots and all possible prompts.
-
+- continue the discussion on how to make sure Raul/Xiruo/Muhamad's project are not the same.
 
 
 # 5 Feb 2024
