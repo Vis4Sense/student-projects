@@ -25,6 +25,19 @@ Xiruo Sun
    - learn reinforcement learning knowledge
    - learn how to use openai gym
    - find some suitable investment strategies.
+  
+Muhamad Hermawan
+1. Progress
+   - Done preparing for presentation
+   - Have discussed with Xiruo about how our project will unique in each other
+   - learning about reinfored learning (pending)
+   - Read asyncio python documentation (pending)
+2. Question amd difficulty
+   - None
+3. Next step
+   - Learn and try reinforced learning
+   - Formulating trading strategy including US stock and sector choises
+   - red Asyncio python documentation
 
 # 29 Jan 2024
 Xiruo Sun
