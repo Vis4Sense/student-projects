@@ -2,7 +2,7 @@
 
 **No meeting** (break for Chinese New Year)
 
-## Work might be needed
+## Work might be needed (for the second half of the project)
 - stock vs crypto
 - different machine learning methods, e.g., reinforcement learning (RL) vs other machine learning methods.
 - different trading strategies, e.g., high-frequency vs. short/mid/long term, value-based vs momentum, experts generated vs. ML based.
