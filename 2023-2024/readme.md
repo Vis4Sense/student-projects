@@ -22,6 +22,16 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 6 Feb 2024
+Jiqai
+1. progress
+  - download Chrome Beta for expiremental feature
+  - try some new user interface
+2. discussion
+3. next step
+  - finish slide of presentation
+  - refine UI demo and make it interactive
+
 # 30 Jan 2024
 Rachana
 1. progress: made a bullet point outline for first semester report, have written 4000 word draft of semester report
@@ -38,6 +48,12 @@ Hongye
 3. next step:
    - prepare for presentation
 
+Jiaqi
+  1. progress:Finished first semester report
+  2. discussion: Google's new feature and modification of project idea.
+  3. next step: 
+    - prepare for presentation
+    - consider more detailed direction
 # 23 Jan 2024
 
 Rachana 
