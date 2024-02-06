@@ -27,20 +27,20 @@ Jiaqi
 1. progress
   - download Chrome Beta for expiremental feature
   - try some new user interface
-2. discussion
+2. questions
 3. next step
   - finish slide of presentation
   - refine UI demo and make it interactive
 
 Rachana
 1. progress: completed semester report draft
-2. discussion
+2. questions
 3. next step: edit semester report and submit
 
 Ziyue
 1. progress
    Exploring the postman API website and google API key
-2. discussion
+2. questions
 3. next step try to solve the key error problem, start programming using the google knowledge graphs
 
 Jianwen
@@ -48,7 +48,7 @@ Jianwen
   - Extracting model-relevat information: may be rely on comment generation models, DeepCom.
   - Established a new code framework with up-to-version structure and dependencies(using copier).
   - A user question list with 2 prototypes (table of contents view and dataflow view).  
-2. discussion
+2. questions
 3. next step
   - think about more prototypes (forms of visualization)
   - Decide whether Machine-Learning models should be involved in this project as technique. 
@@ -56,7 +56,7 @@ Jianwen
 # 30 Jan 2024
 Rachana
 1. progress: made a bullet point outline for first semester report, have written 4000 word draft of semester report
-2. discussion: reviewed report outline
+2. questions: reviewed report outline
 3. next step: finish the report draft and get feedback
 
 Hongye
@@ -71,7 +71,7 @@ Hongye
 
 Jiaqi
   1. progress:Finished first semester report
-  2. discussion: Google's new feature and modification of project idea.
+  2. questions: Google's new feature and modification of project idea.
   3. next step: 
     - prepare for presentation
     - consider more detailed direction
@@ -79,7 +79,7 @@ Jiaqi
 
 Rachana 
 1. progress: read and took notes on research papers on writer's block, using AI to support creative writers, customising diffusion models via finetuning on a small dataset, generating images to illustrate stories with finetuned diffusion models, finetuning LLM to improve prompts for image generation models. Also selected research direction and put together updated project plan.
-2. discussion: reviewed my new project direction and updated plan
+2. questions: reviewed my new project direction and updated plan
 3. next step: complete first semester report draft.
 
 Jiaqi
