@@ -23,7 +23,7 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 6 Feb 2024
-Jiqai
+Jiaqi
 1. progress
   - download Chrome Beta for expiremental feature
   - try some new user interface
