@@ -37,6 +37,12 @@ Rachana
 2. discussion
 3. next step: edit semester report and submit
 
+Ziyue
+1. progress
+   Exploring the postman API website and google API key
+2. discussion
+3. next step try to solve the key error problem, start programming using the google knowledge graphs
+
 Jianwen
 1. progress
   - Extracting model-relevat information: may be rely on comment generation models, DeepCom.
