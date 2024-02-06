@@ -39,13 +39,13 @@ Rachana
 
 Jianwen
 1. progress
-  - How to extract model-relevat information (at least know if it is in specific part such as "loading dataset"): may be rely on comment generation models, DeepCom.
+  - Extracting model-relevat information: may be rely on comment generation models, DeepCom.
   - Established a new code framework with up-to-version structure and dependencies(using copier).
-  - A user question list with 2 prototypes (table of contents view and dataflow view), user choose dataflow view because it can show the model-development procedure more intuitively, giving insights on "what should the code be at this part".  
+  - A user question list with 2 prototypes (table of contents view and dataflow view).  
 2. discussion
 3. next step
   - think about more prototypes (forms of visualization)
-  - current models investigated are focused on Java Code which is not suitable for JupyterLab, if training is required it may take lots of time. Hence decide whether Machine-Learning models should be involved in this project as technique. 
+  - Decide whether Machine-Learning models should be involved in this project as technique. 
 
 # 30 Jan 2024
 Rachana
