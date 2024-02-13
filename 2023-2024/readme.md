@@ -22,6 +22,15 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 13 Feb 2024
+Ziyue
+1. progress
+  - write and run JavaScript codes to test Google Knowledge Graph API
+2. questions
+  - these results might be too simple, how can I get more advanced results
+3. next step
+  - focus on this part and learn to use these results
+
 # 6 Feb 2024
 Jiaqi
 1. progress
