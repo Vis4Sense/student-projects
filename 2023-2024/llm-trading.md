@@ -11,6 +11,8 @@ Raul Farkas
 3. Next steps
    - Design and develop experiments that make use of stock price prediction and RL using OpenAI gym to assess the utility of various trading strategies. There will be a strong focus on running very similar strategies/models with and without news sentiment data to assess the impact of integrating them as a trading decision factor
    - Further experiments with the addition of technical analysis indicators to the training and testing datasets to verify the performance impact.
+   - Repeat the same set of experiemnts with multiple symbols and even other asset classes such as Crypto to verify if there are any differences.
+
 # 12 Feb 2024
 
 **No meeting** (break for Chinese New Year)
