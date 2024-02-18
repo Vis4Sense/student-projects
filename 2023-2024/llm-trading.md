@@ -1,3 +1,16 @@
+# 19 Feb 2024
+
+Raul Farkas
+
+1. Progress
+   - Released new verson of Trading Platform and Python Client with minor bug fixes mostly and a significant change to match the new Alpaca API for getting historical bar data
+   - Experimented with the creation of a OpenAI gym environment for trading and developing a stock price prediction model based on RNN (Recurrent neural network) architecture that makes use of LSTM (Long short-term memory) operators to generate t+1 datapoint using t-n previous market data points
+   - Started development of trading strategy functionality
+2. Questions and difficulties
+   - Is the final presentation in May online?
+3. Next steps
+   - Design and develop experiments that make use of stock price prediction and RL using OpenAI gym to assess the utility of various trading strategies. There will be a strong focus on running very similar strategies/models with and without news sentiment data to assess the impact of integrating them as a trading decision factor
+   - Further experiments with the addition of technical analysis indicators to the training and testing datasets to verify the performance impact.
 # 12 Feb 2024
 
 **No meeting** (break for Chinese New Year)
