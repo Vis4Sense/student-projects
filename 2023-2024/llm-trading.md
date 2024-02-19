@@ -6,6 +6,7 @@ Discussions
    - [Lecture (and video recording) by David Silver from UCL](https://www.davidsilver.uk/teaching/)
    - Hugging Face tutorial (@Xiruo, please add here)
    - Other tutorials (@Ruals and @Muhamad, please add here)
+   - [Reinforcement Learning from Human Feedback (RLHF) tutorial (google cloud)](https://www.deeplearning.ai/short-courses/reinforcement-learning-from-human-feedback/)
 - Baseline system for comparision
    - [Online Portfolio Selection: A Survey](https://arxiv.org/abs/1212.2129)
    - https://github.com/OLPS/OLPS
