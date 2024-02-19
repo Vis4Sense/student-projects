@@ -1,5 +1,26 @@
 # 19 Feb 2024
 
+Discussions
+- Reinforcement Learning (RL) resources
+   - OpenAI RL tutorial: https://www.gymlibrary.dev/content/environment_creation/
+   - Lecture (and video recording) by David Silver from UCL: https://www.davidsilver.uk/teaching/
+   - Hugging Face tutorial (@Xiruo, please add here)
+   - Other tutorials (@Ruals and @Muhamad, please add here)
+- Baseline system for comparision
+   - Online Portfolio Selection: A Survey, https://arxiv.org/abs/1212.2129
+   - https://github.com/OLPS/OLPS
+
+ToDo
+- Kai to find the deep learning time series paper from google
+- Raul to have a look of the time series prediction literature
+- Raul, Xiruo, and Muhamad: revisit the papers Tianxiang sent at the beginning of the project
+   - system/platform architecture
+   - as potential baseline
+- Raul, Xiruo, and Muhamad: to meet and discuss
+   - all the different things to try to test and improve the trading performance
+   - an order/plan of these: what to start, what's next, and so on (start with the simplest and gradually add more data/complexity)
+   - a division of work among the three   
+
 Raul Farkas
 
 1. Progress
