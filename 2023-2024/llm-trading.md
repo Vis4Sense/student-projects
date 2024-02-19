@@ -22,6 +22,24 @@ Xiruo Sun
 3. Next step
    - complete learning RL
    - try RL using openai gym
+  
+Muhamad Hermawan
+1. Progress
+   - Learning about concept of Reinforcement Learning and how it implemented for trading strategy
+   - got a knowledge about asyncio python
+   - Tried to implement Raul's OpenTradingPlatform, and able to run it in windows and incorporate LLM Ollama module through WSL
+   - Progressing on finding out trading strategies, currently lean on to maximise the LLM capabilities in understanding the news context by Investigating the sentiment granularity effect on the trading outcome. ex. sentiment ranging from -1.000 to 1.000 compared to different level of granularity like neutral, positive, very positive, negative, very negative. and with negative, neutral, positive. Additionally, find out What is the treshold of the granurality of the sentiment, on what level of sentiment will consistently give impactful effect to trading outcome. What if various technique analysis incorporated. What results come from different RF algorithm
+  
+2. Question and difficulties
+   - about baseline, 1st, How to find suitable baseline, should be reputable lots of citation paper? (probably long or hard to implement since no code usually provided). Or any paper that have good result and providing codes to replicate is Ok?. 2nd, does the baseline could be any strategy of trading as long as yield high return (state of the art), or it must be relevant with ours, like using RF or maybe incormorating sentiment.
+   - Want to know more about different machine learning methods, e.g., reinforcement learning (RL) vs other machine learning methods.
+  
+3. To do
+   - Involve more on RF environment and its implementation on Financial trading
+   - works on project trading strategy
+   - Ask Raul to know better about OTP and how to maximise its potential
+  
+
 
 # 12 Feb 2024
 
