@@ -13,6 +13,15 @@ Raul Farkas
    - Further experiments with the addition of technical analysis indicators to the training and testing datasets to verify the performance impact.
    - Repeat the same set of experiemnts with multiple symbols and even other asset classes such as Crypto to verify if there are any differences.
    - Possibly try to use Recurrent Networks for signal generation too and compare the performance with using RL
+  
+Xiruo Sun
+1. Progress
+   - learn reinforcement learning on huggingface
+2. Question and difficulty
+   - None
+3. Next step
+   - complete learning RL
+   - try RL using openai gym
 
 # 12 Feb 2024
 
