@@ -2,16 +2,16 @@
 
 Discussions
 - Reinforcement Learning (RL) resources
-   - OpenAI RL tutorial: https://www.gymlibrary.dev/content/environment_creation/
-   - Lecture (and video recording) by David Silver from UCL: https://www.davidsilver.uk/teaching/
+   - [OpenAI RL tutorial](https://www.gymlibrary.dev/content/environment_creation/)
+   - [Lecture (and video recording) by David Silver from UCL](https://www.davidsilver.uk/teaching/)
    - Hugging Face tutorial (@Xiruo, please add here)
    - Other tutorials (@Ruals and @Muhamad, please add here)
 - Baseline system for comparision
-   - Online Portfolio Selection: A Survey, https://arxiv.org/abs/1212.2129
+   - [Online Portfolio Selection: A Survey](https://arxiv.org/abs/1212.2129)
    - https://github.com/OLPS/OLPS
 
 ToDo
-- Kai to find the deep learning time series paper from google
+- ~~Kai to find the deep learning time series paper from google~~ [A decoder-only foundation model for time-series forecasting](https://blog.research.google/2024/02/a-decoder-only-foundation-model-for.html)
 - Raul to have a look of the time series prediction literature
 - Raul, Xiruo, and Muhamad: revisit the papers Tianxiang sent at the beginning of the project
    - system/platform architecture
