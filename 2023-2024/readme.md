@@ -23,6 +23,11 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 20 Feb 2024
+Rachana
+1. progress: finished the presentation
+2. questions
+3. next step: start working on finetuning models
+
 Hongye
 1. progress
   - The web side of this system is under implemented
