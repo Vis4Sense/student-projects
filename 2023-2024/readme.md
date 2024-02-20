@@ -39,6 +39,13 @@ Ziyue
 3. next step
   - Start building the analysing part
 
+Jianwen
+1. progress
+   - started develop the user-manually ML system
+   - prototype: left side for model structure, right side for relevant experiment recordings
+3. questions
+4. next step
+
 
 Jiaqi
 1. progress
