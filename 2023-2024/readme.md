@@ -40,6 +40,14 @@ Ziyue
   - Start building the analysing part
 
 
+Jiaqi
+1. progress
+  - reading papers about other practice and model
+2. questions
+  - stucked with UI for pretty long time. where to start for next stage?
+3. next step
+  - fihish the UI disign and start implementation
+
 # 13 Feb 2024
 Ziyue
 1. progress
