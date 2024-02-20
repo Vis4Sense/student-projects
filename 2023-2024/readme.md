@@ -26,7 +26,7 @@
 Rachana
 1. progress: finished the presentation
 2. questions
-3. next step: start working on finetuning models
+3. next step: start working on finetuning models or implement something simple for a prototype 
 
 Hongye
 1. progress
