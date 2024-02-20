@@ -22,6 +22,16 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 20 Feb 2024
+Hongye
+1. progress
+  - The web side of this system is under implemented
+2. questions
+  - Is the content presented in the previous presentation sufficient as the entire content of this project?
+3. next step
+  - Looking for a few potential users to test my system
+
+
 # 13 Feb 2024
 Ziyue
 1. progress
