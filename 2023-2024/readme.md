@@ -31,6 +31,14 @@ Hongye
 3. next step
   - Looking for a few potential users to test my system
 
+Ziyue
+1. progress
+  - Some functions are added to make the search results more detailed
+2. questions
+  - How to make good use of these results, they might be too simple
+3. next step
+  - Start building the analysing part
+
 
 # 13 Feb 2024
 Ziyue
