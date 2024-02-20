@@ -23,6 +23,30 @@ class KnowledgeGraphAPI {
   }
 }
 
-// a simple usecase
+function processResult(data) {
+  const element = data.itemListElement[0];
+  const result = element.result;
+  const info = {
+    name: result.name,
+    description: result.detailedDescription ? result.detailedDescription.articleBody : 'No description available.',
+    image: result.image ? result.image.contentUrl : 'No image available.',
+    score: element.resultScore
+  };
+
+  displayInfoToUser(info);
+}
+
+function displayInfoToUser(info) {
+  // Simplified UI display logic
+  console.log("Displaying information to user:");
+  console.log(`Name: ${info.name}`);
+  console.log(`Description: ${info.description}`);
+  if (info.image !== 'No image available.') {
+    console.log(`Image URL: ${info.image}`);
+  }
+  console.log(`Score: ${info.score}`);
+}
+
+// Example usage
 const kgApi = new KnowledgeGraphAPI();
-kgApi.search('phone').then(data => console.log(data));
+kgApi.search('Headphones').then(processResult);
