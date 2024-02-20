@@ -1,23 +1,8 @@
 ```json
-{
-  "@context": {
-    "@vocab": "http://schema.org/",
-    "detailedDescription": "goog:detailedDescription",
-    "EntitySearchResult": "goog:EntitySearchResult",
-    "goog": "http://schema.googleapis.com/",
-    "kg": "http://g.co/kg",
-    "resultScore": "goog:resultScore"
-  },
-  "@type": "ItemList",
-  "itemListElement": [{
-    "@type": "EntitySearchResult",
-    "result": {
-      "@id": "kg:/m/01b7fy",
-      "@type": ["Thing"],
-      "detailedDescription": { ... },
-      "image": { ... },
-      "name": "Headphones"
-    },
-    "resultScore": 7298.82177734375
-  }]
-}
+☁️ "Running fiddle"
+"Displaying information to user:"
+"Name: Headphones"
+"Description: Headphones are a pair of small loudspeaker drivers worn on or around the head over a user's ears. They are electroacoustic transducers, which convert an electrical signal to a corresponding sound. "
+"Image URL: https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQtGtFbqF6MczV09rJLshbu_30VBK6gXXVG8RZVWr3_urAMU32g"
+"Score: 9731.7626953125"
+
