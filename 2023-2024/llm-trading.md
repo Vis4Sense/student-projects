@@ -1,6 +1,14 @@
+# 26 Feb 2024
+
+## Discussions
+- The goal is to maximise profit (and then reduce risk) and not predicting future price.
+- Need to decide/predict (for each asset):
+   - Is it a good time to buy or sell
+   - How much to buy or sell
+
 # 19 Feb 2024
 
-Discussions
+## Discussions
 - Reinforcement Learning (RL) resources
    - [OpenAI RL tutorial](https://www.gymlibrary.dev/content/environment_creation/)
    - [Lecture (and video recording) by David Silver from UCL](https://www.davidsilver.uk/teaching/)
@@ -11,7 +19,7 @@ Discussions
    - [Online Portfolio Selection: A Survey](https://arxiv.org/abs/1212.2129)
    - https://github.com/OLPS/OLPS
 
-ToDo
+## ToDo
 - ~~Kai to find the deep learning time series paper from google~~ [A decoder-only foundation model for time-series forecasting](https://blog.research.google/2024/02/a-decoder-only-foundation-model-for.html)
 - Raul to have a look of the time series prediction literature
 - Raul, Xiruo, and Muhamad: revisit the papers Tianxiang sent at the beginning of the project
