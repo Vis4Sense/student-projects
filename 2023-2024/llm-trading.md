@@ -6,6 +6,15 @@
    - Is it a good time to buy or sell
    - How much to buy or sell
 
+Raul Farkas
+1. Progress
+   - Implemented technical analysis indicators (RSI, Moving average, Exponential Moving Average)
+   - Started implementing matching mechanism to match news sentiment to stock data
+2. Questions and difficulty
+   - None
+3. Next step
+   - Finish matching mechanism and start implementing experiments with RL and LSTM (For stock price prediction)
+
 Xiruo Sun
 1. Progress
    - try a very simple rl model with very simple rl environment
