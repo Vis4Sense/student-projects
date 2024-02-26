@@ -11,6 +11,7 @@ Raul Farkas
    - Implemented technical analysis indicators (RSI, Moving average, Exponential Moving Average)
    - Started implementing matching mechanism to match news sentiment to stock data
    - Had discussion with Xirou and Muhamad about what each project will be focusing on
+   - Released OTP v0.1.2 (Contains important bug fix)
 2. Questions and difficulty
    - None
 3. Next step
