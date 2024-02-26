@@ -22,6 +22,12 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 27 Feb 2024
+Rachana
+1. progress: Implemented basic storyboarding page as a simple Flask application with the following functionality: can drag and drop scene divs containing images and text, add/remove buttons, edit scene title and description text by clicking on them and css grid for styling.
+2. questions - should i start finetuning next? or do i add to the storyboard page?
+3. next step: implement another simple feature? or make it possible to save changes to the storyboard locally or in a database.
+
 # 20 Feb 2024
 Rachana
 1. progress: finished the presentation
