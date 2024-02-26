@@ -24,6 +24,16 @@ Xiruo Sun
 3. Next step
    - try to design a suitable environment
 
+Muhamad Hermawan
+1. Progress
+   - Tried some examples provided by open ai gymn, ex: bipedal walking robot
+   - learning David Silver teaching video (unfinished)
+2. Question and difficulty
+   - rl more complext than I expected, need more time to learn about it.
+3. Next step
+   - keep learning rl and relate that open gym example environtment into trading environment
+   - finding literature and material about creating trading environment for rl, and try to reimplement it.
+
 ### Outcome of meeting to discuss the focus of each project
 
 - Muhamad: Quality of sentiment analysis from different prompts and model selection with reinforcement learning(choosing the best trading strategy with a RL or some other AI based model)
