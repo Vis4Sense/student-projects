@@ -6,13 +6,22 @@
    - Is it a good time to buy or sell
    - How much to buy or sell
 
+Xiruo Sun
+1. Progress
+   - try a very simple rl model with very simple rl environment
+2. Question and difficulty
+   - not very clearly about the rl, need further study
+3. Next step
+   - try to design a suitable environment
+
+
 # 19 Feb 2024
 
 ## Discussions
 - Reinforcement Learning (RL) resources
    - [OpenAI RL tutorial](https://www.gymlibrary.dev/content/environment_creation/)
    - [Lecture (and video recording) by David Silver from UCL](https://www.davidsilver.uk/teaching/)
-   - Hugging Face tutorial (@Xiruo, please add here)
+   - Hugging Face tutorial (https://huggingface.co/learn/deep-rl-course/unit0/introduction)
    - Other tutorials (@Ruals and @Muhamad, please add here)
    - [Reinforcement Learning from Human Feedback (RLHF) tutorial (google cloud)](https://www.deeplearning.ai/short-courses/reinforcement-learning-from-human-feedback/)
 - Baseline system for comparision
