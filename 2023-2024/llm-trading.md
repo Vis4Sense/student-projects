@@ -5,6 +5,16 @@
 - Need to decide/predict (for each asset):
    - Is it a good time to buy or sell
    - How much to buy or sell
+ 
+## Todo
+- Raul, Xiruo, Muhamad: create an overview diagram of the combined system that
+   - The goal is to maximise profit (and then reduce risk) and not predicting future price.
+   - Support portfolio management, i.e., for each asset need to decide/predict:
+      - Is it a good time to buy or sell
+      - How much to buy or sell
+- (from previous week)
+   - ~~Kai to find the deep learning time series paper from google~~ [A decoder-only foundation model for time-series forecasting](https://blog.research.google/2024/02/a-decoder-only-foundation-model-for.html)
+   - Raul to have a look of the time series prediction literature
 
 Raul Farkas
 1. Progress
