@@ -1,0 +1,153 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
+
+
+/* GENERAL STYLES */
+
+/* Paragraphs and headings */
+p {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: hsl(220, 13%, 13%);
+}
+
+/* TODO use this light grey color for the scene #1 text */ /*color: hsl(219, 9%, 45%);*/
+
+h1 {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: hsl(220, 13%, 13%);
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: hsl(220, 13%, 13%);
+}
+
+body {
+    background-color:  hsl(0, 0%, 100%);
+    height: 100vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This centers the children (storyboard and button) on the cross-axis */
+    gap: 20px; /* Adds space between the storyboard and the button */
+    width: 100%;
+}
+
+/* BUTTONS */
+button {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+    cursor: pointer;
+}
+
+/* HEADER */
+
+
+
+/* STORYBOARD */
+img {
+    width: 300px;
+    border-radius: 5px;
+}
+
+.storyboard {
+    grid-row: 1 / -1;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 30px;
+    row-gap: 20px;
+    margin: 0 auto;  /* For centering the container */
+    margin-top: 40px;
+    width: 80%;  /* For centering the container */
+    justify-content: center;  /* For centering the container */
+}
+
+/* SCENE DIV */
+.scene-div {
+    background-color: #ffeedb;
+    border-radius: 10px;
+    width: 500px;
+    display: grid;
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+}
+
+.scene-title p {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.scene-text {
+    width: 400px;
+}
+
+/* Drag and drop functionality with DroppableJS */
+
+.sortable-ghost {
+    opacity: 0.4;
+}
+
+.sortable-drag {
+    border: 2px dashed #ccc;
+}
+
+/* Edit scene title and scene text */
+#edit-text {
+    background-color: #423a34;
+    color: white;
+    padding: 5px;
+    box-shadow: 0 0 5px #cccccc;
+    border-radius: 10px;
+}
+
+.editable:focus {
+    outline: 1px solid white;
+}
+
+/* Delete Scene Btn */
+.delete-scene-btn {
+    width: 120px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    background-color: #fcb681;
+    margin-top: 10px;
+}
+
+/* Add box shadow for button clicks */
+.delete-scene-btn:active {
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.5), 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add Scene Btn */
+#add-scene-btn {
+    width: 130px;
+    background-color: #fff9db;
+    font-size: 20px;
+    margin-top: 20px;
+    border: 1.5px solid black;
+    margin-bottom: 20px;
+}
+
+/* Add box shadow for button clicks */
+#add-scene-btn:active {
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.5), 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}

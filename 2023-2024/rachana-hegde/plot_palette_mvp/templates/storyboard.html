@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <title> Storyboard</title>
+</head>
+<body>
+    <h1> Storyboard </h1>
+    <main>
+        <div id="storyboard" class="storyboard">
+            <!-- Example scene #1 -->
+            <div class="scene-div">
+                <!-- Placeholder title -->
+                <div class="scene-title draggable"><p class="editable" contenteditable="false"> MC dreams</p></div>
+                <!-- Placeholder image -->
+                <div class="draggable">
+                    <img src="./static/img/girl_sleeping.jpg">
+                </div>
+                <!-- Placeholder scene description -->
+                <div class="draggable scene-text"><p class="editable" contenteditable="false"> Mara falls sick with the flu and takes a nap.
+                    She ends up experiencing a series of vivid dreams that leave her feeling transformed.</p></div>
+                <!-- Delete scene div -->
+                <button class="delete-scene-btn">Delete Scene</button>
+            </div>
+            <!-- Example scene #2 -->
+            <div class="scene-div">
+                <!-- Placeholder title -->
+                <div class="scene-title"><p class="editable" contenteditable="false"> MC walks dog</p></div>
+                <!-- Placeholder image -->
+                <div class="draggable">
+                    <img src="./static/img/dog_walk.jpg">
+                </div>
+                <!-- Placeholder scene description -->
+                <div class="draggable scene-text"><p class="editable" contenteditable="false"> In the first dream, Mara is walking her dog, Goldy. She's taking her dog
+                    to a contest and feeling very optimistic and excited.</p></div>
+                <!-- Delete scene div -->
+                <button class="delete-scene-btn">Delete Scene</button>
+            </div>
+            <!-- TODO Add upload image functionality -->
+            <!-- TODO Save the order of the scenes (locally??? database??) -->
+        </div>
+        <!-- Add new scene with placeholder image, title, and description -->
+        <button id="add-scene-btn">Add Scene</button>
+    </main>
+
+    <!--  Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="./static/js/app.js"></script>
+</body>
+</html>
