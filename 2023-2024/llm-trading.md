@@ -10,6 +10,7 @@ Raul Farkas
 1. Progress
    - Implemented technical analysis indicators (RSI, Moving average, Exponential Moving Average)
    - Started implementing matching mechanism to match news sentiment to stock data
+   - Had discussion with Xirou and Muhamad about what each project will be focusing on
 2. Questions and difficulty
    - None
 3. Next step
@@ -23,6 +24,11 @@ Xiruo Sun
 3. Next step
    - try to design a suitable environment
 
+### Outcome of meeting to discuss the focus of each project
+
+- Muhamad: Quality of sentiment analysis from different prompts and model selection with reinforcement learning(choosing the best trading strategy with a RL or some other AI based model)
+- Xirou: Market impact of news and reaction time of strategies when making trading decisions.
+- Raul: Using reinforcement learning to make trading decisions based on market data such as bar data, technical indicators, news sentiment and stock prices forecast obtained from models like LSTM to predict prices at different intervals (1minute, 5 minuites...). Various features will be toggled on and off to see their impact on the trading outcome.
 
 # 19 Feb 2024
 
