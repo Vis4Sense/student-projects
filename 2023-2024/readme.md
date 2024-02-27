@@ -26,7 +26,7 @@
 Rachana
 1. progress: Implemented basic storyboarding page as a simple Flask application with the following functionality: can drag and drop scene divs containing images and text, add/remove buttons, edit scene title and description text by clicking on them and css grid for styling.
 2. questions - should i start finetuning next? or do i add to the storyboard page?
-3. next step: implement another simple feature? or make it possible to save changes to the storyboard locally or in a database.
+3. next step: make it possible to save changes to the storyboard locally + upload images; make full implementation list with time frame
 
 Hongye
 1. progress
