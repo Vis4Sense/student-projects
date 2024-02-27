@@ -35,6 +35,16 @@ Hongye
 3. next step
    - More styling, refining and interaction work with the web client.
    - Prepare and think for user feedback study and final paper work
+  
+Ziyue
+1. progress
+   - The Google Knowledge Graph API function is finished
+   - Learn RNN related knowledge
+2. questions
+   - how to make good use of my current data?
+   - how to make a good RNN?
+3. next step
+   - focus on the RNN part
 
 # 20 Feb 2024
 Rachana
