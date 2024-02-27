@@ -30,10 +30,10 @@ Rachana
 
 Hongye
 1. progress
-   - The web side of system MVP is workable, upload the source code to a dedicate repository: [repository link](https://github.com/huyhi/chat-academic-vis)
+   - The web site of system MVP is workable, upload the source code to a dedicate repository: [repository link](https://github.com/huyhi/chat-academic-vis)
 2. questions
 3. next step
-   - More styling, refining and interaction work with the web client.
+   - Develop the system based on the [vitality](https://github.com/vitality-vis), add the dialog and upload paper functionality.
    - Prepare and think for user feedback study and final paper work
   
 Ziyue
@@ -54,7 +54,7 @@ Rachana
 
 Hongye
 1. progress
-  - The web side of this system is under implemented
+  - The web site of this system is under implemented
 2. questions
   - Is the content presented in the previous presentation sufficient as the entire content of this project?
 3. next step
