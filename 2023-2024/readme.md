@@ -30,7 +30,7 @@ Rachana
 
 Hongye
 1. progress
-   - The web side of system MVP is workable
+   - The web side of system MVP is workable, upload the source code to a dedicate repository: [repository link](https://github.com/huyhi/chat-academic-vis)
 2. questions
 3. next step
    - More styling, refining and interaction work with the web client.
