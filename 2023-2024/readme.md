@@ -28,6 +28,15 @@ Rachana
 2. questions - should i start finetuning next? or do i add to the storyboard page?
 3. next step: implement another simple feature? or make it possible to save changes to the storyboard locally or in a database.
 
+Hongye
+1. progress
+  - The web side of system MVP is workable
+2. questions
+  - 
+3. next step
+  - More styling, refining and interaction work with the web client.
+  - Prepare and think for user feedback study and final paper work
+
 # 20 Feb 2024
 Rachana
 1. progress: finished the presentation
