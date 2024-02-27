@@ -30,12 +30,11 @@ Rachana
 
 Hongye
 1. progress
-  - The web side of system MVP is workable
+   - The web side of system MVP is workable
 2. questions
-  - 
 3. next step
-  - More styling, refining and interaction work with the web client.
-  - Prepare and think for user feedback study and final paper work
+   - More styling, refining and interaction work with the web client.
+   - Prepare and think for user feedback study and final paper work
 
 # 20 Feb 2024
 Rachana
