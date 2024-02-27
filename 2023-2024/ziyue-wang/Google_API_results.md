@@ -1,3 +1,5 @@
+```json
+{
 JSFiddle Console (beta). Turn on/off in Editor settings.
 ☁️ "Running fiddle"
 "Displaying information to user:"
@@ -8,3 +10,4 @@ JSFiddle Console (beta). Turn on/off in Editor settings.
 "Wikipedia URL: https://en.wikipedia.org/wiki/Zayn_Malik"
 "Official URL: http://inzayn.com/"
 "Score: 8268.712890625"
+}
