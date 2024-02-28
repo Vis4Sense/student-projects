@@ -46,6 +46,15 @@ Ziyue
 3. next step
    - focus on the RNN part
 
+Jianwen
+1. progress
+   - completed big design framework of first extension version (list view, manual input)
+   - completed several code part of the framework
+3. questions
+4. next step
+   - keep developping the current version
+   - include the automatic title filling for components (based on user's headings, has default)
+
 # 20 Feb 2024
 Rachana
 1. progress: finished the presentation
