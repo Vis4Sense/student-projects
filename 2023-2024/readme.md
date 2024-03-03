@@ -55,6 +55,13 @@ Jianwen
    - keep developping the current version
    - include the automatic title filling for components (based on user's headings, has default)
 
+Jiaqi
+1. progress
+  - start the implementation of prototype. UI
+2. questions
+3. next step
+  - implement other function. Creat node from browsing history. Allow user add node to task box
+
 # 20 Feb 2024
 Rachana
 1. progress: finished the presentation
