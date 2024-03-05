@@ -74,6 +74,7 @@ The scene captures both Sanjana and Akash in a moment of shared contemplation, s
 ## Akash
 <img width="306" alt="Screenshot 2024-03-05 at 12 29 28 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/002653bb-c95c-4b55-b6f4-21f06375fce2">
 
+## All 3 characters 
 <img width="368" alt="Screenshot 2024-03-05 at 12 29 44 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/de1bd167-c5b7-4453-86e9-5805240031ae">
 
 <img width="367" alt="Screenshot 2024-03-05 at 12 29 54 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/a07adf8b-eda2-4721-a411-1b11d1772e0f">
