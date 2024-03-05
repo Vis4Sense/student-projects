@@ -99,4 +99,14 @@ body {
       padding: 10px;
       margin: 10px;
       border-radius: 5px;
+      overflow: auto;
   }
+  .taskBox button {
+    display: inline-block;
+    width: 120px;
+    padding: 8px;
+    margin: 10px; /* Adjust margin */
+    font-size: 18px;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
