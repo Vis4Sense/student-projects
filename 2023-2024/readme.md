@@ -45,6 +45,15 @@ Jianwen
 3. next step
    - learn React and integrate project code with proper css styles.
 
+Jiaqi 
+1. progress
+  - drap and drop action
+2. questions
+  - about content.js in manefest.json file
+3. next step
+  - read page conetent and dynamiclly add node to sidebar
+  - create link between node after added in task box
+
 # 27 Feb 2024
 Rachana
 1. progress: Implemented basic storyboarding page as a simple Flask application with the following functionality: can drag and drop scene divs containing images and text, add/remove buttons, edit scene title and description text by clicking on them and css grid for styling.
