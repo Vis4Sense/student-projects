@@ -33,4 +33,35 @@ Note: All of this was done in the chat GPT interface.
 
 **Prompt for Dall E**
 **Result**
- 
+
+<img width="369" alt="Screenshot 2024-03-05 at 12 28 22 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/6982de7c-4b7b-4c06-9f48-77dcd7c70057">
+
+ <img width="491" alt="Screenshot 2024-03-05 at 12 28 32 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/8d04bac3-918e-406a-9e49-3542e9cbd46d">
+
+<img width="431" alt="Screenshot 2024-03-05 at 12 28 43 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/b880a126-1403-4ce5-85a3-0c527d24d25e">
+
+<img width="430" alt="Screenshot 2024-03-05 at 12 28 53 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/92ba2750-6eb6-41d6-b245-0dfba383ea7d">
+
+# attempt #1 ~ generating scene images with 3 characters (sanjana, akash, and roshan) 
+<img width="369" alt="Screenshot 2024-03-05 at 12 29 17 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/86cd43be-67c0-4b59-a125-96a0b00ba75a">
+<img width="306" alt="Screenshot 2024-03-05 at 12 29 28 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/002653bb-c95c-4b55-b6f4-21f06375fce2">
+
+<img width="368" alt="Screenshot 2024-03-05 at 12 29 44 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/de1bd167-c5b7-4453-86e9-5805240031ae">
+
+<img width="367" alt="Screenshot 2024-03-05 at 12 29 54 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/a07adf8b-eda2-4721-a411-1b11d1772e0f">
+
+<img width="365" alt="Screenshot 2024-03-05 at 12 30 06 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/9f3c963e-3a71-470c-adc9-86b1a3878322">
+
+### takeaways from generating images with sanjana, akash & roshan
+
+- Generating images with 3 characters (sanjana, akash, and roshan) actually took a few minutes longer than doing it for 1 or 2 characters. The latency was a bit annoying and the prompt-image accuracy was much worse compared to the 2 or 1 character scene images.
+- The quality has plummeted.
+- It’s also hard to reliably get images where all 3 characters are visible.
+  
+### takeaways from generating images with sanjana and akash
+
+- It definitely looks like them across the images in different settings - but this is when the original generated images of the characters are referenced and the model is instructed to base the characters’ appearances on those images.
+    - There are minor issues like Akash’s eyes aren’t always rendered correctly.
+    - The characters also tend to appear posed like models - they stand stiffly and/or look at the viewer even when I specify that they’re doing a certain activity like looking at perfume bottles.
+        - Specifying candid shot and emphasising a few more times in the prompt that it should be a candid image seems to help * scroll up for example where it worked *
+- Telling the LLM to emphasise certain things if it’s missing from the image can help generate better images ⇒ I could attempt to anticipate this in my application by designing the prompts to the LLM so that they emphasise things that Dall E tends to forget or overlook unless the prompt is worded in a particular way.
