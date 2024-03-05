@@ -35,7 +35,7 @@ Hongye
 Rachana
 1. progress: did the full implementation list, tested out prompting strategies for consistent character art in chat gpt interface
 2. questions - should i cut some features so that i can finish this project with enough time to do user testing + advice needed on updating timeline for the implementation so it is more realistic. 
-3. next step: make it possible to save changes to the storyboard locally + upload images, test finetuning stable cascade in google colab
+3. next step: make it possible to save changes to the storyboard locally + upload images, test out apis, figure out interface design for getting info to craft prompts 
 
 Jianwen
 1. progress
