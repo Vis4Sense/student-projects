@@ -22,6 +22,17 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+
+# 5 Mar 2024
+
+Hongye
+1. progress
+   - Successfully setup the frontend and backend Vitality development enviroment locally, and could run it on my own computer.
+2. questions
+3. next step
+   - Since the embedding and algorithm used by vitality are different from mine, planing to develop my functions based on Vitality.
+  
+
 # 27 Feb 2024
 Rachana
 1. progress: Implemented basic storyboarding page as a simple Flask application with the following functionality: can drag and drop scene divs containing images and text, add/remove buttons, edit scene title and description text by clicking on them and css grid for styling.
