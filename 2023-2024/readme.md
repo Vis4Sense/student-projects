@@ -55,6 +55,7 @@ Jiaqi
 3. next step
   - read page conetent and dynamiclly add node to sidebar
   - create link between node after added in task box
+  - add session feature
 
 Ziyue
 1. progress
