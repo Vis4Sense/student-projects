@@ -35,7 +35,15 @@ Hongye
 Rachana
 1. progress: did the full implementation list, tested out prompting strategies for consistent character art in chat gpt interface
 2. questions - should i cut some features so that i can finish this project with enough time to do user testing + advice needed on updating timeline for the implementation so it is more realistic. 
-3. next step: 
+3. next step:
+
+Jianwen
+1. progress
+   - finished simple code setting/finding functions, built simple "dashboard" user interface.
+2. questions
+   - should the notes part take classes of individual notes containers, or just blended types of individual notes?  
+3. next step
+   - learn React and integrate project code with proper css styles.
 
 # 27 Feb 2024
 Rachana
