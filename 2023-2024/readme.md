@@ -54,6 +54,14 @@ Jiaqi
   - read page conetent and dynamiclly add node to sidebar
   - create link between node after added in task box
 
+Ziyue
+1. progress
+  - do some LSTM related works
+2. questions
+  - there are lots of works to do to get the data from Google and JavaScript websites
+3. next step
+  - get the pre-process done
+
 # 27 Feb 2024
 Rachana
 1. progress: Implemented basic storyboarding page as a simple Flask application with the following functionality: can drag and drop scene divs containing images and text, add/remove buttons, edit scene title and description text by clicking on them and css grid for styling.
