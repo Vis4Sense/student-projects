@@ -135,6 +135,7 @@ This scene captures a moment of Sanjana's day as she delves into the world of ma
 > This scene captures not just Sanjana's physical journey but also her internal one, as she bridges realms, embodying the essence of exploration and the boundless potential of imagination. The forest around her, alive with the mystery and the promise of adventure, sets the stage for this momentous act, with the portal itself a mesmerizing blend of colors and energies that draw the eye and beckon to the wonders that lie beyond."
 
 **Result**
+
 <img width="494" alt="Screenshot 2024-03-05 at 12 18 00 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/b0e276c7-ddad-4e21-b0c8-0294f52ccd0e">
 
 ## some takeaways from prompting for single character across multiple settings
