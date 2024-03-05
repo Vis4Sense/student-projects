@@ -32,6 +32,10 @@ Hongye
 3. next step
    - Since the embedding and algorithm used by vitality are different from mine, planing to develop my functions based on Vitality.
   
+Rachana
+1. progress: did the full implementation list, tested out prompting strategies for consistent character art in chat gpt interface
+2. questions - should i cut some features so that i can finish this project with enough time to do user testing + advice needed on updating timeline for the implementation so it is more realistic. 
+3. next step: 
 
 # 27 Feb 2024
 Rachana
