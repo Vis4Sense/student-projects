@@ -76,3 +76,19 @@ Create an image using the request without modifications and base this image on a
 ![Image](https://github.com/Vis4Sense/student-projects/assets/66835338/d64461da-421d-41db-b8be-b4f02d99bc70)
 
 **Note**: I'm sure why the image is rendered with the wrong angle sometimes! It seems like another quirk of the image model. 
+
+# prompting attempt #3 - goal is to generate more complex scenes from my novel with the same main character (sanjana) across multiple images
+
+> Create an image using the request without modifications. After generating the image, tell me what seed number was used for the image and the styles used for the image, and the generation ID number:
+> 
+> 
+> "Create a high resolution detailed photo-realistic image of Sanjana,  21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark brown eyes, embodying tranquility and introspection. Sanjana should appear lost in thought, her contemplative expression illuminated by a soft glow that highlights her features. She's dressed casually yet stylishly in a vibrant red flannel long sleeve shirt paired with classic denim jeans, embodying a youthful, carefree spirit.  She always carries a tote bag, signifying her preparedness for any adventure or moment of inspiration, accompanied by personal items like a sketchbook and a cup of chai in settings where appropriate. Sanjana's style includes delicate gold rings and intricate bracelets, symbolizing her elegance and cultural heritage."
+> 
+
+![DALL·E 2024-03-01 16.00.00 - Create a high resolution detailed photo-realistic image of Sanjana, a 21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/6f72ca84-670c-4a4a-ba35-48571350322d/0f5b2818-7e43-47b5-9b19-826bb3a62778/DALLE_2024-03-01_16.00.00_-_Create_a_high_resolution_detailed_photo-realistic_image_of_Sanjana_a_21-year-old_Indian_girl_characterized_by_her_dark_brown_wavy_hair_and_deep_dark.webp)
+
+> Adapt my existing prompt to generate a new image of Sanjana standing inside a magic shop looking at bottles of potions. Include these details about the interior of the magic shop: a bell at the entrance, suggesting a recent customer entry, shelves along the far wall, filled with bottles of herbs and a step ladder for access, an antique mirror reflecting light, positioned above a typewriter with a visible sheet of paper, various wooden stools and cushioned chairs randomly placed around the room, low tables with thick books and weathered cabinets filled with more books, wall sconces with jeweled glass lanterns emitting a bright light, a cozy, lived-in atmosphere with a couch suitable for reading and napping, and a fireplace with an amber bottle amidst the coals, appearing to be consumed by the fire. Sanjana is wearing a black dress with her full body visible. Make sure that she is wearing a black dress but ensure her appearance remains consistent:
+> 
+> 
+> "Create a high resolution detailed photo-realistic image of Sanjana,  21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark brown eyes, embodying tranquility and introspection. Sanjana should appear lost in thought, her contemplative expression illuminated by a soft glow that highlights her features. She's dressed casually yet stylishly in a vibrant red flannel long sleeve shirt paired with classic denim jeans, embodying a youthful, carefree spirit.  She always carries a tote bag, signifying her preparedness for any adventure or moment of inspiration, accompanied by personal items like a sketchbook and a cup of chai in settings where appropriate. Sanjana's style includes delicate gold rings and intricate bracelets, symbolizing her elegance and cultural heritage."
+>
