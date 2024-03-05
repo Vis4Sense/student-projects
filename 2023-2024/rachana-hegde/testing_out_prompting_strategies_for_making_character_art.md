@@ -79,16 +79,64 @@ Create an image using the request without modifications and base this image on a
 
 # prompting attempt #3 - goal is to generate more complex scenes from my novel with the same main character (sanjana) across multiple images
 
+**Prompt for Dall E**
 > Create an image using the request without modifications. After generating the image, tell me what seed number was used for the image and the styles used for the image, and the generation ID number:
 > 
 > 
 > "Create a high resolution detailed photo-realistic image of Sanjana,  21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark brown eyes, embodying tranquility and introspection. Sanjana should appear lost in thought, her contemplative expression illuminated by a soft glow that highlights her features. She's dressed casually yet stylishly in a vibrant red flannel long sleeve shirt paired with classic denim jeans, embodying a youthful, carefree spirit.  She always carries a tote bag, signifying her preparedness for any adventure or moment of inspiration, accompanied by personal items like a sketchbook and a cup of chai in settings where appropriate. Sanjana's style includes delicate gold rings and intricate bracelets, symbolizing her elegance and cultural heritage."
-> 
 
-![DALL·E 2024-03-01 16.00.00 - Create a high resolution detailed photo-realistic image of Sanjana, a 21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/6f72ca84-670c-4a4a-ba35-48571350322d/0f5b2818-7e43-47b5-9b19-826bb3a62778/DALLE_2024-03-01_16.00.00_-_Create_a_high_resolution_detailed_photo-realistic_image_of_Sanjana_a_21-year-old_Indian_girl_characterized_by_her_dark_brown_wavy_hair_and_deep_dark.webp)
+**Result**
+<img width="428" alt="Screenshot 2024-03-05 at 12 15 25 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/60cbcc3c-1bd7-446f-80d4-525d699be888">
 
+**Prompt for GPT**
 > Adapt my existing prompt to generate a new image of Sanjana standing inside a magic shop looking at bottles of potions. Include these details about the interior of the magic shop: a bell at the entrance, suggesting a recent customer entry, shelves along the far wall, filled with bottles of herbs and a step ladder for access, an antique mirror reflecting light, positioned above a typewriter with a visible sheet of paper, various wooden stools and cushioned chairs randomly placed around the room, low tables with thick books and weathered cabinets filled with more books, wall sconces with jeweled glass lanterns emitting a bright light, a cozy, lived-in atmosphere with a couch suitable for reading and napping, and a fireplace with an amber bottle amidst the coals, appearing to be consumed by the fire. Sanjana is wearing a black dress with her full body visible. Make sure that she is wearing a black dress but ensure her appearance remains consistent:
 > 
-> 
 > "Create a high resolution detailed photo-realistic image of Sanjana,  21-year-old Indian girl, characterized by her dark brown wavy hair and deep dark brown eyes, embodying tranquility and introspection. Sanjana should appear lost in thought, her contemplative expression illuminated by a soft glow that highlights her features. She's dressed casually yet stylishly in a vibrant red flannel long sleeve shirt paired with classic denim jeans, embodying a youthful, carefree spirit.  She always carries a tote bag, signifying her preparedness for any adventure or moment of inspiration, accompanied by personal items like a sketchbook and a cup of chai in settings where appropriate. Sanjana's style includes delicate gold rings and intricate bracelets, symbolizing her elegance and cultural heritage."
->
+
+***I used GPT’s response as the prompt for Dall E below. *Note the first paragraph that begins with “Create an image using the request…” does not come from GPT-4, that is a paragraph that I explicitly add before the image prompt to help with consistency of character generation.**
+
+**Prompt for Dall E**
+Create an image using the request without modifications and base this image on a previously generated image with the generation ID number kAbeT0yKB5JB78jj. Maintaining the appearance of the woman in the previous image that I have referenced. After generating the image, tell me what seed number was used for the image and the styles used for the image, and the generation ID number:
+
+"Create a high-resolution, detailed, photo-realistic image of Sanjana, a 21-year-old Indian girl known for her tranquil and introspective nature, now exploring the curious and enchanting interior of a magic shop. Her dark brown wavy hair and deep dark brown eyes reflect the marvel and mystery of her surroundings. Sanjana stands in awe, her contemplative expression softly lit by the ambient glow of jeweled glass lanterns hanging from wall sconces, as she examines bottles of potions lining the shelves.
+
+She is dressed elegantly in a simple yet chic black dress that contrasts with the shop's whimsical chaos, her figure fully visible among the assortment of magical artifacts. The bell at the entrance tinkles, hinting at the recent arrival of another customer, while shelves crammed with bottles of herbs and a step ladder for access fill the far wall. An antique mirror above a typewriter reflects the light, adding a shimmer to the room and to Sanjana's gold rings and intricate bracelets, which sparkle with a touch of her personal elegance and cultural heritage.
+
+The magic shop itself is a trove of wonders, with wooden stools and cushioned chairs scattered around, low tables laden with thick, ancient books, and weathered cabinets bursting with more literature. The room is anchored by a cozy couch, inviting for reading or napping, near a fireplace where an amber bottle sits amongst the coals, creating an aura of mystery as if being consumed by the fire.
+
+This scene captures a moment of Sanjana's day as she delves into the world of magic, embodying a serene explorer amidst the shop's lived-in atmosphere, filled with the promise of adventure and discovery."
+
+**Result**
+<img width="431" alt="Screenshot 2024-03-05 at 12 16 31 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/0b3c4ca4-b635-4d67-bb60-781169b5785c">
+
+**Prompt for Dall E**
+> Create an image using the request without modifications and base this image on a previously generated image with the generation ID number kAbeT0yKB5JB78jj. Maintaining the appearance of the woman in the previous image that I have referenced. After generating the image, tell me what seed number was used for the image and the styles used for the image, and the generation ID number:
+> 
+> 
+> "Create a high-resolution, detailed, photo-realistic wide-angle image that captures Sanjana, a 21-year-old Indian girl with dark brown wavy hair and deep dark brown eyes, in a moment of solemn reflection at her mother's grave within a sprawling cemetery. The image should emphasize the serene yet somber ambiance of the cemetery, showcasing Sanjana standing full-bodied, her gaze directed downwards towards the earth of the grave, encapsulated by the broader context of her surroundings.
+> 
+> She is dressed appropriately for her visit, in blue jeans and a tank top, embodying a mix of personal resilience and the rawness of her grief. The moonlight bathes the scene in a soft glow, illuminating not just Sanjana’s contemplative expression but also the intricate details of the cemetery around her—twisted gnarled trees, a ground covered in a light mist, and the full moon commanding the sky above, casting shadows and adding depth to the scene.
+> 
+> The details of the cemetery, including the eerie beauty of the twisted trees, the ethereal mist at ground level, and the celestial brightness of the full moon, should be visible in the background, adding layers of meaning and emotion to the image. Sanjana’s usual accessories, delicate gold rings, and intricate bracelets are visible, tying her appearance back to her cultural heritage and personal history.
+> 
+> This wide-angle view should not only focus on Sanjana and her moment of mourning but also on the atmospheric details of the cemetery, creating a narrative that speaks to the connection between the individual and the environment, the personal and the universal aspects of grief and remembrance."
+
+**Result**
+<img width="614" alt="Screenshot 2024-03-05 at 12 17 20 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/66f9f13f-5045-4566-9b2f-dee0b984feac">
+
+**Prompt for Dall E**
+> Create an image using the request without modifications and base this image on a previously generated image with the generation ID number kAbeT0yKB5JB78jj. Maintaining the appearance of the woman in the previous image that I have referenced. After generating the image, tell me what seed number was used for the image and the styles used for the image, and the generation ID number:
+> 
+> 
+> "Create a high-resolution, detailed, photo-realistic image capturing a pivotal moment as Sanjana, a 21-year-old Indian girl known for her serene and introspective presence, stands in a forest clearing, engaging in an extraordinary act. With her dark brown wavy hair cascading over her shoulders and her deep dark brown eyes reflecting a mix of determination and wonder, she is about to open a portal to another realm. The ambient forest light creates a soft glow around her, highlighting her focused expression and the dynamic energy emanating from her hands.
+> 
+> Dressed in her casual yet defining style, Sanjana wears blue jeans and a tank top, showcasing her readiness for adventure and her youthful, carefree spirit. Her figure is fully visible, standing confidently with the portal beginning to swirl in front of her, a convergence of light and shadow that hints at the unknown world beyond. Despite the change in her activity, her personal style remains unmistakable with delicate gold rings and intricate bracelets adorning her hands, grounding her elegance and cultural heritage even in this moment of magical endeavor.
+> 
+> This scene captures not just Sanjana's physical journey but also her internal one, as she bridges realms, embodying the essence of exploration and the boundless potential of imagination. The forest around her, alive with the mystery and the promise of adventure, sets the stage for this momentous act, with the portal itself a mesmerizing blend of colors and energies that draw the eye and beckon to the wonders that lie beyond."
+
+**Result**
+<img width="494" alt="Screenshot 2024-03-05 at 12 18 00 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/b0e276c7-ddad-4e21-b0c8-0294f52ccd0e">
+
+## some takeaways from prompting for single character across multiple settings
+- It is possible to get a single character in multiple scenes if I design the prompts carefully and she will be recognisable. There might be slight discrepancies in her facial structure or skin tone but it might not be possible to ‘fix’ this with just prompting.
+    - She is often facing the viewer though so it looks a bit like model shots. The setting or backdrop isn’t always very detailed or she isn’t necessarily interacting with the setting in a way that looks natural.
