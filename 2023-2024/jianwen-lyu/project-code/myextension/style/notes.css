@@ -1,0 +1,105 @@
+.jp-textearea
+{
+    /* basic */
+    flex: 40%;
+    padding: auto;
+}
+
+.jp-notes-button
+{
+    /* basic */
+    background-color:black;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    /* size */
+    width: 50px;
+    height: 25px;
+
+    /* border */
+    border: none;
+}
+.jp-notes-button:hover
+{
+    background-color: gray;
+    color: white;
+}
+
+.jp-note-toolbar
+{
+    /* size */
+    width: 400px;
+    max-height: 27px;
+}
+
+.jp-notes-area
+{
+    /* basic */
+    position: fixed;
+    background-color: white;
+    border: 1px solid black;
+    margin: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    /* size */
+    width: 400px;
+    height: 400px;
+}
+
+.jp-notes-container
+{
+    /* basic */
+    color: white;
+    margin: 1px;
+    display: flex;
+
+    /* size */
+    width: 350px;
+    height: 350px;
+
+    /* border */
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.jp-button-container
+{
+    /* basic */
+    color: white;
+    margin: 1px;
+    border: 1px solid black;
+
+    /* size */
+}
+
+.jp-note
+{
+    /* basic */
+    display: flex;
+    flex-direction: row;
+    color: white;
+    margin: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* size */
+    width: 300px;
+    height: 300px;
+
+    /* border */
+    border: 1px solid black;
+    border-radius: 2px;
+}
