@@ -43,7 +43,9 @@ Jianwen
 2. questions
    - should the notes part take classes of individual notes containers, or just blended types of individual notes?  
 3. next step
-   - learn React and integrate project code with proper css styles.
+   - making textarea display replaced by title-like input display.
+   - markdown contents grabbing functions, enable title hierachies and collapsing.
+   - dataflow graph views
 
 Jiaqi 
 1. progress
