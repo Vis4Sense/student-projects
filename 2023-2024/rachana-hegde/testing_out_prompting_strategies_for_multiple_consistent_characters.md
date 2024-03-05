@@ -68,7 +68,10 @@ The scene captures both Sanjana and Akash in a moment of shared contemplation, s
 <img width="430" alt="Screenshot 2024-03-05 at 12 28 53 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/92ba2750-6eb6-41d6-b245-0dfba383ea7d">
 
 # attempt #1 ~ generating scene images with 3 characters (sanjana, akash, and roshan) 
+## Roshan
 <img width="369" alt="Screenshot 2024-03-05 at 12 29 17 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/86cd43be-67c0-4b59-a125-96a0b00ba75a">
+
+## Akash
 <img width="306" alt="Screenshot 2024-03-05 at 12 29 28 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/002653bb-c95c-4b55-b6f4-21f06375fce2">
 
 <img width="368" alt="Screenshot 2024-03-05 at 12 29 44 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/de1bd167-c5b7-4453-86e9-5805240031ae">
@@ -79,7 +82,7 @@ The scene captures both Sanjana and Akash in a moment of shared contemplation, s
 
 ### takeaways from generating images with sanjana, akash & roshan
 
-- Generating images with 3 characters (sanjana, akash, and roshan) actually took a few minutes longer than doing it for 1 or 2 characters. The latency was a bit annoying and the prompt-image accuracy was much worse compared to the 2 or 1 character scene images.
+- Generating images with 3 characters (sanjana, akash, and roshan) actually took a few minutes longer than doing it for 1 or 2 characters. The latency may be too much and the prompt-image accuracy was much worse compared to the 2 or 1 character scene images.
 - The quality has plummeted.
 - It’s also hard to reliably get images where all 3 characters are visible.
   
