@@ -35,7 +35,34 @@ Hongye
 Rachana
 1. progress: did the full implementation list, tested out prompting strategies for consistent character art in chat gpt interface
 2. questions - should i cut some features so that i can finish this project with enough time to do user testing + advice needed on updating timeline for the implementation so it is more realistic. 
-3. next step: 
+3. next step: make it possible to save changes to the storyboard locally + upload images, test finetuning stable cascade in google colab
+
+Jianwen
+1. progress
+   - finished simple code setting/finding functions, built simple "dashboard" user interface.
+2. questions
+   - should the notes part take classes of individual notes containers, or just blended types of individual notes?  
+3. next step
+   - making textarea display replaced by title-like input display.
+   - markdown contents grabbing functions, enable title hierachies and collapsing.
+   - dataflow graph views
+
+Jiaqi 
+1. progress
+  - drap and drop action
+2. questions
+  - about content.js in manefest.json file
+3. next step
+  - read page conetent and dynamiclly add node to sidebar
+  - create link between node after added in task box
+
+Ziyue
+1. progress
+  - do some LSTM related works
+2. questions
+  - there are lots of works to do to get the data from Google and JavaScript websites
+3. next step
+  - get the pre-process done
 
 # 27 Feb 2024
 Rachana
