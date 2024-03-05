@@ -2,7 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense, Bidirectional, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
-# 模型参数
+# model elements
 vocab_size = 10000  
 embedding_dim = 64  
 lstm_units = 128    
