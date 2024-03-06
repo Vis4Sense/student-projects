@@ -1,4 +1,15 @@
 # 06 Mar 2024
+Raul Farkas
+1. Progress
+   - Further work on developing a Stock Close price forecast model (Based on BiGRU-LSTM architecture)
+   - Created unified diagram of trading system
+2. Questions and difficulty
+   - Training requires a lot of time (especially when testing different parameters) will attempt using Hyperparameter tuning where possible
+3. Next step
+   - Use Hyperparameter tuning for stock close price forecast
+   - Develop RL model
+   - Experiment with toggling on/off sentiment score as a feature to the signal generation RL model and see what is the outcome difference
+   - If time allows, train RL model using hyperparameter tuning
 Xiruo Sun
 1. Progress
    - read some papers and create an overview diagram of the combined system
