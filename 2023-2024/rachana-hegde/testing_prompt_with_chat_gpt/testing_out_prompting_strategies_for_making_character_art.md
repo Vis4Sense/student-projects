@@ -140,7 +140,3 @@ This scene captures a moment of Sanjana's day as she delves into the world of ma
 **Result**
 
 <img width="494" alt="Screenshot 2024-03-05 at 12 18 00 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/b0e276c7-ddad-4e21-b0c8-0294f52ccd0e">
-
-## some takeaways from prompting for single character across multiple settings
-- It is possible to get a single character in multiple scenes if I design the prompts carefully and she will be recognisable. There might be slight discrepancies in her facial structure or skin tone but it might not be possible to ‘fix’ this with just prompting.
-    - She is often facing the viewer though so it looks a bit like model shots. The setting or backdrop isn’t always very detailed or she isn’t necessarily interacting with the setting in a way that looks natural.
