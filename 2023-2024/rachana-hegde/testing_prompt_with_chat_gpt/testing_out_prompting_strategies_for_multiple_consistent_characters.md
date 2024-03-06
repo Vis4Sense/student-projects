@@ -80,17 +80,6 @@ The scene captures both Sanjana and Akash in a moment of shared contemplation, s
 <img width="367" alt="Screenshot 2024-03-05 at 12 29 54 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/a07adf8b-eda2-4721-a411-1b11d1772e0f">
 
 <img width="365" alt="Screenshot 2024-03-05 at 12 30 06 PM" src="https://github.com/Vis4Sense/student-projects/assets/66835338/9f3c963e-3a71-470c-adc9-86b1a3878322">
-
-### takeaways from generating images with sanjana, akash & roshan
-
-- Generating images with 3 characters (sanjana, akash, and roshan) actually took a few minutes longer than doing it for 1 or 2 characters. The latency may be too much and the prompt-image accuracy was much worse compared to the 2 or 1 character scene images.
-- The quality has plummeted.
-- It’s also hard to reliably get images where all 3 characters are visible.
-  
-### takeaways from generating images with sanjana and akash
-
-- It definitely looks like them across the images in different settings - but this is when the original generated images of the characters are referenced and the model is instructed to base the characters’ appearances on those images.
-    - There are minor issues like Akash’s eyes aren’t always rendered correctly.
     - The characters also tend to appear posed like models - they stand stiffly and/or look at the viewer even when I specify that they’re doing a certain activity like looking at perfume bottles.
         - Specifying candid shot and emphasising a few more times in the prompt that it should be a candid image seems to help * scroll up for example where it worked *
 - Telling the LLM to emphasise certain things if it’s missing from the image can help generate better images ⇒ I could attempt to anticipate this in my application by designing the prompts to the LLM so that they emphasise things that Dall E tends to forget or overlook unless the prompt is worded in a particular way.
