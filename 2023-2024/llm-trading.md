@@ -1,3 +1,12 @@
+# 06 Mar 2024
+Xiruo Sun
+1. Progress
+   - read some papers and create an overview diagram of the combined system
+2. Question and difficulty
+   - need to learn deep learning
+3. Next step
+   - write code
+
 # 26 Feb 2024
 
 ## Discussions
