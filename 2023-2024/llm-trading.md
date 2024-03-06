@@ -1,4 +1,13 @@
 # 06 Mar 2024
+
+Project separation:
+- Raul: improve the return of a single symbol/asset with price and technical indicators
+   - The goal is to improve longer term return, such as after one year.
+   - Have a look of the longer term prediction paper from Google and the related work it mentioned.
+   - One idea is to identify certain 'patterns', such as sudden price increase, and take advantage of that.
+- Xiruo: improve the return of a single symbol/stock by optimising the sentiment analysis
+- Muhamad: improve the return of portfolio selection and weighting by optimising the sentiment analysis and possibly RL.
+
 Raul Farkas
 1. Progress
    - Further work on developing a Stock Close price forecast model (Based on BiGRU-LSTM architecture)
