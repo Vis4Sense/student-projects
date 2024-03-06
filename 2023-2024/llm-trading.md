@@ -7,6 +7,15 @@ Xiruo Sun
 3. Next step
    - write code
 
+  Muhamad Hermawan
+1. Progress
+   - experimenting with FinRL a python opensource module for quantitative fianancial in RL
+   - Read some of its published journal/paper
+2. Question and difficulty
+   - still need more time with DRL 
+3. Next step
+   - more experiment with Trading RL Environment and strategy
+
 # 26 Feb 2024
 
 ## Discussions
