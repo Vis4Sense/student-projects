@@ -10,6 +10,7 @@ Raul Farkas
    - Develop RL model
    - Experiment with toggling on/off sentiment score as a feature to the signal generation RL model and see what is the outcome difference
    - If time allows, train RL model using hyperparameter tuning
+     
 Xiruo Sun
 1. Progress
    - read some papers and create an overview diagram of the combined system
