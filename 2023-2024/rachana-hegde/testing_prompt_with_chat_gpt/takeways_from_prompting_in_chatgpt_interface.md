@@ -45,4 +45,3 @@ These prompts are designed to showcase Sanjana in a variety of settings and mood
 - Character details to try including:  “emotion”, “gender”, “age”, “ethnicity”, “height”, eye color, hair color and style, accessories, face shape, skin color
 - Specifying the angle of the photo - wide angle, full body, portrait *these are all photography terms
 - Specify if you want character to look towards viewer or look away / do some action (candid shot)
-
