@@ -14,9 +14,10 @@
             <div class="scene-div">
                 <!-- Placeholder title -->
                 <div class="scene-title draggable"><p class="editable" contenteditable="false"> MC dreams</p></div>
-                <!-- Placeholder image -->
-                <div class="draggable">
+                <!-- Placeholder image and upload button -->
+                <div class="draggable scene-img">
                     <img src="./static/img/girl_sleeping.jpg">
+                    <button class="upload-img-btn">Upload Image</button>
                 </div>
                 <!-- Placeholder scene description -->
                 <div class="draggable scene-text"><p class="editable" contenteditable="false"> Mara falls sick with the flu and takes a nap.
@@ -28,9 +29,10 @@
             <div class="scene-div">
                 <!-- Placeholder title -->
                 <div class="scene-title"><p class="editable" contenteditable="false"> MC walks dog</p></div>
-                <!-- Placeholder image -->
-                <div class="draggable">
+                <!-- Placeholder image and upload button -->
+                <div class="draggable scene-img">
                     <img src="./static/img/dog_walk.jpg">
+                    <button class="upload-img-btn">Upload Image</button>
                 </div>
                 <!-- Placeholder scene description -->
                 <div class="draggable scene-text"><p class="editable" contenteditable="false"> In the first dream, Mara is walking her dog, Goldy. She's taking her dog
@@ -38,7 +40,7 @@
                 <!-- Delete scene div -->
                 <button class="delete-scene-btn">Delete Scene</button>
             </div>
-            <!-- TODO Add upload image functionality -->
+
             <!-- TODO Save the order of the scenes (locally??? database??) -->
         </div>
         <!-- Add new scene with placeholder image, title, and description -->
@@ -47,6 +49,7 @@
 
     <!--  Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/store.js/2.0.12/store.everything.min.js"></script>
     <script src="./static/js/app.js"></script>
 </body>
 </html>
