@@ -11,6 +11,7 @@
 ## Project creation page
 
 - Users can enter information: title, genre, themes, story summary, and image style preference
+- Save data in local storage
 - Click button to create new storyboard
 
 ## Feature: Prompt Editing
@@ -45,14 +46,17 @@
         - hairstyle and hair color
         - height
         - Emotion
-        - accessories
+        - Accessories
+        - Personality traits
         - Unique characteristics (i.e. tattoos, scars)
         - Additional details
+    - Option to add up to 3 characters to appear in image (with the caveat that the image quality might not be totally accurate)
+        - Specify relationship(s) between characters
     - Regular prompt
     - Negative prompt
-    - Setting description
+    - Setting description – location, general environment (i.e. city/urban, nature, building interior), time period
     - Art Style
-    - Mood
+    - Mood – i.e. romantic, whimsical, dark, suspenseful
     - Photo angle - wide angle, full body, portrait, etc.
     - Candid shot – yes or no? (should character be looking at viewer/doing model pose or posed more naturally)
     - *Not sure if I can control: degree of randomness, generation steps, seed, prompt strength, weighting
@@ -65,8 +69,8 @@
 ### Storyboarding
 
 - Scene divs: drag and drop for images and text, add/remove, edit scene title and description text **Completed**
-- Upload images **In progress**
-- Save changes to local storage **In progress**
+- Upload images **Completed**
+- Save changes to local storage **Completed**
 
 # **Estimated time to complete: 1.5 weeks**
 
@@ -87,4 +91,8 @@
 ## Project details page * optional
 
 - User can edit the details (i.e. title, plot) so that the LLM prompt will be updated with new information about the story
-- How to save this information in local storage
+- Update info in local storage
+- Point of View (first person, third person, etc.) **Optional**
+- Writing style (describe style and/or include a short extract from your work to have the LLM describe it for you) **optional - could help with the way plot ideas are phrased**
+- Sources of inspiration - list books, films, tv shows **optional**
+- Target reader?
