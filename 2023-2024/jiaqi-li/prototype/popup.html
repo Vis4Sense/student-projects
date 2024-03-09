@@ -3,17 +3,25 @@
 <head>
 <!-- link with css stylesheet -->
 <link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 <body>
 
-<div class="sidebar">
+<div class="leftSidebar" id="left">
     <h2>Folating node</h2>
     <div id="nodeContainer">
       <button draggable="true">node1</button>
       <button draggable="true">node2</button>
       <button draggable="true">node3</button>
     </div>
+</div>
+
+<div class="rightSidebar" id="right">
+  <h2>Archived task</h2>
+  <div id="historyContainer">
+    <a href="#" class="history">task 1</a>
+    <a href="#" class="history">task 2</a>
+    <a href="#" class="history">task 3</a>
+  </div>
 </div>
 
 <div class="content">
@@ -25,7 +33,6 @@
     
     <div id="taskContainer">
     </div>
-
 </div>
 <script src="content.js"></script>
 </body>

@@ -4,17 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var createButton = document.getElementById('createButton');
     createButton.addEventListener('click', createTaskBox);
 
-    // Allow drop on task boxes
-    var taskContainers = document.querySelectorAll('.taskContainer');
-    taskContainers.forEach(function(container) {
-        container.addEventListener('dragover', allowDrop);
-        container.addEventListener('drop', drop);
+    var nodes = document.querySelectorAll('.leftSidebar button');
+    nodes.forEach(function(node) {
+        node.addEventListener('dragstart', dragStart);
     });
 
-    // Allow nodes to be dragged
-    var nodes = document.querySelectorAll('.sidebar button');
-    nodes.forEach(function(node) {
-        node.addEventListener('dragstart', drag);
+    var nodeContainers = document.querySelectorAll('.nodeContainer');
+    nodeContainers.forEach(function(container) {
+        container.addEventListener('dragover', allowDrop);
+        container.addEventListener('drop', drop);
     });
 });
 
@@ -25,11 +23,36 @@ function createTaskBox() {
     // Create a new task box element
     var taskBox = document.createElement('div');
     taskBox.classList.add('taskBox');
-    taskBox.textContent = taskContent;
 
-    // Set up attributes for drop behavior
-    taskBox.setAttribute('ondragover', 'allowDrop(event)');
-    taskBox.setAttribute('ondrop', 'drop(event)');
+    var nodeContainer = document.createElement('div');
+    nodeContainer.classList.add('nodeContainer');
+    
+    var taskTheme = document.createElement('p');
+    taskTheme.textContent = taskContent;
+    // Create the archive button
+    var archiveButton = document.createElement('button');
+    //archiveButton.textContent = 'Archive';
+    archiveButton.classList.add('archiveButton');
+    archiveButton.addEventListener('click', function() {
+        // Add code to handle archive functionality
+        // For example, you can move the task box to an archive section
+        // Or mark it as archived
+        // This function needs to be implemented
+    });
+
+    // Create the delete button
+    var deleteButton = document.createElement('button');
+    //deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('deleteButton');
+    deleteButton.addEventListener('click', function() {
+        taskBox.remove();
+    });
+
+    // Append the buttons and content to the task box
+    taskBox.appendChild(taskTheme)
+    taskBox.appendChild(archiveButton);
+    taskBox.appendChild(deleteButton);
+    taskBox.appendChild(nodeContainer);
 
     // Append the task box to the task container
     document.getElementById('taskContainer').appendChild(taskBox);
@@ -38,29 +61,42 @@ function createTaskBox() {
     document.getElementById('input_task').value = '';
 }
 
+
 function allowDrop(event) {
     event.preventDefault();
+    console.log("drag over");
 }
 
-function drag(event) {
-    event.dataTransfer.setData('text', event.target.textContent);
+function dragStart(event) {
+    console.log("drag a node")
+    event.dataTransfer.setData('text/plain', event.target.textContent);
 }
 
 function drop(event) {
+    console.log("run the drop function")
     event.preventDefault();
-    var data = event.dataTransfer.getData('text');
+    var data = event.dataTransfer.getData('text/plain');
 
-    // Create a new button element with the dragged node's text
-    var newNode = document.createElement('button');
-    newNode.textContent = data;
-    newNode.draggable = true;
-    newNode.addEventListener('dragstart', drag); // Set up drag behavior for the new node
+    // Create a new node element with the dragged text
+    var newNode = createNode(data);
 
-    // Find the closest task box to the drop target
-    var taskBox = event.target.closest('.taskBox');
+    // Find the closest node container to the drop target
+    var nodeContainer = event.target.closest('.nodeContainer');
 
-    // Append the new node to the task box if found
-    if (taskBox) {
-        taskBox.appendChild(newNode);
+    // Append the new node to the node container if found
+    if (nodeContainer) {
+        nodeContainer.appendChild(newNode);
+        console.log("creat a new node in task box");
     }
+    console.log("drop node in box");
+}
+
+function createNode(text) {
+    
+    var newNode = document.createElement('button');
+    newNode.classList.add('node');
+    newNode.textContent = text;
+    newNode.draggable = true;
+    newNode.addEventListener('dragstart', dragStart); // Set up drag behavior for the new node
+    return newNode;
 }

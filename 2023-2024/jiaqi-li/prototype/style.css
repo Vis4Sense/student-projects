@@ -7,17 +7,15 @@ body {
       font-weight: 400;
       font-size: 16px;
       line-height: 18px;
-      
       margin: 10px;
-  
       color: #000000;
       
   }
   
   h2{
       text-align: center;
-      margin-top: 40px;
       margin-bottom: 40px;
+      font-size: 20px;
       
   }
   input{
@@ -30,16 +28,33 @@ body {
       border: 1px solid #000000;
       border-radius: 5px;
   }
-  .sidebar {
+  .leftSidebar{
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 15%;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
     overflow: auto;
   }
   
+  .rightSidebar {
+    margin-left: 85%;
+    padding: 0;
+    width: 15%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+  }
+
+  div.content {
+    margin-left: 15%;
+    padding: 0;
+    height: 100%;
+    width: 70%;
+  }
+
   .button{
   
   box-sizing: border-box;
@@ -53,26 +68,36 @@ body {
   margin: 5px;
   
   }
-  .sidebar button {
+  .leftSidebar button {
     display: block;
-    width: 150px;
+    width: 80%;
     padding: 8px;
-    margin: 20px;
-    font-size: 18px;
+    margin: 10px;
+    font-size: 16px;
     border-radius: 5px;
   }
-   
+
+  a.history{
+    display:block;
+    text-align: center;
+    width:100%;
+    height:40px;
+    outline:0;
+    font-size: 16px;
+    color: #000000;
+    text-decoration: none;
+  }
+
+  a.history:hover:not(.active){
+    background-color: rgb(164, 164, 164);
+    color: white;
+  }
   button:hover:not(.active) {
     background-color: rgb(164, 164, 164);
     color: white;
   }
   
-  div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-    width: 60%;
-  }
+ 
   
   @media screen and (max-width: 700px) {
     .sidebar {
@@ -92,17 +117,17 @@ body {
   }
   
   .taskBox {
-      border: 1px solid black; 
-      padding: 10px; 
-      width: 80%; 
-      height: 200px;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
-      overflow: auto;
+    position: relative;
+    border: 1px solid black; 
+    padding: 10px; 
+    width: 80%; 
+    height: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    overflow: auto;
   }
-  .taskBox button {
-    display: inline-block;
+  .taskBox .node {
     width: 120px;
     padding: 8px;
     margin: 10px; /* Adjust margin */
@@ -110,3 +135,39 @@ body {
     border-radius: 5px;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
+  .taskBox p {
+    position: absolute;
+    width:70%
+  }
+
+  .archiveButton{
+    position: absolute;
+    margin-left: 80%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background: url("images/archive.png") no-repeat scroll 0 0 transparent;
+  }
+
+
+  .deleteButton {
+    position: absolute;
+    margin-left: 90%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-position: center;
+    justify-content: center;
+    background: url("images/delete.png") no-repeat scroll 0 0 transparent;
+  }
+
+  .nodeContainer{
+    position: absolute;
+    margin-top: 30px;
+  }
