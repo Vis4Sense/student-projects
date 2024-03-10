@@ -8,12 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     nodes.forEach(function(node) {
         node.addEventListener('dragstart', dragStart);
     });
-
-    var nodeContainers = document.querySelectorAll('.nodeContainer');
-    nodeContainers.forEach(function(container) {
-        container.addEventListener('dragover', allowDrop);
-        container.addEventListener('drop', drop);
-    });
 });
 
 function createTaskBox() {
@@ -29,6 +23,11 @@ function createTaskBox() {
     
     var taskTheme = document.createElement('p');
     taskTheme.textContent = taskContent;
+
+    nodeContainer.addEventListener('dragover', allowDrop);
+    nodeContainer.addEventListener('drop', drop);
+
+
     // Create the archive button
     var archiveButton = document.createElement('button');
     //archiveButton.textContent = 'Archive';
@@ -61,7 +60,6 @@ function createTaskBox() {
     document.getElementById('input_task').value = '';
 }
 
-
 function allowDrop(event) {
     event.preventDefault();
     console.log("drag over");
@@ -73,7 +71,6 @@ function dragStart(event) {
 }
 
 function drop(event) {
-    console.log("run the drop function")
     event.preventDefault();
     var data = event.dataTransfer.getData('text/plain');
 
@@ -86,7 +83,18 @@ function drop(event) {
     // Append the new node to the node container if found
     if (nodeContainer) {
         nodeContainer.appendChild(newNode);
-        console.log("creat a new node in task box");
+
+        // Remove the node in the leftSidebar with the same text
+        var leftSidebar = document.getElementsByClassName('leftSidebar')[0]; 
+        var nodesInLeftSidebar = leftSidebar.querySelectorAll('button');
+
+        for (var i = 0; i < nodesInLeftSidebar.length; i++) {
+            if (nodesInLeftSidebar[i].textContent.trim() === data.trim()) {
+                nodesInLeftSidebar[i].parentNode.removeChild(nodesInLeftSidebar[i]);
+                break; 
+            }
+        }
+
     }
     console.log("drop node in box");
 }
