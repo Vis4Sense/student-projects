@@ -35,7 +35,17 @@ Jiaqi
 Rachana
 1. Progress: added the following functionality to application: user can upload images to storyboard, storyboard changes saved to local storage with storeJS api, new storyboard/project creation page has a form where user can enter information and add custom inputs + form data is saved
 2. Questions - should i change this from a flask application into a regular website (because i realised that i ended up processing information like form data with javascript instead of python like i intended)
-3. Next step - add nav bar, do the image generation page + connect to API, save the order of scenes in storyboard locally 
+3. Next step - add nav bar, do the image generation page + connect to API, save the order of scenes in storyboard locally
+
+Jianwen
+1. Progress:
+   - added the collapsible hierarchy structure of model components, based on user's markdown titles.
+   - improved the looking of model structures.
+2. Questions:
+   - should this extension also generate a "model component report" in a markdown cell? 
+4. Next Step:
+   - make "add child" and "remove child" functions for model components, also make them draggable.
+   - make components saved and loaded on next launch.
 
 # 5 Mar 2024
 
