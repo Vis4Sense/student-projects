@@ -40,7 +40,7 @@ Hongye:
 Rachana
 1. Progress: added the following functionality to application: user can upload images to storyboard, storyboard changes saved to local storage with storeJS api, new storyboard/project creation page has a form where user can enter information and add custom inputs + form data is saved
 2. Questions - should i change this from a flask application into a regular website (because i realised that i ended up processing information like form data with javascript instead of python like i intended)
-3. Next step - add nav bar, do the image generation page + connect to API, save the order of scenes in storyboard locally
+3. Next step - convert application from flask backend to normal website, add nav bar, do the image generation page + connect to API, save the order of scenes in storyboard locally
 
 Ziyue
 1. Progress
