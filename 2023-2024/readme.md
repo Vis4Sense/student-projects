@@ -42,6 +42,15 @@ Rachana
 2. Questions - should i change this from a flask application into a regular website (because i realised that i ended up processing information like form data with javascript instead of python like i intended)
 3. Next step - add nav bar, do the image generation page + connect to API, save the order of scenes in storyboard locally
 
+Ziyue
+1. Progress
+   - Do some works on the API part, I set my own API key as defaulted but it might be limited for use
+   - Download a LSTM model, and I try the suggested gpt-researcher method
+2. Questions
+   - As my laptop operation system is re-loaded, I got some troubles, losing my python and environment
+3. Next step
+   - finish web part, and try to combine with LSTM, gpt-researcher
+
 Jianwen
 1. Progress:
    - added the collapsible hierarchy structure of model components, based on user's markdown titles.
