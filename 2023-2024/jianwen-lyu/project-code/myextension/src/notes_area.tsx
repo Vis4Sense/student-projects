@@ -36,7 +36,13 @@ const Note = (): JSX.Element => {
     );
 }
 
+// user choose which type the component is, if model tuning: add hp (auto)
 // TODO: solve problem: notes buttons and notes doesn't appear on popup window
+// mouse hover => 3 buttons occur, 
+// TODO: grab user markdown titles and generate model components, 
+// make components looks like titles instead of textareas, each as a type to choose,
+// default: data loading, feature engineering, model training, output
+// enable title hierachy and folding & collapsing...
 export class NotesArea extends SplitPanel
 {
     // construct the notes area
