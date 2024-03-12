@@ -78,21 +78,21 @@ Jianwen
 
 Jiaqi 
 1. progress
-  - drap and drop action
+   - drap and drop action
 2. questions
-  - about content.js in manefest.json file
+   - about content.js in manefest.json file
 3. next step
-  - read page conetent and dynamiclly add node to sidebar
-  - create link between node after added in task box
-  - add session feature
+   - read page conetent and dynamiclly add node to sidebar
+   - create link between node after added in task box
+   - add session feature
 
 Ziyue
 1. progress
-  - do some LSTM related works
+   - do some LSTM related works
 2. questions
-  - there are lots of works to do to get the data from Google and JavaScript websites
+   - there are lots of works to do to get the data from Google and JavaScript websites
 3. next step
-  - get the pre-process done
+   - get the pre-process done
 
 # 27 Feb 2024
 Rachana
