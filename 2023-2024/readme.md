@@ -27,8 +27,8 @@
 
 Jiaqi
 1. Progress
-  - refine the interface
-  - added function to load tab info to extension.
+   - refine the interface
+   - added function to load tab info to extension.
 2. Questions
 3. Next step
 
