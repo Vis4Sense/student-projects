@@ -45,6 +45,8 @@ class hmPage {
         newNode.setAttribute('draggable', 'true')
         newNode.textContent = newPage.pageObj.title;
         nodeSection.appendChild(newNode);
+
+        newNode.addEventListener('dragstart', dragStart);
     }
  }
 
