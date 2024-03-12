@@ -1,0 +1,94 @@
+<!--Page for creating storyboard-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <title> Storyboard</title>
+</head>
+<body>
+    <h1> Create a new storyboard </h1>
+    <p class="info-request"> Please provide some information about your writing project below. </p>
+    <main>
+        <div id="create-storyboard" >
+            <form id="new-storyboard">
+                <!-- Project Title -->
+                <label for="title" id="title-label">Project Title:</label>
+                <input type="text" id="title" name="title" required><br><br>
+
+                <!-- User can select multiple genres -->
+                <div class="genre-div">
+                    <p class="genre-title">Genre:</p>
+                    <label><input type="checkbox" name="genre[]" value="fantasy"> Fantasy</label><br>
+                    <label><input type="checkbox" name="genre[]" value="mystery"> Mystery</label><br>
+                    <label><input type="checkbox" name="genre[]" value="thriller"> Thriller</label><br>
+                    <label><input type="checkbox" name="genre[]" value="sci-fi"> Sci-Fi</label><br>
+                    <label><input type="checkbox" name="genre[]" value="realistic-fic"> Realistic Fiction</label><br>
+                    <label><input type="checkbox" name="genre[]" value="romance"> Romance </label><br>
+                    <label><input type="checkbox" name="genre[]" value="historical-fic"> Historical Fiction </label><br>
+                    <label><input type="checkbox" name="genre[]" value="young-adult"> Young Adult </label><br>
+                    <label><input type="checkbox" name="genre[]" value="comedy"> Comedy </label><br>
+                    <label><input type="checkbox" name="genre[]" value="childrens-fic"> Children's Fiction </label><br>
+                    <!-- Add genre -->
+                    <div id="custom-genre-div">
+                        <input type="text" id="custom-genre" placeholder="Enter genre name">
+                        <button type="button" id="add-genre">Add Genre</button>
+                    </div>
+                </div>
+
+                <!-- Themes -->
+                <div class="themes-div">
+                    <p class="themes-list">Themes: </p>
+                    <label><input type="checkbox" name="themes[]" value="love"> Love</label><br>
+                    <label><input type="checkbox" name="themes[]" value="redemption"> Redemption</label><br>
+                    <label><input type="checkbox" name="themes[]" value="coming-of-age"> Coming of Age</label><br>
+                    <label><input type="checkbox" name="themes[]" value="good-vs-evil"> Good vs Evil </label><br>
+                    <label><input type="checkbox" name="themes[]" value="survival"> Survival</label><br>
+                    <label><input type="checkbox" name="themes[]" value="heroism"> Heroism</label><br>
+                    <label><input type="checkbox" name="themes[]" value="freedom"> Freedom</label><br>
+                    <label><input type="checkbox" name="themes[]" value="betrayal"> Betrayal</label><br>
+                    <label><input type="checkbox" name="themes[]" value="nature"> Nature</label><br>
+                    <label><input type="checkbox" name="themes[]" value="justice"> Justice</label><br>
+                    <label><input type="checkbox" name="themes[]" value="identity"> Identity</label><br>
+                    <label><input type="checkbox" name="themes[]" value="identity"> Death</label><br>
+                    <!-- Add theme -->
+                    <div id="custom-theme-div">
+                        <input type="text" id="custom-theme" placeholder="Enter theme">
+                        <button type="button" id="add-theme">Add Theme</button>
+                    </div>
+                </div>
+
+                <!-- Image style preferences -->
+                <div class="image-style-div">
+                    <p class="styles-list"> Preferred Image Styles: </p>
+                    <label><input type="checkbox" name="styles[]" value="surreal"> Surreal</label><br>
+                    <label><input type="checkbox" name="styles[]" value="photo-realistic"> Photorealistic</label><br>
+                    <label><input type="checkbox" name="styles[]" value="fantasy"> Fantasy</label><br>
+                    <label><input type="checkbox" name="styles[]" value="futuristic"> Futuristic</label><br>
+                    <label><input type="checkbox" name="styles[]" value="abstract"> Abstract</label><br>
+                    <label><input type="checkbox" name="styles[]" value="cartoon"> Cartoon</label><br>
+                    <label><input type="checkbox" name="styles[]" value="realistic"> Realistic</label><br>
+                    <label><input type="checkbox" name="styles[]" value="watercolor"> Watercolor</label><br>
+                    <label><input type="checkbox" name="styles[]" value="gothic"> Gothic</label><br>
+                    <!-- Add image style -->
+                    <div id="custom-style-div">
+                        <input type="text" id="custom-style" placeholder="Enter image style">
+                        <button type="button" id="add-style">Add Style</button>
+                    </div>
+                </div>
+
+                <!-- Short summary -->
+                <label for="summary" id="summary-label"> Project Summary: </label><br><br>
+                <textarea id="summary" name="summary" required></textarea><br><br>
+
+                <button type="button" id="create-project"> Create </button>
+            </form>
+        </div>
+    </main>
+
+    <!--  Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/store.js/2.0.12/store.everything.min.js"></script>
+    <script src="./static/js/create_storyboard.js"></script>
+</body>
+</html>

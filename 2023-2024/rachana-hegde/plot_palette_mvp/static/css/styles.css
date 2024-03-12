@@ -2,35 +2,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
 
+/*TODO Add CSS style resets so browser CSS is wiped :) */
 
 /* GENERAL STYLES */
 
 /* Paragraphs and headings */
-p {
+p, label {
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 18px;
     font-weight: 400;
     color: hsl(220, 13%, 13%);
 }
 
-/* TODO use this light grey color for the scene #1 text */ /*color: hsl(219, 9%, 45%);*/
+h1, h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: hsl(220, 13%, 13%);
+}
 
 h1 {
-    font-family: 'Kumbh Sans', sans-serif;
     font-size: 30px;
     font-weight: 700;
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: hsl(220, 13%, 13%);
     margin-bottom: 20px;
 }
 
 h2 {
-    font-family: 'Kumbh Sans', sans-serif;
     font-size: 26px;
     font-weight: 600;
-    color: hsl(220, 13%, 13%);
 }
 
 body {
@@ -48,13 +48,20 @@ main {
 
 /* BUTTONS */
 button {
-    font-family: 'Kumbh Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     border: none;
     border-radius: 10px;
     height: 50px;
     cursor: pointer;
+    padding: 0 20px;
+    /*transition: background-color 0.3s ease;*/
 }
+
+/*button:hover {
+    background-color: hsl(220, 13%, 23%);
+    color: #ffffff;
+}*/
 
 /* HEADER */
 
@@ -88,7 +95,6 @@ img {
     margin: 0 auto;
     justify-items: center;
     align-items: center;
-    /*grid-template-rows: 4;*/
 }
 
 .scene-title p {
@@ -120,7 +126,6 @@ img {
 .scene-img:hover .upload-img-btn {
     display: block;
 }
-
 
 /* Drag and drop functionality with DroppableJS */
 
@@ -172,4 +177,71 @@ img {
 /* Add box shadow for button clicks */
 #add-scene-btn:active {
     box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.5), 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* CREATE NEW STORYBOARD PAGE */
+.info-request {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Create Storyboard Form */
+input[type="text"], textarea {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 16px;
+    border: 1px solid hsl(220, 13%, 13%);
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 60px;
+    resize: vertical;
+}
+
+#title-label, #summary-label {
+    font-weight: 700;
+}
+
+#title {
+    width: 550px;
+}
+
+#summary {
+    width: 700px;
+}
+
+/* Genre, Themes, and Image Style Containers */
+.genre-div, .themes-div, .image-style-div {
+    background-color: #EFEFEF;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 660px;
+    margin: 20px auto; /*For centering divs*/
+}
+
+.genre-title, .themes-list, .styles-list {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Buttons for adding custom genre, theme, or style */
+#add-genre, #add-theme, #add-style {
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+}
+
+/* Create project button */
+#create-project {
+    margin-bottom: 20px;
+}
+#create-project:hover, #add-style:hover, #add-genre:hover, #add-theme:hover {
+    background-color: hsl(220, 13%, 13%);
+    color: #ffffff;
 }

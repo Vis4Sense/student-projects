@@ -1,8 +1,19 @@
-// STORYBOARD FUNCTIONALITY
+// BUILD STORYBOARD FUNCTIONALITY
 
 document.addEventListener('DOMContentLoaded', function () {
     var el = document.getElementById('storyboard');
     displayStoryboardData(); // Load storyboard from local storage
+
+    // Get the writing project's title from local storage to display on page
+        var details = store.get('storyboardDetails');
+
+        if(details && details.title) {
+            document.getElementById('storyboardTitle').textContent = 'Storyboard for ' + details.title;
+    }
+
+    // TODO access data for debugging purposes - feel free to delete next two lines of code later :)
+    const dataCheck = store.get('storyboardData');
+    console.log(dataCheck);
 
     // Drag and drop scene divs using SortableJS https://github.com/SortableJS/Sortable
     Sortable.create(el, {
@@ -30,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function() {
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
-            fileInput.accept = 'image/*';
+            fileInput.accept = 'image';
             fileInput.onchange = e => {
                 const file = e.target.files[0];
                 const fileReader = new FileReader();
@@ -77,7 +88,7 @@ function createSceneDiv(data = { title: 'Title', imgSource: './static/img/big_pa
     uploadImgBtn.addEventListener('click', function() {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
-        fileInput.accept = 'image/*';
+        fileInput.accept = 'image';
         fileInput.onchange = e => {
             const file = e.target.files[0];
             const fileReader = new FileReader();
@@ -182,3 +193,26 @@ function displayStoryboardData() {
         });
     }
 }
+
+/* Code for calculating how much local storage data is left - copy paste this into dev tools to check */
+/*
+function getLocalStorageSize() {
+    let total = 0;
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            total += localStorage[key].length * 2;
+        }
+    }
+    return total;
+}
+
+function showStorageInfo() {
+    const filledStorage = getLocalStorageSize();
+    console.log(`Used storage: ${filledStorage} bytes`);
+    const storageLimit = 5 * 1024 * 1024; // The storage limit is usually 5MB in bytes
+    const remainingStorage = storageLimit - filledStorage;
+    console.log(`Storage left is: ${remainingStorage} bytes`);
+}
+
+showStorageInfo();
+*/
