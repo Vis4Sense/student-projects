@@ -3,22 +3,23 @@ body {
     font-family: "Lato", sans-serif;
   }
   
-  p{
+p{
       font-weight: 400;
       font-size: 16px;
       line-height: 18px;
       margin: 10px;
       color: #000000;
       
-  }
-  
-  h2{
+}
+
+h2{
       text-align: center;
       margin-bottom: 40px;
       font-size: 20px;
       
-  }
-  input{
+}
+
+input{
       box-sizing: border-box;
   
       width: 500px;
@@ -27,8 +28,9 @@ body {
       background: #FFFEFE;
       border: 1px solid #000000;
       border-radius: 5px;
-  }
-  .leftSidebar{
+}
+
+.leftSidebar{
     margin: 0;
     padding: 0;
     width: 15%;
@@ -36,7 +38,7 @@ body {
     position: fixed;
     height: 100%;
     overflow: auto;
-  }
+}
   
   .rightSidebar {
     margin-left: 85%;
@@ -61,7 +63,6 @@ body {
   
   width: 115px;
   height: 40px;
-  
   background: #F6F5F5;
   border: 1px solid #000000;
   border-radius: 5px;
@@ -73,7 +74,8 @@ body {
     width: 80%;
     padding: 8px;
     margin: 10px;
-    font-size: 16px;
+    font-size: 1vw;
+    overflow: auto;
     border-radius: 5px;
   }
 
@@ -131,8 +133,9 @@ body {
     width: 120px;
     padding: 8px;
     margin: 10px; /* Adjust margin */
-    font-size: 18px;
+    font-size: 1vw;
     border-radius: 5px;
+    overflow: auto;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
   .taskBox p {
@@ -174,3 +177,4 @@ body {
     height: 80%;
     overflow: auto;
   }
+

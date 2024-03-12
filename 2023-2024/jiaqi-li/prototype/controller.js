@@ -40,12 +40,15 @@ class hmPage {
        
        //add node in interface
 
-        var nodeSection = document.getElementById('nodeSection');
-        newNode = document.createElement("button");
-        newNode.setAttribute('draggable', 'true')
-        newNode.textContent = newPage.pageObj.title;
-        nodeSection.appendChild(newNode);
+      var nodeSection = document.getElementById('nodeSection');
+      newNode = document.createElement("button");
+      newNode.setAttribute('draggable', 'true')
+      newNode.textContent = newPage.pageObj.title;
+      nodeSection.appendChild(newNode);
 
+      newNode.addEventListener('click', function() {
+         window.open(newPage.pageObj.url, '_blank');
+      });
         newNode.addEventListener('dragstart', dragStart);
     }
  }
@@ -60,6 +63,7 @@ class hmPage {
        }
     });
  }
+
 
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
