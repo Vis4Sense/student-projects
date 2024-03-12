@@ -32,6 +32,11 @@ Jiaqi
 2. Questions
 3. Next step
 
+Hongye:
+1. Progress: Went through the front-end and back-end codes of VITALITY, and basically understood the design ideas of VITALITY.
+2. Questions: Should we have a meeting with VITALITY team or just integrate my code into VITALITY ? 
+3. Next step: 
+
 Rachana
 1. Progress: added the following functionality to application: user can upload images to storyboard, storyboard changes saved to local storage with storeJS api, new storyboard/project creation page has a form where user can enter information and add custom inputs + form data is saved
 2. Questions - should i change this from a flask application into a regular website (because i realised that i ended up processing information like form data with javascript instead of python like i intended)
