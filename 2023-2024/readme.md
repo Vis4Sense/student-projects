@@ -23,6 +23,16 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 
+# 12 Mar 2024
+
+Jiaqi
+1. Progress
+  - refine the interface
+  - added function to load tab info to extension.
+2. Questions
+3. Next step
+
+
 # 5 Mar 2024
 
 Hongye
