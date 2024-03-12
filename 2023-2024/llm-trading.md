@@ -1,3 +1,14 @@
+# 13 Mar 2024
+Raul Farkas
+- Progress
+   - Further experiments on stock trend/price prediction
+      - No significant imporvements, barely better than a moving average (i.e. it is a lagged feature)
+   - Started focusing on developing the trading RL strategy
+      - Explored backtesting.py as a backtesting/broker simulator to simplify RL env development
+-  Questions and difficulty
+   - None
+- Next step
+   - Leave forecasting on the side and start working on the RL models that use sentiment analysis   
 # 06 Mar 2024
 
 Project separation:
