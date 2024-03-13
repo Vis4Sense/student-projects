@@ -14,7 +14,7 @@ Xiruo Sun
 1. Progress
    - write my own environment code
 2. Question and difficulty
-   - there are some error with the code, need to be modified 
+   - the profit of the trading is very low, I don't know if it's caused by the code error. I need to modify the code.
 3. Next step
    - modify the code and do some experienments
 
