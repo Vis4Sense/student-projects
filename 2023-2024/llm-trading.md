@@ -9,6 +9,8 @@ Raul Farkas
    - None
 - Next step
    - Leave forecasting on the side and start working on the RL models that use sentiment analysis
+- Links
+   - https://github.com/twopirllc/pandas-ta
  
 Xiruo Sun
 1. Progress
