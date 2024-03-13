@@ -26,6 +26,7 @@ Muhamad Hermawan
 2. Question and difficulty
    - need more time to explore how to produce high quality sent feature
    - appropriate lenght of historical data and test data, and about effect of different historical trend of training and test data
+     
 3 Next step
    - experiment with various sentiment strategy as feature input
    - more experiment on env params and algo params with and combine it with different params and stocks
