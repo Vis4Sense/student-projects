@@ -8,7 +8,16 @@ Raul Farkas
 -  Questions and difficulty
    - None
 - Next step
-   - Leave forecasting on the side and start working on the RL models that use sentiment analysis   
+   - Leave forecasting on the side and start working on the RL models that use sentiment analysis
+ 
+Xiruo Sun
+1. Progress
+   - write my own environment code
+2. Question and difficulty
+   - there are some error with the code, need to be modified 
+3. Next step
+   - modify the code and do some experienments
+
 # 06 Mar 2024
 
 Project separation:
