@@ -17,6 +17,19 @@ Xiruo Sun
    - the profit of the trading is very low, I don't know if it's caused by the code error. I need to modify the code.
 3. Next step
    - modify the code and do some experienments
+  
+Muhamad Hermawan
+1. Progress
+   - more experiment with FinRL lib, ex: try different algo, params, stock comp, technical features, slight modification add functionality
+   - Aanalysing news character for strategy
+   - preprocess news for sentiment feature
+2. Question and difficulty
+   - need more time to explore how to produce high quality sent feature
+   - appropriate lenght of historical data and test data, and about effect of different historical trend of training and test data
+3 Next step
+   - experiment with various sentiment strategy as feature input
+   - more experiment on env params and algo params with and combine it with different params and stocks
+
 
 # 06 Mar 2024
 
