@@ -22,6 +22,12 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 19 Mar 2024
+
+Rachana
+1. Progress: setting up form for collecting data from user to generate image and getting the form data to build the prompt, setting up api key and making api calls to gpt-4
+2. Questions: none
+3. Next step: editing the prompt with gpt-4, setting up more of the image generation
 
 # 12 Mar 2024
 
