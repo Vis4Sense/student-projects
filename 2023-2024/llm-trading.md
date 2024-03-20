@@ -1,3 +1,16 @@
+# 20 Mar 2024
+Xiruo Sun
+1. Progress
+   - Have finished modifying my env code
+   - do the experiment with and without sentiment scores using my env
+2. Question and difficulty
+   - The experiment results have randomness, need to find out how to make the experiment results stable
+3. Next step
+   - try to make the experiment result stable
+   - try to optimise the sentiment analysis to improve result
+
+
+
 # 13 Mar 2024
 Raul Farkas
 - Progress
