@@ -8,6 +8,15 @@ Xiruo Sun
 3. Next step
    - try to make the experiment result stable
    - try to optimise the sentiment analysis to improve result
+  
+Muhamad Hermawan
+1. Progress
+   - did the experiment on 5 assets portofolio, PPO agent, with and without sentiment scores, with various additional technical indicators as another input features. 
+2. Question and difficulty
+   - need to finding out another way to aggregate the sentiment. Interested in ensemble method.
+3. Next step
+   - Try to test another sentiment output from different LLM model
+   - find related paper about state of the art strategy in quantifying the sentiment strength from LLM for RL model input.
 
 
 
