@@ -1,8 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     var createButton = document.getElementById('createButton');
     createButton.addEventListener('click', createTaskBox);
-});
 
+    var nodes = document.querySelectorAll('#nodeSection button');
+    nodes.forEach(function(node, index) {
+        node.addEventListener('dragstart', function(event) {
+            const nodeTitle = node.innerHTML; // Assuming the title is stored as innerHTML of the node
+            const hmPageInstance = hmPages.find(instance => instance.pageObj.title === nodeTitle);
+            if (hmPageInstance) {
+                dragStart(event, hmPageInstance);
+            } else {
+                console.log("hmPageInstance not found for node:", nodeTitle);
+            }
+        });
+    });
+});
 function createTaskBox() {
     // Get the input value
     var taskContent = document.getElementById('input_task').value;
@@ -57,26 +69,36 @@ function createTaskBox() {
     document.getElementById('input_task').value = '';
 }
 
+function serializeHmPage(hmPageInstance) {
+    return JSON.stringify(hmPageInstance);
+}
+
+function deserializeHmPage(jsonString) {
+    const data = JSON.parse(jsonString);
+    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened);
+}
+
 function allowDrop(event) {
     event.preventDefault();
     console.log("drag over");
 }
 
-function dragStart(event) {
-    console.log("drag a node")
-    event.dataTransfer.setData('text/plain', event.target.textContent);
+function dragStart(event,hmPageInstance) {
+    console.log("Dragging a node");
+    const serializedData = serializeHmPage(hmPageInstance);
+    event.dataTransfer.setData('application/json', serializedData);
 }
-
-
 
 
 
 function drop(event) {
     event.preventDefault();
-    var data = event.dataTransfer.getData('text/plain');
+    //var data = event.dataTransfer.getData('text/plain');
+    const jsonString = event.dataTransfer.getData('application/json');
+    const page = deserializeHmPage(jsonString);
 
     // Create a new node element with the dragged text
-    var newNode = createNode(data);
+    var newNode = createNode(page);
 
     // Find the closest node container to the drop target
     var nodeContainer = event.target.closest('.nodeContainer');
@@ -100,11 +122,26 @@ function drop(event) {
     console.log("drop node in box");
 }
 
-function createNode(text) {
-    var newNode = document.createElement('button');
+function createNode(page) {
+    
+    //var newNode = document.createElement('button');
+    //newNode.classList.add('node');
+    //newNode.textContent = text;
+    //newNode.draggable = true;
+    //newNode.addEventListener('dragstart', dragStart); // Set up drag behavior for the new node
+    //return newNode;
+
+    var newNode = document.createElement("button");
     newNode.classList.add('node');
-    newNode.textContent = text;
-    newNode.draggable = true;
-    newNode.addEventListener('dragstart', dragStart); // Set up drag behavior for the new node
+    newNode.setAttribute('draggable', 'true')
+    newNode.textContent = page.pageObj.title;
+    nodeSection.appendChild(newNode);
+
+    newNode.addEventListener('click', function() {
+        window.open(newPage.pageObj.url, '_blank');
+     });
+       newNode.addEventListener('dragstart', dragStart
+    );
+
     return newNode;
 }

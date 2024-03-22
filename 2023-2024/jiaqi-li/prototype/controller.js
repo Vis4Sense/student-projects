@@ -19,14 +19,15 @@ class hmPage {
     'chrome-extension://',
     'edge://extensions/'
  ];
+ 
  let hmPages = []
 
 
  //read openning tags' info, and add in list
  function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true) {
     if (!ignoredUrls.some(url => tabURL.includes(url))) {
-       let newPageId = window.crypto.randomUUID();
-       let newPage = new hmPage(
+      let newPageId = window.crypto.randomUUID();
+      let newPage = new hmPage(
           newPageId,
           tabID,
           new Date(),
@@ -35,10 +36,10 @@ class hmPage {
           docId,
           isOpened
        );
-       hmPages.push(newPage);
-       console.log("A new hmPage added:", newPage.pageObj.title, ', ', newPage.pageObj.url);
+      hmPages.push(newPage);
+      console.log("A new hmPage added:", newPage.pageObj.title, ', ', newPage.pageObj.url);
        
-       //add node in interface
+      //add node in interface
 
       var nodeSection = document.getElementById('nodeSection');
       newNode = document.createElement("button");
@@ -47,9 +48,27 @@ class hmPage {
       nodeSection.appendChild(newNode);
 
       newNode.addEventListener('click', function() {
-         window.open(newPage.pageObj.url, '_blank');
-      });
-        newNode.addEventListener('dragstart', dragStart);
+         // Check if browser extension APIs are available
+         if (typeof chrome !== 'undefined' && chrome.tabs) {
+             // Find the tab with the matching URL
+             chrome.tabs.query({ url: newPage.pageObj.url }, function(tabs) {
+                 if (tabs && tabs.length > 0) {
+                     // If the tab exists, navigate to it
+                     chrome.tabs.update(tabs[0].id, { active: true });
+                 } else {
+                     // If the tab doesn't exist, open a new tab with the URL
+                     chrome.tabs.create({ url: newPage.pageObj.url });
+                 }
+             });
+         } else {
+             // Handle the case where browser extension APIs are not available
+             console.log("Browser extension APIs are not available.");
+         }
+     });
+      //newNode.addEventListener('dragstart', dragStart);
+      newNode.addEventListener('dragstart', function(event) {
+             dragStart(event);
+     });
     }
  }
 
