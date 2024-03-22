@@ -1,47 +1,58 @@
-/* 父组件样式 */
-.jp-model-component {
-    border: 1px solid #ccc;
+  /* parent components */
+  .jp-model-component {
+    border: 1px solid #fff;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #f9f9f9;
-    transition: height 0.3s ease; /* add transition effects */
+    background-color: #fff;
     overflow: hidden;
     
     min-height: 50px;
+    line-height: 50%;
+  }
+  .jp-model-component:hover {
+    background-color: #ccc;
   }
   
   /* child components */
   .jp-model-component .jp-model-component {
     margin-left: 10px; /* left margin larger to represent sub-component */
-    border-left: 1px solid #ccc; /* add a border to represent child */
+    border-left: 1px solid #fff; /* add a border to represent child */
     padding-left: 10px; /* left padding (for child) */
-    background-color: #f5f5f5; 
+    background-color: #fff; 
     margin-top: 5px; 
+    overflow: hidden;
+
+    min-height: 50px;
+    line-height: 50%;
+  }
+  .jp-model-component .jp-model-component:hover {
+    background-color: #ccc;
   }
   
-  /* name area */
+  /* component name */
   .jp-textarea {
-    margin-bottom: 5px;
+    color: #000;
+    font-size: large;
+    font-weight: bold;
   }
   
-  /* button area */
+  /* button area
   .jp-component-button-area {
-    margin-top: 5px;
+    position: absolute;
+    margin-right: 5px;
+    display: none;
   }
   
   /* button */
-  .jp-component-button {
+  /* .jp-component-button {
     display: inline-block;
-    padding: 5px 10px;
-    margin-right: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
+    background-color: #ccc;
+    color: #000;
     cursor: pointer;
+    flex: 1;
+    margin-right: 2px;
   }
   
   .jp-component-button:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-  
+    background-color: grey;
+  } */

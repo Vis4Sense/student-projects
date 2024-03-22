@@ -60,7 +60,6 @@ export class NotesArea extends SplitPanel
             document.body.removeChild(this.node);
             this.parent = null;
             this.dispose();
-            // console.log(this.parent);
         }
         this.node.appendChild(closeButton);
 

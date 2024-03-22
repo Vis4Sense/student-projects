@@ -6,7 +6,7 @@ import {
 import {
   ICommandPalette, 
   //MainAreaWidget,
-  ToolbarButton,
+  //ToolbarButton,
   Toolbar
 } from '@jupyterlab/apputils'
 
@@ -42,6 +42,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
   // operation to start this plugin
   activate: (app: JupyterFrontEnd, palette: ICommandPalette, state:IStateDB, panel:NotebookPanel) => {
+    // panel for model components
     const center_panel = new SplitPanel();
 
     console.log('JupyterLab extension myextension is activated!');
@@ -69,19 +70,19 @@ const plugin: JupyterFrontEndPlugin<void> = {
       notes_container.addClass('jp-center-panel');
 
       // create toolbar buttons for functions
-      const add_button = new ToolbarButton({
-        label: 'add',
-        onClick: () => {
-          let component = new ModelComponent(app, state, panel, center_panel, "");
-          center_panel.addWidget(component);
-          // obtain current number of widgets
-          const childrenCount = center_panel.widgets.length;
-          // modify widgets size to equal
-          const relativeSizes = Array.from({ length: childrenCount }, () => 1 / childrenCount);
-          center_panel.setRelativeSizes(relativeSizes);
-        }
-      })
-      tools.addItem('add', add_button);
+      // const add_button = new ToolbarButton({
+      //   label: 'add',
+      //   onClick: () => {
+      //     let component = new ModelComponent(app, state, panel, center_panel, "");
+      //     center_panel.addWidget(component);
+      //     // obtain current number of widgets
+      //     const childrenCount = center_panel.widgets.length;
+      //     // modify widgets size to equal
+      //     const relativeSizes = Array.from({ length: childrenCount }, () => 1 / childrenCount);
+      //     center_panel.setRelativeSizes(relativeSizes);
+      //   }
+      // })
+      //tools.addItem('add', add_button);
 
       // add widgets to the left panel
       //content.node.appendChild(add_button.node);
@@ -114,6 +115,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         if (!widget.isAttached) {
           // Attach the widget to the main work area if it's not there
           const currentPanel = app.shell.currentWidget;
+          console.log("current panel: ", currentPanel);
           // console.log("current panel: ", currentPanel);
           if (currentPanel instanceof NotebookPanel)
           {
@@ -135,61 +137,64 @@ const plugin: JupyterFrontEndPlugin<void> = {
                   // what we want is the text, not headings themselves
                 });
                 
-                // experiment code for hierarchy
-                let currentIndex = 0;
-                let currentDepth = 0;
-                let rootIndex = 0;
-                const roots:ModelComponent[] = [];
-                const headings:ModelComponent[] = [];
-                headerList.forEach(header => {
-                  const component = new ModelComponent(app, state, panel, center_panel, reducePrefix(header));
-                  console.log("component titles: ", component.componentTitle);
-                  headings.push(component);
-                })
-
-                while (currentIndex < headerList.length)
-                {
-                  if (currentIndex == 0)
-                  {
-                    headings[currentIndex].setDepth(currentDepth);
-                    roots.push(headings[currentIndex]);
-                    console.log("build root at index 0");
-                    currentIndex++;
-                    currentDepth++; 
-                  }
-                  if (readPrefix(headerList[currentIndex]) > readPrefix(headerList[rootIndex]))
-                  {
-                    headings[currentIndex].setDepth(currentDepth);
-                    headings[rootIndex].addSubComponent(headings[currentIndex]);
-                    console.log(currentIndex, " is the child of ", rootIndex);
-                    rootIndex = currentIndex;
-                    currentIndex++;
-                    currentDepth++;
-                  }
-                  else if (readPrefix(headerList[currentIndex]) <= readPrefix(headerList[rootIndex]))
-                  {
-                    console.log("go back...");
-                    rootIndex--;
-                    currentDepth--;
-                    if (rootIndex == -1)
-                    {
-                      console.log(currentIndex, "is another root");
-                      headings[currentIndex].setDepth(0);
-                      roots.push(headings[currentIndex]);
-                      rootIndex = currentIndex;
-                      currentIndex++;
-                      currentDepth = 0;
-                    }
-                  }
-                }
-                // add all roots into extension main panel
-                console.log("roots: ", roots);
-                roots.forEach(root => {
-                  center_panel.addWidget(root);
-                })
                 // empty headings for next cell
-                headerList = [];
+                //headerList = [];
               }
+            })
+
+            // making hierarchy for markdown titles
+            let currentIndex = 0;
+            let currentDepth = 0;
+            let rootIndex = 0;
+            const roots:ModelComponent[] = [];
+            const headings:ModelComponent[] = [];
+            headerList.forEach(header => {
+              const component = new ModelComponent(app, state, panel, center_panel, reducePrefix(header));
+              console.log("component titles: ", component.componentTitle);
+              headings.push(component);
+            })
+
+            while (currentIndex < headerList.length)
+            {
+              if (currentIndex == 0)
+              {
+                headings[currentIndex].setDepth(currentDepth);
+                roots.push(headings[currentIndex]);
+                console.log("build root at index 0");
+                currentIndex++;
+                currentDepth++; 
+              }
+              else if (readPrefix(headerList[currentIndex]) > readPrefix(headerList[rootIndex]))
+              {
+                if (currentDepth == 0) currentDepth++;
+                headings[currentIndex].setDepth(currentDepth);
+                headings[rootIndex].addSubComponent(headings[currentIndex]);
+                console.log(currentIndex, " is the child of ", rootIndex);
+                rootIndex = currentIndex;
+                currentIndex++;
+                currentDepth++;
+              }
+              else if (readPrefix(headerList[currentIndex]) <= readPrefix(headerList[rootIndex]))
+              {
+                console.log("go back...");
+                rootIndex--;
+                currentDepth--;
+                if (rootIndex == -1)
+                {
+                  console.log(currentIndex, "is another root");
+                  headings[currentIndex].setDepth(0);
+                  roots.push(headings[currentIndex]);
+                  rootIndex = currentIndex;
+                  currentIndex++;
+                  currentDepth = 0;
+                }
+              }
+            }
+            // add all roots into extension main panel
+            console.log("roots: ", roots);
+            roots.forEach(root => {
+              center_panel.addWidget(root);
+              root.showAllSubComponents(center_panel, root);
             })
 
             widget.addWidget(center_panel);
@@ -204,14 +209,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
         // Activate the widget
         app.shell.activateById(widget.id);
       }
-    });
+    }); 
 
     // function to make root for heading hierarchy
     // read the number of prefix in string
     const readPrefix = (heading:string):number =>
     {
       let length = heading.length;
-      console.log("heading length ", heading.length);
       let counter = 0;
       for (let i = 0; i < length; i++)
       {
@@ -246,8 +250,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
     // add a button for starting extension button
     let buttonExtension = new ExtensionButton(app);
     app.docRegistry.addWidgetExtension('Notebook', buttonExtension);
+
   }
 
 };
 
 export default plugin;
+
+// TODO： user change file -> extension change
+// headings -> text, hover -> dropdown functions
+// all changes should be done in notebook
