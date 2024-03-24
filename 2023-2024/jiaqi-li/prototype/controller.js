@@ -42,7 +42,7 @@ class hmPage {
       //add node in interface
 
       var nodeSection = document.getElementById('nodeSection');
-      newNode = document.createElement("button");
+      var newNode = document.createElement("button");
       newNode.setAttribute('draggable', 'true')
       newNode.textContent = newPage.pageObj.title;
       nodeSection.appendChild(newNode);
@@ -67,7 +67,18 @@ class hmPage {
      });
       //newNode.addEventListener('dragstart', dragStart);
       newNode.addEventListener('dragstart', function(event) {
-             dragStart(event);
+         // Additional actions before calling dragStart
+         nodeDetail = serializeHmPage(newPage);
+         chrome.storage.local.set({ 'nodeDetail': nodeDetail }, function() {
+             if (chrome.runtime.lastError) {
+                 console.error(chrome.runtime.lastError);
+             } else {
+                 console.log('Node detail stored successfully.');
+                 
+                 // Call the dragStart function
+                 dragStart(event);
+             }
+         });
      });
     }
  }

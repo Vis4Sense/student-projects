@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     var createButton = document.getElementById('createButton');
     createButton.addEventListener('click', createTaskBox);
+
+    var leftSidebarCollection = document.getElementsByClassName('leftSidebar');
+
+// Iterate over each element in the collection and attach event listeners
+    for (var i = 0; i < leftSidebarCollection.length; i++) {
+        var leftSidebar = leftSidebarCollection[i];
+        leftSidebar.addEventListener('dragover', allowDrop);
+        leftSidebar.addEventListener('drop', drop);
+    }
 });
 
 function createTaskBox() {
@@ -62,18 +71,40 @@ function allowDrop(event) {
     console.log("drag over");
 }
 
-function dragStart(event) {
-    console.log("drag a node")
-    event.dataTransfer.setData('text/plain', event.target.textContent);
+
+function serializeHmPage(hmPageInstance) {
+    return JSON.stringify(hmPageInstance);
 }
 
+function deserializeHmPage(jsonString) {
+    const data = JSON.parse(jsonString);
+    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened);
+}
 
-
-
+function dragStart(event) {
+    chrome.storage.local.get('nodeDetail', function(data) {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+        } else {
+            const nodeDetail = data.nodeDetail;
+            console.log(`Dragging ${nodeDetail}`);
+        }
+    });
+    
+}
 
 function drop(event) {
     event.preventDefault();
-    var data = event.dataTransfer.getData('text/plain');
+
+    chrome.storage.local.get('nodeDetail', function(data) {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+        } else {
+            const nodeDetail = data.nodeDetail;
+            console.log(nodeDetail)
+        }
+    });
+    data = deserializeHmPage(nodeDetail);
 
     // Create a new node element with the dragged text
     var newNode = createNode(data);
@@ -90,7 +121,7 @@ function drop(event) {
         var nodesInLeftSidebar = leftSidebar.querySelectorAll('button');
 
         for (var i = 0; i < nodesInLeftSidebar.length; i++) {
-            if (nodesInLeftSidebar[i].textContent.trim() === data.trim()) {
+            if (nodesInLeftSidebar[i].textContent.trim() === data.pageObj.title) {
                 nodesInLeftSidebar[i].parentNode.removeChild(nodesInLeftSidebar[i]);
                 break; 
             }
@@ -100,11 +131,36 @@ function drop(event) {
     console.log("drop node in box");
 }
 
-function createNode(text) {
+function createNode(node) {
     var newNode = document.createElement('button');
     newNode.classList.add('node');
-    newNode.textContent = text;
+    newNode.textContent = node.pageObj.title;
     newNode.draggable = true;
     newNode.addEventListener('dragstart', dragStart); // Set up drag behavior for the new node
+    
+    newNode.addEventListener('click', function() {
+        // Check if browser extension APIs are available
+        if (typeof chrome !== 'undefined' && chrome.tabs) {
+            // Find the tab with the matching URL
+            chrome.tabs.query({ url: node.pageObj.url }, function(tabs) {
+                if (tabs && tabs.length > 0) {
+                    // If the tab exists, navigate to it
+                    chrome.tabs.update(tabs[0].id, { active: true });
+                } else {
+                    // If the tab doesn't exist, open a new tab with the URL
+                    chrome.tabs.create({ url: node.pageObj.url });
+                }
+            });
+        } else {
+            // Handle the case where browser extension APIs are not available
+            console.log("Browser extension APIs are not available.");
+        }
+    });
+
+    newNode.addEventListener('contextmenu', function (event) {
+        event.preventDefault(); 
+        newNode.parentNode.removeChild(newNode);
+        // Additional actions can be performed as needed
+    });
     return newNode;
 }
