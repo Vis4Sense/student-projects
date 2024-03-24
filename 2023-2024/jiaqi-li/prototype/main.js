@@ -16,6 +16,16 @@ function createTaskBox() {
     // Get the input value
     var taskContent = document.getElementById('input_task').value;
 
+    if (taskContent.trim() === '') {
+        // Set input field value to a message
+        document.getElementById('input_task').placeholder = "The task theme can not be null";
+        // Add CSS class to change placeholder color
+        document.getElementById('input_task').classList.add('empty-task');
+        return; 
+    }else {
+        document.getElementById('input_task').classList.remove('empty-task');
+    }
+
     // Create a new task box element
     var taskBox = document.createElement('div');
     taskBox.classList.add('taskBox');
@@ -87,10 +97,21 @@ function dragStart(event) {
             console.error(chrome.runtime.lastError);
         } else {
             const nodeDetail = data.nodeDetail;
-            console.log(`Dragging ${nodeDetail}`);
+            //console.log(`Dragging ${nodeDetail}`);
         }
     });
     
+    var nodeParent = event.target.parentNode.parentNode;
+    sourceContainer = getFirstPartByNewline(nodeParent.innerText);
+
+    chrome.storage.local.set({ 'sourceContainer': sourceContainer});
+
+    function getFirstPartByNewline(str) {
+        // Split the string by newline characters
+        const parts = str.split('\n');
+        // Return the first part
+        return parts[0];
+    }
 }
 
 function drop(event) {
@@ -104,6 +125,7 @@ function drop(event) {
             console.log(nodeDetail)
         }
     });
+    
     data = deserializeHmPage(nodeDetail);
 
     // Create a new node element with the dragged text
@@ -111,6 +133,7 @@ function drop(event) {
 
     // Find the closest node container to the drop target
     var nodeContainer = event.target.closest('.nodeContainer');
+    var leftSidebar = document.querySelector('.leftSidebar');
 
     // Append the new node to the node container if found
     if (nodeContainer) {
@@ -124,6 +147,34 @@ function drop(event) {
             if (nodesInLeftSidebar[i].textContent.trim() === data.pageObj.title) {
                 nodesInLeftSidebar[i].parentNode.removeChild(nodesInLeftSidebar[i]);
                 break; 
+            }
+        }
+
+    }else{
+        leftSidebar.appendChild(newNode);
+
+        chrome.storage.local.get('sourceContainer', function(data) {
+            if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError);
+            } else {
+                var sourceContainer = data.sourceContainer;
+            }
+        });
+
+        var nodeContainer = document.querySelector('.nodeContainer');
+
+        if (nodeContainer){
+            var buttonsInContainer = nodeContainer.querySelectorAll('button');
+
+            console.log(buttonsInContainer);
+
+            for (var i = 0; i < buttonsInContainer.length; i++) {
+                var button = buttonsInContainer[i];
+                // Check if button text content matches certain criteria
+                if (button.textContent.trim() === data.pageObj.title) {
+                    button.parentNode.removeChild(button);
+                    break; 
+                }
             }
         }
 

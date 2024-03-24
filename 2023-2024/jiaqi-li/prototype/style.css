@@ -30,6 +30,10 @@ input{
       border-radius: 5px;
 }
 
+.empty-task::placeholder {
+  color: red;
+}
+
 .leftSidebar{
     margin: 0;
     padding: 0;

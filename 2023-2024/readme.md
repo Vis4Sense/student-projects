@@ -22,6 +22,12 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 26 Mar 2024
+Jiaqi
+1. Progress:refine the feture detail
+2. question:
+   - about code, how to identify element by contained text(node container target)
+3. 
 # 19 Mar 2024
 
 Rachana
