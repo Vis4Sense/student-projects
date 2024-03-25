@@ -83,6 +83,23 @@ class hmPage {
     }
  }
 
+ let tabsStatus = {};
+ function updateNode(tabId, changeInfo, updatedTab) {
+    // Check if the tab is being loaded for the first time
+    if (!tabsStatus[tabId]) {
+        tabsStatus[tabId] = changeInfo.status;
+    }
+
+    // Check if the status changed from 'loading' to 'complete'
+    if (tabsStatus[tabId] === 'loading' && changeInfo.status === 'complete') {
+        console.log(updatedTab);
+    }
+
+    // Update the status for the next iteration
+    tabsStatus[tabId] = changeInfo.status;
+}
+
+
  function initializeHmPages() {
     // add all the tabs opened before running historymap to hmPages
     chrome.tabs.query({}, function (openedTabs) {
@@ -98,5 +115,19 @@ class hmPage {
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
     initializeHmPages();
+
+    // create new nodes when new tabs be opened
+    chrome.tabs.onCreated.addListener(function(tab) {
+        chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
+            // Check if the update is for the newly created tab
+            if (tabId === tab.id && changeInfo.status === 'complete') {
+                // Add the tab once its properties are fully updated
+                addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+                chrome.tabs.onUpdated.removeListener(arguments.callee);
+            }
+        });
+    });
+
+    chrome.tabs.onUpdated.addListener(updateNode);
 });
  

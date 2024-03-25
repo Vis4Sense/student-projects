@@ -24,6 +24,7 @@ function createTaskBox() {
         return; 
     }else {
         document.getElementById('input_task').classList.remove('empty-task');
+        document.getElementById('input_task').placeholder = "input your brief task theme, include as much keyword as possible";
     }
 
     // Create a new task box element
