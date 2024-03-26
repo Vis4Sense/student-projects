@@ -38,8 +38,8 @@ Jianwen
 1. Progress: Fixed some probelems with real notebooks, added refresh and close panel functions.
 2. Question: Where should the notes panel be in the extension area.
 3. Next Step:
-  - auto-find markdown cells when initiated.
-  - ...
+   - auto-find markdown cells when initiated.
+   - ...
 
 # 19 Mar 2024
 
