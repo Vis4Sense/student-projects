@@ -10,6 +10,15 @@ Raul Farkas
   - Then re-create the same models but with news sentiment as a feature
   - Wrap-up code
 
+Xiruo Sun
+1. Progress
+   - do some experiment using different sentiment features
+2. Question and difficulty
+   - haven't try to get the average of test
+   - the profit still negative
+3. Next step
+   - keep try different sentiment features or other methods to improve profit
+
 # 20 Mar 2024
 Xiruo Sun
 1. Progress
