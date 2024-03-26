@@ -57,3 +57,26 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
+// Example: Send page content for advanced analysis to your backend service.
+function sendForAdvancedAnalysis(title, bodyText) {
+  // Fetching the current tab URL
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    const currentTabUrl = tabs[0].url;
+
+    fetch('https://your-backend-service.com/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({url: currentTabUrl, title, bodyText}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Advanced analysis results:', data);
+      // Process the returned analysis results here.
+    })
+    .catch(error => {
+      console.error('Error during advanced analysis:', error);
+    });
+  });
+}
