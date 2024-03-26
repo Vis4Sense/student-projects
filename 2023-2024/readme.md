@@ -27,7 +27,9 @@ Jiaqi
 1. Progress:refine the feture detail
 2. question:
    - about code, how to identify element by contained text(node container target)
-3.  
+   - how to import package in a chrome extension enviroment
+   - the sequence of page/script loading
+3. 
 
 Hongye
 1. Progess: Integrated some functions of own projects based on Vitality. Includes chat box, RAG, LLM conversations
