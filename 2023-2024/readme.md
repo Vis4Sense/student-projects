@@ -27,7 +27,13 @@ Jiaqi
 1. Progress:refine the feture detail
 2. question:
    - about code, how to identify element by contained text(node container target)
-3. 
+3.  
+
+Hongye
+1. Progess: Integrated some functions of own projects based on Vitality. Includes chat box, RAG, LLM conversations
+2. Question:
+3. Next step: The next step is to implement linkage with the existing functions of VITALITY, when users interact through "chat with your data", the VITALITY could "select" some papers. It is also planned to add an interface for uploading customized paper information.
+
 # 19 Mar 2024
 
 Rachana
