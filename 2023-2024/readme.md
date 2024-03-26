@@ -34,6 +34,13 @@ Hongye
 2. Question:
 3. Next step: The next step is to implement linkage with the existing functions of VITALITY, when users interact through "chat with your data", the VITALITY could "select" some papers. It is also planned to add an interface for uploading customized paper information.
 
+Jianwen
+1. Progress: Fixed some probelems with real notebooks, added refresh and close panel functions.
+2. Question: Where should the notes panel be in the extension area.
+3. Next Step:
+  - auto-find markdown cells when initiated.
+  - ...
+
 # 19 Mar 2024
 
 Rachana
