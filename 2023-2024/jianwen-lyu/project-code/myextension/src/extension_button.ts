@@ -10,17 +10,18 @@ export class ExtensionButton implements DocumentRegistry.IWidgetExtension<Notebo
     extension_app: JupyterFrontEnd
 
     constructor(app: JupyterFrontEnd)
-    {
+    { 
         this.extension_app = app
     }
 
     createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): IDisposable {
         // Create the toolbar button
-        console.log("from button: ", panel);
         let mybutton = new ToolbarButton({
             label: 'ML Helper',
             onClick: () => {
+                //console.log("extension buttion clicked: ", this.extension_app);
                 this.extension_app.commands.execute('window:open');
+                //console.log("command executed");
             }
         });
 

@@ -52,6 +52,10 @@ export class ModelComponent extends SplitPanel
             this.componentTitle = "model component";
         }
 
+        this.disposed.connect(() => {
+            console.log("this component is disposed");
+        })
+
         // tracker for cell
         //const tracker: IWidgetTracker<Cell> = new WidgetTracker<Cell>({ namespace: 'selected-cell' });
         //const notebookTracker = new NotebookTracker({namespace:'notebook'});
@@ -297,7 +301,19 @@ export class ModelComponent extends SplitPanel
         console.log("loaded");
     };
 
+    // clear this and all children
+    public clear = () => {
+        if (this.childList.length != 0)
+        {
+            this.childList.forEach(child => {
+                child.clear();
+            }) 
+        } 
+        this.dispose();
+        //console.log("component closed");
+    }
+
 }
 
 // TODO: 1) improve UI looking
-//       2) note system  
+//       2) note system: draggable,   

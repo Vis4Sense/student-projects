@@ -11,5 +11,7 @@ export class NotesContainer extends SplitPanel
     {
         super();
         this.orientation = 'vertical';
+
+        console.log("container built");
     }
 }
