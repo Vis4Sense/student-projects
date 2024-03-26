@@ -42,6 +42,13 @@ Jianwen
 3. Next Step:
    - auto-find markdown cells when initiated.
    - ...
+  
+Ziyue
+1. Process: Update the JavaScript and html codes
+2. Questions: 
+3. Next step:
+  - Focus on the analysis part
+  - Design a workable user interface, the extension will response and react to the user's activities
 
 # 19 Mar 2024
 
