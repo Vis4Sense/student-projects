@@ -18,3 +18,10 @@ chrome.runtime.onInstalled.addListener(function() {
       }
     }
   );
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (changeInfo.status === 'complete' && tab.active) {
+    // inform content.js to conduct analyzing the content of website pages
+    chrome.tabs.sendMessage(tabId, {action: "analyzePageContent"});
+  }
+});
