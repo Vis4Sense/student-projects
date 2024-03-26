@@ -18,6 +18,17 @@ Xiruo Sun
    - the profit still negative
 3. Next step
    - keep try different sentiment features or other methods to improve profit
+  
+Muhamad Hermawan
+1. Progress
+   - Comparing output from different LLM sent input
+   - comparing different prompting 3 shot learning CoT vs Non CoT
+   - more expriment with parameter tuning
+2. Question and difficulty
+   - producing sentiment longer than initially thought, probably will have to choose CoT prompt and not much experiment in producing sentiment, and also limiting the asset around 5 to 10 to reduce raw news
+3. Next step
+   - selecting other asset
+   - trying different processed sentiment
 
 # 20 Mar 2024
 Xiruo Sun
