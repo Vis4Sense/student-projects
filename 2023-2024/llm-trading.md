@@ -1,3 +1,15 @@
+# 26 Mar 2024
+Raul Farkas
+1. Progress
+  - Experimented with the development of RL models for trading, produced a model with good performance on a volatile stock
+  - Currently experimenting with stocks that are generally used for longer term trading e.g. AAPL (might need to modify the technical indicators)
+2. Question and difficulty
+  - Fairly major issue with differences between data in the Gym env and during backtesting (seems that in the env the data is slightly different post-normalization). If no solution is found in a timely manner, the data will go through the Gym env before inference.
+3. Next step
+  - Create a set of models for a set of symbols
+  - Then re-create the same models but with news sentiment as a feature
+  - Wrap-up code
+
 # 20 Mar 2024
 Xiruo Sun
 1. Progress
