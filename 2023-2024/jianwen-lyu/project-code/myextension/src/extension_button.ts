@@ -1,7 +1,7 @@
 import { JupyterFrontEnd } from "@jupyterlab/application";
 import { ToolbarButton } from "@jupyterlab/apputils";
 import { DocumentRegistry } from "@jupyterlab/docregistry";
-import { INotebookModel, NotebookPanel } from "@jupyterlab/notebook";
+import { INotebookModel, NotebookPanel} from "@jupyterlab/notebook";
 import { IDisposable } from "@lumino/disposable";
 
 
@@ -27,6 +27,13 @@ export class ExtensionButton implements DocumentRegistry.IWidgetExtension<Notebo
 
         // Add the toolbar button to the notebook toolbar
         panel.toolbar.insertItem(10, 'mybutton', mybutton);
+        context.fileChanged.connect(() => {
+            const thispanel = this.extension_app.shell.currentWidget;
+            if (thispanel instanceof NotebookPanel)
+            {
+                thispanel.toolbar.insertItem(10, 'mybutton', mybutton);
+            }
+        })
 
         // The ToolbarButton class implements `IDisposable`, so the
         // button *is* the extension for the purposes of this method.

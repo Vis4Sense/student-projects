@@ -96,7 +96,8 @@
   },
   "jupyterlab": {
     "extension": true,
-    "outputDir": "myextension/labextension"
+    "outputDir": "myextension/labextension",
+    "schemaDir": ""
   },
   "eslintIgnore": [
     "node_modules",

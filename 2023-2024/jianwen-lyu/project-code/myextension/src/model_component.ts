@@ -1,25 +1,29 @@
 import { 
     Widget, 
-    SplitPanel 
+    Panel
 } from '@lumino/widgets';
 import { IStateDB } from '@jupyterlab/statedb';
 import { 
-    NotebookPanel, 
-    //NotebookTracker 
+    NotebookPanel
 } from '@jupyterlab/notebook';
 import { JupyterFrontEnd } from '@jupyterlab/application';
+import {Cell} from '@jupyterlab/cells';
 
 
 import '../style/model_component.css';
 import './notes_area';
 import './popup';
-import { NotesArea } from './notes_area';
 import { OptionList } from './option_menu';
+import { NotesArea } from './notes_area';
+import { CodeOptionList } from './code_option_menu';
 
 
 // when hovering: show options 1.add sub-component, 2.set location 3.add notes 4.goto location. 
-export class ModelComponent extends SplitPanel
+export class ModelComponent extends Widget
 {
+    // id 
+    public componentID : string;
+
     // get user notebook panel
     currentPanel : NotebookPanel;
     state : IStateDB;
@@ -31,30 +35,33 @@ export class ModelComponent extends SplitPanel
     isExpanded : boolean = false;
     // depth as sub component
     depth:number = 0;
-    showOptions : boolean = false;
+    cell : Cell;
+    isCode: boolean;
 
     // widgets cannot add inside components, should use Panel objects
     // constructor for model component, we have a jupyterlab current panel parameter,
     // which can extract information from it.
-    constructor(app: JupyterFrontEnd, state: IStateDB, panel:NotebookPanel, container:SplitPanel, title:string)
+    constructor(app: JupyterFrontEnd, state: IStateDB, panel:NotebookPanel, container:Panel, title:string, cell:Cell, isCode:boolean)
     {
         // TODO: make model components able to collapse (extend sub-titles) 
         // basic settings
-        super();
+        super({node:document.createElement('div')});
         this.state = state;
+        this.cell = cell;
+        this.isCode = isCode;
+
         this.addClass('jp-model-component');
         if (title != "")
         {
-            this.componentTitle = title;
+            this.componentTitle = "- " + title;
         }
-        else
-        {
-            this.componentTitle = "model component";
-        }
+        this.componentID = this.componentTitle + '';
 
         this.disposed.connect(() => {
             console.log("this component is disposed");
         })
+
+        this.optionSettings(container);
 
         // tracker for cell
         //const tracker: IWidgetTracker<Cell> = new WidgetTracker<Cell>({ namespace: 'selected-cell' });
@@ -65,72 +72,30 @@ export class ModelComponent extends SplitPanel
             this.currentPanel = app.shell.currentWidget;
         }
 
-        // attached widgets
-        // structure framework
-        this.orientation = 'horizontal';
-        // name text area
-        const nameArea = new Widget();
-        nameArea.addClass('jp-textarea');
-        const nameContent = document.createElement('p');
-        nameContent.textContent = this.componentTitle; 
-        nameArea.node.appendChild(nameContent);
+        this.createTitleNode();
 
-        // better to capsule components into one Widget, 
-        // then we can manipulate spacing
-        // an area for buttons
-        // const buttonArea = new Widget();
-        // buttonArea.addClass('jp-component-button-area');
+    } 
 
-        // // button for set code location
-        // const button1 = document.createElement('button');
-        // button1.textContent = "set";
-        // button1.classList.add("jp-component-button");
-        // button1.onclick = () => {
-        //     this.setCodeLocation();
-        // }
-        // buttonArea.node.appendChild(button1);
-
-        // // button for making notes
-        // const button2 = document.createElement('button');
-        // button2.textContent = "note";
-        // button2.classList.add("jp-component-button");
-        // button2.onclick = () => {
-        //     this.addNotes();
-        // }
-        // buttonArea.node.appendChild(button2);
-
-        // // button for goto code location
-        // const button3 = document.createElement('button');
-        // button3.textContent = "goto";
-        // button3.classList.add("jp-component-button");
-        // button3.onclick = () => {
-        //     this.navigateCode();
-        // }
-        // buttonArea.node.appendChild(button3);
-
-        // // button for show child components
-        // this.isExpanded = false; 
-        // const button4 = document.createElement('button');
-        // button4.textContent = "expand";
-        // button4.classList.add("jp-component-button");
-        // button4.onclick = () => {
-        //     if (this.isExpanded == false)
-        //     {
-        //         this.showSubComponents(container, this);
-        //     }
-        //     else if (this.isExpanded == true)
-        //     {
-        //         this.hideSubComponents(this);
-        //     }
-        // }
-        // buttonArea.node.appendChild(button4);
-
+    public optionSettings(container:Panel)
+    {
         let showOptions = false;
-        // add a dropdown list after clicking
-        const options = new OptionList(container, this); 
-        options.aboutToClose.connect(() => {
-            showOptions = false;
-        });
+
+        let options : OptionList;
+        // add a dropdown list after clicking 
+        if (!this.isCode)
+        {
+            options = new OptionList(container, this);
+            options.aboutToClose.connect(() => {
+                showOptions = false;
+            });
+        }
+        else
+        {
+            options = new CodeOptionList(container, this);
+            options.aboutToClose.connect(() => {
+                showOptions = false;
+            });
+        } 
 
         // we want button area to hide until user's mouse hover on it
         this.node.addEventListener('click', function(e) {
@@ -152,20 +117,23 @@ export class ModelComponent extends SplitPanel
                 showOptions = false;
             } 
         });
-        
-        // add sub-components into widget, unfold children
-        this.addWidget(nameArea);
-        //document.body.appendChild(buttonArea.node);
-        //this.addWidget(buttonArea);
-        //buttonArea.hide();
-    } 
+    }
+
+    public createTitleNode()
+    {
+        // name text area
+        const nameContent = document.createElement('p');
+        nameContent.classList.add('jp-textarea');
+        nameContent.textContent = this.componentTitle;
+        this.node.appendChild(nameContent);
+    }
 
     public addSubComponent(subComponent:ModelComponent) {
         this.childList.push(subComponent);
     }
 
     // function for command in command menu in OptionList
-    public switchExpand(container:SplitPanel, component:ModelComponent)
+    public switchExpand(container:Panel)
     {
         if (this.isExpanded == false)
         {
@@ -178,7 +146,7 @@ export class ModelComponent extends SplitPanel
     }
 
     // show sub components of this component
-    public showSubComponents(centerPanel:SplitPanel, component:ModelComponent) 
+    public showSubComponents(centerPanel:Panel, component:ModelComponent) 
     {
         let index = centerPanel.widgets.indexOf(this);
         //console.log(component.childList);
@@ -188,7 +156,7 @@ export class ModelComponent extends SplitPanel
         for (let i = 0; i < component.childList.length; i++)
         {
             // base case
-            let margin = 5 * component.childList[i].depth;
+            let margin = 10 * component.childList[i].depth;
             component.childList[i].node.style.marginLeft = margin + 'px';
             // if initially no subcomponents, insert, if not, show them.
             if (centerPanel.widgets.indexOf(component.childList[i]) != -1)
@@ -200,16 +168,12 @@ export class ModelComponent extends SplitPanel
                 centerPanel.insertWidget(index+i+1, component.childList[i]);
             }
         }
-        // obtain current number of widgets
-        const childrenCount = centerPanel.widgets.length;
-        // modify widgets size to equal
-        const relativeSizes = Array.from({ length: childrenCount }, () => 1 / childrenCount);
-        centerPanel.setRelativeSizes(relativeSizes);
+
         component.isExpanded = true;
     }
 
     // show all children
-    public showAllSubComponents(centerPanel:SplitPanel, component:ModelComponent)
+    public showAllSubComponents(centerPanel:Panel, component:ModelComponent)
     {
         component.showSubComponents(centerPanel, component);
         component.childList.forEach(subComponent => {
@@ -242,19 +206,27 @@ export class ModelComponent extends SplitPanel
     // construct reaction functions for the buttons
     // set code location function, user can set relevant code for this component
     // if there exist a markdown as name, set to the markdown as default  
-    public setCodeLocation = () => {
-        console.log("code location setting...");
-        // user's mouse select code snippets
-        this.saveSelectedCell();
-    }
+    // public setCodeLocation = () => {
+    //     console.log("code location setting...");
+    //     // user's mouse select code snippets
+    //     this.saveSelectedCell();
+    // }
 
     // add notes function, user can add notes to the panel popped here
-    public addNotes = () => {
-        console.log("Notes added");
-        // add a note panel for taking notes
-        // a popup window for notes
-        const notes = new NotesArea();
-        document.body.appendChild(notes.node);
+    public addNotes = (container:Panel) => {
+        let index = container.widgets.indexOf(this);
+        const note = new NotesArea();
+        note.SetCID(this);
+        note.node.style.marginLeft = this.depth * 10 + 'px';
+        // if have saved notes, load...
+        let this_notes = localStorage.getItem(this.componentID);
+        if (this_notes)
+        {
+            note.loadNote(this_notes, note.notesContainer);
+        }
+
+        // add note area to next position
+        container.insertWidget(index+1, note);
     }
 
     // navigate to the set code location before (cell)
@@ -263,26 +235,33 @@ export class ModelComponent extends SplitPanel
     }
 
     // listener for code cell change in notebook panel
-    // and 
-    private saveSelectedCell = async () => {
-        console.log("saving...");
-        const current = this.currentPanel.content.selectedCells[0];
-        if (current) 
-        {
-            await this.state.save('selectedCellIndex', current.model.id);
-            console.log("saved");
-            alert("selected code cell saved");
-        }
-        else
-        {
-            alert("focus on an ipynb file first!");
-        }
-    };
+    // private saveSelectedCell = async () => {
+    //     console.log("saving...");
+    //     const current = this.currentPanel.content.selectedCells[0];
+    //     if (current) 
+    //     {
+    //         this.cell = current;
+    //         console.log("saved");
+    //         alert("selected code cell saved");
+    //     }
+    //     else
+    //     {
+    //         alert("focus on an ipynb file first!");
+    //     }
+    // };
+
+    // initiate: select cell
+    public saveCellData = (cell:Cell) => {
+        this.state.save('selectedCellIndex', cell.model.id);
+        console.log(cell.model.id);
+        console.log('initial data saved');
+    }
       
     // locate the notebook to selected cell
     private restoreSelectedCell = async () => {
         console.log("loading...");
-        const currentId = await this.state.fetch('selectedCellIndex');
+        const currentId = this.cell.model.id;
+        console.log(currentId);
             
         // find the corresponding cell in notebook
         if (typeof currentId === 'string')
@@ -290,7 +269,7 @@ export class ModelComponent extends SplitPanel
             let foundCell = this.currentPanel.content._findCellById(currentId);
             if (foundCell)
             {
-                this.currentPanel.content.scrollToCell(foundCell?.cell, 'auto'); 
+                this.currentPanel.content.scrollToCell(foundCell?.cell, 'start'); 
             }  
         }
         else
@@ -310,10 +289,11 @@ export class ModelComponent extends SplitPanel
             }) 
         } 
         this.dispose();
-        //console.log("component closed");
     }
 
 }
 
-// TODO: 1) improve UI looking
-//       2) note system: draggable,   
+// TODO: 1) integrate model components into one panel
+//       2) notes: along with component
+//       3) from code cell to add label (in notebook)
+//       4) graph view

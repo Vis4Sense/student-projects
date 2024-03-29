@@ -1,31 +1,14 @@
   /* parent components */
   .jp-model-component {
-    border: 1px solid #fff;
-    padding: 10px;
-    margin-bottom: 10px;
+    contain: strict;
     background-color: #fff;
-    overflow: hidden;
+    display: flex;
     
-    min-height: 50px;
-    line-height: 50%;
+    margin-left: 5px;
+    padding: 3px;
+    min-height: 70px;
   }
   .jp-model-component:hover {
-    background-color: #ccc;
-  }
-  
-  /* child components */
-  .jp-model-component .jp-model-component {
-    margin-left: 10px; /* left margin larger to represent sub-component */
-    border-left: 1px solid #fff; /* add a border to represent child */
-    padding-left: 10px; /* left padding (for child) */
-    background-color: #fff; 
-    margin-top: 5px; 
-    overflow: hidden;
-
-    min-height: 50px;
-    line-height: 50%;
-  }
-  .jp-model-component .jp-model-component:hover {
     background-color: #ccc;
   }
   
@@ -34,25 +17,7 @@
     color: #000;
     font-size: large;
     font-weight: bold;
+    
   }
   
-  /* button area
-  .jp-component-button-area {
-    position: absolute;
-    margin-right: 5px;
-    display: none;
-  }
-  
-  /* button */
-  /* .jp-component-button {
-    display: inline-block;
-    background-color: #ccc;
-    color: #000;
-    cursor: pointer;
-    flex: 1;
-    margin-right: 2px;
-  }
-  
-  .jp-component-button:hover {
-    background-color: grey;
-  } */
+ 

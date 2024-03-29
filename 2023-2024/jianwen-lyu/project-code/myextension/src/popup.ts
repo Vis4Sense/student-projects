@@ -9,15 +9,14 @@ export class Popup extends Widget {
     super();
     this.addClass('jp-popup');
 
-    const close = new Widget();
-    const closeButton = document.createElement('button');
-    closeButton.textContent = "close";
-    closeButton.onclick = () => {
-        this.hide();
-    }
+    const cName = document.createElement('input');
+    cName.placeholder = 'enter component name';
 
-    close.node.appendChild(closeButton);
-    this.node.appendChild(close.node);
+    const submit = document.createElement('button');
+    submit.textContent = 'OK';
+    submit.onclick = () => {
+      //...
+    }
   }
 
   show() {

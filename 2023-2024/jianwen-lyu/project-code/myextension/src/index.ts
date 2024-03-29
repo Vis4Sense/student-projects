@@ -6,14 +6,15 @@ import {
   ICommandPalette, 
   //MainAreaWidget,
   ToolbarButton,
-  Toolbar
+  Toolbar,
+  InputDialog
 } from '@jupyterlab/apputils'
 import { 
-  NotebookPanel
+  NotebookPanel,
+  INotebookTracker
 } from '@jupyterlab/notebook';
 import {MarkdownCell} from '@jupyterlab/cells'
-//import { DocumentRegistry } from '@jupyterlab/docregistry';
-import { SplitPanel } from '@lumino/widgets';
+import { Panel } from '@lumino/widgets';
 import { IStateDB } from '@jupyterlab/statedb';
 
 
@@ -21,7 +22,7 @@ import '../style/index.css'
 import { ExtensionButton } from './extension_button'
 import { ModelComponent } from './model_component'; 
 import { NotesContainer } from './notes_container';
-//import { Collapsible } from './collapsible_component';
+import { NotesArea } from './notes_area';
 
 
 /**
@@ -36,28 +37,28 @@ const plugin: JupyterFrontEndPlugin<void> = {
   requires: [ICommandPalette, IStateDB],
 
   // operation to start this plugin
-  activate: (app: JupyterFrontEnd, palette: ICommandPalette, state:IStateDB, panel:NotebookPanel) => {
+  activate: (app: JupyterFrontEnd, palette: ICommandPalette, state:IStateDB, panel:NotebookPanel, tracker:INotebookTracker) => {
+    const { commands } = app;
+    
     // panel for model components
-    let center_panel = new SplitPanel();
-    const components:ModelComponent[] = [];
+    let center_panel = new Panel();
+    center_panel.addClass('jp-center-panel');
+    let components:ModelComponent[] = [];
+    // for storing new code compoents
+    let code_components:string[][] = [];
 
     console.log('JupyterLab extension myextension is activated!');
     console.log("ICommandPalette: ", palette);
 
     // Define a widget creator function,
     // then call it to make a new widget
-    const newWidget = (center_panel:SplitPanel) => {
+    const newWidget = (center_panel:Panel) => {
       // Create a blank content widget 
-      const widget = new SplitPanel();
-      widget.orientation = 'vertical';
+      const widget = new Panel();
 
       // create a toolbar on the top of view
       const tools = new Toolbar();
       tools.addClass('jp-toolbar');
-
-      // panel for containing ML components
-      center_panel.orientation = 'vertical';
-      center_panel.addClass('jp-center-panel');
 
       // panel for containing notes (popup contents by buttons)
       const notes_container = new NotesContainer();
@@ -75,17 +76,29 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const refresh_button = new ToolbarButton({
         label:'refresh',
         onClick: () => {
+          // destroy all components
           components.forEach(component => {
             component.dispose();
+          });
+          // TODO: destroy notes and save
+          center_panel.widgets.forEach(c => {
+            if (c instanceof NotesArea)
+            {
+              c.close();
+              c.dispose();
+            }
           });
 
           const currentPanel = app.shell.currentWidget;
           if (currentPanel instanceof NotebookPanel)
           {
+            // markdown widgets
             let tempc = makeHierarchy(currentPanel);
             tempc.forEach(c => {
               components.push(c);
             })
+            //code widgets
+            loadCodeComponent(app, state, center_panel);
           }
           else 
           {
@@ -122,10 +135,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // create the new widget
     let widget = newWidget(center_panel);
-    console.log("widget created: ", widget);
 
     // Add an application command
-    const command: string = 'window:open';
+    const command:string = 'window:open';
     app.commands.addCommand(command, {
       label: 'ML Helper Panel',
       execute: () => {
@@ -133,10 +145,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
         const currentPanel = app.shell.currentWidget;
 
         // Regenerate the widget if disposed
-        console.log("isDisposed: ", widget.isDisposed);
-        console.log("isAttached: ", widget.isAttached);
         if (widget.isDisposed) {
-          center_panel = new SplitPanel();
+          center_panel = new Panel();
+          center_panel.addClass('jp-center-panel');
           widget = newWidget(center_panel);
         }
         if (!widget.isAttached) {
@@ -149,19 +160,70 @@ const plugin: JupyterFrontEndPlugin<void> = {
             tempc.forEach(comp => {
               components.push(comp);
             })
-            console.log("components", center_panel.widgets);
+            loadCodeComponent(app, state, center_panel);
           }
           else
           {
             widget.addWidget(center_panel);
             alert("focus on a notebook first");
           }
+          //widget.addWidget(notes);
           app.shell.add(widget, 'left');
         }
         // Activate the widget
         app.shell.activateById(widget.id);
       }
-    }); 
+    });
+
+    // commands integrated on code cell
+    const code_command:string = 'toolbar-button:code-label';
+    commands.addCommand(code_command, {
+      label: 'Add Code Component (Extension)',
+      execute: () => {
+        getText(); 
+      },  
+    });
+    const getText = async () => {
+      const result = await InputDialog.getText({
+        title: 'name the compoennt',
+        okLabel: 'OK',
+        cancelLabel: 'cancel'
+      })
+      if (result.button.accept)
+      {
+        const currentPanel = app.shell.currentWidget;
+        if (currentPanel instanceof NotebookPanel)
+        {
+          let cell = currentPanel.content.selectedCells[0];
+          if (cell)
+          {
+            let userText = result.value;
+            if (userText)
+            {
+              // attach widget
+              const codect = new ModelComponent(app, state, panel, center_panel, userText, cell, true);
+              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + currentPanel.context.path;
+              components.push(codect);
+              center_panel?.addWidget(codect);
+
+              // save code data to localStorage
+              let codeCellId = cell.model.id;
+              code_components.push([codect.componentID, codect.componentTitle, codeCellId]);
+              saveCodeComponent(code_components);
+            }
+          }
+          else
+          {
+            alert('select a cell first');
+          }
+        }
+      }
+    }
+    app.contextMenu.addItem({
+      command: code_command,
+      selector: '.jp-Notebook .jp-Cell',
+      rank: 100
+    });
 
     // function to make root for heading hierarchy
     // read the number of prefix in string
@@ -183,28 +245,120 @@ const plugin: JupyterFrontEndPlugin<void> = {
       return counter;
     }
 
+    // store the code component data into localStorage
+    const saveCodeComponent = (list:string[][]) => {
+      let fileStr = "";
+      const np = app.shell.currentWidget;
+      if (np instanceof NotebookPanel)
+      {
+        fileStr = np.context.path;
+      }
+      else
+      {
+        fileStr = "notfound";
+      }
+      const jsonString = JSON.stringify(list);
+      localStorage.setItem('code' + fileStr, jsonString);
+    }
+
+    // load component data of all code components stored
+    const loadCodeComponent = (app:JupyterFrontEnd, state:IStateDB, container:Panel) => {
+      // find current notebook
+      const panel = app.shell.currentWidget;
+      let fileStr = "";
+      const np = app.shell.currentWidget;
+      if (np instanceof NotebookPanel)
+      {
+        fileStr = np.context.path;
+      }
+      else
+      {
+        fileStr = "notfound";
+      }
+
+      const codeComponentData = localStorage.getItem('code' + fileStr);
+      if (codeComponentData) 
+      {
+        const codeComponentList = JSON.parse(codeComponentData);
+        for (let i = 0; i < codeComponentList?.length; i++)
+        {
+          const c_component = codeComponentList[i];
+          let title = c_component[1];
+          let id = c_component[2];
+
+          // find cell and build component 
+          if (panel instanceof NotebookPanel)
+          {
+            const cell = panel.content._findCellById(id);
+            if (cell)
+            {  
+              const codect = new ModelComponent(app, state, panel, container, title, cell.cell, true);
+              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + panel.context.path;
+              components.push(codect);
+              container.addWidget(codect);
+            }
+          }
+        }
+      }
+    }
+
+    const dePrefix = (title:string) : string => {
+      let newstr = title.replace(/^(#+\s*)/, '');
+      console.log("deprefixed: ", newstr);
+      return newstr;
+    }
+
     // make hierarchy for the center panel
     const makeHierarchy = (currentPanel:NotebookPanel) : ModelComponent[] => {
       // a string list for headers of markdown cells
       let headerList : string[] = [];
+      const headings:ModelComponent[] = [];
 
       currentPanel.content.widgets.forEach(cell => {
         if (cell instanceof MarkdownCell)
         {
-          // let depth = cell.headingInfo.level;
-          // console.log("level depth: ", depth);
-          cell.headings.forEach(pheading => {
-            // const userComponent = new ModelComponent(app, state, panel, pheading.text);
-            // center_panel.addWidget(userComponent);
-            let prefix = "";
-            for (let i = 0; i < pheading.level; i++)
-            {
-              prefix += "#";
-            }
-            headerList.push(prefix + pheading.text);
-            // get a string list using headers, add prefix
-            // what we want is the text, not headings themselves
-          });
+          // cell.headings.forEach(pheading => {
+          //   let prefix = "";
+          //   for (let i = 0; i < pheading.level; i++)
+          //   {
+          //     prefix += "#";
+          //   }
+          //   // get a string list using headers, add prefix
+          //   // what we want is the text, not headings themselves
+          //   headerList.push(prefix + pheading.text);
+          //   const component = new ModelComponent(app, state, panel, center_panel, pheading.text, cell, false);
+          //   component.saveCellData(cell);
+          //   console.log("component titles: ", component.componentTitle);
+          //   headings.push(component);         
+
+            // new approach
+            let cellText = cell.model.toJSON().source.toString();
+            let cellLines = cellText.split('\n');
+
+            cellLines.forEach(line => {
+              const titlePattern = /^(#{1,6})\s+(.*)$/gm;
+              const titleMatch = line.match(titlePattern)
+              if (titleMatch) {
+                headerList.push(line);
+                //console.log("line content: ", line);
+                const component = new ModelComponent(app, state, panel, center_panel, dePrefix(line), cell, false);
+                component.saveCellData(cell);
+                //console.log("component titles: ", component.componentTitle);
+                headings.push(component);        
+              }
+              const boldPattern = /^\*\*(.+?)\*\*$|^__(.+?)__$/;
+              const boldMatch = line.match(boldPattern);
+              if (boldMatch) {
+                const boldText = boldMatch[1] || boldMatch[2];
+                headerList.push('##########' + boldText);
+                const component = new ModelComponent(app, state, panel, center_panel, boldText, cell, false);
+                component.saveCellData(cell);
+                //console.log("component titles: ", component.componentTitle);
+                headings.push(component);        
+              }
+            })
+
+          //});
         }
       })
 
@@ -213,12 +367,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       let currentDepth = 0;
       let rootIndex = 0;
       const roots:ModelComponent[] = [];
-      const headings:ModelComponent[] = [];
-      headerList.forEach(header => {
-        const component = new ModelComponent(app, state, panel, center_panel, reducePrefix(header));
-        console.log("component titles: ", component.componentTitle);
-        headings.push(component);
-      })
 
       while (currentIndex < headerList.length)
       {
@@ -262,21 +410,25 @@ const plugin: JupyterFrontEndPlugin<void> = {
       roots.forEach(root => {
         center_panel.addWidget(root);
         root.showAllSubComponents(center_panel, root);
+      });
+
+      headings.forEach(component => {
+        let fileStr = "";
+        const np = app.shell.currentWidget;
+        if (np instanceof NotebookPanel)
+        {
+          fileStr = np.context.path;
+        }
+        else
+        {
+          fileStr = "notfound";
+        }
+        component.componentID = component.componentTitle + center_panel.widgets.indexOf(component) + fileStr;
+        console.log('cid: ', component.componentID);
       })
 
       widget.addWidget(center_panel);
       return headings;
-    }
-
-    const reducePrefix = (heading:string):string => {
-      let newHeading:string = "";
-      let nprefix = readPrefix(heading);
-
-      for (let i = nprefix; i < heading.length; i++)
-      {
-        newHeading += heading[i];
-      }
-      return newHeading;
     }
 
     // add the helper to command palette, as another way
@@ -291,4 +443,4 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
 export default plugin;
 
-// TODO: notes on same panel with components: individual page or combined?
+// TODO: save user-built code cells , by (title, cell.model.id) in localStorage, so cannot dispose after refresh or close

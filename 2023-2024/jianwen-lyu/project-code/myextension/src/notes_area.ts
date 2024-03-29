@@ -1,98 +1,150 @@
 import { 
-    Widget,
-    SplitPanel
+    Panel,
+    Widget
 } from '@lumino/widgets';
-import {
-    Toolbar,
-    ToolbarButton
-} from '@jupyterlab/apputils'
 
 
-import '../style/notes.css';
-import { NotesContainer } from './notes_container';
+import '../style/index.css';
+import { ModelComponent } from './model_component';
 
 
-// user choose which type the component is, if model tuning: add hp (auto)
-// TODO: solve problem: notes buttons and notes doesn't appear on popup window
-// mouse hover => 3 buttons occur, 
-// TODO: grab user markdown titles and generate model components, 
-// make components looks like titles instead of textareas, each as a type to choose,
-// default: data loading, feature engineering, model training, output
-// enable title hierachy and folding & collapsing...
-export class NotesArea extends SplitPanel
+export class NotesArea extends Panel
 {
+    cid : string = '';
+    notes : Widget[] = [];
+    data: string[] = [];
+    notesContainer : Panel;
+
     // construct the notes area
     constructor()
     { 
-        // control units
-        let isMoving = false;
-
         super();
-        this.orientation = 'vertical';
         this.addClass('jp-notes-area');
 
-        // container for notes
-        const container = new NotesContainer();
+        this.notesContainer = new Panel();
+        this.notesContainer.addClass('jp-notes-container');
 
-        // add event listener for user's mouse (draggable function)
-        this.node.addEventListener('mousedown', function(e) {
-            isMoving = true;
-        });
-        this.node.addEventListener('mousemove', function(e) {
-            console.log(isMoving);
-            if (isMoving)
+        const buttons = new Widget();
+        buttons.addClass('jp-notes-buttons');
+
+        let addButton = document.createElement('button');
+        addButton.textContent = '+';
+        buttons.node.appendChild(addButton);
+        addButton.onclick = () => {
+            const new_clip = new Widget();
+            let userNote = document.createElement('input');
+            userNote.classList.add('jp-notes-text');
+            userNote.placeholder = 'user may add notes here';
+            new_clip.node.appendChild(userNote);
+            new_clip.addClass('jp-notes-input');
+
+            this.notes.push(new_clip);
+            this.notesContainer.addWidget(new_clip);
+        }
+
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = '-';
+        buttons.node.appendChild(deleteButton);
+        deleteButton.onclick = () => {
+            // delete the last widget of container
+            let len = this.notes.length;
+            if (len > 0)
             {
-                // set position of draggable panel
-                this.style.left = e.clientX + 'px';
-                this.style.top = e.clientY + 'px';
+                const target = this.notes.pop();
+                target?.dispose();
             }
-        });
-        this.node.addEventListener('mouseup', function() {
-            isMoving = false;
-        });
 
-        // toolbar for the note area
-        const noteTools = new Toolbar();
-        noteTools.addClass('jp-notes-toolbar');
+            // auto-save when deleted some record
+            // save: user text in input area
+            if (!this.cid) {
+                console.warn('Component ID (cid) is not set.');
+                return;
+            }
+        
+            let notesContent = this.notes.map(note => {
+                let inputElement = note.node.querySelector('input');
+                return inputElement ? inputElement.value : '';
+            });
+     
+            let serializedNotes = JSON.stringify(notesContent);
+            console.log(serializedNotes);
 
-        // button to close the window
-        const closeButton = new ToolbarButton({
-            label: 'close',
-        });
-        closeButton.onClick = () => {
-            console.log("close button clicked");
-            document.body.removeChild(this.node);
-            this.parent = null;
+            localStorage.setItem(this.cid, serializedNotes);
+        }
+
+        const upperButtons = new Widget();
+        upperButtons.addClass('jp-notes-buttons');
+
+        let closeButton = document.createElement('button');
+        closeButton.textContent = 'X';
+        upperButtons.node.appendChild(closeButton);
+        closeButton.onclick = () => {
             this.dispose();
         }
 
-        // button to add a note content
-        const addButton = new ToolbarButton({
-            label: 'add',
-        });
-        addButton.onClick = () => {
-            console.log("add button clicked");
-            const note = new NoteClip();
-            container.addWidget(note);
+        let saveButton = document.createElement('button');
+        saveButton.textContent = 'save';
+        upperButtons.node.appendChild(saveButton);
+        saveButton.onclick = () => {
+            // save: user text in input area
+            if (!this.cid) {
+                console.warn('Component ID (cid) is not set.');
+                return;
+            }
+        
+            let notesContent = this.notes.map(note => {
+                let inputElement = note.node.querySelector('input');
+                return inputElement ? inputElement.value : '';
+            });
+     
+            let serializedNotes = JSON.stringify(notesContent);
+            console.log(serializedNotes);
+
+            localStorage.setItem(this.cid, serializedNotes);
         }
 
-        noteTools.addItem('close', closeButton);
-        noteTools.addItem('add note', addButton);
-
-        this.addWidget(noteTools);
-        this.addWidget(container);
-    }
-}
-
-class NoteClip extends Widget
-{
-    constructor()
-    {
-        super();
+        // handling events (signals)
+        this.disposed.connect(() => {
+            if (!this.cid) {
+                console.warn('Component ID (cid) is not set.');
+                return;
+            }
         
-        console.log("note created");
-        // a text area for taking notes
-        const note = document.createElement('input');
-        this.node.appendChild(note);
+            let notesContent = this.notes.map(note => {
+                let inputElement = note.node.querySelector('input');
+                return inputElement ? inputElement.value : '';
+            });
+     
+            let serializedNotes = JSON.stringify(notesContent);
+            console.log(serializedNotes);
+
+            localStorage.setItem(this.cid, serializedNotes);
+        })
+
+        this.addWidget(upperButtons);
+        this.addWidget(this.notesContainer);
+        this.addWidget(buttons);
+    }
+    
+    public SetCID(component:ModelComponent)
+    {
+        this.cid = component.componentID;
+    }
+
+    public loadNote(data:string, container:Panel)
+    {
+        const userData = JSON.parse(data);
+        for (let i = 0; i < userData.length; i++)
+        {
+            const note = new Widget();
+            let userNote = document.createElement('input');
+            userNote.classList.add('jp-notes-text');
+            userNote.value = userData[i];
+            note.node.appendChild(userNote);
+            note.addClass('jp-notes-input');
+            this.notes.push(note);
+            container.addWidget(note);
+        }
     }
 }
+

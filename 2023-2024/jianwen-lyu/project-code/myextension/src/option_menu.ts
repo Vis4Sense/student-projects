@@ -1,8 +1,7 @@
 import { 
-    SplitPanel,
+    Panel,
     Menu 
 } from '@lumino/widgets';
-
 import { CommandRegistry } from '@lumino/commands';
 
 
@@ -14,28 +13,20 @@ export class OptionList extends Menu
     component : ModelComponent;
     commands : CommandRegistry; 
 
-    constructor(container:SplitPanel, component:ModelComponent)
+    constructor(container:Panel, component:ModelComponent)
     {
         super({
             commands: new CommandRegistry()
         });
         this.component = component;
         this.commands = new CommandRegistry();
-
-        // register commands for the items
-        const setCommand:string = "code:set";
-        this.commands.addCommand(setCommand, {
-            label: 'set code location',
-            execute: () => {
-                component.setCodeLocation();
-            }
-        })
  
+        // commands for the options
         const noteCommand:string = "note:add";
         this.commands.addCommand(noteCommand, {
-            label: 'add notes',
+            label: 'open notes',
             execute: () => {
-                component.addNotes();
+                component.addNotes(container);
             }
         })
  
@@ -51,11 +42,10 @@ export class OptionList extends Menu
         this.commands.addCommand(expandCommand, {
             label:'expand/collapse',  
             execute: () => {
-                component.switchExpand(container, component);
+                component.switchExpand(container);
             }
         }) 
  
-        this.addItem({command: setCommand});
         this.addItem({command: noteCommand});
         this.addItem({command: navigateCommand});
         this.addItem({command: expandCommand});
