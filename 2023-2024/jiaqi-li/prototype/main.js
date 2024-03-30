@@ -167,8 +167,6 @@ function drop(event) {
         if (nodeContainer){
             var buttonsInContainer = nodeContainer.querySelectorAll('button');
 
-            console.log(buttonsInContainer);
-
             for (var i = 0; i < buttonsInContainer.length; i++) {
                 var button = buttonsInContainer[i];
                 // Check if button text content matches certain criteria

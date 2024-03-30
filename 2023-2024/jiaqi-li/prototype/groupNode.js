@@ -1,6 +1,8 @@
-//import { pipeline } from '@xenova/transformers';
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.16.1';
 
+pipe = pipeline('sentiment-analysis')
 /*
+
 window.addEventListener('DOMContentLoaded', getNodeList);
 
 function getNodeList() {
@@ -49,7 +51,7 @@ generateEmbeddingsForList(example)
     .catch(error => {
         console.error("Error generating embeddings for list:", error);
     });
-    */
+
 
 const generator = await pipeline('summarization', 'Xenova/distilbart-cnn-6-6');
 const text = ["Density-based spatial clustering of applications with noise (DBSCAN) is one of the most popular algorithm for clustering data."+
@@ -61,3 +63,5 @@ const output = await generator(text, {
 
 console.log(output)
 //{summary_text: " The main difference between OPTICS and DBSCAN is that it can handle data of varying densities. K-means clustering is one of the most popular method of vector quantization. Although this method is not density-based, it's included in the library for completeness."}
+
+*/

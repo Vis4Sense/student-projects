@@ -20,9 +20,8 @@ class hmPage {
     'edge://extensions/'
  ];
  
- let hmPages = []
 
-
+ let hmPages = [];
  //read openning tags' info, and add in list
  function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true) {
     if (!ignoredUrls.some(url => tabURL.includes(url))) {
@@ -128,11 +127,10 @@ class hmPage {
             // Add the tab once its properties are fully updated
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
         }else {
-            // If it's not a new tab, call updateNode function
+
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
         }
-        
     });
-
+    console.log(hmPages);
 });
  
