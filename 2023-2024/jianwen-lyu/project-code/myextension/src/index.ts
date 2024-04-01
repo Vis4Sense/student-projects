@@ -11,7 +11,7 @@ import {
 } from '@jupyterlab/apputils'
 import { 
   NotebookPanel,
-  INotebookTracker
+  INotebookTracker  
 } from '@jupyterlab/notebook';
 import {MarkdownCell} from '@jupyterlab/cells'
 import { Panel } from '@lumino/widgets';
