@@ -22,6 +22,18 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 2 Apr 2024
+Jianwen
+1. Progress:
+   - fixed the display problem.
+   - added code-cell function, user can right-click code cell for adding a component, this component can be deleted.
+   - added notes function, user can add notes under one component, this note will be stored to backend.
+   - for Graph-Display, found some Graph-related libraries: D3.js, Chart.js, jsPlumb, GoJS, Mermaid... 
+2. Question:
+   - which library to choose (may have no time for testing all of them).
+   - graph view as a seperate panel?    
+3. Next Step:
+
 # 26 Mar 2024
 Jiaqi
 1. Progress:refine the feture detail
