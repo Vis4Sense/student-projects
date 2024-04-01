@@ -25,6 +25,7 @@
 # 2 Apr 2024
 Jianwen
 1. Progress:
+   - finished the auto-cell finding function.
    - fixed the display problem.
    - added code-cell function, user can right-click code cell for adding a component, this component can be deleted.
    - added notes function, user can add notes under one component, this note will be stored to backend.
