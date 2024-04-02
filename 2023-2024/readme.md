@@ -33,7 +33,8 @@ Jianwen
 2. Question:
    - which library to choose (may have no time for testing all of them).
    - graph view as a seperate panel?
-   - for dataflow graphic view, we need to find "where data loading is", "where feature engineering is", ..., do we need stuff like LLM to do that?     
+   - for dataflow graphic view, we need to find "where data loading is", "where feature engineering is", ..., do we need stuff like LLM to do that?
+   - compatibility of Graphics Lib with @Lumino
 3. Next Step:
 
 Rachana
