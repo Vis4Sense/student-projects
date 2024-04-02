@@ -20,6 +20,16 @@ Muhamad Hermawan
    - implementing dynamic traning period.
    - finalising sentiment extraction method.
 
+Raul Farkas
+1. Progress
+  - Working on stabilizing agent training to avoid having massively different results when training multiple times on same conditions
+2. Question and difficulty
+  - Getting baseline for comparison
+3. Next step
+  - Finish adjusting model training, train model multiple times with different symbols and features (such as sentiment).
+  - Collect performance results and compare with the buy and hold strategy
+  - Write dissertation
+
 # 26 Mar 2024
 Raul Farkas
 1. Progress
