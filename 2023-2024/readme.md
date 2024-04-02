@@ -38,8 +38,8 @@ Jianwen
 Rachana
 1. Progress:
    - tested different prompting strategies in openai playground
-   - set up the image generation page with multiple rounds of prompt processing with gpt-4 (character description, image preferences summary, and overall prompt refinement)
-   - tried out the user flow for making images but unfortunately, the character looks different in each image
+   - set up the image generation page with multiple rounds of prompt processing with gpt-4 (character description, image preferences summary, and overall prompt refinement) + generating images with dall e 3
+   - tried out user flow for the page (filling out forms etc) but unfortunately, the character looks too different in each image
 3. Question: can't find a solution for stopping dall e api from editing the prompt (this is an issue since i want to use similar prompts to get consistent character generation). and i also can't get the API to generate similar looking characters even with the whole prompt editing workflow i set up so i'm not really sure how to fix this.
 4. Next step: trying to make the character look more similar in each image so the images are useful for storyboarding
 
