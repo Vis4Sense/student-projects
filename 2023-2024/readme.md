@@ -45,6 +45,16 @@ Rachana
 3. Question: can't find a solution for stopping dall e api from editing the prompt (this is an issue since i want to use similar prompts to get consistent character generation). and i also can't get the API to generate similar looking characters even with the whole prompt editing workflow i set up so i'm not really sure how to fix this.
 4. Next step: trying to make the character look more similar in each image so the images are useful for storyboarding
 
+Ziyue
+1. Progress:
+   - finished some page development
+   - continue on the codes and then debugging
+2. Question:
+   - is there any model/example UIs that we can try to simulate?
+   - how about the essay? how should we finish our 15000 words essay? should we develop it based on our proposal?
+3. Next step:
+   - try to finish the web part and the GPT/LSTM comparsion part
+
 # 26 Mar 2024
 Jiaqi
 1. Progress:refine the feture detail
