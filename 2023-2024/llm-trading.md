@@ -1,3 +1,13 @@
+# 02 Apr 2024
+Xiruo Sun
+1. Progress
+   - read the excepted return and llm, get baseline model sensation based on this paper's method
+   - compare the baseline model and orca model
+2. Question and difficulty
+   - my env has something wrong, I need to edit it
+3. Next step
+   - try different sensation strategy and do experienment
+
 # 26 Mar 2024
 Raul Farkas
 1. Progress
