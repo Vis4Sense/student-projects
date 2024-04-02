@@ -32,7 +32,8 @@ Jianwen
    - for Graph-Display, found some Graph-related libraries: D3.js, Chart.js, jsPlumb, GoJS, Mermaid... 
 2. Question:
    - which library to choose (may have no time for testing all of them).
-   - graph view as a seperate panel?    
+   - graph view as a seperate panel?
+   - for dataflow graphic view, we need to find "where data loading is", "where feature engineering is", ..., do we need stuff like LLM to do that?     
 3. Next Step:
 
 Rachana
