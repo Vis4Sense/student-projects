@@ -7,6 +7,18 @@ Xiruo Sun
    - my env has something wrong, I need to edit it
 3. Next step
    - try different sensation strategy and do experienment
+  
+Muhamad Hermawan
+1. Progress
+   - Increasing the reliability of sentiment strength, from 3-shot CoT -> 6 shot CoT, and from 3 shot non-CoT into 9-shot non-CoT
+   - Changing the asset composition into all tech, increasing it to 8 assets. (take most 8 tech asssets with most news)
+   
+2. Question and difficullty
+   - need more exploration on new sentiment output with that new assets compositions
+3. Next step
+   - Increasing training period.
+   - implementing dynamic traning period.
+   - finalising sentiment extraction method.
 
 # 26 Mar 2024
 Raul Farkas
