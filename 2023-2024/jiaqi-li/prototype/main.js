@@ -62,7 +62,6 @@ function createTaskBox() {
         taskTheme: taskContent,
         // Add other properties as needed
     };
-    console.log(taskMap);
 
     var taskTheme = document.createElement('p');
     taskTheme.textContent = taskContent;
@@ -173,11 +172,14 @@ function drop(event) {
     var nodeContainer = event.target.closest('.nodeContainer');
     section = nodeContainer.id;
 
-    // Create a new node element with the dragged text
+    // Create a new node element with the dragged node info
     var newNode = createNode(data,section);
-    
-    var leftSidebar = document.querySelector('.leftSidebar');
+    //update taskMap,the node index shoule update to the latest index
+    nodeId="node"+Object.keys(taskMap[section]).length;
 
+    taskMap[section][nodeId] = {data};
+    console.log(taskMap);
+    var leftSidebar = document.querySelector('.leftSidebar');
 
     //***********not functioning when drag node back************/
     // Append the new node to the node container if found
