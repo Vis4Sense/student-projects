@@ -37,7 +37,7 @@ input{
 .leftSidebar{
     margin: 0;
     padding: 0;
-    width: 15%;
+    width: 20%;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
@@ -55,7 +55,7 @@ input{
   }
 
   div.content {
-    margin-left: 15%;
+    margin-left: 25%;
     padding: 0;
     height: 100%;
     width: 70%;

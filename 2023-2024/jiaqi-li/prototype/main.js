@@ -4,13 +4,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var leftSidebarCollection = document.getElementsByClassName('leftSidebar');
 
-// Iterate over each element in the collection and attach event listeners
     for (var i = 0; i < leftSidebarCollection.length; i++) {
         var leftSidebar = leftSidebarCollection[i];
         leftSidebar.addEventListener('dragover', allowDrop);
         leftSidebar.addEventListener('drop', drop);
     }
 });
+/*
+taskMap structure
+{
+    task01: {
+        taskTheme: "task theme",
+        node1:{
+            pageId = pageId,
+            tabId = tabId,
+            time = time,
+            pageObj = pageObj,
+            parentPageId = parentPageId,
+            docId = docId,
+        }
+    },
+    task02: {
+        taskTheme: "task theme",
+        // Add other properties as needed
+    },
+*/
+
+let taskMap = {};
 
 function createTaskBox() {
     // Get the input value
@@ -33,7 +53,17 @@ function createTaskBox() {
 
     var nodeContainer = document.createElement('div');
     nodeContainer.classList.add('nodeContainer');
+    //set unique id for each task box, use the length of taskMap as the id
+    nodeContainer.id = "task"+(Object.keys(taskMap).length)+1;
     
+    
+    //update taskMap 
+    taskMap[nodeContainer.id] = {
+        taskTheme: taskContent,
+        // Add other properties as needed
+    };
+    console.log(taskMap);
+
     var taskTheme = document.createElement('p');
     taskTheme.textContent = taskContent;
 
@@ -49,8 +79,18 @@ function createTaskBox() {
         // archive functionality
 
 
+        /*
+        // Assume tabIds is an array containing the IDs of the tabs you want to move
+        var tabIds = [1, 2, 3]; // Example tab IDs
 
-
+        // Create a new window
+        chrome.windows.create({ focused: true }, function(newWindow) {
+            // Move each tab to the new window
+            tabIds.forEach(function(tabId) {
+                chrome.tabs.move(tabId, { windowId: newWindow.id, index: -1 });
+            });
+        });
+        */
 
 
 
@@ -123,21 +163,26 @@ function drop(event) {
             console.error(chrome.runtime.lastError);
         } else {
             const nodeDetail = data.nodeDetail;
-            console.log(nodeDetail)
+            //console.log(nodeDetail)
         }
     });
     
     data = deserializeHmPage(nodeDetail);
 
-    // Create a new node element with the dragged text
-    var newNode = createNode(data);
-
-    // Find the closest node container to the drop target
+    // Find the closest node container to the drop target and get the id of that container
     var nodeContainer = event.target.closest('.nodeContainer');
+    section = nodeContainer.id;
+
+    // Create a new node element with the dragged text
+    var newNode = createNode(data,section);
+    
     var leftSidebar = document.querySelector('.leftSidebar');
 
+
+    //***********not functioning when drag node back************/
     // Append the new node to the node container if found
     if (nodeContainer) {
+        console.log(`drop node to node container: ${data}`);
         nodeContainer.appendChild(newNode);
 
         // Remove the node in the leftSidebar with the same text
@@ -152,6 +197,8 @@ function drop(event) {
         }
 
     }else{
+        // drag node from task box to left sidebar
+        console.log(`drop node to left sidebar: ${data}`)
         leftSidebar.appendChild(newNode);
 
         chrome.storage.local.get('sourceContainer', function(data) {
@@ -178,9 +225,8 @@ function drop(event) {
         }
 
     }
-    console.log("drop node in box");
 }
-
+/*
 function createNode(node) {
     var newNode = document.createElement('button');
     newNode.classList.add('node');
@@ -214,3 +260,4 @@ function createNode(node) {
     });
     return newNode;
 }
+*/

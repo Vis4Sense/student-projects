@@ -30,7 +30,7 @@ const config = {
                 },
                 {
                     from: "src/style.css",
-                    to: "style.css"
+                    to: "styles.css"
                 }
             ],
         })

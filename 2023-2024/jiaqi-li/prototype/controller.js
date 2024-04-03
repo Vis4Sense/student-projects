@@ -37,69 +37,12 @@ class hmPage {
        );
       hmPages.push(newPage);
       console.log("A new hmPage added:", newPage.pageObj.title, ', ', newPage.pageObj.url);
-       
-      //add node in interface
-
-      var nodeSection = document.getElementById('nodeSection');
-      var newNode = document.createElement("button");
-      newNode.setAttribute('draggable', 'true')
-      newNode.textContent = newPage.pageObj.title;
-
-      var duplicateFound = false;
-      var existingButtons = nodeSection.querySelectorAll('button');
-      existingButtons.forEach(function(button) {
-        if (button.innerHTML === newPage.pageObj.title) {
-            duplicateFound = true;
-            console.log(`find duplicate button: ${button}`)
-            return;// Exit the loop early if duplicate is found
-        }
-        });
-
-      if (!duplicateFound) {
-            nodeSection.appendChild(newNode);
-      }
-      newNode.addEventListener('click', function() {
-         // Check if browser extension APIs are available
-         if (typeof chrome !== 'undefined' && chrome.tabs) {
-             // Find the tab with the matching URL
-             chrome.tabs.query({ url: newPage.pageObj.url }, function(tabs) {
-                 if (tabs && tabs.length > 0) {
-                     // If the tab exists, navigate to it
-                     chrome.tabs.update(tabs[0].id, { active: true });
-                 } else {
-                     // If the tab doesn't exist, open a new tab with the URL
-                     chrome.tabs.create({ url: newPage.pageObj.url });
-                 }
-             });
-         } else {
-             // Handle the case where browser extension APIs are not available
-             console.log("Browser extension APIs are not available.");
-         }
-     });
-      //newNode.addEventListener('dragstart', dragStart);
-      newNode.addEventListener('dragstart', function(event) {
-         // Additional actions before calling dragStart
-         nodeDetail = serializeHmPage(newPage);
-         chrome.storage.local.set({ 'nodeDetail': nodeDetail }, function() {
-             if (chrome.runtime.lastError) {
-                 console.error(chrome.runtime.lastError);
-             } else {
-                 console.log('Node detail stored successfully.');
-                 
-                 // Call the dragStart function
-                 dragStart(event);
-             }
-         });
-     });
     }
  }
-
 
  function initializeHmPages() {
     // add all the tabs opened before running historymap to hmPages
     chrome.tabs.query({}, function (openedTabs) {
-       console.log("Tabs opened before historymap: ", openedTabs);
-       hmPages = []
        for (let i = 0; i < openedTabs.length; i++) {
           addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
        }
@@ -107,10 +50,72 @@ class hmPage {
  }
 
 
+function createNode(page,section) {
+    console.log("running createNode");
+    var nodeSection = document.getElementById(section);
+    var newNode = document.createElement("button");
+    newNode.setAttribute('draggable', 'true');
+    newNode.classList.add('node');
+    newNode.textContent = page.pageObj.title;
+        
+    newNode.addEventListener('click', function() {
+        // Check if browser extension APIs are available
+        if (typeof chrome !== 'undefined' && chrome.tabs) {
+            // Find the tab with the matching URL
+            chrome.tabs.query({ url: page.pageObj.url }, function(tabs) {
+                if (tabs && tabs.length > 0) {
+                    // If the tab exists, navigate to it
+                    chrome.tabs.update(tabs[0].id, { active: true });
+                } else {
+                    // If the tab doesn't exist, open a new tab with the URL
+                    chrome.tabs.create({ url: page.pageObj.url });
+                }
+            });
+        } else {
+            // Handle the case where browser extension APIs are not available
+            console.log("Browser extension APIs are not available.");
+        }
+    });
+        
+    newNode.addEventListener('dragstart', function(event) {
+        // Additional actions before calling dragStart
+        nodeDetail = serializeHmPage(page);
+        chrome.storage.local.set({ 'nodeDetail': nodeDetail }, function() {
+            if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+            } else {
+                console.log('Node detail stored successfully.');
+                    
+                    // Call the dragStart function
+                dragStart(event);
+            }
+        });
+    });
+    
+    // Add a context menu to delete the node
+    newNode.addEventListener('contextmenu', function (event) {
+        event.preventDefault(); 
+        newNode.parentNode.removeChild(newNode);
+        // Additional actions can be performed as needed
+    });
+        
+    nodeSection.appendChild(newNode);
+    return newNode;
+}
+
+ 
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
     initializeHmPages();
-
+    
+    // set timeout and Create nodes in the left sidebar
+    setTimeout(function() {
+        section = "nodeSection";
+        hmPages.forEach(function(page) {
+            createNode(page,section);
+        });
+    }, 100);
+    
     // create new nodes when new tabs be opened
     let isNewTab = false;
 
@@ -131,6 +136,6 @@ class hmPage {
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
         }
     });
-    console.log(hmPages);
+    //console.log(hmPages);
 });
  

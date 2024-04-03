@@ -1,11 +1,6 @@
 {
     "manifest_version": 3,
     "name": "Task Manager Extension",
-    "content_security_policy": {
-        "extension_pages": "script-src 'self' 'unsafe-inline'; object-src 'self'",
-        "sandbox": ["allow-scripts", "allow-forms"],
-        "sandboxed_pages": "script-src 'self' 'unsafe-inline'; object-src 'self'"
-      },
     "version": "1.0",
     "description": "Manage your online tasks with this extension.",
     "action": {
