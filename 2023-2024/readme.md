@@ -55,6 +55,17 @@ Ziyue
 3. Next step:
    - try to finish the web part and the GPT/LSTM comparsion part
 
+Jiaqi 
+1. Progress:
+   - explore webpack, which allow us use outside package.
+   - modulise the code, add a new dict for data storage.
+2. Question:
+   - not a easy thing to integrage webpack at this stage, might crush existing module.
+3. Next step:
+   - enable simple feature with transformer.js.
+   - considering new feature instead of archive: open all the pages from one task in new window when user click a button.
+   - continue the modulization. 
+
 # 26 Mar 2024
 Jiaqi
 1. Progress:refine the feture detail
