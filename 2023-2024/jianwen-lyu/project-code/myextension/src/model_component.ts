@@ -23,6 +23,7 @@ export class ModelComponent extends Widget
 {
     // id 
     public componentID : string;
+    public nameContent = document.createElement('p');
 
     // get user notebook panel
     currentPanel : NotebookPanel;
@@ -49,31 +50,31 @@ export class ModelComponent extends Widget
         this.state = state;
         this.cell = cell;
         this.isCode = isCode;
-
+        
         this.addClass('jp-model-component');
-        if (title != "")
+        if (title[0] == "-")
+        {
+            this.componentTitle = title;
+        }
+        else if (title != "")
         {
             this.componentTitle = "- " + title;
         }
         this.componentID = this.componentTitle + '';
 
-        this.disposed.connect(() => {
-            console.log("this component is disposed");
-        })
-
+        // set option list
         this.optionSettings(container);
 
         // tracker for cell
-        //const tracker: IWidgetTracker<Cell> = new WidgetTracker<Cell>({ namespace: 'selected-cell' });
-        //const notebookTracker = new NotebookTracker({namespace:'notebook'});
+        // const tracker: IWidgetTracker<Cell> = new WidgetTracker<Cell>({ namespace: 'selected-cell' });
+        // const notebookTracker = new NotebookTracker({namespace:'notebook'});
         this.currentPanel = panel;
         if (app.shell.currentWidget instanceof NotebookPanel)
         {
             this.currentPanel = app.shell.currentWidget;
         }
 
-        this.createTitleNode();
-
+        this.createTitleNode(this.nameContent);
     } 
 
     public optionSettings(container:Panel)
@@ -99,7 +100,6 @@ export class ModelComponent extends Widget
 
         // we want button area to hide until user's mouse hover on it
         this.node.addEventListener('click', function(e) {
-            console.log("mouse clicked");
             if (!showOptions)
             {
                 // get mouse location on the page
@@ -119,10 +119,9 @@ export class ModelComponent extends Widget
         });
     }
 
-    public createTitleNode()
+    public createTitleNode(nameContent : HTMLParagraphElement)
     {
         // name text area
-        const nameContent = document.createElement('p');
         nameContent.classList.add('jp-textarea');
         nameContent.textContent = this.componentTitle;
         this.node.appendChild(nameContent);
@@ -234,34 +233,16 @@ export class ModelComponent extends Widget
         this.restoreSelectedCell();
     }
 
-    // listener for code cell change in notebook panel
-    // private saveSelectedCell = async () => {
-    //     console.log("saving...");
-    //     const current = this.currentPanel.content.selectedCells[0];
-    //     if (current) 
-    //     {
-    //         this.cell = current;
-    //         console.log("saved");
-    //         alert("selected code cell saved");
-    //     }
-    //     else
-    //     {
-    //         alert("focus on an ipynb file first!");
-    //     }
-    // };
-
     // initiate: select cell
     public saveCellData = (cell:Cell) => {
         this.state.save('selectedCellIndex', cell.model.id);
-        console.log(cell.model.id);
-        console.log('initial data saved');
+        //console.log(cell.model.id);
     }
       
     // locate the notebook to selected cell
     private restoreSelectedCell = async () => {
-        console.log("loading...");
         const currentId = this.cell.model.id;
-        console.log(currentId);
+        //console.log(currentId);
             
         // find the corresponding cell in notebook
         if (typeof currentId === 'string')
@@ -277,7 +258,7 @@ export class ModelComponent extends Widget
             console.log('error: id must be type string');
         }
             
-        console.log("loaded");
+        //console.log("loaded");
     };
 
     // clear this and all children

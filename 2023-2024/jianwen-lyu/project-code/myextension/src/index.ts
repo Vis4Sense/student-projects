@@ -13,8 +13,8 @@ import {
   NotebookPanel,
   INotebookTracker  
 } from '@jupyterlab/notebook';
-import {MarkdownCell} from '@jupyterlab/cells'
-import { Panel } from '@lumino/widgets';
+import { MarkdownCell, Cell } from '@jupyterlab/cells'
+import { Panel, TabPanel } from '@lumino/widgets';
 import { IStateDB } from '@jupyterlab/statedb';
 
 
@@ -23,6 +23,7 @@ import { ExtensionButton } from './extension_button'
 import { ModelComponent } from './model_component'; 
 import { NotesContainer } from './notes_container';
 import { NotesArea } from './notes_area';
+import { GraphPanel } from './graph_view';
 
 
 /**
@@ -44,6 +45,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     let center_panel = new Panel();
     center_panel.addClass('jp-center-panel');
     let components:ModelComponent[] = [];
+    let graphicCopmonents:ModelComponent[] = [];
     // for storing new code compoents
     let code_components:string[][] = [];
 
@@ -54,11 +56,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
     // then call it to make a new widget
     const newWidget = (center_panel:Panel) => {
       // Create a blank content widget 
+      const tab_widget = new TabPanel();
       const widget = new Panel();
+      const graph_widget = new Panel();
+      let graphics = new GraphPanel(components);
 
       // create a toolbar on the top of view
       const tools = new Toolbar();
       tools.addClass('jp-toolbar');
+      const gtools = new Toolbar();
+      gtools.addClass('jp-toolbar');
 
       // panel for containing notes (popup contents by buttons)
       const notes_container = new NotesContainer();
@@ -68,11 +75,29 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const close_button = new ToolbarButton({
         label: 'close',
         onClick: () => {
-          widget.dispose();
+          components = [];
+          tab_widget.widgets.forEach(w => {
+            w.dispose();
+          })
+          tab_widget.dispose();
         }
       });
       tools.addItem('close', close_button);
 
+      // create close button for graphics
+      const g_close_button = new ToolbarButton({
+        label: 'close',
+        onClick: () => {
+          graphicCopmonents = [];
+          tab_widget.widgets.forEach(w => {
+            w.dispose();
+          })
+          tab_widget.dispose();
+        }
+      });
+      gtools.addItem('close', g_close_button);
+
+      // refresh button for list view
       const refresh_button = new ToolbarButton({
         label:'refresh',
         onClick: () => {
@@ -80,6 +105,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           components.forEach(component => {
             component.dispose();
           });
+          components = [];
           // TODO: destroy notes and save
           center_panel.widgets.forEach(c => {
             if (c instanceof NotesArea)
@@ -93,7 +119,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           if (currentPanel instanceof NotebookPanel)
           {
             // markdown widgets
-            let tempc = makeHierarchy(currentPanel);
+            let tempc = makeHierarchy(currentPanel, center_panel);
             tempc.forEach(c => {
               components.push(c);
             })
@@ -108,6 +134,53 @@ const plugin: JupyterFrontEndPlugin<void> = {
       });
       tools.addItem('refresh', refresh_button);
 
+      // refresh button for graphicw view
+      const g_refresh_button = new ToolbarButton({
+        label:'refresh',
+        onClick: () => {
+          // get hierarchies
+          graphics.clear();
+          graphics.dispose();
+
+          // destroy all components
+          components.forEach(component => {
+            component.dispose();
+          });
+          components = [];
+          // TODO: destroy notes and save
+          center_panel.widgets.forEach(c => {
+            if (c instanceof NotesArea)
+            {
+              c.close();
+              c.dispose();
+            }
+          });
+
+          const currentPanel = app.shell.currentWidget;
+          if (currentPanel instanceof NotebookPanel)
+          {
+            // markdown widgets
+            let tempc = makeHierarchy(currentPanel, center_panel);
+            tempc.forEach(c => {
+              components.push(c);
+            })
+            //code widgets
+            loadCodeComponent(app, state, center_panel);
+          }
+          else 
+          {
+            alert("focus on a notebook first!");
+          }
+
+          graphicCopmonents = components;
+
+          graphics = new GraphPanel(graphicCopmonents);
+          graph_widget.addWidget(graphics);
+        }
+      });
+      gtools.addItem('refresh', g_refresh_button);
+
+      // collapse button for list view
       const collapse_button = new ToolbarButton({
         label:'collapse all',
         onClick: () => {
@@ -125,12 +198,22 @@ const plugin: JupyterFrontEndPlugin<void> = {
       //content.node.appendChild(add_button.node);
       //content.node.appendChild(center_panel.node);
       widget.addWidget(tools);
+      widget.addWidget(center_panel);
+
+      graph_widget.addWidget(gtools);
+      graph_widget.addWidget(graphics);
+
+      // configurate the tabbed panel
+      widget.title.label = 'Model Components';
+      graph_widget.title.label = 'Graphic View';
+      tab_widget.addWidget(widget);
+      tab_widget.addWidget(graph_widget);
 
       // define the basic information about this widget
-      widget.id = 'mlhelp-jupyterlab';
-      widget.title.label = 'ML Helper';
-      widget.title.closable = true;
-      return widget;
+      tab_widget.id = 'mlhelp-jupyterlab';
+      tab_widget.title.label = 'ML Helper';
+      tab_widget.title.closable = true;
+      return tab_widget;
     }
 
     // create the new widget
@@ -152,19 +235,20 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         if (!widget.isAttached) {
           // Attach the widget to the main work area if it's not there
-          console.log("current panel: ", currentPanel);
+          //console.log("current panel: ", currentPanel);
           // console.log("current panel: ", currentPanel);
           if (currentPanel instanceof NotebookPanel)
           {
-            let tempc = makeHierarchy(currentPanel);
+            let tempc = makeHierarchy(currentPanel, center_panel);
             tempc.forEach(comp => {
               components.push(comp);
+              graphicCopmonents.push(comp);
             })
             loadCodeComponent(app, state, center_panel);
           }
           else
           {
-            widget.addWidget(center_panel);
+            widget = newWidget(center_panel);
             alert("focus on a notebook first");
           }
           //widget.addWidget(notes);
@@ -200,15 +284,38 @@ const plugin: JupyterFrontEndPlugin<void> = {
             let userText = result.value;
             if (userText)
             {
-              // attach widget
+              let compLoc = -1;
+              let compDist = 0;
+              
+              const closestMrk = findPreviousMarkdown(currentPanel, cell);
+              for (let component of components)
+              {
+                if (closestMrk && component.componentTitle == "- " + dePrefix(closestMrk.split('\n')[0]))
+                {
+                  //console.log("found component: ", component.componentTitle);
+                  compLoc = center_panel.widgets.indexOf(component);
+                  compDist = component.depth;
+                }
+              }
+
               const codect = new ModelComponent(app, state, panel, center_panel, userText, cell, true);
+              codect.depth = compDist;
               codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + currentPanel.context.path;
               components.push(codect);
-              center_panel?.addWidget(codect);
+              //console.log("component location: ", compLoc);
+              if (compLoc != -1)
+              {
+                center_panel?.insertWidget(compLoc + 1, codect);
+              }
+              else
+              {
+                center_panel?.insertWidget(0, codect);
+              }
 
               // save code data to localStorage
               let codeCellId = cell.model.id;
-              code_components.push([codect.componentID, codect.componentTitle, codeCellId]);
+              let codeContent = cell.model.toJSON().source.toString();
+              code_components.push([codect.componentID, codect.componentTitle, codeCellId, codeContent]);
               saveCodeComponent(code_components);
             }
           }
@@ -219,11 +326,32 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       }
     }
+    // add extra extension option to context menu
     app.contextMenu.addItem({
       command: code_command,
       selector: '.jp-Notebook .jp-Cell',
       rank: 100
     });
+
+    // function to find cloest before-this markdown cell
+    const findPreviousMarkdown = (notebook : NotebookPanel, cell : Cell) => {
+      let mkcell = null;
+      const cells = notebook.content.widgets;
+
+      for (let c of cells)
+      {
+        if (c instanceof MarkdownCell)
+        {
+          mkcell = c;
+        }
+        if (c == cell)
+        {
+          break;
+        }
+      }
+
+      return mkcell?.model.toJSON().source.toString();
+    }
 
     // function to make root for heading hierarchy
     // read the number of prefix in string
@@ -264,12 +392,17 @@ const plugin: JupyterFrontEndPlugin<void> = {
     // load component data of all code components stored
     const loadCodeComponent = (app:JupyterFrontEnd, state:IStateDB, container:Panel) => {
       // find current notebook
-      const panel = app.shell.currentWidget;
+      // const panel = app.shell.currentWidget;
+      //console.log("loading components...")
+
       let fileStr = "";
+
       const np = app.shell.currentWidget;
+      //console.log("notebook: ", np);
       if (np instanceof NotebookPanel)
       {
         fileStr = np.context.path;
+        //console.log("file: ", fileStr)
       }
       else
       {
@@ -277,25 +410,71 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
 
       const codeComponentData = localStorage.getItem('code' + fileStr);
+      //console.log(codeComponentData);
       if (codeComponentData) 
       {
+        // get data
         const codeComponentList = JSON.parse(codeComponentData);
+        //console.log(codeComponentList);
+
+        // build code component
         for (let i = 0; i < codeComponentList?.length; i++)
         {
           const c_component = codeComponentList[i];
           let title = c_component[1];
           let id = c_component[2];
+          let content = c_component[3];
 
           // find cell and build component 
-          if (panel instanceof NotebookPanel)
+          // changed panel to np
+          if (np instanceof NotebookPanel)
           {
-            const cell = panel.content._findCellById(id);
+            let cell = np.content._findCellById(id)?.cell;
+            if (!cell)
+            {
+              for (let tcell of np.content.widgets)
+              {
+                //console.log(tcell.model.toJSON().source.toString());
+                //console.log(content);
+                if (tcell instanceof Cell && tcell.model.toJSON().source.toString() == content)
+                {
+                  cell = tcell;
+                }
+              }
+            }
             if (cell)
-            {  
-              const codect = new ModelComponent(app, state, panel, container, title, cell.cell, true);
-              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + panel.context.path;
+            { 
+              // find markdown cell location
+              let compLoc = -1;
+              let compDist = 0;
+
+              const closestMrk = findPreviousMarkdown(np, cell);
+              for (let component of components)
+              {
+                //console.log("closest: ", closestMrk);
+                //console.log("component title: ", component.componentTitle);
+                if (closestMrk && component.componentTitle == "- " + dePrefix(closestMrk.split('\n')[0]))
+                {
+                  //console.log("found component: ", component.componentTitle);
+                  compLoc = container.widgets.indexOf(component);
+                  compDist = component.depth;
+                } 
+              } 
+
+              // construct component
+              const codect = new ModelComponent(app, state, np, container, title, cell, true);
+              codect.depth = compDist;
+              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + np.context.path;
               components.push(codect);
-              container.addWidget(codect);
+              if (compLoc != -1)
+              {
+                container.insertWidget(compLoc + 1, codect);
+              }
+              else
+              {
+                container.addWidget(codect);
+              }
+              
             }
           }
         }
@@ -304,12 +483,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     const dePrefix = (title:string) : string => {
       let newstr = title.replace(/^(#+\s*)/, '');
-      console.log("deprefixed: ", newstr);
       return newstr;
     }
 
     // make hierarchy for the center panel
-    const makeHierarchy = (currentPanel:NotebookPanel) : ModelComponent[] => {
+    const makeHierarchy = (currentPanel:NotebookPanel, center_panel:Panel) : ModelComponent[] => {
       // a string list for headers of markdown cells
       let headerList : string[] = [];
       const headings:ModelComponent[] = [];
@@ -331,32 +509,32 @@ const plugin: JupyterFrontEndPlugin<void> = {
           //   console.log("component titles: ", component.componentTitle);
           //   headings.push(component);         
 
-            // new approach
-            let cellText = cell.model.toJSON().source.toString();
-            let cellLines = cellText.split('\n');
+          // new approach
+          let cellText = cell.model.toJSON().source.toString();
+          let cellLines = cellText.split('\n');
 
-            cellLines.forEach(line => {
-              const titlePattern = /^(#{1,6})\s+(.*)$/gm;
-              const titleMatch = line.match(titlePattern)
-              if (titleMatch) {
-                headerList.push(line);
-                //console.log("line content: ", line);
-                const component = new ModelComponent(app, state, panel, center_panel, dePrefix(line), cell, false);
-                component.saveCellData(cell);
-                //console.log("component titles: ", component.componentTitle);
-                headings.push(component);        
-              }
-              const boldPattern = /^\*\*(.+?)\*\*$|^__(.+?)__$/;
-              const boldMatch = line.match(boldPattern);
-              if (boldMatch) {
-                const boldText = boldMatch[1] || boldMatch[2];
-                headerList.push('##########' + boldText);
-                const component = new ModelComponent(app, state, panel, center_panel, boldText, cell, false);
-                component.saveCellData(cell);
-                //console.log("component titles: ", component.componentTitle);
-                headings.push(component);        
-              }
-            })
+          cellLines.forEach(line => {
+            const titlePattern = /^(#{1,6})\s+(.*)$/gm;
+            const titleMatch = line.match(titlePattern)
+            if (titleMatch) {
+              headerList.push(line);
+              //console.log("line content: ", line);
+              const component = new ModelComponent(app, state, panel, center_panel, dePrefix(line), cell, false);
+              component.saveCellData(cell);
+              //console.log("component titles: ", component.componentTitle);
+              headings.push(component);        
+            }
+            const boldPattern = /^\*\*(.+?)\*\*$|^__(.+?)__$/;
+            const boldMatch = line.match(boldPattern);
+            if (boldMatch) {
+              const boldText = boldMatch[1] || boldMatch[2];
+              headerList.push('##########' + boldText);
+              const component = new ModelComponent(app, state, panel, center_panel, boldText, cell, false);
+              component.saveCellData(cell);
+              //console.log("component titles: ", component.componentTitle);
+              headings.push(component);        
+            }
+          })
 
           //});
         }
@@ -374,29 +552,29 @@ const plugin: JupyterFrontEndPlugin<void> = {
         {
           headings[currentIndex].setDepth(currentDepth);
           roots.push(headings[currentIndex]);
-          console.log("build root at index 0");
+          //console.log("build root at index 0");
           currentIndex++;
           currentDepth++; 
         }
         else if (readPrefix(headerList[currentIndex]) > readPrefix(headerList[rootIndex]))
         {
           if (currentDepth == 0) currentDepth++;
-          console.log(currentDepth); 
+          //console.log(currentDepth); 
           headings[currentIndex].setDepth(currentDepth);
           headings[rootIndex].addSubComponent(headings[currentIndex]);
-          console.log(currentIndex, " is the child of ", rootIndex);
+          //console.log(currentIndex, " is the child of ", rootIndex);
           rootIndex = currentIndex;
           currentIndex++;
           currentDepth++;
         }
         else if (readPrefix(headerList[currentIndex]) <= readPrefix(headerList[rootIndex]))
         {
-          console.log("go back...");
+          //console.log("go back...");
           rootIndex--;
           if (currentDepth > 0) currentDepth--;
           if (rootIndex == -1)
           {
-            console.log(currentIndex, "is another root");
+            //console.log(currentIndex, "is another root");
             headings[currentIndex].setDepth(0);
             roots.push(headings[currentIndex]);
             rootIndex = currentIndex;
@@ -424,10 +602,27 @@ const plugin: JupyterFrontEndPlugin<void> = {
           fileStr = "notfound";
         }
         component.componentID = component.componentTitle + center_panel.widgets.indexOf(component) + fileStr;
-        console.log('cid: ', component.componentID);
+        //console.log(localStorage.getItem(component.componentID));
+        let data = localStorage.getItem(component.componentID);
+        if (data)
+        {
+          const dataContent = JSON.parse(data);
+          if (dataContent)
+          {
+            for (let i = 0; i < dataContent.length; i++)
+            {
+              if (dataContent[i] != "")
+              {
+                component.componentTitle = component.componentTitle + " (Notes)";
+                component.createTitleNode(component.nameContent);
+                break;
+              }
+            }
+          }
+        }
       })
 
-      widget.addWidget(center_panel);
+      //widget = newWidget(center_panel);
       return headings;
     }
 
@@ -438,6 +633,20 @@ const plugin: JupyterFrontEndPlugin<void> = {
     let buttonExtension = new ExtensionButton(app);
     app.docRegistry.addWidgetExtension('Notebook', buttonExtension);
 
+    // when widget is about closed, save current code contents
+    widget.disposed.connect(() => {
+      // save data in end state
+      for (let code_component of code_components)
+      {
+        let code_id = code_component[2];
+        let cell = panel.content._findCellById(code_id)?.cell;
+        if (cell)
+        {
+          code_component[3] = cell.model.toJSON().source.toString();
+        }
+      }
+      saveCodeComponent(code_components);
+    })
   }
 };
 

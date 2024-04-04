@@ -58,7 +58,8 @@
     "watch:labextension": "jupyter labextension watch ."
   },
   "dependencies": {
-    "@jupyterlab/application": "^4.0.0-beta.0"
+    "@jupyterlab/application": "^4.0.0-beta.0",
+    "yfiles": "file:yfiles/yfiles-26.0.3+eval-dev.tgz"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^4.0.0-beta.0",

@@ -67,7 +67,7 @@ export class NotesArea extends Panel
             });
      
             let serializedNotes = JSON.stringify(notesContent);
-            console.log(serializedNotes);
+            //console.log(serializedNotes);
 
             localStorage.setItem(this.cid, serializedNotes);
         }
@@ -98,7 +98,7 @@ export class NotesArea extends Panel
             });
      
             let serializedNotes = JSON.stringify(notesContent);
-            console.log(serializedNotes);
+            //console.log(serializedNotes);
 
             localStorage.setItem(this.cid, serializedNotes);
         }
@@ -116,7 +116,7 @@ export class NotesArea extends Panel
             });
      
             let serializedNotes = JSON.stringify(notesContent);
-            console.log(serializedNotes);
+            //console.log(serializedNotes);
 
             localStorage.setItem(this.cid, serializedNotes);
         })
