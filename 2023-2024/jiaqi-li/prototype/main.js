@@ -22,7 +22,11 @@ taskMap structure
             pageObj = pageObj,
             parentPageId = parentPageId,
             docId = docId,
-        }
+        },
+        node2:{
+            pageId = pageId,
+            ...
+        },
     },
     task02: {
         taskTheme: "task theme",
@@ -54,7 +58,7 @@ function createTaskBox() {
     var nodeContainer = document.createElement('div');
     nodeContainer.classList.add('nodeContainer');
     //set unique id for each task box, use the length of taskMap as the id
-    nodeContainer.id = "task"+(Object.keys(taskMap).length)+1;
+    nodeContainer.id = "task"+(Object.keys(taskMap).length+1);
     
     
     //update taskMap 
@@ -118,13 +122,9 @@ function createTaskBox() {
 
 function allowDrop(event) {
     event.preventDefault();
-    console.log("drag over");
+    //console.log("drag over");
 }
 
-
-function serializeHmPage(hmPageInstance) {
-    return JSON.stringify(hmPageInstance);
-}
 
 function deserializeHmPage(jsonString) {
     const data = JSON.parse(jsonString);
@@ -162,37 +162,33 @@ function drop(event) {
             console.error(chrome.runtime.lastError);
         } else {
             const nodeDetail = data.nodeDetail;
-            //console.log(nodeDetail)
         }
     });
-    
-    data = deserializeHmPage(nodeDetail);
+    //console.log(nodeDetail);
+    pageData = deserializeHmPage(nodeDetail);
 
     // Find the closest node container to the drop target and get the id of that container
     var nodeContainer = event.target.closest('.nodeContainer');
-    section = nodeContainer.id;
-
-    // Create a new node element with the dragged node info
-    var newNode = createNode(data,section);
-    //update taskMap,the node index shoule update to the latest index
-    nodeId="node"+Object.keys(taskMap[section]).length;
-
-    taskMap[section][nodeId] = {data};
-    console.log(taskMap);
     var leftSidebar = document.querySelector('.leftSidebar');
 
     //***********not functioning when drag node back************/
-    // Append the new node to the node container if found
+    // Append the new node to the node container if found,or left sidebar
     if (nodeContainer) {
-        console.log(`drop node to node container: ${data}`);
-        nodeContainer.appendChild(newNode);
+        section = nodeContainer.id;
+        // Create a new node element with the dragged node info
+        createNode(pageData,section);
+        //update taskMap,the node index shoule update to the latest index
+        nodeId="node"+Object.keys(taskMap[section]).length;
 
+        taskMap[section][nodeId] = {pageData};
+        //console.log(taskMap);
+        
         // Remove the node in the leftSidebar with the same text
         var leftSidebar = document.getElementsByClassName('leftSidebar')[0]; 
         var nodesInLeftSidebar = leftSidebar.querySelectorAll('button');
 
         for (var i = 0; i < nodesInLeftSidebar.length; i++) {
-            if (nodesInLeftSidebar[i].textContent.trim() === data.pageObj.title) {
+            if (nodesInLeftSidebar[i].textContent.trim() === pageData.pageObj.title) {
                 nodesInLeftSidebar[i].parentNode.removeChild(nodesInLeftSidebar[i]);
                 break; 
             }
@@ -200,31 +196,43 @@ function drop(event) {
 
     }else{
         // drag node from task box to left sidebar
-        console.log(`drop node to left sidebar: ${data}`)
-        leftSidebar.appendChild(newNode);
-
-        chrome.storage.local.get('sourceContainer', function(data) {
+        console.log(`drop node to left sidebar: ${pageData}`)
+        section = "nodeSection";
+        
+        chrome.storage.local.get('parentElementID', function(data) {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError);
             } else {
-                var sourceContainer = data.sourceContainer;
+                const parentElementID = data.parentElementID;
+                
+                var nodeContainer = document.querySelector('#' + parentElementID);
+                // remove the node from nodeContainer
+                if (nodeContainer) {
+                    // remove the node from nodeContainer
+                    var nodesInContainer = nodeContainer.querySelectorAll('button');
+                    for (var i = 0; i < nodesInContainer.length; i++) {
+                        console.log(pageData);
+                        if (nodesInContainer[i].textContent.trim() === pageData.pageObj.title) {
+                            nodesInContainer[i].parentNode.removeChild(nodesInContainer[i]);
+                            break; // No need to continue once the node is found and removed
+                        }
+                    }
+                }
             }
         });
 
-        var nodeContainer = document.querySelector('.nodeContainer');
-
-        if (nodeContainer){
-            var buttonsInContainer = nodeContainer.querySelectorAll('button');
-
-            for (var i = 0; i < buttonsInContainer.length; i++) {
-                var button = buttonsInContainer[i];
-                // Check if button text content matches certain criteria
-                if (button.textContent.trim() === data.pageObj.title) {
-                    button.parentNode.removeChild(button);
-                    break; 
-                }
+        var buttonsInNodeSection = document.querySelectorAll('.leftSidebar button');
+        for (var i = 0; i < buttonsInNodeSection.length; i++) {
+            var button = buttonsInNodeSection[i];
+            // Check if button text content matches certain criteria
+            if (button.textContent.trim() === pageData.pageObj.title) {
+                console.log("node already exists in the left sidebar"+pageData.pageObj.title);
+                return; // Skip creating the node if the title already exists
             }
         }
+
+        createNode(pageData,section);
+    
 
     }
 }
@@ -253,12 +261,6 @@ function createNode(node) {
             // Handle the case where browser extension APIs are not available
             console.log("Browser extension APIs are not available.");
         }
-    });
-
-    newNode.addEventListener('contextmenu', function (event) {
-        event.preventDefault(); 
-        newNode.parentNode.removeChild(newNode);
-        // Additional actions can be performed as needed
     });
     return newNode;
 }

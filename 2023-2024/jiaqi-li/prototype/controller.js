@@ -50,9 +50,15 @@ class hmPage {
  }
 
 
+function serializeHmPage(hmPageInstance) {
+    return JSON.stringify(hmPageInstance);
+}
+
 function createNode(page,section) {
-    console.log("running createNode");
+    //console.log("running createNode");
     var nodeSection = document.getElementById(section);
+
+    // Check if the node already exists in the nodeSection
     var newNode = document.createElement("button");
     newNode.setAttribute('draggable', 'true');
     newNode.classList.add('node');
@@ -90,6 +96,17 @@ function createNode(page,section) {
                 dragStart(event);
             }
         });
+        // Check if the parent element of newNode has an id
+        if (newNode.parentNode.id) {
+            // Store the parent element id in chrome storage
+            chrome.storage.local.set({ 'parentElementID': newNode.parentNode.id }, function() {
+            if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError);
+            } else {
+                //console.log('Parent element id stored successfully.'+ newNode.parentNode.id);
+            }
+            });
+        }
     });
     
     // Add a context menu to delete the node
@@ -98,7 +115,8 @@ function createNode(page,section) {
         newNode.parentNode.removeChild(newNode);
         // Additional actions can be performed as needed
     });
-        
+
+
     nodeSection.appendChild(newNode);
     return newNode;
 }
