@@ -62,10 +62,7 @@ function createTaskBox() {
     
     
     //update taskMap 
-    taskMap[nodeContainer.id] = {
-        taskTheme: taskContent,
-        // Add other properties as needed
-    };
+    updateTaskMap(nodeContainer.id,taskContent,"","create");
 
     var taskTheme = document.createElement('p');
     taskTheme.textContent = taskContent;
@@ -180,8 +177,8 @@ function drop(event) {
         //update taskMap,the node index shoule update to the latest index
         nodeId="node"+Object.keys(taskMap[section]).length;
 
-        taskMap[section][nodeId] = {pageData};
-        //console.log(taskMap);
+        //update taskMap
+        updateTaskMap(section,pageData,nodeId,"add");
         
         // Remove the node in the leftSidebar with the same text
         var leftSidebar = document.getElementsByClassName('leftSidebar')[0]; 
@@ -215,7 +212,7 @@ function drop(event) {
                             nodesInContainer[i].parentNode.removeChild(nodesInContainer[i]);
 
                             //update taskMap
-                            updateTaskMap(parentElementID, pageData,'delete');
+                            updateTaskMap(parentElementID, pageData,"",'delete');
                         }
                     }
                 }
@@ -238,11 +235,11 @@ function drop(event) {
     }
 }
 
-function updateTaskMap(taskId, pageData,type) {
+function updateTaskMap(taskId,pageData,nodeId,type) {
     //update taskMap
     switch(type){
     //get the node index according to the pageData
-    case "delete":
+        case "delete":
 
             for (var NodeId in taskMap[taskId]) {
                 // Check if NodeId starts with 'node'
@@ -254,6 +251,18 @@ function updateTaskMap(taskId, pageData,type) {
                     }
                 }
             }
+            break;
 
-    }
+        case "add":
+            //update taskMap
+            taskMap[taskId][nodeId] = {pageData};
+            console.log(taskMap);
+            break;
+        case "create":
+            taskMap[taskId] = {
+                taskTheme: pageData,
+            };
+            console.log(taskMap);
+            break;
+        };
 }
