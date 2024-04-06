@@ -171,7 +171,7 @@ function drop(event) {
     var nodeContainer = event.target.closest('.nodeContainer');
     var leftSidebar = document.querySelector('.leftSidebar');
 
-    //***********not functioning when drag node back************/
+
     // Append the new node to the node container if found,or left sidebar
     if (nodeContainer) {
         section = nodeContainer.id;
@@ -203,28 +203,29 @@ function drop(event) {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError);
             } else {
-                const parentElementID = data.parentElementID;
-                
-                var nodeContainer = document.querySelector('#' + parentElementID);
                 // remove the node from nodeContainer
+
+                const parentElementID = data.parentElementID;
+                var nodeContainer = document.querySelector('#' + parentElementID);
+                
                 if (nodeContainer) {
-                    // remove the node from nodeContainer
                     var nodesInContainer = nodeContainer.querySelectorAll('button');
                     for (var i = 0; i < nodesInContainer.length; i++) {
-                        console.log(pageData);
                         if (nodesInContainer[i].textContent.trim() === pageData.pageObj.title) {
                             nodesInContainer[i].parentNode.removeChild(nodesInContainer[i]);
-                            break; // No need to continue once the node is found and removed
+
+                            //update taskMap
+                            updateTaskMap(parentElementID, pageData,'delete');
                         }
                     }
                 }
             }
         });
 
+        // Check if the node already exists in the left sidebar
         var buttonsInNodeSection = document.querySelectorAll('.leftSidebar button');
         for (var i = 0; i < buttonsInNodeSection.length; i++) {
             var button = buttonsInNodeSection[i];
-            // Check if button text content matches certain criteria
             if (button.textContent.trim() === pageData.pageObj.title) {
                 console.log("node already exists in the left sidebar"+pageData.pageObj.title);
                 return; // Skip creating the node if the title already exists
@@ -236,32 +237,23 @@ function drop(event) {
 
     }
 }
-/*
-function createNode(node) {
-    var newNode = document.createElement('button');
-    newNode.classList.add('node');
-    newNode.textContent = node.pageObj.title;
-    newNode.draggable = true;
-    newNode.addEventListener('dragstart', dragStart); // Set up drag behavior for the new node
-    
-    newNode.addEventListener('click', function() {
-        // Check if browser extension APIs are available
-        if (typeof chrome !== 'undefined' && chrome.tabs) {
-            // Find the tab with the matching URL
-            chrome.tabs.query({ url: node.pageObj.url }, function(tabs) {
-                if (tabs && tabs.length > 0) {
-                    // If the tab exists, navigate to it
-                    chrome.tabs.update(tabs[0].id, { active: true });
-                } else {
-                    // If the tab doesn't exist, open a new tab with the URL
-                    chrome.tabs.create({ url: node.pageObj.url });
+
+function updateTaskMap(taskId, pageData,type) {
+    //update taskMap
+    switch(type){
+    //get the node index according to the pageData
+    case "delete":
+
+            for (var NodeId in taskMap[taskId]) {
+                // Check if NodeId starts with 'node'
+                if (NodeId.startsWith('node')) {
+                    // Your code for processing nodes here
+                    if (taskMap[taskId][NodeId].pageData.pageObj.title === pageData.pageObj.title) {
+                        delete taskMap[taskId][NodeId];
+                        console.log(taskMap);
+                    }
                 }
-            });
-        } else {
-            // Handle the case where browser extension APIs are not available
-            console.log("Browser extension APIs are not available.");
-        }
-    });
-    return newNode;
+            }
+
+    }
 }
-*/
