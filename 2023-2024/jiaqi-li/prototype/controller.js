@@ -59,8 +59,17 @@ function serializeHmPage(hmPageInstance) {
 function createNode(page,section) {
     //console.log("running createNode");
     var nodeSection = document.getElementById(section);
-
-    // Check if the node already exists in the nodeSection
+    
+    // check if the page is already in the nodeSection
+    var buttonsInNodeSection = document.querySelectorAll('.leftSidebar button');
+    for (var i = 0; i < buttonsInNodeSection.length; i++) {
+        var button = buttonsInNodeSection[i];
+        if (button.textContent.trim() === page.pageObj.title) {
+            console.log("node already exists in the left sidebar"+page.pageObj.title);
+            return; // Skip creating the node if the title already exists
+        }
+    }
+    // Create a new node element
     var newNode = document.createElement("button");
     newNode.setAttribute('draggable', 'true');
     newNode.classList.add('node');
@@ -153,10 +162,14 @@ function createNode(page,section) {
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
             newPage = hmPages[hmPages.length-1];
             createNode(newPage,section);
+
+            console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
         }else {
+            section = "nodeSection"
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
             newPage = hmPages[hmPages.length-1];
             createNode(newPage,section);
+            console.log("A new tab updated:");
         }
     });
     //console.log(hmPages);
