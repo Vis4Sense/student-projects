@@ -22,6 +22,16 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 9 Apr 2024
+Hongye
+1. Progress:
+   - Integrate [LangSmith](https://www.langchain.com/langsmith) in the backend service to help analyze the RAG execution process
+   - Read a paper in the field of LLM and RAG: https://arxiv.org/abs/2312.10997
+   - Added a new function to upload custom paper information in the back-end service
+2. Question:
+3. Next Step:
+    - Continue to improve Vitality’s web page display 
+
 # 2 Apr 2024
 Jianwen
 1. Progress:
