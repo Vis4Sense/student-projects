@@ -17,7 +17,9 @@ class hmPage {
  
  const ignoredUrls = [
     'chrome-extension://',
-    'edge://extensions/'
+    'edge://extensions/',
+    'chrome://extensions/',
+    'chrome://newtab/',
  ];
  
 
@@ -146,12 +148,15 @@ function createNode(page,section) {
         if (isNewTab && tabId === updatedTab.id && changeInfo.status === 'complete') {
             // Reset the flag
             isNewTab = false;
-            
             // Add the tab once its properties are fully updated
+            section = "nodeSection"
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+            newPage = hmPages[hmPages.length-1];
+            createNode(newPage,section);
         }else {
-
             addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+            newPage = hmPages[hmPages.length-1];
+            createNode(newPage,section);
         }
     });
     //console.log(hmPages);

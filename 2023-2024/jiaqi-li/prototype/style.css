@@ -147,7 +147,7 @@ input{
     width:70%
   }
 
-  .archiveButton{
+  .pullOutButton{
     position: absolute;
     margin-left: 80%;
     width: 30px;
@@ -157,7 +157,7 @@ input{
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    background: url("images/archive.png") no-repeat scroll 0 0 transparent;
+    background: url("images/pullOut.png") no-repeat scroll 0 0 transparent;
   }
 
 

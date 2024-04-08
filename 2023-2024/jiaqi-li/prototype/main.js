@@ -71,28 +71,35 @@ function createTaskBox() {
     nodeContainer.addEventListener('drop', drop);
 
 
-    // Create the archive button
-    var archiveButton = document.createElement('button');
-    //archiveButton.textContent = 'Archive';
-    archiveButton.classList.add('archiveButton');
-    archiveButton.addEventListener('click', function() {
-        // archive functionality
+    // Create the pull-put button
+    // when click the button
+    var pullOutButton = document.createElement('button');
+    //pullOutButton.textContent = 'Pull Out';
+    pullOutButton.classList.add('pullOutButton');
+    pullOutButton.addEventListener('click', function() {
+        // pull out functionality
 
+        taksId = nodeContainer.id;
+        // go through the taskMap to get the node URL
+        var tabIds = [];
+        for (var nodeId in taskMap[taksId]) {
+            // Check if nodeId starts with 'node'
+            if (nodeId.startsWith('node')) {
+                // Your code for processing nodes here
+                tabIds.push(taskMap[taksId][nodeId].pageData.tabId
+                    );
+            }
+        }
 
-        /*
-        // Assume tabIds is an array containing the IDs of the tabs you want to move
-        var tabIds = [1, 2, 3]; // Example tab IDs
+        console.log(tabIds);
+        chrome.windows.create({ focused: false, state: 'minimized'}, function(newWindow) {
 
-        // Create a new window
-        chrome.windows.create({ focused: true }, function(newWindow) {
-            // Move each tab to the new window
             tabIds.forEach(function(tabId) {
                 chrome.tabs.move(tabId, { windowId: newWindow.id, index: -1 });
             });
+            // Once all tabs are moved, maximize the window
+            chrome.windows.update(newWindow.id, { focused: true, state: 'maximized' });
         });
-        */
-
-
 
     });
 
@@ -106,7 +113,7 @@ function createTaskBox() {
 
     // Append the buttons and content to the task box
     taskBox.appendChild(taskTheme)
-    taskBox.appendChild(archiveButton);
+    taskBox.appendChild(pullOutButton);
     taskBox.appendChild(deleteButton);
     taskBox.appendChild(nodeContainer);
 
@@ -230,11 +237,11 @@ function drop(event) {
         }
 
         createNode(pageData,section);
-    
 
     }
 }
 
+//update taskMap in different situation
 function updateTaskMap(taskId,pageData,nodeId,type) {
     //update taskMap
     switch(type){
