@@ -7,17 +7,8 @@
         "default_title": "Click to open extension"
     },
     "permissions": ["tabs","storage","scripting","history","webNavigation", "contextMenus"],
-    "host_permissions": [
-        "*://*/*"
-      ],
     "background": {
         "service_worker": "background.js",
         "type": "module"
-    },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["content_script.js"]
-        }
-    ]
+    }
 }

@@ -72,7 +72,7 @@ function createTaskBox() {
 
 
     // Create the pull-put button
-    // when click the button
+    // when click the button, all pages in the task box will be pulled out to a new window
     var pullOutButton = document.createElement('button');
     //pullOutButton.textContent = 'Pull Out';
     pullOutButton.classList.add('pullOutButton');
@@ -109,6 +109,8 @@ function createTaskBox() {
     deleteButton.classList.add('deleteButton');
     deleteButton.addEventListener('click', function() {
         taskBox.remove();
+        //update taskMap
+        updateTaskMap(nodeContainer.id,"","",'delete box');
     });
 
     // Append the buttons and content to the task box
@@ -180,13 +182,16 @@ function drop(event) {
     if (nodeContainer) {
         section = nodeContainer.id;
         // Create a new node element with the dragged node info
-        createNode(pageData,section);
-        //update taskMap,the node index shoule update to the latest index
-        nodeId="node"+Object.keys(taskMap[section]).length;
+        isCreated=createNode(pageData,section);
 
-        //update taskMap
-        updateTaskMap(section,pageData,nodeId,"add");
-        
+        //update taskMap only when the node is created
+        if(isCreated){
+        //update taskMap,the node index shoule update to the latest index
+            nodeId="node"+Object.keys(taskMap[section]).length;
+
+            //update taskMap
+            updateTaskMap(section,pageData,nodeId,"add");
+        }
         // Remove the node in the leftSidebar with the same text
         var leftSidebar = document.getElementsByClassName('leftSidebar')[0]; 
         var nodesInLeftSidebar = leftSidebar.querySelectorAll('button');
@@ -271,5 +276,12 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
             };
             console.log(taskMap);
             break;
+        
+
+        case "delete box":
+            delete taskMap[taskId];
+            console.log(taskMap);
+            break;
+
         };
-}
+} 

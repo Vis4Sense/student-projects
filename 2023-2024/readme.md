@@ -65,6 +65,7 @@ Jiaqi
    - send message between content script to other script
 3. Next Step:
    - integrate transformer.js
+
 # 2 Apr 2024
 Jianwen
 1. Progress:

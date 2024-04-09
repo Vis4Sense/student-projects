@@ -57,16 +57,16 @@ function serializeHmPage(hmPageInstance) {
 }
 
 function createNode(page,section) {
-    //console.log("running createNode");
     var nodeSection = document.getElementById(section);
-    
+
     // check if the page is already in the nodeSection
-    var buttonsInNodeSection = document.querySelectorAll('.leftSidebar button');
+    var buttonsInNodeSection = document.querySelectorAll('#'+section+' button');
+
     for (var i = 0; i < buttonsInNodeSection.length; i++) {
         var button = buttonsInNodeSection[i];
         if (button.textContent.trim() === page.pageObj.title) {
             console.log("node already exists in the left sidebar"+page.pageObj.title);
-            return; // Skip creating the node if the title already exists
+            return false; // Skip creating the node if the title already exists
         }
     }
     // Create a new node element
@@ -124,12 +124,14 @@ function createNode(page,section) {
     newNode.addEventListener('contextmenu', function (event) {
         event.preventDefault(); 
         newNode.parentNode.removeChild(newNode);
-        // Additional actions can be performed as needed
+        //update taskMap
+        updateTaskMap(section,page,"",'delete');
     });
 
 
     nodeSection.appendChild(newNode);
-    return newNode;
+
+    return true;
 }
 
  
