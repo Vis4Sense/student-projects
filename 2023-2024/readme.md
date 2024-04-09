@@ -30,7 +30,12 @@ Hongye
    - Added a new function to upload custom paper information in the back-end service
 2. Question:
 3. Next Step:
-    - Continue to improve Vitality’s web page display 
+    - Continue to improve Vitality’s web page display
+
+Rachana
+1. Progress: asked 4 people to do formal user testing & found 1 person to do user testing informally this week, testing out redesigning prompts to improve character consistency with better results, figured out how to make sure dall e api only minimally edits prompts, the dalle 2 api requires user to submit a mask for parts of image to edit and this process seemed a little complicated so i think it will be best to stick with prompting
+2. Questions: none
+3. Next step: implementing the prompt design changes that i think will work better, adding plot generation functionality to storyboard, informal testing
 
 # 2 Apr 2024
 Jianwen
