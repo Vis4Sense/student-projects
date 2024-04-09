@@ -32,6 +32,14 @@ Hongye
 3. Next Step:
     - Continue to improve Vitality’s web page display
 
+Ziyue
+1. Progress:
+   - Add some part and improve some part of gpt-researcher
+2. Questions:
+   - how can we reduce the process of cmd and gpt-researcher UI as much as possible
+3. Next step:
+   - improve the display webpage, and switch the beautifulsoup4 part into AI Agents (try to use it as much as possible)
+
 Rachana
 1. Progress: asked 4 people to do formal user testing & found 1 person to do user testing informally this week, testing out redesigning prompts to improve character consistency with better results, figured out how to make sure dall e api only minimally edits prompts, the dalle 2 api requires user to submit a mask for parts of image to edit and this process seemed a little complicated so i think it will be best to stick with prompting
 2. Questions: none
