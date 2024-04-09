@@ -37,6 +37,15 @@ Rachana
 2. Questions: none
 3. Next step: implementing the prompt design changes that i think will work better, adding plot generation functionality to storyboard, informal testing
 
+Jianwen
+1. Progress:
+   - Refined structures after adding new model components.
+   - Added graphic panels indicating markdown components, and sequential/parallel layout switching.
+   - completer prototype of Introduction part of dissertation.
+2. Question:
+3. Next Step:
+   - if no new functions required, keep working on dissertation.
+
 # 2 Apr 2024
 Jianwen
 1. Progress:
