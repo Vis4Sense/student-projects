@@ -1,3 +1,16 @@
+# 09 Apr 2024
+Raul Farkas
+1. Progress
+   - Concluded most experimentation with the trading agents in backtesting, found interesting results
+     - Amazing performance with zero-commission trading
+     - Lower performance when commission is introduced, but still possible to make a profit on certain stocks
+     - Uncertain results with and without sentiment analysis (might be due to incorrect sentiment score (attempting with sentiment analysis per-symbol in a news headline)
+2. Questions and difficulties
+  - None so far
+3. Next steps
+   - Finish writing dissertation
+   - Create 3-min demo video
+
 # 02 Apr 2024
 Xiruo Sun
 1. Progress
