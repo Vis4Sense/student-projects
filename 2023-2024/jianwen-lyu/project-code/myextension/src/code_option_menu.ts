@@ -56,9 +56,10 @@ export class CodeOptionList extends OptionList
             }
         })
 
+        // remove old items in father class
         super.removeItemAt(2);
-        super.removeItemAt(3);
         this.addItem({command: deleteCommand});
+        super.removeItemAt(2);
     }
 
 }

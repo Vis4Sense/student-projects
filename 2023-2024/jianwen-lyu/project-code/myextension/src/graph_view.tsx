@@ -116,7 +116,7 @@ function LoadGraphics()
 function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
 {
     // all graph components:
-    const graphNodes:INode[] = []
+    let graphNodes:INode[] = []
     const depths:number[] = [];
 
     // layout
@@ -129,39 +129,55 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
         fill: 'black', 
         stroke: 'black'
       });
-      graph.setStyle(start, circleStyle);
+    graph.setStyle(start, circleStyle);
     graphNodes.push(start);
 
-    let pg = start;
+    //let pg = start;
     let pc = components[0];
-    let isFoundLast = false;
+    //let isFoundLast = false;
 
     // get all components in a list
     for (let i = 0; i < components.length; i++)
     {
+        let lastg = graphNodes.pop();
         let g = GetComponents(components[i], graphNodes, depths, graph);
-        if (i == 0)
+    
+        // console.log("last graph: ", lastg?.labels);
+        // console.log("g: ", g.labels);
+
+        if (lastg && components[i].tag == "Sequential")
         {
-            graph.createEdge(start, g);
+            graph.createEdge(lastg, g);
         }
-        else if ((pc.tag == "Sequential") && (components[i].tag == "Sequential"))
-        {
-            isFoundLast = true;
-            graph.createEdge(pg, g);
-            pc = components[i]
-            pg = g;
-        }
+        // if ((pc.tag == "Sequential") && (components[i].tag == "Sequential"))
+        // {
+        //     isFoundLast = true;
+        //     graph.createEdge(pg, g);
+        //     pc = components[i]
+        //     pg = g;
+        // }
+        // else if (components[i].tag == "Sequential")
+        // {
+        //     isFoundLast = true;
+        //     graph.createEdge(start, g);
+        //     pc = components[i];
+        //     pg = g;
+        // }  
         else
         {
             graph.createEdge(start, g);
+            // remove elements after g
+            let index = graphNodes.indexOf(g);
+            graphNodes = graphNodes.slice(0, index);   
         }
 
-        if (!isFoundLast)
-        {
-            pc = components[i];
-            pg = g;
-        }
+        // if (!isFoundLast)
+        // {
+        //     pc = components[i];
+        //     pg = g;
+        // }
         console.log("last number title: ", pc.componentTitle);
+
     } 
 
     graph.applyLayout(layout);
@@ -183,9 +199,8 @@ function GetComponents(component:ModelComponent, graphNodes:INode[], depths:numb
     {
         const clist = component.childList;
         let isFoundLast = false;
-        let prev_component = component.childList[0];
-        let prev_graphic = GetComponents(clist[0], graphNodes, depths, graph);
-        graph.createEdge(g, prev_graphic);
+        let prev_component = component;
+        let prev_graphic = g;
 
         for(let i = 1; i < clist.length; i++)
         {
@@ -200,7 +215,7 @@ function GetComponents(component:ModelComponent, graphNodes:INode[], depths:numb
             else if (clist[i].tag == "Sequential")
             {
                 isFoundLast = true;
-                graph.createEdge(g, cg);
+                (prev_component == component) ? graph.createEdge(g, cg) : graph.createEdge(prev_graphic, cg);
                 prev_component = clist[i];
                 prev_graphic = cg;
             }   

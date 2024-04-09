@@ -75,6 +75,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const close_button = new ToolbarButton({
         label: 'close',
         onClick: () => {
+          // dispose components
           components = [];
           tab_widget.widgets.forEach(w => {
             w.dispose();
@@ -88,6 +89,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const g_close_button = new ToolbarButton({
         label: 'close',
         onClick: () => {
+          // dispose widgets
           components = [];
           tab_widget.widgets.forEach(w => {
             w.dispose();
@@ -300,6 +302,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
               const codect = new ModelComponent(app, state, panel, center_panel, userText, cell, true);
               codect.depth = compDist;
+              codect.node.style.marginLeft = 10 * codect.depth + 'px';
               components.push(codect);
               if (compLoc != -1)
               {
@@ -448,6 +451,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               let compDist = 0;
 
               const closestMrk = findPreviousMarkdown(np, cell);
+              console.log("components: ", components)
               for (let component of components)
               {
                 //console.log("closest: ", closestMrk);
@@ -463,6 +467,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               // construct component
               const codect = new ModelComponent(app, state, np, container, title, cell, true);
               codect.depth = compDist;
+              codect.node.style.marginLeft = 10 * codect.depth + 'px';
               components.push(codect);
               if (compLoc != -1)
               {
@@ -473,7 +478,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
                 container.addWidget(codect);
               }
               codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + np.context.path;
-              
+              let codeCellId = cell.model.id;
+              let codeContent = cell.model.toJSON().source.toString();
+              code_components.push([codect.componentID, codect.componentTitle, codeCellId, codeContent]);
             }
           }
         }
@@ -623,8 +630,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
 
         // for each markdown cells, build tags
-        const regex_index = /^-\s*(Step\s+\d+|\d+\.)/;
-        const gview = (regex_index.test(component.componentTitle)) ? "Sequential" : "Parallel";
+        //const regex_index = /^-\s*(Step\s+\d+|\d+\.)/;
+        const gview = "Sequential";
         let gview_info = localStorage.getItem("tag" + component.componentID);
         if (gview_info)
         {
@@ -634,7 +641,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         else
         {
-          // if no history, save and build new record
+          //if no history, save and build new record
           component.tag = gview;
           component.optionSettings(center_panel);
           localStorage.setItem("tag" + component.componentID, component.tag);
@@ -655,6 +662,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     // when widget is about closed, save current code contents
     widget.disposed.connect(() => {
       // save data in end state
+      // console.log("disposing...", code_components);
       for (let code_component of code_components)
       {
         let code_id = code_component[2];
