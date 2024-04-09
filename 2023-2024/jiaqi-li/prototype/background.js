@@ -33,3 +33,21 @@ function activate_main_window(){
       }
     });  
   }
+
+  chrome.runtime.onInstalled.addListener(function() {
+    // Query all open tabs
+    chrome.tabs.query({}, function(tabs) {
+        // Iterate over each tab
+        tabs.forEach(function(tab) {
+            // Inject content script into the tab
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                files: ['content_script.js']
+            }).then(() => {
+                console.log('Content script injected into tab:', tab.id);
+            }).catch(error => {
+                console.error('Failed to inject content script:', error);
+            });
+        });
+    });
+});
