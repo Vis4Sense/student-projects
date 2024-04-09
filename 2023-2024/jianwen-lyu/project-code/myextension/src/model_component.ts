@@ -24,6 +24,7 @@ export class ModelComponent extends Widget
     // id 
     public componentID : string;
     public nameContent = document.createElement('p');
+    public tag : string;
 
     // get user notebook panel
     currentPanel : NotebookPanel;
@@ -50,6 +51,7 @@ export class ModelComponent extends Widget
         this.state = state;
         this.cell = cell;
         this.isCode = isCode;
+        this.tag = "Parallel";
         
         this.addClass('jp-model-component');
         if (title[0] == "-")
@@ -63,7 +65,10 @@ export class ModelComponent extends Widget
         this.componentID = this.componentTitle + '';
 
         // set option list
-        this.optionSettings(container);
+        if (this.isCode)
+        {
+            this.optionSettings(container);
+        }
 
         // tracker for cell
         // const tracker: IWidgetTracker<Cell> = new WidgetTracker<Cell>({ namespace: 'selected-cell' });
@@ -75,6 +80,11 @@ export class ModelComponent extends Widget
         }
 
         this.createTitleNode(this.nameContent);
+
+        // when disposed...
+        this.disposed.connect(() => {
+            localStorage.setItem("tag" + this.componentID, this.tag);
+        });
     } 
 
     public optionSettings(container:Panel)
@@ -272,9 +282,19 @@ export class ModelComponent extends Widget
         this.dispose();
     }
 
-}
+    // change the dsiplaying way in graphics view
+    public changeGraphicView()
+    {
+        if (this.tag == "Sequential")
+        {
+            this.tag = "Parallel";
+            localStorage.setItem("tag" + this.componentID, "Parallel");
+        }
+        else
+        {
+            this.tag = "Sequential";
+            localStorage.setItem("tag" + this.componentID, "Sequential");
+        }
+    }
 
-// TODO: 1) integrate model components into one panel
-//       2) notes: along with component
-//       3) from code cell to add label (in notebook)
-//       4) graph view
+}

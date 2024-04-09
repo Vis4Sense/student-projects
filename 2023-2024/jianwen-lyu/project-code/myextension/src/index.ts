@@ -88,7 +88,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const g_close_button = new ToolbarButton({
         label: 'close',
         onClick: () => {
-          graphicCopmonents = [];
+          components = [];
           tab_widget.widgets.forEach(w => {
             w.dispose();
           })
@@ -300,9 +300,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
               const codect = new ModelComponent(app, state, panel, center_panel, userText, cell, true);
               codect.depth = compDist;
-              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + currentPanel.context.path;
               components.push(codect);
-              //console.log("component location: ", compLoc);
               if (compLoc != -1)
               {
                 center_panel?.insertWidget(compLoc + 1, codect);
@@ -311,6 +309,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               {
                 center_panel?.insertWidget(0, codect);
               }
+              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + currentPanel.context.path;
 
               // save code data to localStorage
               let codeCellId = cell.model.id;
@@ -464,7 +463,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
               // construct component
               const codect = new ModelComponent(app, state, np, container, title, cell, true);
               codect.depth = compDist;
-              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + np.context.path;
               components.push(codect);
               if (compLoc != -1)
               {
@@ -474,6 +472,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               {
                 container.addWidget(codect);
               }
+              codect.componentID = codect.componentTitle + center_panel.widgets.indexOf(codect) + np.context.path;
               
             }
           }
@@ -517,9 +516,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
             const titlePattern = /^(#{1,6})\s+(.*)$/gm;
             const titleMatch = line.match(titlePattern)
             if (titleMatch) {
+              // build component
               headerList.push(line);
-              //console.log("line content: ", line);
               const component = new ModelComponent(app, state, panel, center_panel, dePrefix(line), cell, false);
+              // handle data
               component.saveCellData(cell);
               //console.log("component titles: ", component.componentTitle);
               headings.push(component);        
@@ -527,11 +527,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
             const boldPattern = /^\*\*(.+?)\*\*$|^__(.+?)__$/;
             const boldMatch = line.match(boldPattern);
             if (boldMatch) {
+              // build component
               const boldText = boldMatch[1] || boldMatch[2];
               headerList.push('##########' + boldText);
               const component = new ModelComponent(app, state, panel, center_panel, boldText, cell, false);
               component.saveCellData(cell);
-              //console.log("component titles: ", component.componentTitle);
               headings.push(component);        
             }
           })
@@ -602,7 +602,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
           fileStr = "notfound";
         }
         component.componentID = component.componentTitle + center_panel.widgets.indexOf(component) + fileStr;
-        //console.log(localStorage.getItem(component.componentID));
+
+        // load data
         let data = localStorage.getItem(component.componentID);
         if (data)
         {
@@ -619,6 +620,24 @@ const plugin: JupyterFrontEndPlugin<void> = {
               }
             }
           }
+        }
+
+        // for each markdown cells, build tags
+        const regex_index = /^-\s*(Step\s+\d+|\d+\.)/;
+        const gview = (regex_index.test(component.componentTitle)) ? "Sequential" : "Parallel";
+        let gview_info = localStorage.getItem("tag" + component.componentID);
+        if (gview_info)
+        {
+          // extract history first
+          component.tag = gview_info;
+          component.optionSettings(center_panel);
+        }
+        else
+        {
+          // if no history, save and build new record
+          component.tag = gview;
+          component.optionSettings(center_panel);
+          localStorage.setItem("tag" + component.componentID, component.tag);
         }
       })
 

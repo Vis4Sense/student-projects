@@ -1,6 +1,6 @@
 import { 
     Panel,
-    Menu 
+    Menu
 } from '@lumino/widgets';
 import { CommandRegistry } from '@lumino/commands';
 
@@ -12,6 +12,7 @@ export class OptionList extends Menu
 {
     component : ModelComponent;
     commands : CommandRegistry; 
+    isSeq: boolean;
 
     constructor(container:Panel, component:ModelComponent)
     {
@@ -19,6 +20,7 @@ export class OptionList extends Menu
             commands: new CommandRegistry()
         });
         this.component = component;
+        this.isSeq = (component.tag === "Sequential") ? true : false;
         this.commands = new CommandRegistry();
  
         // commands for the options
@@ -45,9 +47,19 @@ export class OptionList extends Menu
                 component.switchExpand(container);
             }
         }) 
+
+        const setProcessCommand:string = "component:set";
+        this.commands.addCommand(setProcessCommand, {
+            label: (this.isSeq) ? 'in graphic view: sequential' : 'in graphic view: parallel',
+            execute: () => {
+                this.isSeq = !this.isSeq;
+                component.changeGraphicView();
+            }
+        });
  
         this.addItem({command: noteCommand});
         this.addItem({command: navigateCommand});
         this.addItem({command: expandCommand});
+        this.addItem({command: setProcessCommand});
     }
 }

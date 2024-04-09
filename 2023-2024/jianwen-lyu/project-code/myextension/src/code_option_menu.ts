@@ -56,6 +56,8 @@ export class CodeOptionList extends OptionList
             }
         })
 
+        super.removeItemAt(2);
+        super.removeItemAt(3);
         this.addItem({command: deleteCommand});
     }
 

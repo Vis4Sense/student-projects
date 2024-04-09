@@ -5,6 +5,7 @@ import React, {useEffect} from 'react';
 import {
     License,
     GraphComponent,
+    GraphViewerInputMode,
     ShapeNodeStyle,
     IGraph,
     INode,
@@ -83,7 +84,11 @@ function LoadGraphics()
     const root:ModelComponent[] = [];
         
     const graphicComponent = new GraphComponent("#graphics");
+    const inputModeView = new GraphViewerInputMode();
     const graph = graphicComponent.graph;
+    inputModeView.moveViewportInputMode.enabled = true;
+
+    graphicComponent.inputMode = inputModeView;
 
     // clear early contents
     graph.clear();
@@ -98,7 +103,6 @@ function LoadGraphics()
 
     // create structure for components
     LoadComponentsToGraph(root, graph);
-    
 
     // render the graph
     //console.log("components loading...", graphicComponent);
@@ -116,7 +120,7 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
     const depths:number[] = [];
 
     // layout
-    const layout = new HierarchicLayout({layoutOrientation: 'left-to-right'});
+    const layout = new HierarchicLayout({layoutOrientation: 'top-to-bottom'});
 
     // start point
     const start = graph.createNode(new Rect(0, 0, 20, 20));
@@ -129,6 +133,8 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
     graphNodes.push(start);
 
     let pg = start;
+    let pc = components[0];
+    let isFoundLast = false;
 
     // get all components in a list
     for (let i = 0; i < components.length; i++)
@@ -138,20 +144,35 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
         {
             graph.createEdge(start, g);
         }
+        else if ((pc.tag == "Sequential") && (components[i].tag == "Sequential"))
+        {
+            isFoundLast = true;
+            graph.createEdge(pg, g);
+            pc = components[i]
+            pg = g;
+        }
         else
         {
-            graph.createEdge(pg, g);
+            graph.createEdge(start, g);
         }
-        pg = g;
+
+        if (!isFoundLast)
+        {
+            pc = components[i];
+            pg = g;
+        }
+        console.log("last number title: ", pc.componentTitle);
     } 
 
     graph.applyLayout(layout);
         
 }
 
+// make a graph of one component and its children, and link parent with children 
 function GetComponents(component:ModelComponent, graphNodes:INode[], depths:number[], graph:IGraph) : INode
 {
-    const g = graph.createNode(new Rect(0, 0, 300, 100));
+    // configurate this node
+    const g = graph.createGroupNode(null, new Rect(0, 0, 300, 100));
     const label = graph.addLabel(g, component.componentTitle);
     graph.setNodeLayout(g, new Rect(0, 0, label.layout.width + 20, (label.layout.width < 150) ? (label.layout.width - 30) : (100)));
     graphNodes.push(g);
@@ -160,10 +181,40 @@ function GetComponents(component:ModelComponent, graphNodes:INode[], depths:numb
     // for children
     if (component.childList.length != 0)
     {
-        component.childList.forEach(child => {
-            const cg = GetComponents(child, graphNodes, depths, graph);
-            graph.createEdge(g, cg);
-        });
+        const clist = component.childList;
+        let isFoundLast = false;
+        let prev_component = component.childList[0];
+        let prev_graphic = GetComponents(clist[0], graphNodes, depths, graph);
+        graph.createEdge(g, prev_graphic);
+
+        for(let i = 1; i < clist.length; i++)
+        {
+            const cg = GetComponents(clist[i], graphNodes, depths, graph);
+            if ((prev_component.tag == "Sequential") && (clist[i].tag == "Sequential"))
+            {
+                isFoundLast = true;
+                graph.createEdge(prev_graphic, cg);
+                prev_component = clist[i];
+                prev_graphic = cg;
+            }
+            else if (clist[i].tag == "Sequential")
+            {
+                isFoundLast = true;
+                graph.createEdge(g, cg);
+                prev_component = clist[i];
+                prev_graphic = cg;
+            }   
+            else
+            {
+                graph.createEdge(g, cg);
+            }
+            
+            if (!isFoundLast)
+            {
+                prev_component = clist[i];
+                prev_graphic = cg;
+            }
+        }
     }
 
     return g;
