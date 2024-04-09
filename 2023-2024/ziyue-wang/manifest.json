@@ -3,17 +3,17 @@
     "name": "Sensemaking Extension",
     "version": "1.0",
     "description": "Enhance your browsing experience with customized sensemaking.",
-    "permissions": ["activeTab", "storage", "http://*/", "https://*/"],
+    "permissions": ["activeTab", "storage", "http://*/", "https://*/", "http://localhost/*", "<all_urls>"],
     "browser_action": {
       "default_popup": "popup.html",
       "default_icon": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/icon16x16.png",
+        "48": "images/icon48x48.png",
+        "128": "images/icon128x128.png"
       }
     },
     "background": {
-      "scripts": ["background.js"],
+      "scripts": ["backup.js"],
       "persistent": false
     },
     "content_scripts": [
@@ -23,8 +23,8 @@
       }
     ],
     "icons": {
-      "16": "images/icon16.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "images/icon16x16.png",
+      "48": "images/icon48x48.png",
+      "128": "images/icon128x128.png"
     }
   }
