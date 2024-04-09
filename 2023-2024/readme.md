@@ -46,6 +46,17 @@ Jianwen
 3. Next Step:
    - if no new functions required, keep working on dissertation.
 
+Jiaqi
+1. Progress:
+   - modularlize the code
+   - drop function, when drag node back to left sidebar
+   - Design new data sturcture to store task info, and modefy the code to uodate taskMap
+   - Pull out functionality， open pages in a new window
+2. Question:
+   - injection of content script
+   - send message between content script to other script
+3. Next Step:
+   - integrate transformer.js
 # 2 Apr 2024
 Jianwen
 1. Progress:
