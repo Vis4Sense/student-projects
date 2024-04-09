@@ -11,6 +11,15 @@ Raul Farkas
    - Finish writing dissertation
    - Create 3-min demo video
 
+Xiruo Sun
+1. Progress
+   - only read some papers
+2. Question and difficulty
+   - stuck with the project about how to improve sentiment analysis
+3. Next step
+   - try the baseline and improve sentiment analysis
+
+
 # 02 Apr 2024
 Xiruo Sun
 1. Progress
