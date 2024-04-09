@@ -31,8 +31,10 @@ function extractTextContent(element) {
 
 var mainContent = extractTextContent(mainContentContainer);
 
+chrome.runtime.sendMessage({ mainContent: mainContent });
+
 console.log(mainContent);
 
-chrome.runtime.sendMessage({ mainContent: mainContent });
+
 
 

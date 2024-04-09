@@ -34,20 +34,37 @@ function activate_main_window(){
     });  
   }
 
-  chrome.runtime.onInstalled.addListener(function() {
-    // Query all open tabs
-    chrome.tabs.query({}, function(tabs) {
-        // Iterate over each tab
-        tabs.forEach(function(tab) {
-            // Inject content script into the tab
-            chrome.scripting.executeScript({
-                target: { tabId: tab.id },
-                files: ['content_script.js']
-            }).then(() => {
-                console.log('Content script injected into tab:', tab.id);
-            }).catch(error => {
-                console.error('Failed to inject content script:', error);
-            });
-        });
-    });
+// Function to inject content script into a tab
+function injectContentScript(tabId) {
+  chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['content_script.js']
+  }).then(() => {
+      console.log('Content script injected into tab:', tabId);
+  }).catch(error => {
+      console.error('Failed to inject content script:', error);
+  });
+}
+
+// Event listener for when the extension is installed or enabled
+chrome.runtime.onInstalled.addListener(function() {
+  // Query all open tabs and inject content script into each tab
+  chrome.tabs.query({}, function(tabs) {
+      tabs.forEach(tab => {
+          // Check if the tab is not a Chrome internal page
+          if (!tab.url.startsWith('chrome://')) {
+              injectContentScript(tab.id);
+          }
+      });
+  });
 });
+
+// Event listener for when a new tab is created
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  // Check if the tab has finished loading and is not a Chrome internal page
+  if (changeInfo.status === 'complete' && tab.url && !tab.url.startsWith('chrome://')) {
+      // Inject content script into the newly created tab
+      injectContentScript(tabId);
+  }
+});
+
