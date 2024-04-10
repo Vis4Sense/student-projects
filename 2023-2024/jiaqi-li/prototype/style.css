@@ -141,7 +141,7 @@ input{
     font-size: 1vw;
     border-radius: 5px;
     overflow: auto;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box; 
 }
   .taskBox p {
     position: absolute;

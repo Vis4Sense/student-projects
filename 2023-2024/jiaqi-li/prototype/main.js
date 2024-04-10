@@ -22,6 +22,8 @@ taskMap structure
             pageObj = pageObj,
             parentPageId = parentPageId,
             docId = docId,
+            isOpened = isOpened,
+            pageContent = pageContent
         },
         node2:{
             pageId = pageId,
@@ -134,7 +136,7 @@ function allowDrop(event) {
 
 function deserializeHmPage(jsonString) {
     const data = JSON.parse(jsonString);
-    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened);
+    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened,data.content);
 }
 
 function dragStart(event) {
@@ -170,9 +172,8 @@ function drop(event) {
             const nodeDetail = data.nodeDetail;
         }
     });
-    //console.log(nodeDetail);
     pageData = deserializeHmPage(nodeDetail);
-
+    console.log(pageData);
     // Find the closest node container to the drop target and get the id of that container
     var nodeContainer = event.target.closest('.nodeContainer');
     var leftSidebar = document.querySelector('.leftSidebar');

@@ -6,6 +6,7 @@
     "action": {
         "default_title": "Click to open extension"
     },
+    "host_permissions": ["*://*/*"],
     "permissions": ["tabs","storage","scripting","history","webNavigation", "contextMenus"],
     "background": {
         "service_worker": "background.js",

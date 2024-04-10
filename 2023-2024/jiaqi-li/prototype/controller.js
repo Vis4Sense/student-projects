@@ -1,5 +1,5 @@
 class hmPage {
-    constructor(pageId, tabId, time, pageObj, parentPageId, docId=null, isOpened=true) {
+    constructor(pageId, tabId, time, pageObj, parentPageId, docId=null, isOpened=true, pageContent) {
        this.pageId = pageId;
        this.docId = docId; // a UUID of the document loaded, get from webNavigation API, needed for locating the page to update pageObj after navigation completed
        this.tabId = tabId;
@@ -12,6 +12,7 @@ class hmPage {
           forward: 0, // the number of times the parent page goes forward to this page
           back: 0 // the number of times this page goes back to the parent page
        };
+       this.content = pageContent;
     }
  }
  
@@ -25,7 +26,7 @@ class hmPage {
 
  let hmPages = [];
  //read openning tags' info, and add in list
- function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true) {
+ function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true,pageContent) {
     if (!ignoredUrls.some(url => tabURL.includes(url))) {
       let newPageId = window.crypto.randomUUID();
       let newPage = new hmPage(
@@ -35,7 +36,8 @@ class hmPage {
           pageObj,
           parentPageId,
           docId,
-          isOpened
+          isOpened,
+          pageContent,
        );
       hmPages.push(newPage);
       console.log("A new hmPage added:", newPage.pageObj.title, ', ', newPage.pageObj.url);
@@ -46,8 +48,23 @@ class hmPage {
     // add all the tabs opened before running historymap to hmPages
     chrome.tabs.query({}, function (openedTabs) {
        for (let i = 0; i < openedTabs.length; i++) {
-          addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
+          //get page content from opened tab
+
+          //skip urls that start with chrome
+            if (!ignoredUrls.some(url => openedTabs[i].url.includes(url))) {    
+                chrome.scripting.executeScript({
+                    target: {tabId: openedTabs[i].id},
+                    function: function() {
+                        return document.body.innerText;
+                    }
+                }).then((result) => {
+                    let pageContent = result[0].result;
+                    addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null,true,pageContent);
+                });
+            }
+          //addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
        }
+       console.log(hmPages);
     });
  }
 
