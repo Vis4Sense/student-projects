@@ -18,6 +18,16 @@ Xiruo Sun
    - stuck with the project about how to improve sentiment analysis
 3. Next step
    - try the baseline and improve sentiment analysis
+  
+Muhamad Hermawan
+1. Progress
+   - Implementing Hyperparameters Optimitation using Optuna
+   - Trying multiple sentiment and optimised through Optuna to see best result per sentiment and without sentiment
+2. Question and difficulty
+   - Parameter optimisation is time consuming, many parameters and all of it are sensitive to the output result.
+3. Next step
+   -  run couple more parameter tunning to see the output variance between sentiment including no sentiment. and then try to finalise the sentiment before run more thorough parameter optimisation
+   - Read the recommended paper for baseline and try to understand and implement it, look other possibilities for alternative baseline from other papers.
 
 
 # 02 Apr 2024
