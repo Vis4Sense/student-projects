@@ -140,11 +140,9 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
     for (let i = 0; i < components.length; i++)
     {
         let lastg = graphNodes.pop();
+        if (lastg) graphNodes.push(lastg);
         let g = GetComponents(components[i], graphNodes, depths, graph);
     
-        // console.log("last graph: ", lastg?.labels);
-        // console.log("g: ", g.labels);
-
         if (lastg && components[i].tag == "Sequential")
         {
             graph.createEdge(lastg, g);
@@ -171,11 +169,6 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
             graphNodes = graphNodes.slice(0, index);   
         }
 
-        // if (!isFoundLast)
-        // {
-        //     pc = components[i];
-        //     pg = g;
-        // }
         console.log("last number title: ", pc.componentTitle);
 
     } 
