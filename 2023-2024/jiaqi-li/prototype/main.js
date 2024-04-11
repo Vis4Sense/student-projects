@@ -247,6 +247,7 @@ function drop(event) {
     }
 }
 
+
 //update taskMap in different situation
 function updateTaskMap(taskId,pageData,nodeId,type) {
     //update taskMap

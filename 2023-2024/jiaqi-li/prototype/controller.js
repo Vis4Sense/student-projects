@@ -73,6 +73,8 @@ function serializeHmPage(hmPageInstance) {
     return JSON.stringify(hmPageInstance);
 }
 
+
+
 function createNode(page,section) {
     var nodeSection = document.getElementById(section);
 
@@ -91,6 +93,37 @@ function createNode(page,section) {
     newNode.setAttribute('draggable', 'true');
     newNode.classList.add('node');
     newNode.textContent = page.pageObj.title;
+
+    // Create the summary element for this button
+    const summary = document.createElement('div');
+    summary.className = 'summary';
+    summary.textContent = page.content;
+    newNode.appendChild(summary); // Append the summary to the button element
+
+    // Function to show the summary
+    function showSummary(event) {
+        summary.style.display = 'block'; // Show the summary
+        
+        // Position the summary relative to the button
+        const buttonRect = newNode.getBoundingClientRect();
+        const sidebar = document.querySelector('.leftSidebar');
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const sidebarScrollTop = sidebar.scrollTop;
+        
+        summary.style.left = buttonRect.left + 'px';
+        summary.style.top = (buttonRect.top - sidebarRect.top + sidebarScrollTop + buttonRect.height) + 'px';
+    }
+
+    // Function to hide the summary
+    function hideSummary() {
+        summary.style.display = 'none'; // Hide the summary
+    }
+
+    // Add event listeners to show/hide the summary
+    newNode.addEventListener('mouseenter', showSummary);
+    newNode.addEventListener('mousemove', showSummary); // Move event listener to follow mouse cursor
+    newNode.addEventListener('mouseleave', hideSummary);
+
         
     newNode.addEventListener('click', function() {
         // Check if browser extension APIs are available
@@ -145,13 +178,12 @@ function createNode(page,section) {
         updateTaskMap(section,page,"",'delete');
     });
 
-
     nodeSection.appendChild(newNode);
 
     return true;
 }
 
- 
+
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
     initializeHmPages();
@@ -171,25 +203,28 @@ function createNode(page,section) {
         isNewTab = true;
     });
     
+
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
         // Check if the update is for the newly created tab and it's fully loaded
-        if (isNewTab && tabId === updatedTab.id && changeInfo.status === 'complete') {
-            // Reset the flag
-            isNewTab = false;
-            // Add the tab once its properties are fully updated
-            section = "nodeSection"
-            addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
-            newPage = hmPages[hmPages.length-1];
-            createNode(newPage,section);
+        if (!ignoredUrls.some(url => updatedTab.url.includes(url))){
+            if (isNewTab && tabId === updatedTab.id && changeInfo.status === 'complete') {
+                // Reset the flag
+                isNewTab = false;
+                // Add the tab once its properties are fully updated
+                section = "nodeSection"
+                addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+                newPage = hmPages[hmPages.length-1];
+                createNode(newPage,section);
 
-            console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
-        }else {
-            section = "nodeSection"
-            addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
-            newPage = hmPages[hmPages.length-1];
-            createNode(newPage,section);
-            console.log("A new tab updated:");
-        }
+                console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
+            }else {
+                section = "nodeSection"
+                addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+                newPage = hmPages[hmPages.length-1];
+                createNode(newPage,section);
+                console.log("A new tab updated:");
+            };
+        };
     });
     //console.log(hmPages);
 });
