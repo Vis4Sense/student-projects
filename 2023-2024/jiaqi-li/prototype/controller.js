@@ -21,6 +21,7 @@ class hmPage {
     'edge://extensions/',
     'chrome://extensions/',
     'chrome://newtab/',
+    'https://chromewebstore.google.com/',
  ];
  
 
@@ -54,7 +55,25 @@ class hmPage {
                 chrome.scripting.executeScript({
                     target: {tabId: openedTabs[i].id},
                     function: function() {
-                        return document.body.innerText;
+                        let pageContent = '';
+                        // Check if the URL includes 'chat.openai.com'
+                        if (document.location.href.includes('chat.openai.com')) {
+                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
+                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
+                            pageContent += chatText;
+                        }else{
+                            // Select h1, h2, h3, h4, h5 and paragraph text
+                            const selector = 'h1, h2, h3, h4, h5, h6, p';
+                            const elements = document.querySelectorAll(selector);
+                            
+                            elements.forEach((element) => {
+                                const elementText = element.innerText;
+                                if (elementText !== 'New chat') {
+                                pageContent += elementText + '\n\n';
+                                }
+                            });}
+                        
+                        return pageContent;
                     }
                 }).then((result) => {
                     let pageContent = result[0].result;
@@ -64,7 +83,7 @@ class hmPage {
           //addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
        }
     });
- }
+}
 
 
 function serializeHmPage(hmPageInstance) {
@@ -188,7 +207,25 @@ function createNode(page,section) {
                 chrome.scripting.executeScript({
                     target: {tabId: updatedTab.id},
                     function: function() {
-                        return document.body.innerText;
+                        let pageContent = '';
+                        // Check if the URL includes 'chat.openai.com'
+                        if (document.location.href.includes('chat.openai.com')) {
+                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
+                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
+                            pageContent += chatText;
+                        }else{
+                            // Select h1, h2, h3, h4, h5 h6and paragraph text
+                            const selector = 'h1, h2, h3, h4, h5, h6, p';
+                            const elements = document.querySelectorAll(selector);
+                            
+                            elements.forEach((element) => {
+                                const elementText = element.innerText;
+                                if (elementText !== 'New chat') {
+                                pageContent += elementText + '\n\n';
+                                }
+                            });}
+                        
+                        return pageContent;
                     }
                 }).then((result) => {
                     let pageContent = result[0].result;
@@ -203,7 +240,25 @@ function createNode(page,section) {
                 chrome.scripting.executeScript({
                     target: {tabId: updatedTab.id},
                     function: function() {
-                        return document.body.innerText;
+                        let pageContent = '';
+                        // Check if the URL includes 'chat.openai.com'
+                        if (document.location.href.includes('chat.openai.com')) {
+                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
+                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
+                            pageContent += chatText;
+                        }else{
+                            // Select h1, h2, h3, h4, h5 h6and paragraph text
+                            const selector = '#main-content,h1, h2, h3, h4, h5, h6, p';
+                            const elements = document.querySelectorAll(selector);
+                            
+                            elements.forEach((element) => {
+                                const elementText = element.innerText;
+                                if (elementText !== 'New chat') {
+                                pageContent += elementText + '\n\n';
+                                }
+                            });}
+                        
+                        return pageContent;
                     }
                 }).then((result) => {
                     let pageContent = result[0].result;
