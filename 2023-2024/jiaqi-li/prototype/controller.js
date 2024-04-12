@@ -98,31 +98,6 @@ function createNode(page,section) {
     summary.textContent = page.content;
     newNode.appendChild(summary); // Append the summary to the button element
 
-    // Function to show the summary
-    function showSummary(event) {
-        summary.style.display = 'block'; // Show the summary
-        
-        // Position the summary relative to the button
-        const buttonRect = newNode.getBoundingClientRect();
-        const sidebar = document.querySelector('.leftSidebar');
-        const sidebarRect = sidebar.getBoundingClientRect();
-        const sidebarScrollTop = sidebar.scrollTop;
-        
-        summary.style.left = buttonRect.left + 'px';
-        summary.style.top = (buttonRect.top - sidebarRect.top + sidebarScrollTop + buttonRect.height) + 'px';
-    }
-
-    // Function to hide the summary
-    function hideSummary() {
-        summary.style.display = 'none'; // Hide the summary
-    }
-
-    // Add event listeners to show/hide the summary
-    newNode.addEventListener('mouseenter', showSummary);
-    newNode.addEventListener('mousemove', showSummary); // Move event listener to follow mouse cursor
-    newNode.addEventListener('mouseleave', hideSummary);
-
-        
     newNode.addEventListener('click', function() {
         // Check if browser extension APIs are available
         if (typeof chrome !== 'undefined' && chrome.tabs) {
@@ -210,14 +185,30 @@ function createNode(page,section) {
                 isNewTab = false;
                 // Add the tab once its properties are fully updated
                 section = "nodeSection"
-                addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+                chrome.scripting.executeScript({
+                    target: {tabId: updatedTab.id},
+                    function: function() {
+                        return document.body.innerText;
+                    }
+                }).then((result) => {
+                    let pageContent = result[0].result;
+                    addPage(updatedTab.url, null, updatedTab.id, updatedTab, null,true,pageContent);
+                });
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);
 
                 console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
             }else {
                 section = "nodeSection"
-                addPage(updatedTab.url, null, updatedTab.id, updatedTab, null);
+                chrome.scripting.executeScript({
+                    target: {tabId: updatedTab.id},
+                    function: function() {
+                        return document.body.innerText;
+                    }
+                }).then((result) => {
+                    let pageContent = result[0].result;
+                    addPage(updatedTab.url, null, updatedTab.id, updatedTab, null,true,pageContent);
+                });
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);
                 console.log("A new tab updated:");

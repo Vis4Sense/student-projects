@@ -26177,21 +26177,57 @@ class PipelineSingleton {
   }
 }
 
-const classify = async (text) => {
-  
-  let task = "summarization";
-  let model = "Xenova/distilbart-cnn-6-6";
-  let pipeline = await PipelineSingleton.getInstance(task, model, (data) => {
+// Define a function to perform classification asynchronously
+const classify = async (text, task, model) => {
+  // Get or create a new pipeline instance
+  const pipeline = await PipelineSingleton.getInstance(task, model, (data) => {
     // Progress callback function, if needed
   });
 
-  // Actually run the model on the input text
-  let result = await pipeline(text);
+  // Run the model on the input text
+  const result = await pipeline(text);
   return result;
 };
 
-let data = "yes";
-console.log(classify(data));
+// Define an array of tasks with corresponding text inputs
+const tasks = [
+  { text: "Space exploration has always captured the imagination of humanity. From the pioneering days of the Space Race to the modern era of international collaboration, our thirst for knowledge about the cosmos remains unquenchable. Discoveries of exoplanets, black holes, and the potential for life beyond Earth continue to fuel our curiosity and drive us to explore further into the vast unknown.", task: "summarization", model: "Xenova/distilbart-cnn-6-6" },
+  { text: "Artificial intelligence (AI) is revolutionizing the way we interact with technology and perceive the world around us. With advancements in machine learning and deep learning algorithms, AI systems are becoming increasingly adept at tasks once thought to be exclusive to human intelligence. From autonomous vehicles to virtual assistants, AI is reshaping industries and unlocking new possibilities for innovation. ", task: "summarization", model: "Xenova/distilbart-cnn-6-6" },
+  // Add more tasks as needed
+];
+
+// Create an array to store promises for each task
+const promises = tasks.map(({ text, task, model }) => classify(text, task, model));
+
+// Execute all promises concurrently
+Promise.all(promises)
+  .then((results) => {
+    // Handle results of all tasks
+    console.log(results);
+  })
+  .catch((error) => {
+    // Handle errors
+    console.error("Error:", error);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 })();
 

@@ -31,34 +31,27 @@ input{
     color: red;
 }
 
-.leftSidebar{
-    margin: 0;
-    padding: 0;
-    width: 20%;
-    background-color: #f1f1f1;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
+/* Default styles */
+.leftSidebar {
+  position:relative;
+  margin: 0;
+  padding: 0;
+  width: 20%;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
 }
-  
-  .rightSidebar {
-    margin-left: 85%;
-    padding: 0;
-    width: 15%;
-    background-color: #f1f1f1;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-  }
 
-  div.content {
-    margin-left: 25%;
-    padding: 0;
-    height: 100%;
-    width: 70%;
-  }
+div.content {
+  margin-left: 25%;
+  padding: 0;
+  height: 100%;
+  width: 70%;
+}
 
   .button{
+    position:relative;
     box-sizing: border-box;
     width: 115px;
     height: 40px;
@@ -72,7 +65,8 @@ input{
     display: block;
     width: 80%;
     padding: 8px;
-    margin: 10px;
+    margin-left: 10%;
+    margin-bottom: 5px;
     font-size: 1vw;
     overflow: auto;
     border-radius: 5px;
@@ -81,25 +75,6 @@ input{
   button:hover:not(.active) {
     background-color: rgb(164, 164, 164);
     color: white;
-  }
-  
- 
-  
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-  }
-  
-  @media screen and (max-width: 400px) {
-    .sidebar a {
-      text-align: center;
-      float: none;
-    }
   }
   
   .taskBox {
@@ -162,9 +137,16 @@ input{
     overflow: auto;
   }
 
+  button:hover .summary {
+    display: block; 
+  }
 
+  .nodeContainer button:hover .summary{
+    display: block;
+  }
   .summary {
     position: absolute;
+    left:10px;
     background-color: rgb(240, 237, 237);
     border: 1px solid #ccc;
     padding: 10px;
@@ -172,7 +154,7 @@ input{
     display: none; 
     z-index: 9999;   
     color: black;
-    width: 69%;
+    width: 70%;
     height: auto;
     font-size: 1vw;
     overflow: auto;
