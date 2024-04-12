@@ -173,7 +173,6 @@ function drop(event) {
         }
     });
     pageData = deserializeHmPage(nodeDetail);
-    console.log(pageData);
     // Find the closest node container to the drop target and get the id of that container
     var nodeContainer = event.target.closest('.nodeContainer');
     var leftSidebar = document.querySelector('.leftSidebar');
@@ -198,7 +197,7 @@ function drop(event) {
         var nodesInLeftSidebar = leftSidebar.querySelectorAll('button');
 
         for (var i = 0; i < nodesInLeftSidebar.length; i++) {
-            if (nodesInLeftSidebar[i].textContent.trim() === pageData.pageObj.title) {
+            if (nodesInLeftSidebar[i].firstChild.nodeValue.trim() === pageData.pageObj.title) {
                 nodesInLeftSidebar[i].parentNode.removeChild(nodesInLeftSidebar[i]);
                 break; 
             }
@@ -221,7 +220,7 @@ function drop(event) {
                 if (nodeContainer) {
                     var nodesInContainer = nodeContainer.querySelectorAll('button');
                     for (var i = 0; i < nodesInContainer.length; i++) {
-                        if (nodesInContainer[i].textContent.trim() === pageData.pageObj.title) {
+                        if (nodesInContainer[i].firstChild.nodeValue.trim() === pageData.pageObj.title) {
                             nodesInContainer[i].parentNode.removeChild(nodesInContainer[i]);
 
                             //update taskMap
@@ -236,7 +235,7 @@ function drop(event) {
         var buttonsInNodeSection = document.querySelectorAll('.leftSidebar button');
         for (var i = 0; i < buttonsInNodeSection.length; i++) {
             var button = buttonsInNodeSection[i];
-            if (button.textContent.trim() === pageData.pageObj.title) {
+            if (button.firstChild.nodeValue.trim() === pageData.pageObj.title) {
                 console.log("node already exists in the left sidebar"+pageData.pageObj.title);
                 return; // Skip creating the node if the title already exists
             }

@@ -49,7 +49,6 @@ class hmPage {
     chrome.tabs.query({}, function (openedTabs) {
        for (let i = 0; i < openedTabs.length; i++) {
           //get page content from opened tab
-
           //skip urls that start with chrome
             if (!ignoredUrls.some(url => openedTabs[i].url.includes(url))) {    
                 chrome.scripting.executeScript({
@@ -64,7 +63,6 @@ class hmPage {
             }
           //addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
        }
-       console.log(hmPages);
     });
  }
 
@@ -80,12 +78,12 @@ function createNode(page,section) {
 
     // check if the page is already in the nodeSection
     var buttonsInNodeSection = document.querySelectorAll('#'+section+' button');
-
     for (var i = 0; i < buttonsInNodeSection.length; i++) {
         var button = buttonsInNodeSection[i];
-        if (button.textContent.trim() === page.pageObj.title) {
+        var text = button.firstChild.nodeValue.trim();
+        if (text === page.pageObj.title) {
             console.log("node already exists in the left sidebar"+page.pageObj.title);
-            return false; // Skip creating the node if the title already exists
+            return; // Skip creating the node if the title already exists
         }
     }
     // Create a new node element
