@@ -45,46 +45,31 @@ class hmPage {
     }
  }
 
- function initializeHmPages() {
-    // add all the tabs opened before running historymap to hmPages
+
+function initializeHmPages() {
+    // Add all the tabs opened before running historymap to hmPages
     chrome.tabs.query({}, function (openedTabs) {
-       for (let i = 0; i < openedTabs.length; i++) {
-          //get page content from opened tab
-          //skip urls that start with chrome
-            if (!ignoredUrls.some(url => openedTabs[i].url.includes(url))) {    
+        for (let i = 0; i < openedTabs.length; i++) {
+            // Ignore urls that start with chrome
+            if (!ignoredUrls.some(url => openedTabs[i].url.includes(url))) {
                 chrome.scripting.executeScript({
-                    target: {tabId: openedTabs[i].id},
-                    function: function() {
-                        let pageContent = '';
-                        // Check if the URL includes 'chat.openai.com'
-                        if (document.location.href.includes('chat.openai.com')) {
-                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
-                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
-                            pageContent += chatText;
-                        }else{
-                            // Select h1, h2, h3, h4, h5 and paragraph text
-                            const selector = 'h1, h2, h3, h4, h5, h6, p';
-                            const elements = document.querySelectorAll(selector);
-                            
-                            elements.forEach((element) => {
-                                const elementText = element.innerText;
-                                if (elementText !== 'New chat') {
-                                pageContent += elementText + '\n\n';
-                                }
-                            });}
-                        
-                        return pageContent;
-                    }
-                }).then((result) => {
-                    let pageContent = result[0].result;
-                    addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null,true,pageContent);
+                    target: { tabId: openedTabs[i].id },
+                    files: ['content.js'] 
                 });
             }
-          //addPage(openedTabs[i].url, null, openedTabs[i].id, openedTabs[i], null);
-       }
+        }
+    });
+
+    // Listen for the message from content script and add extracted page content
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message.action === 'extractedPageContent') {
+            let pageContent = message.pageContent;
+            // Add page with extracted content
+            console.log("received message from content.js "+sender.tab.url);
+            addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
+        }
     });
 }
-
 
 function serializeHmPage(hmPageInstance) {
     return JSON.stringify(hmPageInstance);
@@ -205,64 +190,38 @@ function createNode(page,section) {
                 // Add the tab once its properties are fully updated
                 section = "nodeSection"
                 chrome.scripting.executeScript({
-                    target: {tabId: updatedTab.id},
-                    function: function() {
-                        let pageContent = '';
-                        // Check if the URL includes 'chat.openai.com'
-                        if (document.location.href.includes('chat.openai.com')) {
-                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
-                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
-                            pageContent += chatText;
-                        }else{
-                            // Select h1, h2, h3, h4, h5 h6and paragraph text
-                            const selector = 'h1, h2, h3, h4, h5, h6, p';
-                            const elements = document.querySelectorAll(selector);
-                            
-                            elements.forEach((element) => {
-                                const elementText = element.innerText;
-                                if (elementText !== 'New chat') {
-                                pageContent += elementText + '\n\n';
-                                }
-                            });}
-                        
-                        return pageContent;
-                    }
-                }).then((result) => {
-                    let pageContent = result[0].result;
-                    addPage(updatedTab.url, null, updatedTab.id, updatedTab, null,true,pageContent);
+                    target: { tabId: updatedTab.id },
+                    files: ['content.js'] 
                 });
+
+                chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+                    if (message.action === 'extractedPageContent') {
+                        let pageContent = message.pageContent;
+                        // Add page with extracted content
+                        console.log("received message from content.js "+sender.tab.url);
+                        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
+                    }
+                });
+
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);
 
                 console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
             }else {
                 section = "nodeSection"
+                
                 chrome.scripting.executeScript({
-                    target: {tabId: updatedTab.id},
-                    function: function() {
-                        let pageContent = '';
-                        // Check if the URL includes 'chat.openai.com'
-                        if (document.location.href.includes('chat.openai.com')) {
-                            const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
-                            const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
-                            pageContent += chatText;
-                        }else{
-                            // Select h1, h2, h3, h4, h5 h6and paragraph text
-                            const selector = '#main-content,h1, h2, h3, h4, h5, h6, p';
-                            const elements = document.querySelectorAll(selector);
-                            
-                            elements.forEach((element) => {
-                                const elementText = element.innerText;
-                                if (elementText !== 'New chat') {
-                                pageContent += elementText + '\n\n';
-                                }
-                            });}
-                        
-                        return pageContent;
+                    target: { tabId: updatedTab.id },
+                    files: ['content.js'] 
+                });
+
+                chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+                    if (message.action === 'extractedPageContent') {
+                        let pageContent = message.pageContent;
+                        // Add page with extracted content
+                        console.log("received message from content.js "+sender.tab.url);
+                        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
                     }
-                }).then((result) => {
-                    let pageContent = result[0].result;
-                    addPage(updatedTab.url, null, updatedTab.id, updatedTab, null,true,pageContent);
                 });
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);

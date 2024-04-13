@@ -1,30 +1,30 @@
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.message === 'copyContent') {
-      const url = window.location.href;
-      let text = '';
-  
-      if (url.includes('chat.openai.com')) {
-        console.log('Copying content from ChatGPT');
-        const selector = [...document.querySelectorAll('.whitespace-pre-wrap')];
-        const elements = selector.map((selector) => selector.textContent.trim());
-        text = elements.join('\n\n');
-      } else {
-        console.log('Copying content from a website');
-        const selector = 'h1, h2, h3, h4, h5, h6, p';
+
+// Function to extract page content
+function extractPageContent() {
+    let pageContent = '';
+    // Check if the URL includes 'chat.openai.com'
+    if (document.location.href.includes('chat.openai.com')) {
+        const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
+        const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
+        pageContent += chatText;
+    } else {
+        // Select h1, h2, h3, h4, h5 and paragraph text
+        const selector = '#main-content,#markdown-content,h1, h2, h3, h4, h5, h6, p';
         const elements = document.querySelectorAll(selector);
-  
+
         elements.forEach((element) => {
-          const elementText = element.innerText;
-          if (elementText !== 'New chat') {
-            text += elementText + '\n\n';
-          }
+            const elementText = element.innerText;
+            if (elementText !== 'New chat') {
+                pageContent += elementText + '\n\n';
+            }
         });
-      }
-  
-      console.log('The text is: ', text);
-      sendResponse({ text: text });
     }
-  
-    return true;
-  });
-  
+    console.log(pageContent);
+    return pageContent;
+}
+
+// Execute the function and send the result back to the main script
+chrome.runtime.sendMessage({
+    action: 'extractedPageContent',
+    pageContent: extractPageContent()
+});
