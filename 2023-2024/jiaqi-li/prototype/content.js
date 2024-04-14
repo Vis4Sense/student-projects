@@ -23,7 +23,7 @@ function extractPageContent() {
     return pageContent;
 }
 
-// Execute the function and send the result back to the main script
+// Execute the function and send the result back to the controller script
 chrome.runtime.sendMessage({
     action: 'extractedPageContent',
     pageContent: extractPageContent()

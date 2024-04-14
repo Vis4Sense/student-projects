@@ -54,7 +54,7 @@ function initializeHmPages() {
             if (!ignoredUrls.some(url => openedTabs[i].url.includes(url))) {
                 chrome.scripting.executeScript({
                     target: { tabId: openedTabs[i].id },
-                    files: ['content.js'] 
+                    files: ['backend.js'] 
                 });
             }
         }
@@ -65,7 +65,7 @@ function initializeHmPages() {
         if (message.action === 'extractedPageContent') {
             let pageContent = message.pageContent;
             // Add page with extracted content
-            console.log("received message from content.js "+sender.tab.url);
+            console.log("received message from backend.js "+sender.tab.url);
             addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
         }
     });
@@ -171,7 +171,7 @@ function createNode(page,section) {
         hmPages.forEach(function(page) {
             createNode(page,section);
         });
-    }, 100);
+    }, 1000);
     
     // create new nodes when new tabs be opened
     let isNewTab = false;
@@ -191,18 +191,8 @@ function createNode(page,section) {
                 section = "nodeSection"
                 chrome.scripting.executeScript({
                     target: { tabId: updatedTab.id },
-                    files: ['content.js'] 
+                    files: ['backend.js'] 
                 });
-
-                chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-                    if (message.action === 'extractedPageContent') {
-                        let pageContent = message.pageContent;
-                        // Add page with extracted content
-                        console.log("received message from content.js "+sender.tab.url);
-                        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
-                    }
-                });
-
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);
 
@@ -212,17 +202,9 @@ function createNode(page,section) {
                 
                 chrome.scripting.executeScript({
                     target: { tabId: updatedTab.id },
-                    files: ['content.js'] 
+                    files: ['backend.js'] 
                 });
 
-                chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-                    if (message.action === 'extractedPageContent') {
-                        let pageContent = message.pageContent;
-                        // Add page with extracted content
-                        console.log("received message from content.js "+sender.tab.url);
-                        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
-                    }
-                });
                 newPage = hmPages[hmPages.length-1];
                 createNode(newPage,section);
                 console.log("A new tab updated:");

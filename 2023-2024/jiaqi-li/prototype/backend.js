@@ -26163,6 +26163,7 @@ _xenova_transformers__WEBPACK_IMPORTED_MODULE_0__.env.allowLocalModels = false;
 _xenova_transformers__WEBPACK_IMPORTED_MODULE_0__.env.backends.onnx.wasm.numThreads = 1;
 
 
+
 class PipelineSingleton {
   static instance = null;
 
@@ -26177,57 +26178,61 @@ class PipelineSingleton {
   }
 }
 
-// Define a function to perform classification asynchronously
-const classify = async (text, task, model) => {
+
+const model = async (text, task, model) => {
   // Get or create a new pipeline instance
   const pipeline = await PipelineSingleton.getInstance(task, model, (data) => {
     // Progress callback function, if needed
   });
 
-  // Run the model on the input text
   const result = await pipeline(text);
   return result;
 };
 
-// Define an array of tasks with corresponding text inputs
-const tasks = [
-  { text: "Space exploration has always captured the imagination of humanity. From the pioneering days of the Space Race to the modern era of international collaboration, our thirst for knowledge about the cosmos remains unquenchable. Discoveries of exoplanets, black holes, and the potential for life beyond Earth continue to fuel our curiosity and drive us to explore further into the vast unknown.", task: "summarization", model: "Xenova/distilbart-cnn-6-6" },
-  { text: "Artificial intelligence (AI) is revolutionizing the way we interact with technology and perceive the world around us. With advancements in machine learning and deep learning algorithms, AI systems are becoming increasingly adept at tasks once thought to be exclusive to human intelligence. From autonomous vehicles to virtual assistants, AI is reshaping industries and unlocking new possibilities for innovation. ", task: "summarization", model: "Xenova/distilbart-cnn-6-6" },
-  // Add more tasks as needed
-];
 
-// Create an array to store promises for each task
-const promises = tasks.map(({ text, task, model }) => classify(text, task, model));
+// Function to extract page content
+function extractPageContent() {
+  let pageContent = '';
+  // Check if the URL includes 'chat.openai.com'
+  if (document.location.href.includes('chat.openai.com')) {
+      const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
+      const chatText = chatElements.map((element) => element.textContent.trim()).join('\n\n');
+      pageContent += chatText;
+  } else {
+      // Select h1, h2, h3, h4, h5 and paragraph text
+      const selector = '#main-content,#markdown-content,h1, h2, h3, h4, h5, h6, p';
+      const elements = document.querySelectorAll(selector);
 
-// Execute all promises concurrently
-Promise.all(promises)
-  .then((results) => {
-    // Handle results of all tasks
-    console.log(results);
-  })
-  .catch((error) => {
-    // Handle errors
-    console.error("Error:", error);
-  });
+      elements.forEach((element) => {
+          const elementText = element.innerText;
+          if (elementText !== 'New chat') {
+              pageContent += elementText + '\n\n';
+          }
+      });
+  }
+  console.log(pageContent);
+
+  let summaryPromise = model(pageContent,"summarization","Xenova/distilbart-cnn-6-6");
+
+  async function getSummary() {
+    const summary = await summaryPromise;
+    console.log(summary[0].summary_text);
+  }
+  let summarisedContent = getSummary();
+  return summarisedContent;
+}
+
+// Execute the function and send the result back to the controller script
+chrome.runtime.sendMessage({
+  action: 'extractedPageContent',
+  pageContent: extractPageContent()
+});
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 })();
 
