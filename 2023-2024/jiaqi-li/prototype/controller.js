@@ -59,17 +59,8 @@ function initializeHmPages() {
             }
         }
     });
-
-    // Listen for the message from content script and add extracted page content
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message.action === 'extractedPageContent') {
-            let pageContent = message.pageContent;
-            // Add page with extracted content
-            console.log("received message from backend.js "+sender.tab.url);
-            addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
-        }
-    });
 }
+
 
 function serializeHmPage(hmPageInstance) {
     return JSON.stringify(hmPageInstance);
@@ -160,11 +151,24 @@ function createNode(page,section) {
     return true;
 }
 
+// Listen for the message from content script and update hmpages and interface
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.action === 'extractedPageContent') {
+        let pageContent = message.pageContent;
+        // Add page with extracted content
+        console.log("received message from backend.js "+sender.tab.url);
+        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
+        section = "nodeSection";
+        newPage = hmPages[hmPages.length-1];
+        createNode(newPage,section);
+    }
+});
+
 
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
     initializeHmPages();
-    
+    /*
     // set timeout and Create nodes in the left sidebar
     setTimeout(function() {
         section = "nodeSection";
@@ -172,7 +176,7 @@ function createNode(page,section) {
             createNode(page,section);
         });
     }, 1000);
-    
+    */
     // create new nodes when new tabs be opened
     let isNewTab = false;
 
@@ -188,26 +192,24 @@ function createNode(page,section) {
                 // Reset the flag
                 isNewTab = false;
                 // Add the tab once its properties are fully updated
-                section = "nodeSection"
-                chrome.scripting.executeScript({
-                    target: { tabId: updatedTab.id },
-                    files: ['backend.js'] 
-                });
-                newPage = hmPages[hmPages.length-1];
-                createNode(newPage,section);
-
-                console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
-            }else {
-                section = "nodeSection"
                 
                 chrome.scripting.executeScript({
                     target: { tabId: updatedTab.id },
                     files: ['backend.js'] 
                 });
+                //section = "nodeSection"
+                //newPage = hmPages[hmPages.length-1];
+                //createNode(newPage,section);
 
-                newPage = hmPages[hmPages.length-1];
-                createNode(newPage,section);
-                console.log("A new tab updated:");
+                console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
+            }else {
+                chrome.scripting.executeScript({
+                    target: { tabId: updatedTab.id },
+                    files: ['backend.js'] 
+                });
+                //section = "nodeSection"
+                //newPage = hmPages[hmPages.length-1];
+                //createNode(newPage,section);
             };
         };
     });

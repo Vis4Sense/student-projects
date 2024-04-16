@@ -26216,10 +26216,15 @@ function extractPageContent() {
 
   async function getSummary() {
     const summary = await summaryPromise;
-    console.log(summary[0].summary_text);
+    return summary[0].summary_text;
   }
   let summarisedContent = getSummary();
-  return summarisedContent;
+  // print the summarised content after promise completed
+  summarisedContent.then((value) => {
+    console.log(value);
+    
+  });
+  return pageContent;
 }
 
 // Execute the function and send the result back to the controller script
