@@ -42,7 +42,7 @@ Rachana
    - added nav bar, the order of scenes in storyboard are also saved in localstorage now
    - set up plot ideas generation based on the storyboard content and/or additional form data from user
 3. Question: is 6-8 users sufficient for the prototype testing?
-4. Next step: finish summarising user testing session, use feedback to improve the MVP 
+4. Next step: finish summarising user testing session, use feedback to improve the MVP, switch to azure api
 
 # 9 Apr 2024
 Hongye
