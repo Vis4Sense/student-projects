@@ -26190,9 +26190,9 @@ const model = async (text, task, model) => {
 };
 
 
-// Function to extract page content
-function extractPageContent() {
+async function extractPageContent() {
   let pageContent = '';
+
   // Check if the URL includes 'chat.openai.com'
   if (document.location.href.includes('chat.openai.com')) {
       const chatElements = [...document.querySelectorAll('.whitespace-pre-wrap')];
@@ -26211,27 +26211,33 @@ function extractPageContent() {
       });
   }
   console.log(pageContent);
-
-  let summaryPromise = model(pageContent,"summarization","Xenova/distilbart-cnn-6-6");
-
-  async function getSummary() {
-    const summary = await summaryPromise;
-    return summary[0].summary_text;
-  }
-  let summarisedContent = getSummary();
-  // print the summarised content after promise completed
-  summarisedContent.then((value) => {
-    console.log(value);
-    
-  });
   return pageContent;
 }
 
-// Execute the function and send the result back to the controller script
-chrome.runtime.sendMessage({
-  action: 'extractedPageContent',
-  pageContent: extractPageContent()
-});
+async function summary(text){
+  let summaryPromise = model(text,"summarization","Xenova/distilbart-cnn-6-6");
+  const summary = await summaryPromise;
+  return summary[0].summary_text;
+}
+
+async function main() {
+  let pageContent = await extractPageContent();
+  let summarisedContent = await summary(pageContent);
+
+  // Execute the function and send the result back to the controller script
+  chrome.runtime.sendMessage({
+    action: 'extractedPageContent',
+    pageContent: summarisedContent
+  });
+}
+
+main();
+
+
+
+
+
+
 
 
 
