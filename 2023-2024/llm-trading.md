@@ -9,7 +9,7 @@ Xiruo Sun
   
 Muhamad Hermawan
 1. Progress
-   - More experiment with hyper parameters tuning
+   - experiment with hyper parameters tuning and lots of testing
    - Experiment with 5 sentiment model, dolphin 7B, Kunoichi 7B, Orca2 13B, equal weighted Ensembled 3 LLM (dolphin, Kunoichi, Orca), weighted Ensembled 3 LLM
    - trying baseline from paper Deep Reinforcement Learning for Automated Stock Trading: An Ensemble Strategy: source https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3690996
 2. Question and difficulty
