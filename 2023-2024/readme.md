@@ -22,6 +22,18 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 16 Apr 2024
+Jiaqi 
+1. Progress
+   - intergrate with transformer.js
+   - add content script to read page content and use transformer.js summarise
+   - display page content in interface
+2. question 
+   - the order of sripts
+3. next step
+   - use summarised content in interface
+   - intergrate embedding and clustering
+   
 # 9 Apr 2024
 Hongye
 1. Progress:
