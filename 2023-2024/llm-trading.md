@@ -1,3 +1,14 @@
+# 16 Apr 2024
+Xiruo Sun
+1. Progress
+   - do some parameter tuning
+2. Question and difficulty
+   - the more training times, the less action the rl model takes
+3. Next step
+   - do more experinment
+
+
+
 # 09 Apr 2024
 Raul Farkas
 1. Progress
