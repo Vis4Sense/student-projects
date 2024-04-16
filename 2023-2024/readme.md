@@ -63,6 +63,13 @@ Jianwen
    - about dissertation writing: feedback
 3. Next Step:
 
+Ziyue
+1. Progress:
+   - some functions like search are finished
+2. Questions:
+   - API key is not easy to be published on git hub
+3. Next Step:
+
 # 9 Apr 2024
 Hongye
 1. Progress:
