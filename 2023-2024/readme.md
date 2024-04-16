@@ -34,6 +34,16 @@ Jiaqi
    - use summarised content in interface
    - intergrate embedding and clustering
    
+Rachana
+1. Progress:
+   - sort of fixed the character consistency in multiple images issue (but it is dependent on how much detail user provides when filling out form) => i'm doing this by tracking the prompts submitted to gpt-4 in a separate json file so it has context about how it edited previous prompts for image generation
+   - managed to make sure API only lightly edits the submitted prompt
+   - did informal user testing with one friend for 1.5 hours + asked questions at the end  
+   - added nav bar, the order of scenes in storyboard are also saved in localstorage now
+   - set up plot ideas generation based on the storyboard content and/or additional form data from user
+3. Question: is 6-8 users sufficient for the prototype testing?
+4. Next step: finish summarising user testing session, use feedback to improve the MVP 
+
 # 9 Apr 2024
 Hongye
 1. Progress:
