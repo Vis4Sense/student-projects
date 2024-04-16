@@ -33,7 +33,18 @@ Jiaqi
 3. next step
    - use summarised content in interface
    - intergrate embedding and clustering
+
+Hongye 
+1. Progress
+   - Try replacing the embedding method of VITALITY to use the OpenAI's embedding approach.
    
+3. question 
+   - VITALITY uses two embedding methods: specter and glove. It may need to use OpenAI's embedding method to completely replace VITALITY's embedding.
+  - Meet some difficulty in forntend development, populating the RAG result into Vitality visualization graph and list.
+
+3. next step
+   - Discuss with VITALITY team to get some feedback and advice.
+
 Rachana
 1. Progress:
    - sort of fixed the character consistency in multiple images issue (but it is dependent on how much detail user provides when filling out form) => i'm doing this by tracking the prompts submitted to gpt-4 in a separate json file so it has context about how it edited previous prompts for image generation
