@@ -17,6 +17,14 @@ Muhamad Hermawan
 3. Next step
    - more experiment testing and trying to add other baselines.
 
+Raul Farkas
+1. Progress
+   - Writing final dissertation
+   - Performed more experiments
+2. Questions
+   - None
+3. Next step
+   - Finish dissertation work
 
 # 09 Apr 2024
 Raul Farkas
