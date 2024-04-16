@@ -55,6 +55,15 @@ Rachana
 3. Question: is 6-8 users sufficient for the prototype testing?
 4. Next step: finish summarising user testing session, use feedback to improve the MVP, switch to azure api
 
+Jianwen 
+1. Progress:
+   - change code to all "Sequential" initially
+   - dissertation writing (except for evaluation and summary)
+   - evaluation task (feedback this afternoon)
+2. Questions:
+   - about dissertation writing: feedback
+3. Next Step:
+
 # 9 Apr 2024
 Hongye
 1. Progress:
