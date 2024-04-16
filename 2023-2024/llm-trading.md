@@ -6,7 +6,16 @@ Xiruo Sun
    - the more training times, the less action the rl model takes
 3. Next step
    - do more experinment
-
+  
+Muhamad Hermawan
+1. Progress
+   - More experiment with hyper parameters tuning
+   - Experiment with 5 sentiment model, dolphin 7B, Kunoichi 7B, Orca2 13B, equal weighted Ensembled 3 LLM (dolphin, Kunoichi, Orca), weighted Ensembled 3 LLM
+   - trying baseline from paper Deep Reinforcement Learning for Automated Stock Trading: An Ensemble Strategy: source https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3690996
+2. Question and difficulty
+   - Parameters tunning takes lot of time, it seems like no limit since single slight change in parameters sometimes will resulting quite different result, no pattern, will take most high from all test, and use the parameters to test on asset with different sentiment and also no sentiment.
+3. Next step
+   - more experiment testing and trying to add other baselines.
 
 
 # 09 Apr 2024
