@@ -136,7 +136,7 @@ function allowDrop(event) {
 
 function deserializeHmPage(jsonString) {
     const data = JSON.parse(jsonString);
-    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened,data.content);
+    return new hmPage(data.pageId, data.tabId, data.time, data.pageObj, data.parentPageId, data.docId, data.isOpened,data.content,data.embedding);
 }
 
 function dragStart(event) {
@@ -213,11 +213,9 @@ function drop(event) {
                 console.error(chrome.runtime.lastError);
             } else {
                 // remove the node from nodeContainer
-
                 const parentElementID = data.parentElementID;
                 var nodeContainer = document.querySelector('#' + parentElementID);
-                
-                if (nodeContainer) {
+                if (nodeContainer && nodeContainer.id !== 'nodeSection') {
                     var nodesInContainer = nodeContainer.querySelectorAll('button');
                     for (var i = 0; i < nodesInContainer.length; i++) {
                         if (nodesInContainer[i].firstChild.nodeValue.trim() === pageData.pageObj.title) {
@@ -275,7 +273,6 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
             taskMap[taskId] = {
                 taskTheme: pageData,
             };
-            console.log(taskMap);
             break;
         
 

@@ -26167,11 +26167,14 @@ _xenova_transformers__WEBPACK_IMPORTED_MODULE_0__.env.backends.onnx.wasm.numThre
 class PipelineSingleton {
   static instance = null;
 
-  static async getInstance(task, model, progress_callback = null) {
-      if (this.instance === null || this.instance.task !== task || this.instance.model !== model) {
-          this.instance = (0,_xenova_transformers__WEBPACK_IMPORTED_MODULE_0__.pipeline)(task, model, { progress_callback });
+  static async getInstance(task, model, options = {}, progress_callback = null) {
+      const { normalize = false } = options;
+
+      if (this.instance === null || this.instance.task !== task || this.instance.model !== model || this.instance.options.normalize !== normalize) {
+          this.instance = (0,_xenova_transformers__WEBPACK_IMPORTED_MODULE_0__.pipeline)(task, model, { ...options, progress_callback });
           this.instance.task = task; 
-          this.instance.model = model; 
+          this.instance.model = model;
+          this.instance.options = { ...options, normalize }; 
       }
 
       return this.instance;
@@ -26179,13 +26182,12 @@ class PipelineSingleton {
 }
 
 
-const model = async (text, task, model) => {
-  // Get or create a new pipeline instance
-  const pipeline = await PipelineSingleton.getInstance(task, model, (data) => {
-    // Progress callback function, if needed
+const model = async (text, task, model, options = {}) => {
+  const pipeline = await PipelineSingleton.getInstance(task, model, options, (data) => {
+    // console.log(data);
   });
 
-  const result = await pipeline(text);
+  const result = await pipeline(text,options);
   return result;
 };
 
@@ -26220,14 +26222,25 @@ async function summary(text){
   return summary[0].summary_text;
 }
 
+async function embedding(text, options = {}) {
+  let embeddingPromise = model(text, "feature-extraction", "Xenova/all-MiniLM-L6-v2", options);
+  const embedding = await embeddingPromise;
+  return embedding.data;
+}
+
 async function main() {
   let pageContent = await extractPageContent();
   let summarisedContent = await summary(pageContent);
 
+  let vector = await embedding(summarisedContent, { pooling: 'mean', normalize: true });
+
+  console.log(vector);
+
   // Execute the function and send the result back to the controller script
   chrome.runtime.sendMessage({
     action: 'extractedPageContent',
-    pageContent: summarisedContent
+    pageContent: summarisedContent,
+    embedding:vector
   });
 }
 

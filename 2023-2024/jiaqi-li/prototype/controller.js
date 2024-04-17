@@ -1,5 +1,5 @@
 class hmPage {
-    constructor(pageId, tabId, time, pageObj, parentPageId, docId=null, isOpened=true, pageContent) {
+    constructor(pageId, tabId, time, pageObj, parentPageId, docId=null, isOpened=true, pageContent,embedding) {
        this.pageId = pageId;
        this.docId = docId; // a UUID of the document loaded, get from webNavigation API, needed for locating the page to update pageObj after navigation completed
        this.tabId = tabId;
@@ -13,6 +13,7 @@ class hmPage {
           back: 0 // the number of times this page goes back to the parent page
        };
        this.content = pageContent;
+       this.embedding = embedding;
     }
  }
  
@@ -27,7 +28,7 @@ class hmPage {
 
  let hmPages = [];
  //read openning tags' info, and add in list
- function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true,pageContent) {
+ function addPage(tabURL, docId, tabID, pageObj, parentPageId, isOpened=true,pageContent,embedding) {
     if (!ignoredUrls.some(url => tabURL.includes(url))) {
       let newPageId = window.crypto.randomUUID();
       let newPage = new hmPage(
@@ -39,6 +40,7 @@ class hmPage {
           docId,
           isOpened,
           pageContent,
+          embedding
        );
       hmPages.push(newPage);
       console.log("A new hmPage added:", newPage.pageObj.title, ', ', newPage.pageObj.url);
@@ -155,9 +157,10 @@ function createNode(page,section) {
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.action === 'extractedPageContent') {
         let pageContent = message.pageContent;
+        let embedding = message.embedding;
         // Add page with extracted content
         console.log("received message from backend.js "+sender.tab.url);
-        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent);
+        addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent,embedding);
         section = "nodeSection";
         newPage = hmPages[hmPages.length-1];
         createNode(newPage,section);
