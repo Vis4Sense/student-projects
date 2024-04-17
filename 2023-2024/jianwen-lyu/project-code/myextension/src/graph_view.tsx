@@ -139,28 +139,13 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
     // get all components in a list
     for (let i = 0; i < components.length; i++)
     {
-        let lastg = graphNodes.pop();
-        if (lastg) graphNodes.push(lastg);
+        let lastg = graphNodes[graphNodes.length - 1];
         let g = GetComponents(components[i], graphNodes, depths, graph);
     
         if (lastg && components[i].tag == "Sequential")
         {
             graph.createEdge(lastg, g);
         }
-        // if ((pc.tag == "Sequential") && (components[i].tag == "Sequential"))
-        // {
-        //     isFoundLast = true;
-        //     graph.createEdge(pg, g);
-        //     pc = components[i]
-        //     pg = g;
-        // }
-        // else if (components[i].tag == "Sequential")
-        // {
-        //     isFoundLast = true;
-        //     graph.createEdge(start, g);
-        //     pc = components[i];
-        //     pg = g;
-        // }  
         else
         {
             graph.createEdge(start, g);
@@ -181,7 +166,7 @@ function LoadComponentsToGraph(components:ModelComponent[], graph:IGraph)
 function GetComponents(component:ModelComponent, graphNodes:INode[], depths:number[], graph:IGraph) : INode
 {
     // configurate this node
-    const g = graph.createGroupNode(null, new Rect(0, 0, 300, 100));
+    const g = graph.createNode(new Rect(0, 0, 300, 100));
     const label = graph.addLabel(g, component.componentTitle);
     graph.setNodeLayout(g, new Rect(0, 0, label.layout.width + 20, (label.layout.width < 150) ? (label.layout.width - 30) : (100)));
     graphNodes.push(g);
@@ -195,7 +180,7 @@ function GetComponents(component:ModelComponent, graphNodes:INode[], depths:numb
         let prev_component = component;
         let prev_graphic = g;
 
-        for(let i = 1; i < clist.length; i++)
+        for(let i = 0; i < clist.length; i++)
         {
             const cg = GetComponents(clist[i], graphNodes, depths, graph);
             if ((prev_component.tag == "Sequential") && (clist[i].tag == "Sequential"))

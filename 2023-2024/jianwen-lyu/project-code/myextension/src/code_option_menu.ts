@@ -38,9 +38,11 @@ export class CodeOptionList extends OptionList
                     let data = JSON.parse(codeComponentData);
                     for (let i = 0; i < data.length; i++)
                     {
-                        if (data[i][0] === component.componentID)
+                        console.log(data[i][0]);
+                        console.log(component.componentID);
+                        if (data[i][0] == component.componentID)
                         {
-                            data.splice(i, 1);
+                            data.splice(i);
                             break;
                         }
                     }
@@ -59,7 +61,7 @@ export class CodeOptionList extends OptionList
         // remove old items in father class
         super.removeItemAt(2);
         this.addItem({command: deleteCommand});
-        super.removeItemAt(2);
+        //super.removeItemAt(2);
     }
 
 }

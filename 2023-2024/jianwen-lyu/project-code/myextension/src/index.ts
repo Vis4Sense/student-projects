@@ -417,7 +417,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       {
         // get data
         const codeComponentList = JSON.parse(codeComponentData);
-        //console.log(codeComponentList);
+        console.log(codeComponentList);
 
         // build code component
         for (let i = 0; i < codeComponentList?.length; i++)
@@ -451,7 +451,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               let compDist = 0;
 
               const closestMrk = findPreviousMarkdown(np, cell);
-              console.log("components: ", components)
+              //console.log("components: ", components)
               for (let component of components)
               {
                 //console.log("closest: ", closestMrk);
@@ -501,20 +501,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       currentPanel.content.widgets.forEach(cell => {
         if (cell instanceof MarkdownCell)
         {
-          // cell.headings.forEach(pheading => {
-          //   let prefix = "";
-          //   for (let i = 0; i < pheading.level; i++)
-          //   {
-          //     prefix += "#";
-          //   }
-          //   // get a string list using headers, add prefix
-          //   // what we want is the text, not headings themselves
-          //   headerList.push(prefix + pheading.text);
-          //   const component = new ModelComponent(app, state, panel, center_panel, pheading.text, cell, false);
-          //   component.saveCellData(cell);
-          //   console.log("component titles: ", component.componentTitle);
-          //   headings.push(component);         
-
           // new approach
           let cellText = cell.model.toJSON().source.toString();
           let cellLines = cellText.split('\n');
@@ -542,8 +528,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
               headings.push(component);        
             }
           })
-
-          //});
         }
       })
 
@@ -673,6 +657,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       }
       saveCodeComponent(code_components);
+
+      code_components = [];
     })
   }
 };
