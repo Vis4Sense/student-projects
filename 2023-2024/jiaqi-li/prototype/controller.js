@@ -49,6 +49,9 @@ class hmPage {
 
 
 function initializeHmPages() {
+    // Initialize taskMap
+    updateTaskMap("floatingNode","","","createLeft");
+
     // Add all the tabs opened before running historymap to hmPages
     chrome.tabs.query({}, function (openedTabs) {
         for (let i = 0; i < openedTabs.length; i++) {
@@ -80,7 +83,7 @@ function createNode(page,section) {
         var text = button.firstChild.nodeValue.trim();
         if (text === page.pageObj.title) {
             console.log("node already exists in the left sidebar"+page.pageObj.title);
-            return; // Skip creating the node if the title already exists
+            return false; // Skip creating the node if the title already exists
         }
     }
     // Create a new node element
@@ -143,9 +146,18 @@ function createNode(page,section) {
     // Add a context menu to delete the node
     newNode.addEventListener('contextmenu', function (event) {
         event.preventDefault(); 
+        // get the parenrt element id 
+        var parentElementID = newNode.parentNode.id;
+
         newNode.parentNode.removeChild(newNode);
+        
+        //console.log(parentElementID);
         //update taskMap
-        updateTaskMap(section,page,"",'delete');
+        if (parentElementID === "nodeSection") {
+            updateTaskMap("floatingNode",page,"",'delete');
+        } else {
+            updateTaskMap(section,page,"",'delete');
+        }
     });
 
     nodeSection.appendChild(newNode);
@@ -163,7 +175,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent,embedding);
         section = "nodeSection";
         newPage = hmPages[hmPages.length-1];
-        createNode(newPage,section);
+        let isCreated = createNode(newPage,section);
+        console.log(isCreated);
+        //only update task map when node created successfully
+        if(isCreated){
+            nodeId="node"+(Object.keys(taskMap["floatingNode"]).length+1);
+            updateTaskMap("floatingNode",newPage,nodeId,"addLeft");
+            console.log(taskMap);
+        }
+        
     }
 });
 
@@ -171,15 +191,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
  window.addEventListener("DOMContentLoaded", function () {
     // Initialize hmPages
     initializeHmPages();
-    /*
-    // set timeout and Create nodes in the left sidebar
-    setTimeout(function() {
-        section = "nodeSection";
-        hmPages.forEach(function(page) {
-            createNode(page,section);
-        });
-    }, 1000);
-    */
+
     // create new nodes when new tabs be opened
     let isNewTab = false;
 
@@ -200,9 +212,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     target: { tabId: updatedTab.id },
                     files: ['backend.js'] 
                 });
-                //section = "nodeSection"
-                //newPage = hmPages[hmPages.length-1];
-                //createNode(newPage,section);
+                
 
                 console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
             }else {
@@ -210,9 +220,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     target: { tabId: updatedTab.id },
                     files: ['backend.js'] 
                 });
-                //section = "nodeSection"
-                //newPage = hmPages[hmPages.length-1];
-                //createNode(newPage,section);
+            
             };
         };
     });

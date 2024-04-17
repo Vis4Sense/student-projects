@@ -26234,7 +26234,7 @@ async function main() {
 
   let vector = await embedding(summarisedContent, { pooling: 'mean', normalize: true });
 
-  console.log(vector);
+  //console.log(vector);
 
   // Execute the function and send the result back to the controller script
   chrome.runtime.sendMessage({

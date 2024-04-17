@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 /*
 taskMap structure
-{
+{   
+    floatingNode:{
+        node1{},
+        node2{},
+        ...
+    }
     task01: {
         taskTheme: "task theme",
         node1:{
@@ -60,10 +65,10 @@ function createTaskBox() {
     var nodeContainer = document.createElement('div');
     nodeContainer.classList.add('nodeContainer');
     //set unique id for each task box, use the length of taskMap as the id
-    nodeContainer.id = "task"+(Object.keys(taskMap).length+1);
+    nodeContainer.id = "task"+(Object.keys(taskMap).length);
     
     
-    //update taskMap 
+    //create task in taskMap
     updateTaskMap(nodeContainer.id,taskContent,"","create");
 
     var taskTheme = document.createElement('p');
@@ -111,7 +116,7 @@ function createTaskBox() {
     deleteButton.classList.add('deleteButton');
     deleteButton.addEventListener('click', function() {
         taskBox.remove();
-        //update taskMap
+        //Delete the task box in taskMap
         updateTaskMap(nodeContainer.id,"","",'delete box');
     });
 
@@ -189,8 +194,19 @@ function drop(event) {
         //update taskMap,the node index shoule update to the latest index
             nodeId="node"+Object.keys(taskMap[section]).length;
 
-            //update taskMap
+            //Add node in corresponding task dict in taskMap
             updateTaskMap(section,pageData,nodeId,"add");
+
+            //go through the floatingNode to find the nodeId of the dragged node
+            for (var nodeId in taskMap["floatingNode"]) {
+                // Check if nodeId starts with 'node'
+                if (nodeId.startsWith('node')) {
+                    if (taskMap["floatingNode"][nodeId].pageData.pageObj.title === pageData.pageObj.title) {
+                        delete taskMap["floatingNode"][nodeId];
+                        console.log(taskMap);
+                    }
+                }
+            }
         }
         // Remove the node in the leftSidebar with the same text
         var leftSidebar = document.getElementsByClassName('leftSidebar')[0]; 
@@ -221,8 +237,13 @@ function drop(event) {
                         if (nodesInContainer[i].firstChild.nodeValue.trim() === pageData.pageObj.title) {
                             nodesInContainer[i].parentNode.removeChild(nodesInContainer[i]);
 
-                            //update taskMap
+                            //remove the node in taskMap
                             updateTaskMap(parentElementID, pageData,"",'delete');
+
+                            //get the node index according to the lengh of floatingNode
+                            nodeId="node"+(Object.keys(taskMap["floatingNode"]).length+1);
+                            //add node in floatingNode
+                            updateTaskMap("floatingNode",pageData,nodeId,'addLeft');
                         }
                     }
                 }
@@ -265,21 +286,30 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
             break;
 
         case "add":
-            //update taskMap
             taskMap[taskId][nodeId] = {pageData};
-            console.log(taskMap);
+            //console.log(taskMap);
             break;
+
         case "create":
             taskMap[taskId] = {
                 taskTheme: pageData,
             };
             break;
-        
 
         case "delete box":
             delete taskMap[taskId];
-            console.log(taskMap);
+            //console.log(taskMap);
             break;
 
+        case "createLeft":
+            taskMap[taskId] = {
+                
+            };
+            break;
+        
+        case "addLeft":
+            taskMap[taskId][nodeId] = {pageData};
+            //console.log(taskMap);
+            break;
         };
 } 
