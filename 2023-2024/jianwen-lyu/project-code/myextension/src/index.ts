@@ -288,6 +288,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
             {
               let compLoc = -1;
               let compDist = 0;
+              let closeComponent;
               
               const closestMrk = findPreviousMarkdown(currentPanel, cell);
               for (let component of components)
@@ -297,6 +298,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
                   //console.log("found component: ", component.componentTitle);
                   compLoc = center_panel.widgets.indexOf(component);
                   compDist = component.depth;
+                  closeComponent = component;
                 }
               }
 
@@ -319,6 +321,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
               let codeContent = cell.model.toJSON().source.toString();
               code_components.push([codect.componentID, codect.componentTitle, codeCellId, codeContent]);
               saveCodeComponent(code_components);
+              
+              // add parent relation
+              closeComponent?.addSubComponent(codect);
             }
           }
           else
@@ -449,6 +454,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               // find markdown cell location
               let compLoc = -1;
               let compDist = 0;
+              let closeComponent;
 
               const closestMrk = findPreviousMarkdown(np, cell);
               //console.log("components: ", components)
@@ -461,6 +467,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
                   //console.log("found component: ", component.componentTitle);
                   compLoc = container.widgets.indexOf(component);
                   compDist = component.depth;
+                  closeComponent = component;
                 } 
               } 
 
@@ -481,6 +488,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
               let codeCellId = cell.model.id;
               let codeContent = cell.model.toJSON().source.toString();
               code_components.push([codect.componentID, codect.componentTitle, codeCellId, codeContent]);
+
+              // build parent-child relationship
+              closeComponent?.addSubComponent(codect);
             }
           }
         }

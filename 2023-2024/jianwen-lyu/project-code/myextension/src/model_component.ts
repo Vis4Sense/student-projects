@@ -186,7 +186,7 @@ export class ModelComponent extends Widget
     {
         component.showSubComponents(centerPanel, component);
         component.childList.forEach(subComponent => {
-            if (subComponent.childList.length != 0)
+            if (subComponent && subComponent.childList.length != 0)
             {
                 subComponent.showAllSubComponents(centerPanel, subComponent);
             }
@@ -198,7 +198,7 @@ export class ModelComponent extends Widget
     {
         component.childList.forEach(subComponent => {
             subComponent.hide();
-            if (subComponent.childList.length != 0)
+            if (subComponent && subComponent.childList.length != 0)
             {
                 this.hideSubComponents(subComponent);
             }
