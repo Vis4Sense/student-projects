@@ -1,0 +1,29 @@
+Pre-Use Questions:
+
+Pre-Understanding of Sensemaking: "Prior to using this extension, were you familiar with the concept of sensemaking? Please elaborate."
+
+Expectations of Browser Extension Functionality: "What are your expectations regarding the functionalities of a browser extension designed for sensemaking?"
+
+Usability and Adaptability
+
+Ease of Adaptation: "During your interaction with the extension, did you experience any difficulties? Please describe any challenges you encountered."
+
+Ease of Use: "How would you rate the ease of use of this extension? Was it straightforward to learn and operate?"
+
+Privacy and Performance
+
+Privacy Concerns: "Do you have any privacy concerns related to the use of this extension? If so, what are they?"
+
+Performance Speed: "How do you assess the performance speed of the extension? Was it satisfactory in terms of response time and processing speed?"
+
+Satisfaction and Optimization
+
+Satisfaction with the Results: "How satisfied are you with the results produced by the extension? Please provide specific examples."
+
+Suggestions for Optimization: "Do you have any suggestions for improving the extension’s functionality or design?"
+
+Understanding and Perceptions
+
+Inferencing Sensemaking: "Without prior definition, were you able to infer what sensemaking is used for by interacting with this extension?"
+
+Opinions on Development of Browser Extensions for Machine Learning: "What are your opinions on the development of browser extensions for machine learning and large predictive models? How do you think they contribute to the field?"
