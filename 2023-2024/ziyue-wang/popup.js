@@ -137,7 +137,7 @@ function performGPTAnalysis() {
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer sk-proj-EnUAQnTOEWDbiLWpOnDaT3BlbkFJQnbeMfij4F9CmjTtkmlB`, // Replace with your actual API key
+        'Authorization': `Bearer YOUR-API-KEY`, // Replace with your actual API key
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
