@@ -27,3 +27,14 @@ Understanding and Perceptions
 Inferencing Sensemaking: "Without prior definition, were you able to infer what sensemaking is used for by interacting with this extension?"
 
 Opinions on Development of Browser Extensions for Machine Learning: "What are your opinions on the development of browser extensions for machine learning and large predictive models? How do you think they contribute to the field?"
+
+Some other related accouncements:
+
+1. Some other interviewees are indeed not so skilled in installing libraries, operating on webpage extensions, or there laptops/computers do not hold enough memory space,
+so the interviews are designed to invite them to operate on my laptop, or through SunFlower remote control software.
+
+2. OpenAI API KEY are not so expensive, but without paying to their company, normal tire level 1 (free version) API key is not working. API Tokens are limited in a period of time.
+so evaluations by each one are seperate to avoid making the API Tokens out of budget
+
+3. Everyone might search different things so that un-related history recordings are normal to see. For better and more accurate outcomes, there will be at least 30 minutes
+of relaxing if someone is finished, before the second one is ready.
