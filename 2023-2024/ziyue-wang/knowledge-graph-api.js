@@ -1,6 +1,7 @@
 class KnowledgeGraphAPI {
   constructor() {
-    this.apiKey = 'AIzaSyAPUzaIGCpxj0MdpMr-pGTFuYnMnwRRAuI'; // 
+    this.apiKey = 'AIzaSyAPUzaIGCpxj0MdpMr-pGTFuYnMnwRRAuI'; 
+    // this is my private API key only for test, please switch to your API key later
     this.baseUrl = 'https://kgsearch.googleapis.com/v1/entities:search';
   }
 

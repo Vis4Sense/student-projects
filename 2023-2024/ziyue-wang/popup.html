@@ -40,8 +40,10 @@
     <div id="search-results"></div>
   </div>
 
+  <!-- Ensure there is only one history-container -->
   <div id="history-container" class="container">
-    <p>Search history will be shown here.</p>
+    <p>Search history will be shown here:</p>
+    <div id="search-history"></div> <!-- This will display the browsing history -->
   </div>
 
   <div id="kg-page" class="container">
@@ -59,9 +61,7 @@
   <button id="gpt-analysis-btn" class="menu-button">GPT Analysis</button>
   <div id="gpt-analysis-results"></div>
 
-  <!-- now we get switching button -->
-  <button class="menu-button" onclick="showContainer('kg-page')">Google Knowledge Graph</button>
-
+  <script src="knowledge-graph-api.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

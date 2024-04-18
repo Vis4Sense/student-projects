@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "anthropic": "^0.0.0",
+    "openai": "^4.36.0"
+  }
+}

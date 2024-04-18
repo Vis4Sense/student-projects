@@ -57,6 +57,23 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.command === "fetchHistory") {
+    console.log('fetchHistory message received'); // it is only for testing if calling this function is valid or not
+    // we get the searching history from the past 30 mins until now
+    const thirtyMinutesAgo = (new Date()).getTime() - 30 * 60 * 1000;
+    chrome.history.search({
+      'text': '', 
+      'startTime': thirtyMinutesAgo,
+      'maxResults': 100
+    }, function(historyItems) {
+      // send history to popup.js
+      sendResponse({historyItems: historyItems});
+    });
+    return true;
+  }
+});
+
 // Example: Send page content for advanced analysis to your backend service.
 function sendForAdvancedAnalysis(title, bodyText) {
   // Fetching the current tab URL
@@ -80,4 +97,3 @@ function sendForAdvancedAnalysis(title, bodyText) {
     });
   });
 }
-
