@@ -26126,12 +26126,44 @@ async function embedding(text, options = {}) {
 };
 
 
+// Define your event listener function
+async function handleEmbeddingEvent(event) {
+    let taskTopic = event.detail.taskTopic;
+    let text = taskTopic;
+    
+    // Await the embedding function to get the actual embedding vector
+    let vector = await embedding(text, { pooling: 'mean', normalize: true });
+    
+    // Now that vector has resolved, you can log it or perform further operations
+    console.log(vector);
+
+    // Add embedding to taskMap
+    let taskId = event.detail.taskId;
+    taskMap[taskId]["topic_embedding"] = vector;
+    console.log(taskMap)
+}
+
+// Add the event listener only if it hasn't been added before
+if (!document.listenerAdded) {
+    document.listenerAdded = true;
+    document.addEventListener('embeddingEvent', handleEmbeddingEvent);
+}
 
 
-let text = "research about ADHD and info from NHS"
 
-let vector = await embedding(text, { pooling: 'mean', normalize: true });
-console.log("embeddings for task topic:"+vector);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

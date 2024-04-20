@@ -45,9 +45,9 @@ let taskMap = {};
 
 function createTaskBox() {
     // Get the input value
-    var taskContent = document.getElementById('input_task').value;
+    var taskTopic = document.getElementById('input_task').value;
 
-    if (taskContent.trim() === '') {
+    if (taskTopic.trim() === '') {
         // Set input field value to a message
         document.getElementById('input_task').placeholder = "The task theme can not be null";
         // Add CSS class to change placeholder color
@@ -69,11 +69,15 @@ function createTaskBox() {
     
     
     //create task in taskMap
-    updateTaskMap(nodeContainer.id,taskContent,"","create");
+    updateTaskMap(nodeContainer.id,taskTopic,"","create");
 
     var taskTheme = document.createElement('p');
-    taskTheme.textContent = taskContent;
+    taskTheme.textContent = taskTopic;
 
+    // Dispatch an event to notify the embedding script
+    document.dispatchEvent(new CustomEvent('embeddingEvent', { detail: { taskTopic: taskTopic,taskId: nodeContainer.id } }));
+    
+    // Allow the task box to accept dropped nodes
     nodeContainer.addEventListener('dragover', allowDrop);
     nodeContainer.addEventListener('drop', drop);
 
