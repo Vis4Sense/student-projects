@@ -7,7 +7,15 @@
         "default_title": "Click to open extension"
     },
     "host_permissions": ["*://*/*"],
-    "permissions": ["tabs","storage","scripting","history","webNavigation", "contextMenus","tabs","activeTab"],
+    "permissions": ["tabs",
+                    "offscreen",
+                    "storage",
+                    "scripting",
+                    "history",
+                    "webNavigation",
+                    "contextMenus",
+                    "tabs","activeTab",
+                    "unlimitedStorage"],
     "background": {
         "service_worker": "background.js",
         "type": "module"

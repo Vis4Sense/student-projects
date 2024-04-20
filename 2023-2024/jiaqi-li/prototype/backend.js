@@ -26223,7 +26223,7 @@ async function summary(text){
 }
 
 async function embedding(text, options = {}) {
-  let embeddingPromise = model(text, "feature-extraction", "Xenova/all-MiniLM-L6-v2", options);
+  let embeddingPromise = model(text, "feature-extraction", 'Xenova/all-MiniLM-L6-v2', options);
   const embedding = await embeddingPromise;
   return embedding.data;
 }
@@ -26231,16 +26231,19 @@ async function embedding(text, options = {}) {
 async function main() {
   let pageContent = await extractPageContent();
   let summarisedContent = await summary(pageContent);
+  console.log("summary: ",summarisedContent);
 
-  let vector = await embedding(summarisedContent, { pooling: 'mean', normalize: true });
-
-  //console.log(vector);
+  let vector_s = await embedding(summarisedContent, { pooling: 'mean', normalize: true });
+  //console.log("embedding for summary"+vector_s);
+  
+  let vector_c = await embedding(pageContent, { pooling: 'mean', normalize: true });
+  //console.log("embedding for page content"+vector_c);
 
   // Execute the function and send the result back to the controller script
   chrome.runtime.sendMessage({
     action: 'extractedPageContent',
     pageContent: summarisedContent,
-    embedding:vector
+    embedding:vector_s
   });
 }
 
