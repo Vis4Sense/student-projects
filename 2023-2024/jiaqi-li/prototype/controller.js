@@ -200,6 +200,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
     
 
+    // Define a variable to track whether the script has been injected
+    let scriptInjected = {};
+
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
         // Check if the update is for the newly created tab and it's fully loaded
         if (!ignoredUrls.some(url => updatedTab.url.includes(url))){
@@ -207,23 +210,30 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 // Reset the flag
                 isNewTab = false;
                 // Add the tab once its properties are fully updated
-                
-                chrome.scripting.executeScript({
-                    target: { tabId: updatedTab.id },
-                    files: ['backend.js'] 
-                });
-                
+                if (!scriptInjected[updatedTab.id]) {
+                    chrome.scripting.executeScript({
+                        target: { tabId: updatedTab.id },
+                        files: ['backend.js'] 
+                    });
+                    // Mark the script as injected for this tab
+                    scriptInjected[updatedTab.id] = true;
+                }
 
                 console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
-            }else {
-                chrome.scripting.executeScript({
-                    target: { tabId: updatedTab.id },
-                    files: ['backend.js'] 
-                });
-            
-            };
-        };
+            } else {
+                // Execute the script only if it hasn't been injected before
+                if (!scriptInjected[updatedTab.id]) {
+                    chrome.scripting.executeScript({
+                        target: { tabId: updatedTab.id },
+                        files: ['backend.js'] 
+                    });
+                    // Mark the script as injected for this tab
+                    scriptInjected[updatedTab.id] = true;
+                }
+            }
+        }
     });
+
     //console.log(hmPages);
 });
  

@@ -26231,14 +26231,9 @@ async function embedding(text, options = {}) {
 async function main() {
   let pageContent = await extractPageContent();
   let summarisedContent = await summary(pageContent);
-  console.log("summary: ",summarisedContent);
 
   let vector_s = await embedding(summarisedContent, { pooling: 'mean', normalize: true });
-  //console.log("embedding for summary"+vector_s);
   
-  let vector_c = await embedding(pageContent, { pooling: 'mean', normalize: true });
-  //console.log("embedding for page content"+vector_c);
-
   // Execute the function and send the result back to the controller script
   chrome.runtime.sendMessage({
     action: 'extractedPageContent',
