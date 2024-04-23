@@ -9,3 +9,4 @@ This is sentiment files coming from three different LLM Model (GPTQ) sourced fro
 - To produce the sentiment, 6-shot scenario Chain of Thought prompting is used.
 - the sentiment is for 8 assets which are ['TSLA', 'AAPL', 'MSFT', 'AMZN', 'NVDA', 'META', 'GOOG', 'AMD']
 - the period of the news data for above assets is from 1 January 2023 to 28 February 2024
+- Sentiment score produced is ranging from -1 (most negative) to 1 (most positive) where 0 is neutral
