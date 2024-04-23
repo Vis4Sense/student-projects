@@ -8,7 +8,7 @@ Muhamad Hermawan
 2. Question and difficullty
    - about the sufficiency of agent training, how to properly evaluate the training phase?
 3. Next step
-   - Enough with agent params, now will try to play around with environtment, modify here and there..to see if it will increase the agent learning capabilities in training.
+   - Enough with agent params, now will try to play around with environtment, modify here and there..to see if it will increase the overall result.
 
 
 # 16 Apr 2024
