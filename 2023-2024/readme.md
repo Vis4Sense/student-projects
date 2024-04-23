@@ -38,6 +38,16 @@ Jiaqi
    - grouping behavior(color change/add in node container automatically)
    - continu dissertation writing
 
+Hongye
+1. Progress
+   - Had some meetings with team from Vitality last week, and identified some functions that need to be done.
+   - Basically complete the implementation of three new functions
+       - Add Ada embeddings into Vitality and support use Ada embedding to do "search by paper / abstract"
+       - Add "Summarize / Literature review" into the "Saved paper" tab
+       - Add chat box that allow users to enter questions to engage in "conversation with the data"
+2. Question
+3. Next step
+   - User case / scenario study ? 
 
    
 # 16 Apr 2024
