@@ -6,9 +6,9 @@ Muhamad Hermawan
         - To minimise the volatility of the test result, I increase the training period to around 1200 episodes on each training phase of the test.
    - From above test, it is more evidence that the agent trained with sentiment feature, doing better in training phase (less volatile training per episode) and resulting better output in test phase, compare to non sentiment.
 2. Question and difficullty
-   - about the sufficiency of agent training, is it observeable by looking the training result? (e.g. the sharpe ratio per episode of training)
+   - about the sufficiency of agent training, how to properly evaluate the training phase?
 3. Next step
-   - Enough with agent params, now will try to play around with environtment, modify here and there..to see if it will increase the agent learning capabilities in training.
+   - Enough with agent params, now will try to play around with environtment, modify here and there..to see if it will increase the overall result.
 
 
 # 16 Apr 2024
