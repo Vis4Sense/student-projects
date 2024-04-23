@@ -26143,7 +26143,7 @@ async function handleEmbeddingEvent(event) {
     console.log(taskMap)
 }
 
-// Add the event listener only if it hasn't been added before
+
 if (!document.listenerAdded) {
     document.listenerAdded = true;
     document.addEventListener('embeddingEvent', handleEmbeddingEvent);

@@ -22,6 +22,24 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+
+# 23 Apr 2024
+Jiaqi
+1. Progress
+   - start writing dissertation(background, Literature review)
+   - integrate embedding to page content and summary
+   - created a use case example, visualization and analysis
+   - summary displaied in interface
+   - try euclidean distance for node similarity
+2. Question
+   - codeing: is there any other functionality I could add
+   - research: extension enviroment is not frendly for reinforcement learning. Lack of research point 
+3. Next step
+   - grouping behavior(color change/add in node container automatically)
+   - continu dissertation writing
+
+
+   
 # 16 Apr 2024
 Jiaqi 
 1. Progress
