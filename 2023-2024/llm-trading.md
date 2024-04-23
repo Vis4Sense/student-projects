@@ -2,7 +2,7 @@
 Muhamad Hermawan
 1. Progress
    - Did series of testing with this condition:
-        - Remove the deterministic output (remove random_seed) from agent and trading environtment. Instead, run each test 3 times (each for sentiment and non sentiment) and take average of the result.
+        - Remove the deterministic output (remove random_seed) from agent and trading environtment. Instead, run each test 3 times (each for sentiment and non sentiment features) and take average of the result.
         - To minimise the volatility of the test result, I increase the training period to around 1200 episodes on each training phase of the test.
    - From above test, it is more evidence that the agent trained with sentiment feature, doing better in training phase (less volatile training per episode) and resulting better output in test phase, compare to non sentiment.
 2. Question and difficullty
