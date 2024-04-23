@@ -11,6 +11,16 @@ Muhamad Hermawan
    - Enough with agent params, now will try to play around with environtment, modify here and there..to see if it will increase the overall result.
 
 
+Xiruo Sun
+1. Progress
+   - do experiment using all the sensations I have.
+2. Question and difficulty
+   - In order to increase the frequency of agent transactions, I modify the reward function, but the results are not good.
+3. Next step
+   - change reward function
+   - change action function
+
+
 # 16 Apr 2024
 Xiruo Sun
 1. Progress
