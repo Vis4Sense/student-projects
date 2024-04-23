@@ -19,6 +19,14 @@ Xiruo Sun
 3. Next step
    - change reward function
    - change action function
+  
+Raul Farkas
+1. Progress
+   - Finished dissertation and submitted
+2. Question and difficulty
+   - None
+3. Next step
+   - Finish the final presentation
 
 
 # 16 Apr 2024
