@@ -43,100 +43,6 @@ taskMap structure
 
 let taskMap = {};
 
-function createTaskBox() {
-    // Get the input value
-    var taskTopic = document.getElementById('input_task').value;
-
-    if (taskTopic.trim() === '') {
-        // Set input field value to a message
-        document.getElementById('input_task').placeholder = "The task theme can not be null";
-        // Add CSS class to change placeholder color
-        document.getElementById('input_task').classList.add('empty-task');
-        return; 
-    }else {
-        document.getElementById('input_task').classList.remove('empty-task');
-        document.getElementById('input_task').placeholder = "input your brief task theme, include as much keyword as possible";
-    }
-
-    // Create a new task box element
-    var taskBox = document.createElement('div');
-    taskBox.classList.add('taskBox');
-
-    var nodeContainer = document.createElement('div');
-    nodeContainer.classList.add('nodeContainer');
-    //set unique id for each task box, use the length of taskMap as the id
-    nodeContainer.id = "task"+(Object.keys(taskMap).length);
-    
-    
-    //create task in taskMap
-    updateTaskMap(nodeContainer.id,taskTopic,"","create");
-
-    var taskTheme = document.createElement('p');
-    taskTheme.textContent = taskTopic;
-
-    // Dispatch an event to notify the embedding script
-    document.dispatchEvent(new CustomEvent('embeddingEvent', { detail: { taskTopic: taskTopic,taskId: nodeContainer.id } }));
-    
-    // Allow the task box to accept dropped nodes
-    nodeContainer.addEventListener('dragover', allowDrop);
-    nodeContainer.addEventListener('drop', drop);
-
-
-    // Create the pull-put button
-    // when click the button, all pages in the task box will be pulled out to a new window
-    var pullOutButton = document.createElement('button');
-    //pullOutButton.textContent = 'Pull Out';
-    pullOutButton.classList.add('pullOutButton');
-    pullOutButton.addEventListener('click', function() {
-        // pull out functionality
-
-        taksId = nodeContainer.id;
-        // go through the taskMap to get the node URL
-        var tabIds = [];
-        for (var nodeId in taskMap[taksId]) {
-            // Check if nodeId starts with 'node'
-            if (nodeId.startsWith('node')) {
-                // Your code for processing nodes here
-                tabIds.push(taskMap[taksId][nodeId].pageData.tabId
-                    );
-            }
-        }
-
-        console.log(tabIds);
-        chrome.windows.create({ focused: false, state: 'minimized'}, function(newWindow) {
-
-            tabIds.forEach(function(tabId) {
-                chrome.tabs.move(tabId, { windowId: newWindow.id, index: -1 });
-            });
-            // Once all tabs are moved, maximize the window
-            chrome.windows.update(newWindow.id, { focused: true, state: 'maximized' });
-        });
-
-    });
-
-    // Create the delete button
-    var deleteButton = document.createElement('button');
-    //deleteButton.textContent = 'Delete';
-    deleteButton.classList.add('deleteButton');
-    deleteButton.addEventListener('click', function() {
-        taskBox.remove();
-        //Delete the task box in taskMap
-        updateTaskMap(nodeContainer.id,"","",'delete box');
-    });
-
-    // Append the buttons and content to the task box
-    taskBox.appendChild(taskTheme)
-    taskBox.appendChild(pullOutButton);
-    taskBox.appendChild(deleteButton);
-    taskBox.appendChild(nodeContainer);
-
-    // Append the task box to the task container
-    document.getElementById('taskContainer').appendChild(taskBox);
-
-    // Clear the input field after creating the task box
-    document.getElementById('input_task').value = '';
-}
-
 function allowDrop(event) {
     event.preventDefault();
     //console.log("drag over");
@@ -196,7 +102,7 @@ function drop(event) {
         //update taskMap only when the node is created
         if(isCreated){
         //update taskMap,the node index shoule update to the latest index
-            nodeId="node"+Object.keys(taskMap[section]).length;
+            nodeId="node"+(Object.keys(taskMap[section]).length-1);
 
             //Add node in corresponding task dict in taskMap
             updateTaskMap(section,pageData,nodeId,"add");
@@ -225,7 +131,7 @@ function drop(event) {
 
     }else{
         // drag node from task box to left sidebar
-        console.log(`drop node to left sidebar: ${pageData}`)
+        console.log(`drop node to left sidebar`)
         section = "nodeSection";
         
         chrome.storage.local.get('parentElementID', function(data) {

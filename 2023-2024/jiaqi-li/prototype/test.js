@@ -1,3 +1,4 @@
+
 function euclideanDistance(vector1, vector2) {
     if (vector1.length !== vector2.length) {
         throw new Error("Vectors must have the same length");
@@ -18,3 +19,21 @@ const euclideanDistance_2 = (a, b) =>
 
 let distance = euclideanDistance_2(vector1, vector2);
 console.log(distance)
+
+var opt = {}
+opt.epsilon = 10; // epsilon is learning rate (10 = default)
+opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
+opt.dim = 2; // dimensionality of the embedding (2 = default)
+
+var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+
+// initialize data. Here we have 3 points and some example pairwise dissimilarities
+var dists = [[1.0, 0.1, 0.2], [0.1, 1.0, 0.3], [0.2, 0.1, 1.0]];
+tsne.initDataDist(dists);
+
+for(var k = 0; k < 500; k++) {
+  tsne.step(); // every time you call this, solution gets better
+}
+
+var Y = tsne.getSolution(); // Y is an array of 2-D points that you can plot
+console.log(Y)

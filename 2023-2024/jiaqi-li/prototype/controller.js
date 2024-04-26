@@ -72,99 +72,6 @@ function serializeHmPage(hmPageInstance) {
 }
 
 
-
-function createNode(page,section) {
-    var nodeSection = document.getElementById(section);
-
-    // check if the page is already in the nodeSection
-    var buttonsInNodeSection = document.querySelectorAll('#'+section+' button');
-    for (var i = 0; i < buttonsInNodeSection.length; i++) {
-        var button = buttonsInNodeSection[i];
-        var text = button.firstChild.nodeValue.trim();
-        if (text === page.pageObj.title) {
-            console.log("node already exists in the left sidebar"+page.pageObj.title);
-            return false; // Skip creating the node if the title already exists
-        }
-    }
-    // Create a new node element
-    var newNode = document.createElement("button");
-    newNode.setAttribute('draggable', 'true');
-    newNode.classList.add('node');
-    newNode.textContent = page.pageObj.title;
-
-    // Create the summary element for this button
-    const summary = document.createElement('div');
-    summary.className = 'summary';
-    summary.textContent = page.content;
-    newNode.appendChild(summary); // Append the summary to the button element
-
-    newNode.addEventListener('click', function() {
-        // Check if browser extension APIs are available
-        if (typeof chrome !== 'undefined' && chrome.tabs) {
-            // Find the tab with the matching URL
-            chrome.tabs.query({ url: page.pageObj.url }, function(tabs) {
-                if (tabs && tabs.length > 0) {
-                    // If the tab exists, navigate to it
-                    chrome.tabs.update(tabs[0].id, { active: true });
-                } else {
-                    // If the tab doesn't exist, open a new tab with the URL
-                    chrome.tabs.create({ url: page.pageObj.url });
-                }
-            });
-        } else {
-            // Handle the case where browser extension APIs are not available
-            console.log("Browser extension APIs are not available.");
-        }
-    });
-        
-    newNode.addEventListener('dragstart', function(event) {
-        // Additional actions before calling dragStart
-        nodeDetail = serializeHmPage(page);
-        chrome.storage.local.set({ 'nodeDetail': nodeDetail }, function() {
-            if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError);
-            } else {
-                console.log('Node detail stored successfully.');
-                    
-                    // Call the dragStart function
-                dragStart(event);
-            }
-        });
-        // Check if the parent element of newNode has an id
-        if (newNode.parentNode.id) {
-            // Store the parent element id in chrome storage
-            chrome.storage.local.set({ 'parentElementID': newNode.parentNode.id }, function() {
-            if (chrome.runtime.lastError) {
-                console.error(chrome.runtime.lastError);
-            } else {
-                //console.log('Parent element id stored successfully.'+ newNode.parentNode.id);
-            }
-            });
-        }
-    });
-    
-    // Add a context menu to delete the node
-    newNode.addEventListener('contextmenu', function (event) {
-        event.preventDefault(); 
-        // get the parenrt element id 
-        var parentElementID = newNode.parentNode.id;
-
-        newNode.parentNode.removeChild(newNode);
-        
-        //console.log(parentElementID);
-        //update taskMap
-        if (parentElementID === "nodeSection") {
-            updateTaskMap("floatingNode",page,"",'delete');
-        } else {
-            updateTaskMap(section,page,"",'delete');
-        }
-    });
-
-    nodeSection.appendChild(newNode);
-
-    return true;
-}
-
 // Listen for the message from content script and update hmpages and interface
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.action === 'extractedPageContent') {
@@ -176,7 +83,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         section = "nodeSection";
         newPage = hmPages[hmPages.length-1];
         let isCreated = createNode(newPage,section);
-        console.log(isCreated);
+        //console.log(isCreated);
         //only update task map when node created successfully
         if(isCreated){
             nodeId="node"+(Object.keys(taskMap["floatingNode"]).length+1);
