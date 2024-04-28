@@ -18,7 +18,7 @@ const euclideanDistance_2 = (a, b) =>
   Math.hypot(...Object.keys(a).map(k => b[k] - a[k]));
 
 let distance = euclideanDistance_2(vector1, vector2);
-console.log(distance)
+//console.log(distance)
 
 var opt = {}
 opt.epsilon = 10; // epsilon is learning rate (10 = default)
@@ -36,4 +36,4 @@ for(var k = 0; k < 500; k++) {
 }
 
 var Y = tsne.getSolution(); // Y is an array of 2-D points that you can plot
-console.log(Y)
+//console.log(Y)

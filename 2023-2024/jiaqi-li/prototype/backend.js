@@ -26192,7 +26192,7 @@ const model = async (text, task, model, options = {}) => {
 };
 
 
-async function extractPageContent() {
+function extractPageContent() {
   let pageContent = '';
 
   // Check if the URL includes 'chat.openai.com'

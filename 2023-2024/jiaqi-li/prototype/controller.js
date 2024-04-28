@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         let pageContent = message.pageContent;
         let embedding = message.embedding;
         // Add page with extracted content
-        console.log("received message from backend.js "+sender.tab.url);
+        //console.log("received message from backend.js  "+sender.tab.url);
         addPage(sender.tab.url, null, sender.tab.id, sender.tab, null, true, pageContent,embedding);
         section = "nodeSection";
         newPage = hmPages[hmPages.length-1];
@@ -88,7 +88,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if(isCreated){
             nodeId="node"+(Object.keys(taskMap["floatingNode"]).length+1);
             updateTaskMap("floatingNode",newPage,nodeId,"addLeft");
-            console.log(taskMap);
+            //console.log(taskMap);
         }
         
     }
