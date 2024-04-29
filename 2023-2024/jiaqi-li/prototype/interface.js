@@ -1,4 +1,10 @@
 function createTaskBox() {
+    //check if the node in nodesection have "highlight" class, remove the class
+    var nodes = document.querySelectorAll('.node');
+    for (var i = 0; i < nodes.length; i++) {
+        nodes[i].classList.remove('highlight');
+    }
+    
     // Get the input value
     var taskTopic = document.getElementById('input_task').value;
 

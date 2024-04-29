@@ -26218,7 +26218,7 @@ function reduceDimension(embedding){
 
     var opt = {}
     opt.epsilon = 10; // epsilon is learning rate (10 = default)
-    opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
+    opt.perplexity = 5; // roughly how many neighbors each point influences (30 = default)
     opt.dim = 2; // dimensionality of the embedding (2 = default)
 
     var tsne = new tsnejs.tSNE(opt);
@@ -26226,7 +26226,7 @@ function reduceDimension(embedding){
     for (const nodeId in taskMap.floatingNode) {
       if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
         const node = taskMap.floatingNode[nodeId];
-
+        console.log(node.pageData.pageObj.title);
         if (node.pageData.embedding) {
           // If embedding exists, you can access it and use it as needed
           const embedding = node.pageData.embedding;
@@ -26254,7 +26254,7 @@ function reduceDimension(embedding){
     var T = Y[Y.length - 1]; 
     console.log('2D vector for task topic:', T);
 
-    return Y,T
+    return { nodeList: Y, topic: T }
 }
 
 // calculate the euclidean distance between two vectors
@@ -26270,10 +26270,93 @@ function euclideanDistance(vector1, vector2) {
   return Math.sqrt(sum);
 }
 
+function cosineDistance(vector1, vector2) {
+  if (vector1.length !== vector2.length) {
+    throw new Error("Vectors must have the same length");
+  }
+
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
+
+  for (let i = 0; i < vector1.length; i++) {
+    dotProduct += vector1[i] * vector2[i];  // sum of products
+    normA += vector1[i] * vector1[i];  // sum of squares of vector1
+    normB += vector2[i] * vector2[i];  // sum of squares of vector2
+  }
+
+  normA = Math.sqrt(normA);  // square root of sum of squares = magnitude of vector1
+  normB = Math.sqrt(normB);  // magnitude of vector2
+
+  if (normA === 0 || normB === 0) {
+    throw new Error("Cannot compute cosine similarity of zero-length vectors");
+  }
+
+  let cosineSimilarity = dotProduct / (normA * normB);
+  let cosineDistance = 1 - cosineSimilarity;  // 1 minus the cosine similarity
+
+  return cosineDistance;
+}
+
+function euclideanDistance2D(point1, point2) {
+  // Extract coordinates
+  const [x1, y1] = point1;
+  const [x2, y2] = point2;
+
+  // Calculate the differences in each dimension
+  const deltaX = x2 - x1;
+  const deltaY = y2 - y1;
+
+  // Compute the Euclidean distance
+  return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+}
+
+function calculateMedian(array) {
+  if (array.length === 0) {
+    throw new Error("Array is empty");
+  }
+
+  // Sort the array
+  array.sort((a, b) => a - b);
+
+  // Find the middle index
+  const middleIndex = Math.floor(array.length / 2);
+
+  if (array.length % 2 === 0) {
+    // If even, return the average of the two middle numbers
+    return (array[middleIndex - 1] + array[middleIndex]) / 2;
+  } else {
+    // If odd, return the middle number
+    return array[middleIndex];
+  }
+}
+
 function sortNode(taskId, embedding){
-  reduceDimension(embedding);
+  let result = reduceDimension(embedding);  // Capture the returned object
+  let nodeList = result.nodeList; 
+  let topic = result.topic;  
+  
+  let Euclideandistance = [];
+  let Cosinedistance = []
+  //calculate the distance between the task topic and each floating node
+  for (let i = 0; i < nodeList.length - 1; i++) {
+    Euclideandistance.push(euclideanDistance2D(nodeList[i], topic));
+    //Cosinedistance.push(cosineDistance(nodeList[i], topic));
+  }
+  console.log(Euclideandistance)
 
+  // calculate the median of Euclidean distance
+  const median = calculateMedian(Euclideandistance);
 
+  //go through the button in div "nodeSection", if the distance < 3, add a class to button
+  let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
+  
+  for (let i = 0; i < nodes.length; i++) {
+    if (Euclideandistance[i] <= median) {
+      nodes[i].classList.add("highlight");
+      console.log(i)
+    }
+  }
 }
 
 

@@ -72,6 +72,10 @@ div.content {
     border-radius: 5px;
   }
 
+  .leftSidebar button.highlight {
+    background-color: rgb(182, 218, 231); /* Light blue background */
+  }
+
   button:hover:not(.active) {
     background-color: rgb(164, 164, 164);
     color: white;
