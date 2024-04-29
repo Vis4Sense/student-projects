@@ -26345,16 +26345,19 @@ function sortNode(taskId, embedding){
   }
   console.log(Euclideandistance)
 
-  // calculate the median of Euclidean distance
-  const median = calculateMedian(Euclideandistance);
+  // If there are distances in the array
+  if (Euclideandistance.length > 0) {
+    // calculate the median of Euclidean distance
+    const median = calculateMedian(Euclideandistance);
 
-  //go through the button in div "nodeSection", if the distance < 3, add a class to button
-  let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
-  
-  for (let i = 0; i < nodes.length; i++) {
-    if (Euclideandistance[i] <= median) {
-      nodes[i].classList.add("highlight");
-      console.log(i)
+    //go through the button in div "nodeSection", if the distance < 3, add a class to button
+    let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
+    
+    for (let i = 0; i < nodes.length; i++) {
+      if (Euclideandistance[i] <= median) {
+        nodes[i].classList.add("highlight");
+        console.log(i)
+      }
     }
   }
 }

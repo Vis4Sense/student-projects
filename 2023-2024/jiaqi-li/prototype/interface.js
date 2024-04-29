@@ -4,7 +4,7 @@ function createTaskBox() {
     for (var i = 0; i < nodes.length; i++) {
         nodes[i].classList.remove('highlight');
     }
-    
+
     // Get the input value
     var taskTopic = document.getElementById('input_task').value;
 
@@ -42,7 +42,15 @@ function createTaskBox() {
     // Allow the task box to accept dropped nodes
     nodeContainer.addEventListener('dragover', allowDrop);
     nodeContainer.addEventListener('drop', drop);
-
+    nodeContainer.addEventListener('click', function() {
+        //console.log(taskMap[nodeContainer.id].topic_embedding);
+        document.dispatchEvent(new CustomEvent('readyForDimensionReduction', {
+            detail: {
+              taskId: nodeContainer.id,
+              embedding: taskMap[nodeContainer.id].topic_embedding
+            }
+          }));
+    });
 
     // Create the pull-put button
     // when click the button, all pages in the task box will be pulled out to a new window
@@ -98,6 +106,7 @@ function createTaskBox() {
     // Clear the input field after creating the task box
     document.getElementById('input_task').value = '';
 }
+
 
 
 // handel the node creation and node behavior
