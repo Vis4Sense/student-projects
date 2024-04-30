@@ -1,4 +1,5 @@
 30 Apr 2024
+Muhamad Hermawan
 1. Progress
    - do extended testing up to 7000 episodes both for non sentiment and sentiment version. got highest sharpe on sentiment version, >6
 2. Question and difficulty
