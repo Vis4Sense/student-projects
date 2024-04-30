@@ -26381,6 +26381,11 @@ if (!document.listenerAdded) {
     
   });
   document.addEventListener('readyForDimensionReduction', function(event) {
+    //check if the node in nodesection have "highlight" class, remove the class
+    var nodes = document.querySelectorAll('.node');
+    for (var i = 0; i < nodes.length; i++) {
+        nodes[i].classList.remove('highlight');
+    }
     let taskId = event.detail.taskId;
     let embedding = event.detail.embedding;
     // Assuming sortNode can handle an event with these details
