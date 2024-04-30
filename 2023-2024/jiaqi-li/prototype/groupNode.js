@@ -26298,19 +26298,6 @@ function cosineDistance(vector1, vector2) {
   return cosineDistance;
 }
 
-function euclideanDistance2D(point1, point2) {
-  // Extract coordinates
-  const [x1, y1] = point1;
-  const [x2, y2] = point2;
-
-  // Calculate the differences in each dimension
-  const deltaX = x2 - x1;
-  const deltaY = y2 - y1;
-
-  // Compute the Euclidean distance
-  return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-}
-
 function calculateMedian(array) {
   if (array.length === 0) {
     throw new Error("Array is empty");
@@ -26332,18 +26319,37 @@ function calculateMedian(array) {
 }
 
 function sortNode(taskId, embedding){
-  let result = reduceDimension(embedding);  // Capture the returned object
-  let nodeList = result.nodeList; 
-  let topic = result.topic;  
-  
+  //let result = reduceDimension(embedding);  // Capture the returned object
+  //let nodeList = result.nodeList; 
+  //let topic = result.topic;  
+
+  let nodeList = [];
+  for (const nodeId in taskMap.floatingNode) {
+    if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
+      const node = taskMap.floatingNode[nodeId];
+      //console.log(node.pageData.pageObj.title);
+      if (node.pageData.embedding) {
+        // If embedding exists, you can access it and use it as needed
+        const embedding = Object.values(node.pageData.embedding);
+        // add embeddings to array
+        nodeList.push(embedding);
+      } else {
+          console.log(`Node ${nodeId} does not have an embedding.`);
+      }
+      
+    }
+  }
+
+  let topic = embedding;
+  //console.log(embedding);
   let Euclideandistance = [];
-  let Cosinedistance = []
+  let Cosinedistance = [];
   //calculate the distance between the task topic and each floating node
-  for (let i = 0; i < nodeList.length - 1; i++) {
-    Euclideandistance.push(euclideanDistance2D(nodeList[i], topic));
+  for (let i = 0; i < nodeList.length; i++) {
+    Euclideandistance.push(cosineDistance(nodeList[i], topic));
     //Cosinedistance.push(cosineDistance(nodeList[i], topic));
   }
-  console.log(Euclideandistance)
+  console.log(Euclideandistance);
 
   // If there are distances in the array
   if (Euclideandistance.length > 0) {
@@ -26354,9 +26360,8 @@ function sortNode(taskId, embedding){
     let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
     
     for (let i = 0; i < nodes.length; i++) {
-      if (Euclideandistance[i] <= median) {
+      if (Euclideandistance[i] <= 1.1) {
         nodes[i].classList.add("highlight");
-        console.log(i)
       }
     }
   }
@@ -26381,11 +26386,6 @@ if (!document.listenerAdded) {
     
   });
   document.addEventListener('readyForDimensionReduction', function(event) {
-    //check if the node in nodesection have "highlight" class, remove the class
-    var nodes = document.querySelectorAll('.node');
-    for (var i = 0; i < nodes.length; i++) {
-        nodes[i].classList.remove('highlight');
-    }
     let taskId = event.detail.taskId;
     let embedding = event.detail.embedding;
     // Assuming sortNode can handle an event with these details
