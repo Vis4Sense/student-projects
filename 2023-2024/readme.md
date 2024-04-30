@@ -22,7 +22,17 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
-
+# 30 Apr 2024
+1. progress
+   - utilise t-sne for dimension reduction
+   - using a new package to extract main contant
+   - analysis the outcome of t-sne
+2. question
+   - t-sne doesn't have good performance for similarity match
+3. next step
+   - try to use PCA
+   - start user test
+   
 # 23 Apr 2024
 Jiaqi
 1. Progress
