@@ -27,6 +27,16 @@ Raul Farkas
 4. Next steps
    - Prepare final presentation
 
+
+Xiruo Sun
+1. Progress
+   - do experiment for 1500 episodes.
+2. Question and difficulty
+   - Using my env and finrl environment for experiments, there is always only one action when test.
+   - I change my env and the action is no longer just one, but doing the same action every time.
+3. Next step
+   - change reward function
+
 # 23 Apr 2024
 Muhamad Hermawan
 1. Progress
