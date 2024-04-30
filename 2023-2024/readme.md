@@ -39,9 +39,9 @@ Rachana
    - Added storyboard templates for five act structure and hero's journey
    - Combined image generation with plot idea generation so the user will see an image that illustrates the plot idea. Also made it possible for user to add the plot idea to the storyboard directly by clicking a button.
 2. question
-   - Storing the image data in local storage is actually making the application slow
+   - Storing the image data in local storage is actually making the application slow - this wasn't an issue during the informal testing because I asked the user to upload images as the last step. Do I need to fix this issue or can I just leave it (I think the solution will involve changing how I store data which will take time)? 
 4. next step
-   - finish debugging 
+   - finish debugging (fix issues with page refreshing), save plot ideas and associated image data to JSON file, plan the user testing & evaluation
 
 # 23 Apr 2024
 Jiaqi
