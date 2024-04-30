@@ -34,6 +34,15 @@
    - try to use PCA
    - start user test
 
+Rachana
+1. progress
+   - Added storyboard templates for five act structure and hero's journey
+   - Combined image generation with plot idea generation so the user will see an image that illustrates the plot idea. Also made it possible for user to add the plot idea to the storyboard directly by clicking a button.
+2. question
+   - Storing the image data in local storage is actually making the application slow
+4. next step
+   - finish debugging 
+
 # 23 Apr 2024
 Jiaqi
 1. Progress
