@@ -5,7 +5,7 @@ Muhamad Hermawan
    - strange behaviour of the agent which is sell all holding stocks, several times on some points are identified. (market crash safety is triggered, for the lattest test, I set it off)
 2. Question and difficulty
    - on training phase, both the sentiment and non sentiment showing decrease of reward on end of training pahse and stabilise around that reward (after 5000 for non sent, above 3000 for non sent)
-   - on this around 7000 episodes of training, the agent only buy and hold both on sentiment and non sentiment (first time I encounter this). on my previous up to around 5000 episodes of training the behaviour is normal, buy sell hold.
+   - on this around 7000 episodes of training, the agent only buy and hold both on sentiment and non sentiment (first time I encounter this). on my previous up to around 1300 episodes of training the behaviour is normal, buy sell hold.
 3. Next step
    - another test and experiment: reduce the complexity (reducing techincal indicator used, try only 3 or 4) adding new features (price change)
    - modify the environtment, hopefully better result.
