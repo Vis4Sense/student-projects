@@ -10,6 +10,21 @@ Muhamad Hermawan
    - modify the environtment, hopefully better result.
    - do another 7000++ episodes training with new setting.
 
+Raul Farkas
+1. Progress
+   - Not much work has been done after the submission of the disertation
+   - Link to project repositories:
+      - https://github.com/raulfrk/OpenTradingPlatform
+      - https://github.com/raulfrk/OpenTradingPlatformPythonClient
+      - https://github.com/raulfrk/StrategyBuilder
+      - https://github.com/raulfrk/TradingExperiments
+
+2. Question and difficulty Next
+   - None
+
+4. Next steps
+   - Prepare final presentation
+
 23 Apr 2024
 Muhamad Hermawan
 1. Progress
