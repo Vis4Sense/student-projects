@@ -29,10 +29,11 @@
    - analysis the outcome of t-sne
 2. question
    - t-sne doesn't have good performance for similarity match
+   - WebAssembly run time error
 3. next step
    - try to use PCA
    - start user test
-   
+
 # 23 Apr 2024
 Jiaqi
 1. Progress
