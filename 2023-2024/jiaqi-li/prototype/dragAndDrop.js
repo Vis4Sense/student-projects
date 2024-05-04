@@ -39,9 +39,12 @@ taskMap structure
         taskTheme: "task theme",
         // Add other properties as needed
     },
+    ...
+}
 */
 
 let taskMap = {};
+let userLog = {};
 
 function allowDrop(event) {
     event.preventDefault();

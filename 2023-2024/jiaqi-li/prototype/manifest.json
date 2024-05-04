@@ -15,7 +15,8 @@
                     "webNavigation",
                     "contextMenus",
                     "tabs","activeTab",
-                    "unlimitedStorage"],
+                    "unlimitedStorage",
+                    "webRequest"],
     "background": {
         "service_worker": "background.js",
         "type": "module"

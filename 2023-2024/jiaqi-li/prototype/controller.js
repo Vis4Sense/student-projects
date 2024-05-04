@@ -23,6 +23,7 @@ class hmPage {
     'chrome://extensions/',
     'chrome://newtab/',
     'https://chromewebstore.google.com/',
+    'chrome://history/'
  ];
  
 

@@ -46,6 +46,7 @@ function createTaskBox() {
         //console.log(taskMap[nodeContainer.id].topic_embedding);
         document.dispatchEvent(new CustomEvent('readyForDimensionReduction', {
             detail: {
+              action: 'taskBoxClick',
               taskId: nodeContainer.id,
               embedding: taskMap[nodeContainer.id].topic_embedding
             }

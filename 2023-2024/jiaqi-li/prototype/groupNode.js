@@ -26260,75 +26260,42 @@ function reduceDimension(embedding){
 // calculate the euclidean distance between two vectors
 function euclideanDistance(vector1, vector2) {
   if (vector1.length !== vector2.length) {
-      throw new Error("Vectors must have the same length");
+      throw new Error("Vectors must be of equal length");
   }
 
-  let sum = 0;
-  for (let i = 0; i < vector1.length; i++) {
-      sum += Math.pow(vector1[i] - vector2[i], 2);
-  }
-  return Math.sqrt(sum);
-}
-
-function cosineDistance(vector1, vector2) {
-  if (vector1.length !== vector2.length) {
-    throw new Error("Vectors must have the same length");
-  }
-
-  let dotProduct = 0;
-  let normA = 0;
-  let normB = 0;
+  let sumSquaredDiff = 0;
 
   for (let i = 0; i < vector1.length; i++) {
-    dotProduct += vector1[i] * vector2[i];  // sum of products
-    normA += vector1[i] * vector1[i];  // sum of squares of vector1
-    normB += vector2[i] * vector2[i];  // sum of squares of vector2
+      const diff = vector1[i] - vector2[i];
+      sumSquaredDiff += diff * diff;
   }
 
-  normA = Math.sqrt(normA);  // square root of sum of squares = magnitude of vector1
-  normB = Math.sqrt(normB);  // magnitude of vector2
-
-  if (normA === 0 || normB === 0) {
-    throw new Error("Cannot compute cosine similarity of zero-length vectors");
-  }
-
-  let cosineSimilarity = dotProduct / (normA * normB);
-  let cosineDistance = 1 - cosineSimilarity;  // 1 minus the cosine similarity
-
-  return cosineDistance;
+  return Math.sqrt(sumSquaredDiff);
 }
 
-function calculateMedian(array) {
-  if (array.length === 0) {
-    throw new Error("Array is empty");
-  }
 
-  // Sort the array
-  array.sort((a, b) => a - b);
-
-  // Find the middle index
-  const middleIndex = Math.floor(array.length / 2);
-
-  if (array.length % 2 === 0) {
-    // If even, return the average of the two middle numbers
-    return (array[middleIndex - 1] + array[middleIndex]) / 2;
-  } else {
-    // If odd, return the middle number
-    return array[middleIndex];
-  }
-}
-
-function sortNode(taskId, embedding){
-  //let result = reduceDimension(embedding);  // Capture the returned object
-  //let nodeList = result.nodeList; 
-  //let topic = result.topic;  
+function sortNode(taskId, embedding,action){
+  let actionID = (Object.keys(userLog).length)
+  
+  userLog[actionID] = {
+    taskId : taskId,
+    action : action,
+    nodes: [],
+    embeddings: [],
+    EuclideanDistance: [],
+    recomendation: [] 
+};
 
   let nodeList = [];
+
   for (const nodeId in taskMap.floatingNode) {
+
     if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
       const node = taskMap.floatingNode[nodeId];
       //console.log(node.pageData.pageObj.title);
       if (node.pageData.embedding) {
+        userLog[actionID]["nodes"].push(node.pageData.pageObj.title);
+        userLog[actionID]["embeddings"].push(node.pageData.embedding);
         // If embedding exists, you can access it and use it as needed
         const embedding = Object.values(node.pageData.embedding);
         // add embeddings to array
@@ -26346,21 +26313,24 @@ function sortNode(taskId, embedding){
   let Cosinedistance = [];
   //calculate the distance between the task topic and each floating node
   for (let i = 0; i < nodeList.length; i++) {
-    Euclideandistance.push(cosineDistance(nodeList[i], topic));
+    Euclideandistance.push(euclideanDistance(nodeList[i], topic));
     //Cosinedistance.push(cosineDistance(nodeList[i], topic));
   }
-  console.log(Euclideandistance);
+  //console.log(Euclideandistance);
+
+  userLog[actionID]["EuclideanDistance"] = Euclideandistance;
 
   // If there are distances in the array
   if (Euclideandistance.length > 0) {
     // calculate the median of Euclidean distance
-    const median = calculateMedian(Euclideandistance);
-
+    //const median = calculateMedian(Euclideandistance);
+    //console.log(median);
     //go through the button in div "nodeSection", if the distance < 3, add a class to button
     let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
     
     for (let i = 0; i < nodes.length; i++) {
-      if (Euclideandistance[i] <= 1.1) {
+      if (Euclideandistance[i] <= 1) {
+        userLog[actionID]["recomendation"].push(nodes[i].textContent);
         nodes[i].classList.add("highlight");
       }
     }
@@ -26379,17 +26349,20 @@ if (!document.listenerAdded) {
     // Emit a custom event to trigger reduceDimension with the required data
     document.dispatchEvent(new CustomEvent('readyForDimensionReduction', {
       detail: {
+        action : 'create task',
         taskId: taskId,
         embedding: taskEmbedding
       }
     }));
     
   });
+
   document.addEventListener('readyForDimensionReduction', function(event) {
     let taskId = event.detail.taskId;
+    let action = event.detail.action;
     let embedding = event.detail.embedding;
     // Assuming sortNode can handle an event with these details
-    sortNode(taskId, embedding); 
+    sortNode(taskId, embedding,action); 
   });
 }
 
