@@ -19,6 +19,16 @@ Muhamad Hermawan
    - Will try to lift the trading limit, above test is max buy each stock is 5% from initial balance. Next: unlimited as the agent like to buy and sell
    - More experiment with different reward calculation
 
+Xiruo Sun
+1. Progress
+   - do experiment for 8000 episodes.
+   - the performance of with sentiment is better than without sentiment.
+   - write the optuna code to test different model.learn parameter
+2. Question and difficulty
+   - need to do more experiment.
+3. Next step
+   - do optuna experiment.
+   - do experiment using other stocks dataset
 
 
 # 30 Apr 2024
