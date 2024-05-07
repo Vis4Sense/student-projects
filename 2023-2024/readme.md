@@ -23,6 +23,7 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 # 7 May 2024
+Rachana
 1. progress
    - finished debugging and last additions to website (fix issues with page refreshing and buttons not triggering correctly, made home page describing the website's features w/ screenshots of examples)
    - hosted the prototype website up on pythonanywhere ([link]((https://rachana99.pythonanywhere.com/))
@@ -38,6 +39,7 @@
 
 
 # 30 Apr 2024
+Jiaqi
 1. progress
    - utilise t-sne for dimension reduction
    - using a new package to extract main contant
