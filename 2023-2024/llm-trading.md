@@ -16,6 +16,7 @@ Muhamad Hermawan
    - Need more test with different reward and punishment calculation
    - Feature scaller, yes or no?
 3. Next Step
+   - Will try to lift the trading limit, above test is max buy each stock is 5% from initial balance. Next: unlimited as the agent like to buy and sell
    - More experiment with different reward calculation
    - considering adding more features that could lead the model able to converge faster (find the trend of the data)
 
