@@ -5,8 +5,11 @@ Muhamad Hermawan
    - Experiments:
      > trying decaying learning rate, as the training goes on the learning rate will smaller
      > restructure the reward function, instead of based on portofolio value, into realised profit or loss.
+     
         -good thing: the agent now seems encourage more to trade rather than buy and hold
+     
         -bad thing: not as expected, the agent failed to converge, both on 2 technicals + sentiment and 2 technicals only (no sentiment)
+     
         -tried up to 23,000 episodes, same result.
 2. Question and difficulty
    - Need to debug the environtment regarding the reward or punishment calculation to make sure it is as intended.
