@@ -4,7 +4,7 @@ Muhamad Hermawan
 1. Progress
    Experiments:
    - trying decaying learning rate, as the training goes on the learning rate will smaller
-   - restructure the reward function, instead of based on portofolio value, into realised profit or loss.
+   - testing around with different reward scenario.
      
         -good thing: the agent now seems encourage more to trade rather than buy and hold
      
