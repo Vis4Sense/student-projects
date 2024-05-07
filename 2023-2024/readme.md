@@ -28,12 +28,13 @@
    - hosted the prototype website up on pythonanywhere ([link]((https://rachana99.pythonanywhere.com/))
    - read 2 research papers suggested by kai - my study design was inspired by the anglekindling paper
    - completed the user study & evaluation design
+   - finished recruiting participants: 5 hobbyist writers (mainly students or fresh graduates who enjoy writing in free time), 1 professional writer (poet w/ multiple publications and awards who is working on a novel)
    - completed 3 user testing sessions
 2. question: i already did the testing but are there are changes i should make in how i evaluate the responses from the users? 
 3. next step
 - do another 3 user testing sessions
 - transcribe all 6 testing sessions and do a thematic analysis/evaluate the testing
-- outline dissertation
+- outline dissertation and start writing first draft
 
 
 # 30 Apr 2024
