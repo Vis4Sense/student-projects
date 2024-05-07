@@ -22,6 +22,20 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+# 7 May 2024
+1. progress
+   - finished debugging and last additions to website (fix issues with page refreshing and buttons not triggering correctly, made home page describing the website's features w/ screenshots of examples)
+   - hosted the prototype website up on pythonanywhere ([link]((https://rachana99.pythonanywhere.com/))
+   - read 2 research papers suggested by kai - my study design was inspired by the anglekindling paper
+   - completed the user study & evaluation design
+   - completed 3 user testing sessions
+2. question: i already did the testing but are there are changes i should make in how i evaluate the responses from the users? 
+3. next step
+- do another 3 user testing sessions
+- transcribe all 6 testing sessions and do a thematic analysis/evaluate the testing
+- outline dissertation
+
+
 # 30 Apr 2024
 1. progress
    - utilise t-sne for dimension reduction
