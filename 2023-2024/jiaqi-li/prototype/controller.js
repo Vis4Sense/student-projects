@@ -126,9 +126,10 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     // Mark the script as injected for this tab
                     scriptInjected[updatedTab.id] = true;
                 }
-
-                console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
+                console.log("add a new tab")
+                //console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
             } else {
+                console.log("tab update")
                 // Execute the script only if it hasn't been injected before
                 if (!scriptInjected[updatedTab.id]) {
                     chrome.scripting.executeScript({
