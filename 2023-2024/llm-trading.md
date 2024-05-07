@@ -3,8 +3,8 @@
 Muhamad Hermawan
 1. Progress
    - Experiments:
-     > trying decaying learning rate, as the training goes on the learning rate will smaller
-     > restructure the reward function, instead of based on portofolio value, into realised profit or loss.
+     a. trying decaying learning rate, as the training goes on the learning rate will smaller
+     b. restructure the reward function, instead of based on portofolio value, into realised profit or loss.
      
         -good thing: the agent now seems encourage more to trade rather than buy and hold
      
