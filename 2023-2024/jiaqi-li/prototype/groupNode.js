@@ -26210,52 +26210,6 @@ async function handleEmbeddingEvent(event) {
     return vector;
 }
 
-// reduce the dimension of the floating node in the task map
-function reduceDimension(embedding){
-    //go through the floating node in task map, get the 2d vector for each node
-    //then use the dynamic time warping to get the similarity between the two nodes
-    let array = []
-
-    var opt = {}
-    opt.epsilon = 10; // epsilon is learning rate (10 = default)
-    opt.perplexity = 5; // roughly how many neighbors each point influences (30 = default)
-    opt.dim = 2; // dimensionality of the embedding (2 = default)
-
-    var tsne = new tsnejs.tSNE(opt);
-
-    for (const nodeId in taskMap.floatingNode) {
-      if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
-        const node = taskMap.floatingNode[nodeId];
-        console.log(node.pageData.pageObj.title);
-        if (node.pageData.embedding) {
-          // If embedding exists, you can access it and use it as needed
-          const embedding = node.pageData.embedding;
-          // add embeddings to array
-          array.push(embedding);
-          
-          // You can perform further processing with the embedding here
-        } else {
-            console.log(`Node ${nodeId} does not have an embedding.`);
-        }
-        
-      }
-    }
-    //console.log(array);
-
-    array.push(embedding);
-    tsne.initDataDist(array);
-    for(var k = 0; k < 100; k++) {
-      tsne.step();
-    }
-    //get 2d vector for floating node
-    var Y = tsne.getSolution();
-    console.log('All solutions:', Y);
-    //get 2d vector for task topic embedding
-    var T = Y[Y.length - 1]; 
-    console.log('2D vector for task topic:', T);
-
-    return { nodeList: Y, topic: T }
-}
 
 // calculate the euclidean distance between two vectors
 function euclideanDistance(vector1, vector2) {

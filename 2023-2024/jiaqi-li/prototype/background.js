@@ -37,3 +37,45 @@ function activateMainWindow() {
         }
     });
 }
+
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+      id: "setApiDetails",
+      title: "Set API Details",
+      contexts: ["all"]
+    });
+  });
+  
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    const left = 1010; 
+    const top = 100; 
+    if (info.menuItemId === "setApiDetails") {
+      chrome.windows.create({
+        url: "dropdown.html",
+        type: "popup",
+        width: 350,
+        height: 250,
+        left:left,
+        top:top
+      });
+    }
+  });
+
+  chrome.storage.local.get(['endpoint', 'apiKey'], function(result) {
+    if (result.endpoint && result.apiKey) {
+        console.log("API Endpoint and Key are set: ", result);
+        // You can initialize your API or other functions here
+    } else {
+        console.log("API details are not set.");
+    }
+});
+
+// Listen for changes in storage
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (var key in changes) {
+        var storageChange = changes[key];
+        console.log('Storage key "%s" in namespace "%s" changed. ' +
+                    'Old value was "%s", new value is "%s".',
+                    key, namespace, storageChange.oldValue, storageChange.newValue);
+    }
+});

@@ -108,40 +108,33 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
     
 
-    // Define a variable to track whether the script has been injected
-    let scriptInjected = {};
+
+    let delays = {};
 
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
-        // Check if the update is for the newly created tab and it's fully loaded
-        if (!ignoredUrls.some(url => updatedTab.url.includes(url))){
-            if (isNewTab && tabId === updatedTab.id && changeInfo.status === 'complete') {
-                // Reset the flag
-                isNewTab = false;
-                // Add the tab once its properties are fully updated
-                if (!scriptInjected[updatedTab.id]) {
-                    chrome.scripting.executeScript({
-                        target: { tabId: updatedTab.id },
-                        files: ['backend.js'] 
-                    });
-                    // Mark the script as injected for this tab
-                    scriptInjected[updatedTab.id] = true;
+        if (!ignoredUrls.some(url => updatedTab.url.includes(url))) {
+            if (tabId === updatedTab.id && changeInfo.status === 'complete') {
+                // Cancel any existing timeout for this tab to handle rapid consecutive updates
+                if (delays[tabId]) {
+                    clearTimeout(delays[tabId]);
                 }
-                console.log("add a new tab")
-                //console.log("A new tab added:", updatedTab.title, ', ', updatedTab.url);
-            } else {
-                console.log("tab update")
-                // Execute the script only if it hasn't been injected before
-                if (!scriptInjected[updatedTab.id]) {
+    
+                // Set a new timeout
+                delays[tabId] = setTimeout(() => {
+                    // Execute the script
                     chrome.scripting.executeScript({
-                        target: { tabId: updatedTab.id },
-                        files: ['backend.js'] 
+                        target: {tabId: tabId},
+                        files: ['backend.js']
                     });
-                    // Mark the script as injected for this tab
-                    scriptInjected[updatedTab.id] = true;
-                }
+                    console.log("Script re-injected into tab:", updatedTab.url);
+    
+                    // Remove the timeout identifier since the script is now injected
+                    delete delays[tabId];
+                }, 2000); // Delay for 500 ms, adjust as needed
             }
         }
     });
+    
 
     //console.log(hmPages);
 });

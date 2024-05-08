@@ -1,4 +1,13 @@
+
+
 function createTaskBox() {
+    chrome.storage.local.get(['endpoint', 'apiKey'], function(result) {
+        if (result.endpoint && result.apiKey) {
+            var endpoint = result.endpoint;
+            var azureApiKey = result.apiKey;
+    var DeploymentID = "gpt-35-turbo-16k";
+    
+    
     //check if the node in nodesection have "highlight" class, remove the class
     var nodes = document.querySelectorAll('.node');
     for (var i = 0; i < nodes.length; i++) {
@@ -53,11 +62,12 @@ function createTaskBox() {
           }));
     });
 
-    // Create the pull-put button
+    // Create the pull-out button
     // when click the button, all pages in the task box will be pulled out to a new window
     var pullOutButton = document.createElement('button');
     //pullOutButton.textContent = 'Pull Out';
     pullOutButton.classList.add('pullOutButton');
+    pullOutButton.title = 'Pull Out webpages';
     pullOutButton.addEventListener('click', function() {
         // pull out functionality
 
@@ -89,16 +99,79 @@ function createTaskBox() {
     var deleteButton = document.createElement('button');
     //deleteButton.textContent = 'Delete';
     deleteButton.classList.add('deleteButton');
+    deleteButton.title = 'Delete';
     deleteButton.addEventListener('click', function() {
         taskBox.remove();
         //Delete the task box in taskMap
         updateTaskMap(nodeContainer.id,"","",'delete box');
     });
+    
+
+    //Create summary button
+    var summaryButton = document.createElement('button');
+    summaryButton.classList.add('summaryButton');
+    summaryButton.title = 'Generate task summary';
+    summaryButton.addEventListener('click', function() {
+        //generate task summary
+        var text = "";
+        for (var nodeId in taskMap[nodeContainer.id]) {
+            // Check if nodeId starts with 'node'
+            if (nodeId.startsWith('node')) {
+                text += taskMap[nodeContainer.id][nodeId].pageData.content + "\n";
+            }
+        }
+        messages = [{
+            role: "system",
+            content: `User message will provide several main content from different webpages about same topic ${taskTopic}, and you need to generate a summary based on the user message. The summary should be concise and informative, and serve as inference for user about the main purpose of the task.`
+          }, {
+            role: "user",
+            content: text
+          }];
+
+        let url = "{AOAIEndpoint}/openai/deployments/{AOAIDeploymentID}/chat/completions?api-version=2023-06-01-preview".replace("{AOAIEndpoint}", endpoint).replace("{AOAIDeploymentID}", DeploymentID);
+        let body = JSON.stringify({
+           messages: messages
+        });
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': azureApiKey
+            },
+            body: body
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            let messageContent = data.choices[0].message.content;
+            // 'data' is the JSON object from the response
+            var width = 400;
+            var height = 300;
+            var left = (window.screen.width - width) / 2;
+            var top = (window.screen.height - height) / 2;
+            var popup = window.open("", "popup", "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left);
+            popup.document.write("<p>" + messageContent + "</p>");
+        })
+        .catch(error => {
+            console.error('Failed to fetch:', error);
+        });
+
+        //console.log(summary);
+        //popup a small window to show the summary
+        //make the window at the middle of the screen
+        
+    }
+    );
 
     // Append the buttons and content to the task box
     taskBox.appendChild(taskTheme)
     taskBox.appendChild(pullOutButton);
     taskBox.appendChild(deleteButton);
+    taskBox.appendChild(summaryButton);
     taskBox.appendChild(nodeContainer);
 
     // Append the task box to the task container
@@ -106,6 +179,9 @@ function createTaskBox() {
 
     // Clear the input field after creating the task box
     document.getElementById('input_task').value = '';
+
+    }
+  });
 }
 
 
@@ -202,3 +278,4 @@ function createNode(page,section) {
 
     return true;
 }
+

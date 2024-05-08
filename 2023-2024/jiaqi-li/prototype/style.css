@@ -133,6 +133,20 @@ div.content {
     background: url("images/delete.png") no-repeat scroll 0 0 transparent;
   }
 
+  .summaryButton{
+    position: absolute;
+    margin-left: 70%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-position: center;
+    justify-content: center;
+    background: url("images/summary.png") no-repeat scroll 0 0 transparent;
+
+  }
+
   .nodeContainer{
     position: absolute;
     margin-top: 30px;
