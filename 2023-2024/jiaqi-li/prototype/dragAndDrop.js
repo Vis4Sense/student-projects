@@ -79,6 +79,13 @@ function dragStart(event) {
         return parts[0];
     }
 }
+function generateNewNodeId(obj) {
+    const keys = Object.keys(obj);
+    const lastKey = keys[keys.length - 1];
+    const lastNumber = parseInt(lastKey.replace(/[^\d]/g, ''));  
+    const newId = 'node' + (lastNumber + 1);  
+    return newId;
+}
 
 function drop(event) {
     event.preventDefault();
@@ -105,7 +112,7 @@ function drop(event) {
         //update taskMap only when the node is created
         if(isCreated){
         //update taskMap,the node index shoule update to the latest index
-            nodeId="node"+(Object.keys(taskMap[section]).length-1);
+            nodeId = generateNewNodeId(taskMap[section]);
 
             //Add node in corresponding task dict in taskMap
             updateTaskMap(section,pageData,nodeId,"add");
@@ -154,12 +161,13 @@ function drop(event) {
                             updateTaskMap(parentElementID, pageData,"",'delete');
 
                             //get the node index according to the lengh of floatingNode
-                            nodeId="node"+(Object.keys(taskMap["floatingNode"]).length+1);
+                            const nodeId = generateNewNodeId(taskMap.floatingNode);
                             //add node in floatingNode
                             updateTaskMap("floatingNode",pageData,nodeId,'addLeft');
                         }
                     }
                 }
+                console.log(taskMap);
             }
         });
 
@@ -192,7 +200,7 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
                     // Your code for processing nodes here
                     if (taskMap[taskId][NodeId].pageData.pageObj.title === pageData.pageObj.title) {
                         delete taskMap[taskId][NodeId];
-                        console.log(taskMap);
+                        //console.log(taskMap);
                     }
                 }
             }
@@ -222,7 +230,7 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
         
         case "addLeft":
             taskMap[taskId][nodeId] = {pageData};
-            //console.log(taskMap);
+            console.log(taskMap);
             break;
         };
 } 

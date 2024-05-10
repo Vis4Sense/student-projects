@@ -23,7 +23,8 @@ class hmPage {
     'chrome://extensions/',
     'chrome://newtab/',
     'https://chromewebstore.google.com/',
-    'chrome://history/'
+    'chrome://history/',
+    'google.com/search',
  ];
  
 
@@ -126,7 +127,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                         target: {tabId: tabId},
                         files: ['backend.js']
                     });
-                    console.log("Script re-injected into tab:", updatedTab.url);
+                    //console.log("Script re-injected into tab:", updatedTab.url);
     
                     // Remove the timeout identifier since the script is now injected
                     delete delays[tabId];

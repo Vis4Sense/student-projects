@@ -5,9 +5,9 @@ document.getElementById('save').addEventListener('click', function() {
     if (endpoint && apiKey) {
         chrome.storage.local.set({ endpoint, apiKey }, function() {
             console.log('API details saved.');
-            window.close(); // Optionally close the popup after saving
+            window.close(); 
         });
     } else {
-        alert('Please fill in all fields.');
+        alert('Please fill in all fields.');å
     }
 });

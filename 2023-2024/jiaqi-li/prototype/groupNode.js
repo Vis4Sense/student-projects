@@ -26246,7 +26246,7 @@ function sortNode(taskId, embedding,action){
 
     if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
       const node = taskMap.floatingNode[nodeId];
-      //console.log(node.pageData.pageObj.title);
+      console.log(node.pageData.pageObj.title);
       if (node.pageData.embedding) {
         userLog[actionID]["nodes"].push(node.pageData.pageObj.title);
         userLog[actionID]["embeddings"].push(node.pageData.embedding);
@@ -26281,13 +26281,15 @@ function sortNode(taskId, embedding,action){
     //console.log(median);
     //go through the button in div "nodeSection", if the distance < 3, add a class to button
     let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
-    
+    console.log(nodes);
+    console.log(Euclideandistance);
     for (let i = 0; i < nodes.length; i++) {
       if (Euclideandistance[i] <= 1) {
         userLog[actionID]["recomendation"].push(nodes[i].textContent);
         nodes[i].classList.add("highlight");
       }
     }
+
   }
 }
 

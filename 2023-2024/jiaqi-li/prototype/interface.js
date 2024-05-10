@@ -122,7 +122,15 @@ function createTaskBox() {
         }
         messages = [{
             role: "system",
-            content: `User message will provide several main content from different webpages about same topic ${taskTopic}, and you need to generate a summary based on the user message. The summary should be concise and informative, and serve as inference for user about the main purpose of the task.`
+            content: `User message will provide several main content from different webpages about
+             same topic ${taskTopic}, and you need to generate a summary based on the user message.
+             The summary should be concise and informative, and serve as inference for user about 
+             the main purpose of the task.
+              
+              Guidelines:
+              - The summary should be concise and informative
+              - Make the summary as a list of each webpage's main content, each point should be less than 80 words
+              - add a \n between each point`
           }, {
             role: "user",
             content: text
@@ -213,7 +221,6 @@ function createNode(page,section) {
     newNode.appendChild(summary); // Append the summary to the button element
 
     newNode.addEventListener('click', function() {
-        // Check if browser extension APIs are available
         if (typeof chrome !== 'undefined' && chrome.tabs) {
             // Find the tab with the matching URL
             chrome.tabs.query({ url: page.pageObj.url }, function(tabs) {
@@ -240,7 +247,7 @@ function createNode(page,section) {
             } else {
                 console.log('Node detail stored successfully.');
                     
-                    // Call the dragStart function
+                // Call the dragStart function
                 dragStart(event);
             }
         });

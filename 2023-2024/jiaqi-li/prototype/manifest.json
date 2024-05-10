@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Task Manager Extension",
-    "version": "1.0",
+    "version": "2.0",
     "description": "Manage your online tasks with this extension.",
     "action": {
         "default_title": "Click to open extension"

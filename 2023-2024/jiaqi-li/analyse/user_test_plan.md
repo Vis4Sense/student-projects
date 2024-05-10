@@ -7,6 +7,10 @@
     - Is this extension being helpful in multitask senario
     - Any suggestion about feature functionality or optimization
 
+## user study research question
+    - UI helpful,clear or not
+    - 
+
 ## Plan
     1. User: 3 potential user
     2. Evaluation method: user observation. google meeting with screen sharing. Collect the log when they test the application.
