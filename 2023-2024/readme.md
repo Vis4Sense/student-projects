@@ -27,10 +27,12 @@
 Hongye
 
 1. Progress:
+   - Working with the dissertation.
+   - Try to deploy Vitality2 to the online environment.
 
 2. Question:
-
-3. Next Step:
+   - Failed to deploy backend services on 1Cup/1G Memory ECS service instance. Do school of Computer Science have such resource support for that ?
+   
 
 
 # 7 May 2024
