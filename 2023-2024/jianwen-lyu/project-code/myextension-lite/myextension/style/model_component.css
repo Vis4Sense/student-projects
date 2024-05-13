@@ -1,0 +1,23 @@
+  /* parent components */
+  .jp-model-component {
+    contain: strict;
+    background-color: #fff;
+    display: flex;
+    
+    margin-left: 5px;
+    padding: 3px;
+    min-height: 70px;
+  }
+  .jp-model-component:hover {
+    background-color: #ccc;
+  }
+  
+  /* component name */
+  .jp-textarea {
+    color: #000;
+    font-size: large;
+    font-weight: bold;
+    
+  }
+  
+ 
