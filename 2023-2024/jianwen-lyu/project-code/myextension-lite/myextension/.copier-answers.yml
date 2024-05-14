@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.0.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: ''
+author_name: Jianwen LYU
+data_format: string
+file_extension: ''
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: myextension
+mimetype: ''
+mimetype_name: ''
+project_short_description: A JupyterLab extension for ML Assistant.
+python_name: myextension
+repository: ''
+test: true
+viewer_name: ''
+

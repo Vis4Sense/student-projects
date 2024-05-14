@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "My Extension Cell Toolbar Settings",
+  "description": "Settings for the My Extension cell toolbar.",
+  "type": "object",
+  "properties": {
+    "exampleSetting": {
+      "type": "boolean",
+      "title": "Enable Example Feature",
+      "description": "Enable or disable an example feature in the cell toolbar.",
+      "default": true
+    }
+  },
+  "additionalProperties": false,
+  "jupyter.lab.toolbars": {
+    "Cell": [
+      {
+        "name": "code-cell-label",
+        "command": "toolbar-button:code-label"
+      }
+    ]
+  }
+}

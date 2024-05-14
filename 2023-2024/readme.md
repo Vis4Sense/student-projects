@@ -22,6 +22,27 @@
  |requirement list   |       |[Requirement](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/jiaqi-li/interview/requirement.md)      | [requirements](https://github.com/Vis4Sense/student-projects/blob/main/2023-2024/rachana-hegde/updated_requirements.md)  |      |         |    [requirements](./hongye-an/interview/requirements.md)    |
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
+
+# 14 May 2024
+Hongye
+
+1. Progress:
+   - Working with the dissertation.
+   - Try to deploy Vitality2 to the online environment.
+
+2. Question:
+   - Failed to deploy backend services on 1Cup/1G Memory ECS service instance. Do school of Computer Science have such resource support for that ?
+
+Rachana
+1. Progress:
+- Made diss outline, got feedback & updated it
+- Completed another 3 user testing sessions
+- Transcribed 5/6 sessions
+- Drafted half of the Prototype Evaluation section
+2. Question: none
+3. Next steps: finish analysing testing, complete the diss first draft and get feedback
+
+
 # 7 May 2024
 Rachana
 1. progress
