@@ -58,7 +58,7 @@ Jiaqi
          
          set 1:{task1: make a simple travel plan to Tailand; task2: what is the cause of aurora, what value can be used to predict it?}
 
-         set 2:{task1: make a simple travel plan to Scotland; task2: what is ADHD,find the general cause of it and theripy advice.}
+         set 2:{task1: make a simple travel plan to Scotland; task2: what is ADHD,find the general cause of it and therapy advice.}
       - user need to search for set1 as usually, and provide a breif search result
       - for set2, user need to use extension
       - compare the browsing time, tab count and final result
