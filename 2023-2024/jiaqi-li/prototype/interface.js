@@ -76,6 +76,7 @@ function createTaskBox() {
         var tabIds = [];
         for (var nodeId in taskMap[taksId]) {
             // Check if nodeId starts with 'node'
+            console.log(nodeId);
             if (nodeId.startsWith('node')) {
                 //nevigate to the pages in the task box
                 tabIds.push(taskMap[taksId][nodeId].pageData.tabId

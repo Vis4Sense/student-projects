@@ -8,6 +8,6 @@ document.getElementById('save').addEventListener('click', function() {
             window.close(); 
         });
     } else {
-        alert('Please fill in all fields.');å
+        alert('Please fill in all fields.');
     }
 });

@@ -82,9 +82,13 @@ function dragStart(event) {
 function generateNewNodeId(obj) {
     const keys = Object.keys(obj);
     const lastKey = keys[keys.length - 1];
-    const lastNumber = parseInt(lastKey.replace(/[^\d]/g, ''));  
-    const newId = 'node' + (lastNumber + 1);  
-    return newId;
+    if (lastKey.startsWith('node')) {
+        const lastNumber = parseInt(lastKey.replace(/[^\d]/g, ''), 10);
+        const newId = 'node' + (lastNumber + 1);
+        return newId;
+    } else {
+        return 'node1';
+    }
 }
 
 function drop(event) {
@@ -114,6 +118,7 @@ function drop(event) {
         //update taskMap,the node index shoule update to the latest index
             nodeId = generateNewNodeId(taskMap[section]);
 
+            console.log(taskMap[section]);
             //Add node in corresponding task dict in taskMap
             updateTaskMap(section,pageData,nodeId,"add");
 

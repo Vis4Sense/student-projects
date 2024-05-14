@@ -26281,7 +26281,7 @@ function sortNode(taskId, embedding,action){
     //console.log(median);
     //go through the button in div "nodeSection", if the distance < 3, add a class to button
     let nodes = document.getElementById("nodeSection").getElementsByTagName("button");
-    console.log(nodes);
+    //console.log(nodes);
     console.log(Euclideandistance);
     for (let i = 0; i < nodes.length; i++) {
       if (Euclideandistance[i] <= 1) {
