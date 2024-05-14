@@ -1,5 +1,7 @@
 
 # 14 May 2024
+
+Muhamad Hermawan
 1. Progress:
    - majorly debug and modifying environtment especially reward, (trying quite variations of reward and punishment) and testing
    - three testing on sentiment and non sentiment with final reward function
