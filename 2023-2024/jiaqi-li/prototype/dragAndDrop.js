@@ -82,13 +82,18 @@ function dragStart(event) {
 function generateNewNodeId(obj) {
     const keys = Object.keys(obj);
     const lastKey = keys[keys.length - 1];
-    if (lastKey.startsWith('node')) {
-        const lastNumber = parseInt(lastKey.replace(/[^\d]/g, ''), 10);
-        const newId = 'node' + (lastNumber + 1);
-        return newId;
-    } else {
+    if(lastKey){
+        if (lastKey.startsWith('node')) {
+            const lastNumber = parseInt(lastKey.replace(/[^\d]/g, ''), 10);
+            const newId = 'node' + (lastNumber + 1);
+            return newId;
+        } else {
+            return 'node1';
+        }
+    } else{
         return 'node1';
     }
+    
 }
 
 function drop(event) {
@@ -118,7 +123,7 @@ function drop(event) {
         //update taskMap,the node index shoule update to the latest index
             nodeId = generateNewNodeId(taskMap[section]);
 
-            console.log(taskMap[section]);
+            //console.log(taskMap[section]);
             //Add node in corresponding task dict in taskMap
             updateTaskMap(section,pageData,nodeId,"add");
 
@@ -128,7 +133,7 @@ function drop(event) {
                 if (nodeId.startsWith('node')) {
                     if (taskMap["floatingNode"][nodeId].pageData.pageObj.title === pageData.pageObj.title) {
                         delete taskMap["floatingNode"][nodeId];
-                        console.log(taskMap);
+                        //console.log(taskMap);
                     }
                 }
             }
@@ -172,7 +177,7 @@ function drop(event) {
                         }
                     }
                 }
-                console.log(taskMap);
+                //console.log(taskMap);
             }
         });
 
@@ -235,7 +240,7 @@ function updateTaskMap(taskId,pageData,nodeId,type) {
         
         case "addLeft":
             taskMap[taskId][nodeId] = {pageData};
-            console.log(taskMap);
+            //console.log(taskMap);
             break;
         };
 } 

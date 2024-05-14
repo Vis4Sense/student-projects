@@ -26246,7 +26246,7 @@ function sortNode(taskId, embedding,action){
 
     if (taskMap.floatingNode.hasOwnProperty(nodeId)) {
       const node = taskMap.floatingNode[nodeId];
-      console.log(node.pageData.pageObj.title);
+      //console.log(node.pageData.pageObj.title);
       if (node.pageData.embedding) {
         userLog[actionID]["nodes"].push(node.pageData.pageObj.title);
         userLog[actionID]["embeddings"].push(node.pageData.embedding);

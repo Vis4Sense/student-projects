@@ -118,8 +118,11 @@ function createTaskBox() {
               
               Guidelines:
               - The summary should be concise and informative
-              - Make the summary as a list of each webpage's main content, each point should be less than 80 words
+              - Make the summary as a list of each webpage's main content, each point should be between <li> and <\li> 
+                for example: 
+                <li> this is a log in page </li>
               - Please only use the provided information for your answer
+              - the summary should be less than 200 words
               - if there is no information from user quety, return "I need more information to generate summary"`
           }, {
             role: "user",
@@ -146,6 +149,7 @@ function createTaskBox() {
         })
         .then(data => {
             let messageContent = data.choices[0].message.content;
+            console.log(messageContent);
             // 'data' is the JSON object from the response
             // var width = 400;
             // var height = 300;
@@ -158,11 +162,11 @@ function createTaskBox() {
 
             if (existingSummaryText && existingSummaryText.classList.contains("summary-text")) {
                 // If an element with the specified id exists and it has the "summary-text" class, update its content
-                existingSummaryText.innerHTML = "<p>" + messageContent + "</p>";
+                existingSummaryText.innerHTML = "<ul>" + messageContent + "<\/ul>";
             } else {
                 // If no element with the specified id exists or it does not have the "summary-text" class, create a new one
                 var newDiv = document.createElement("div");
-                newDiv.innerHTML = "<p>" + messageContent + "</p>";
+                newDiv.innerHTML = "<ul>" + messageContent + "<\/ul>";
                 newDiv.classList.add("summary-text");
                 newDiv.setAttribute("id", nodeContainer.id); // Set the id if it doesn't exist, otherwise it retains its existing id
                 newDiv.style.top = taskBox.offsetTop + "px";

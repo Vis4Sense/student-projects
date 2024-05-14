@@ -67,6 +67,7 @@ div.content {
     border: 1px solid #000000;
     border-radius: 5px;
     margin: 5px;
+    font-size: 12px;
   }
   
   .leftSidebar button {
@@ -75,7 +76,7 @@ div.content {
     padding: 8px;
     margin-left: 10%;
     margin-bottom: 5px;
-    font-size: 1vw;
+    font-size: 12px;
     overflow: auto;
     border-radius: 5px;
   }
@@ -104,7 +105,7 @@ div.content {
     width: 120px;
     padding: 8px;
     margin: 10px; /* Adjust margin */
-    font-size: 1vw;
+    font-size: 12px;
     border-radius: 5px;
     overflow: auto;
     box-sizing: border-box; 
@@ -197,7 +198,7 @@ div.content {
     color: black;
     width: 70%;
     height: auto;
-    font-size: 1vw;
+    font-size: 10px;
     overflow: auto;
     border-radius: 5px;
 }
