@@ -8,6 +8,15 @@
 3. Next step
    - start to draft disertation
    - little bit extended experiment
+  
+
+Xiruo Sun
+1. Progress
+   - no much progress, because I need to modify the observation space last week, I only started doing the parameter tuning experiment yesterday.
+2. Question and difficulty
+   - when I do parameter tuning, I could only do 200 episodes training each set of parameters because of the limited time, does this make sense?
+3. Next step
+   - writing dissertation while doing experiments.
 
 
 # 7 May 2024
