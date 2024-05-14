@@ -16,7 +16,7 @@ Xiruo Sun
 1. Progress
    - no much progress, because I need to modify the observation space last week, I only started doing the parameter tuning experiment yesterday.
 2. Question and difficulty
-   - when I do parameter tuning, I could only do 200 episodes training each set of parameters because of the limited time, does this make sense?
+   - when I do parameter tuning, I could only do 200 episodes training each set of parameters(different learning rate, gamma, etc.) because of the limited time, does this make sense?
 3. Next step
    - writing dissertation while doing experiments.
 
