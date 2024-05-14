@@ -17,15 +17,23 @@ h2{
     font-size: 20px; 
 }
 
-input{
-    box-sizing: border-box;
-    width: 500px;
+#input_task {
+  flex: 1; 
+  box-sizing: border-box;
+    width: 390px;
     height: 40px;
     margin: 10px;
     background: #FFFEFE;
     border: 1px solid #000000;
     border-radius: 5px;
 }
+
+#createButton {
+  flex: 0; 
+  width: 80px;
+}
+
+
 
 .empty-task::placeholder {
     color: red;
@@ -44,14 +52,14 @@ input{
 }
 
 div.content {
-  margin-left: 25%;
+  margin-left: 20%;
   padding: 0;
   height: 100%;
-  width: 70%;
+  width: 65%;
 }
 
   .button{
-    position:relative;
+    position: relative;
     box-sizing: border-box;
     width: 115px;
     height: 40px;
@@ -144,9 +152,24 @@ div.content {
     background-position: center;
     justify-content: center;
     background: url("images/summary.png") no-repeat scroll 0 0 transparent;
-
   }
 
+  .summary-text {
+    position: absolute;
+    top: 0; 
+    right: 0; 
+    padding: 10px;
+    width: 18%;
+    height: 200px;
+    background-color: #f3f0f0; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+    overflow: auto
+}
+  .summary-text p{
+    font-size: 14px;
+  }
   .nodeContainer{
     position: absolute;
     margin-top: 30px;

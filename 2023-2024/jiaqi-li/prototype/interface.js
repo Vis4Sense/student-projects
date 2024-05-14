@@ -84,7 +84,7 @@ function createTaskBox() {
             }
         }
 
-        console.log(tabIds);
+        //console.log(tabIds);
         chrome.windows.create({ focused: false, state: 'minimized'}, function(newWindow) {
 
             tabIds.forEach(function(tabId) {
@@ -95,19 +95,7 @@ function createTaskBox() {
         });
 
     });
-
-    // Create the delete button
-    var deleteButton = document.createElement('button');
-    //deleteButton.textContent = 'Delete';
-    deleteButton.classList.add('deleteButton');
-    deleteButton.title = 'Delete';
-    deleteButton.addEventListener('click', function() {
-        taskBox.remove();
-        //Delete the task box in taskMap
-        updateTaskMap(nodeContainer.id,"","",'delete box');
-    });
     
-
     //Create summary button
     var summaryButton = document.createElement('button');
     summaryButton.classList.add('summaryButton');
@@ -131,7 +119,8 @@ function createTaskBox() {
               Guidelines:
               - The summary should be concise and informative
               - Make the summary as a list of each webpage's main content, each point should be less than 80 words
-              - add a \n between each point`
+              - Please only use the provided information for your answer
+              - if there is no information from user quety, return "I need more information to generate summary"`
           }, {
             role: "user",
             content: text
@@ -158,12 +147,29 @@ function createTaskBox() {
         .then(data => {
             let messageContent = data.choices[0].message.content;
             // 'data' is the JSON object from the response
-            var width = 400;
-            var height = 300;
-            var left = (window.screen.width - width) / 2;
-            var top = (window.screen.height - height) / 2;
-            var popup = window.open("", "popup", "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left);
-            popup.document.write("<p>" + messageContent + "</p>");
+            // var width = 400;
+            // var height = 300;
+            // var left = (window.screen.width - width) / 2;
+            // var top = (window.screen.height - height) / 2;
+            // var popup = window.open("", "popup", "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left);
+            // popup.document.write("<p>" + messageContent + "</p>");
+
+            var existingSummaryText = document.getElementById(nodeContainer.id);
+
+            if (existingSummaryText && existingSummaryText.classList.contains("summary-text")) {
+                // If an element with the specified id exists and it has the "summary-text" class, update its content
+                existingSummaryText.innerHTML = "<p>" + messageContent + "</p>";
+            } else {
+                // If no element with the specified id exists or it does not have the "summary-text" class, create a new one
+                var newDiv = document.createElement("div");
+                newDiv.innerHTML = "<p>" + messageContent + "</p>";
+                newDiv.classList.add("summary-text");
+                newDiv.setAttribute("id", nodeContainer.id); // Set the id if it doesn't exist, otherwise it retains its existing id
+                newDiv.style.top = taskBox.offsetTop + "px";
+                newDiv.style.right = "20px";
+                
+                document.body.appendChild(newDiv);
+            }
         })
         .catch(error => {
             console.error('Failed to fetch:', error);
@@ -175,6 +181,23 @@ function createTaskBox() {
         
     }
     );
+
+
+    // Create the delete button
+    var deleteButton = document.createElement('button');
+    //deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('deleteButton');
+    deleteButton.title = 'Delete';
+    deleteButton.addEventListener('click', function() {
+        taskBox.remove();
+        var existingSummaryText = document.getElementById(nodeContainer.id);
+        if (existingSummaryText && existingSummaryText.classList.contains("summary-text")){
+            existingSummaryText.remove();
+        }
+        
+        //Delete the task box in taskMap
+        updateTaskMap(nodeContainer.id,"","",'delete box');
+    });
 
     // Append the buttons and content to the task box
     taskBox.appendChild(taskTheme)
