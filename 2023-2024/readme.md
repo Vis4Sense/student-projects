@@ -43,11 +43,33 @@ Rachana
 3. Next steps: finish analysing testing, complete the diss first draft and get feedback
 
 
+Jiaqi
+1. Progress:
+   - integrate Azure api in prototype
+   - add a task summarize functionality
+   - connected with 4 users, completed the training session
+   - conducted 1 user test
+2. Question:
+   - ada embedding model doesn't have corresponding Javascript SDK
+   - the design of user test:
+      - provide 2 set of tasks, each set with 2 tasks. 
+         
+         for example: 
+         
+         set 1:{task1: make a simple travel plan to Tailand; task2: what is the cause of aurora, what value can be used to predict it?}
+
+         set 2:{task1: make a simple travel plan to Scotland; task2: what is ADHD,find the general cause of it and theripy advice.}
+      - user need to search for set1 as usually, and provide a breif search result
+      - for set2, user need to use extension
+      - compare the browsing time, tab count and final result
+3. next step
+   - conduct user test and result analysis
+
 # 7 May 2024
 Rachana
 1. progress
    - finished debugging and last additions to website (fix issues with page refreshing and buttons not triggering correctly, made home page describing the website's features w/ screenshots of examples)
-   - hosted the prototype website up on pythonanywhere ([link]((https://rachana99.pythonanywhere.com/))
+   - hosted the prototype website up on pythonanywhere ([link]((https://rachana99.pythonanywhere.com/)))
    - read 2 research papers suggested by kai - my study design was inspired by the anglekindling paper
    - completed the user study & evaluation design
    - finished recruiting participants: 5 hobbyist writers (mainly students or fresh graduates who enjoy writing in free time), 1 professional writer (poet w/ multiple publications and awards who is working on a novel)
