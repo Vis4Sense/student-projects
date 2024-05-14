@@ -32,7 +32,15 @@ Hongye
 
 2. Question:
    - Failed to deploy backend services on 1Cup/1G Memory ECS service instance. Do school of Computer Science have such resource support for that ?
-   
+
+Rachana
+1. Progress:
+- Made diss outline, got feedback & updated it
+- Completed another 3 user testing sessions
+- Transcribed 5/6 sessions
+- Drafted half of the Prototype Evaluation section
+2. Question: none
+3. Next steps: finish analysing testing, complete the diss first draft and get feedback
 
 
 # 7 May 2024
