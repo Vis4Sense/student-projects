@@ -3,7 +3,7 @@
 
 Muhamad Hermawan
 1. Progress:
-   - majorly debug and modifying environtment especially reward, (trying quite variations of reward and punishment) and testing
+   - primarly debug and modifying environtment especially reward, (trying quite variations of reward and punishment) and testing
    - three testing on sentiment and non sentiment with final reward function
 2. Question and difficulty
    - not converge yet after training up to around 5000 episodes,  probably need more
