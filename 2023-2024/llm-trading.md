@@ -20,6 +20,14 @@ Xiruo Sun
 3. Next step
    - writing dissertation while doing experiments.
 
+Raul Farkas
+1. Progress:
+   - Started working on final presentation
+2. Questions and difficulties
+   - None
+3. Next step
+   - Finish presentation and present of Friday
+
 
 # 7 May 2024
 
