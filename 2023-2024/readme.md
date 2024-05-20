@@ -23,6 +23,16 @@
  |prototype          | A simple extension |        |         |        |         |    [prototype](./hongye-an/proj-code/README.md)    |
 
 
+# 21 May 2024
+Jiaqi 
+1. Progress:
+   - put summary in main interface
+   - conducted 3 user test
+2. Question:
+3. Next step:
+   - user study analysis and write dissertation
+
+   
 # 14 May 2024
 Hongye
 
