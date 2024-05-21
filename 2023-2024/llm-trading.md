@@ -1,4 +1,6 @@
 # 21 May 2024
+
+Muhamad Hermawan
 1. Progress:
    - modify environtment, implement various reward function
    - More test with various reward function
