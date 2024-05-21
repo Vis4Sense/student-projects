@@ -32,6 +32,13 @@ Jiaqi
 3. Next step:
    - user study analysis and write dissertation
 
+Rachana
+1. Progress:
+   - transcribed 6th testing session
+   - analysed testing
+   - drafted evaluation, discussion, lit review, research questions, user requirements
+3. Next step: finish dissertation draft + get feedback
+
    
 # 14 May 2024
 Hongye
