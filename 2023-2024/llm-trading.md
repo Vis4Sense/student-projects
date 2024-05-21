@@ -16,6 +16,15 @@ Muhamad Hermawan
    - Start writing 
 
 
+Xiruo Sun
+   - do experiments using different input environments.
+2. Question and difficulty
+   - the performance using only price features is better than only using sentiment features.
+3. Next step
+   - try more experiment.
+   - write paper
+
+
 # 14 May 2024
 
 Muhamad Hermawan
