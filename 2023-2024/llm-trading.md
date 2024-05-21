@@ -17,6 +17,7 @@ Muhamad Hermawan
 
 
 Xiruo Sun
+1. Progress:
    - do experiments using different input environments.
 2. Question and difficulty
    - the performance using only price features is better than only using sentiment features.
