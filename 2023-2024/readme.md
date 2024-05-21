@@ -39,6 +39,12 @@ Rachana
    - drafted evaluation, discussion, lit review, research questions, user requirements
 3. Next step: finish dissertation draft + get feedback
 
+Hongye
+1. Progress:
+   - Deploy Vitality2 but unfortunately not worked on my 4C8G cloud instance
+   - Keep going on dissertation
+2. Next step: finish deployment, user case study and dissertation draft in next week.
+
    
 # 14 May 2024
 Hongye
