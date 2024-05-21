@@ -7,7 +7,7 @@
    - Alpaca, available but close price is non adjusted, some missing data on 8 asset stocks
    - yahoo finance, cannot retrieve historical hourly data beyond one and half years
    - Eikon Refinitiv (Reuters), only lattest 1 year historical data for hourly data
-   - Bought from databento.com, got from 2018 hourly data, but it is non adjusted closed price
+   - Bought from databento.com, got from 2018 hourly data, but it is non adjusted closed price, some missing data
    - bought from polygon.io, got from 2020, close price is adjusted, but too many missing data between hours. random between stock, so one record
    - haven't got another free source or affordable. others too expensive to try.
 3. Next Step
