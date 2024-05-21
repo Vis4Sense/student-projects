@@ -1,3 +1,18 @@
+# 21 May 2024
+1. Progress:
+   - modify environtment, implement various reward function
+   - More test with various reward function
+2. Question or Difficulty
+   Haven't found reliable hourly market data at least for 5 years history
+   - Alpaca, available but close price is non adjusted, some missing data on 8 asset stocks
+   - yahoo finance, cannot retrieve historical hourly data beyond one and half years
+   - Eikon Refinitiv (Reuters), only lattest 1 year historical data for hourly data
+   - Bought from databento.com, got from 2018 hourly data, but it is non adjusted closed price
+   - bought from polygon.io, got from 2020, close price is adjusted, but too many missing data between hours. random between stock, so one record
+   - haven't got another free source or affordable. others too expensive to try.
+3. Next Step
+   - Start writing 
+
 
 # 14 May 2024
 
