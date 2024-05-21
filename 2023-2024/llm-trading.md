@@ -2,7 +2,7 @@
 1. Progress:
    - modify environtment, implement various reward function
    - More test with various reward function
-2. Question or Difficulty
+2. Question or Difficulty:
    Haven't found reliable hourly market data at least for 5 years history
    - Alpaca, available but close price is non adjusted, some missing data on 8 asset stocks
    - yahoo finance, cannot retrieve historical hourly data beyond one and half years
