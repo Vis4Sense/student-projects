@@ -25,7 +25,7 @@
 # 28 May 2024
 Rachana
 1. Progress: wrote full draft of dissertation and requested feedback
-2. Question: none
+2. Question: I added a subsection to my discussion section to talk about the significance of the findings - i'm not sure if it's sufficient for digging deep into the results like you said though?
 3. Next step: Use feedback to edit dissertation and then submit.
 
 # 21 May 2024
