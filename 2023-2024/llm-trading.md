@@ -1,3 +1,15 @@
+# 28 May 2024
+Xiruo Sun
+1. Progress:
+   - reset the max number of stock trading quantity(full buying power), do experiments again. some sentiment models perform better than none-sentiment models.
+   - write some part of the dissertion.
+2. Question and difficulty
+   - it is difficult to summary the pattern of these experinment.
+3. Next step
+   - finish the dissertion
+
+
+
 # 21 May 2024
 
 Muhamad Hermawan
