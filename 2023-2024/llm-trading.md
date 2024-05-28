@@ -9,6 +9,15 @@ Xiruo Sun
    - finish the dissertion
 
 
+Muhamad Hermawan
+1. progress:
+   - Train the agent with sentimen and without sentiment in longer period time from 2019 to 2021
+   - testing the agent with 9 different period of testing data, from 2022 to 2024
+2. Difficulty and Question
+   - Failed to train on longer timeframe, taking too much time for enough episode of training above 4000 episodes training.
+3. Next step
+   - Writing dissertation
+
 
 # 21 May 2024
 
