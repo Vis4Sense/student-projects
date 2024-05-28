@@ -28,6 +28,9 @@ Rachana
 2. Question: I added a subsection to my discussion section to talk about the significance of the findings - i'm not sure if it's sufficient for digging deep into the results like you said though?
 3. Next step: Use feedback to edit dissertation and then submit.
 
+Hongye
+Progress & Next Step: Working with the dissertation: https://www.overleaf.com/read/zqwxpsnhwzjt#ca88d0
+
 # 21 May 2024
 Jiaqi 
 1. Progress:
