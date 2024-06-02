@@ -17,7 +17,7 @@ Four participants tested the prototype, each conducting a total of four tasks—
         - Using the extension was seen as reducing browsing time and aiding in creating more detailed documents.
 
 
-3. System Usability Scale  questions(Strongly agree, Agree, Neutral, Disagree, Strongly disagree)
+3. System Usability Scale  questions( Agree, Neutral, Disagree)
     - I think that I would like to use this system frequently.
         - Agree 2, Neutral 1, Disagree 1
     - I found the system unnecessarily complex.

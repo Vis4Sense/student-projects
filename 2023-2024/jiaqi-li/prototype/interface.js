@@ -150,13 +150,6 @@ function createTaskBox() {
         .then(data => {
             let messageContent = data.choices[0].message.content;
             console.log(messageContent);
-            // 'data' is the JSON object from the response
-            // var width = 400;
-            // var height = 300;
-            // var left = (window.screen.width - width) / 2;
-            // var top = (window.screen.height - height) / 2;
-            // var popup = window.open("", "popup", "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left);
-            // popup.document.write("<p>" + messageContent + "</p>");
 
             var existingSummaryText = document.getElementById(nodeContainer.id);
 
@@ -180,8 +173,6 @@ function createTaskBox() {
         });
 
         //console.log(summary);
-        //popup a small window to show the summary
-        //make the window at the middle of the screen
         
     }
     );

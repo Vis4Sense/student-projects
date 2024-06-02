@@ -9,8 +9,8 @@ class hmPage {
        this.isOpened = isOpened;
        // this.clicked = false;
        this.forwardBack = {
-          forward: 0, // the number of times the parent page goes forward to this page
-          back: 0 // the number of times this page goes back to the parent page
+          forward: 0, 
+          back: 0 
        };
        this.content = pageContent;
        this.embedding = embedding;
@@ -129,9 +129,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     });
                     //console.log("Script re-injected into tab:", updatedTab.url);
     
-                    // Remove the timeout identifier since the script is now injected
                     delete delays[tabId];
-                }, 2000); // Delay for 500 ms, adjust as needed
+                }, 2000); 
             }
         }
     });

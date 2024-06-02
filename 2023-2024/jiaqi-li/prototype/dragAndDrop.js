@@ -199,7 +199,7 @@ function drop(event) {
 
 //update taskMap in different situation
 function updateTaskMap(taskId,pageData,nodeId,type) {
-    //update taskMap
+
     switch(type){
     //get the node index according to the pageData
         case "delete":

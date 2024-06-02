@@ -3,9 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
     function saveFile() {
-        // Here you can implement the logic to save the file
-        // For example, you can use FileSaver.js library (https://github.com/eligrey/FileSaver.js/)
-        // For simplicity, let's just show an alert
 
         const taskMapContent = JSON.stringify(taskMap, null, 2);
         const taskMapBlob = new Blob([taskMapContent], { type: "application/json" });

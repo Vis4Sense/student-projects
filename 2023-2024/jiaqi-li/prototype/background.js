@@ -64,7 +64,6 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get(['endpoint', 'apiKey'], function(result) {
     if (result.endpoint && result.apiKey) {
         console.log("API Endpoint and Key are set: ", result);
-        // You can initialize your API or other functions here
     } else {
         console.log("API details are not set.");
     }
