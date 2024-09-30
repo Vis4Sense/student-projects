@@ -4,7 +4,8 @@
   - An alternative is company/organisation/charity that work with real users (they can get you in contact with the users).
   - A few would be fine, and the more the better.
 - Requirements 
-  - Get the requirements from the real users, not what you think: you might not know what users wants, unless you are a targeted user.
+  - Get the requirements from the **real users**, not what you think: you might not know what users wants, unless you are a targeted user.
+  - Focus on the **target use case**, i.e., the problem that the users will use your solution for. There can be many other related tasks, but these are out of the scope
   - The requirements should be about the **problems** or **challenges**, not the technology or solution
     - For example, 'I cannot create the prompt for chatGPT to generate the text I want' instead of 'I want a prompt autocomplete feature when using the chatGPT web interface'.
   - How to get requirements
