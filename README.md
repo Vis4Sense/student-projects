@@ -6,7 +6,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 - You will **need to be proactive**, especially if you want a good grade:
   - I will provide general directions, but not step-by-step instructions (you will need to figure these out);
   - Such as finding relevant papers, coming up with new design idea, and exploring implementation options;
-  - I am always here to help if you have any question or difficulty: **ask as soon as you can if something is not clear or you got stuck.**
+  - I am always here to help if you have any question or difficulty: **ask as soon as you can if something is not clear or you got stuck.Don't wait for the next meeting.**
 - Have a look of the **previous student projects**:
   - Someone has worked on your topic already; you don't need to start from scratch.
 - We will have weekly meetings:
