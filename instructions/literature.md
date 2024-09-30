@@ -12,8 +12,8 @@
 - We will discuss and share these.
 
 For this project, you are likely to find good-quality related work from these journals and conference
- - **IEEE Transactions on Visualization and Computer Graphics ([IEEE TVCG])**(https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945)
- - **ACM conference on human factors in computing systems ([ACM CHI])**(https://dl.acm.org/conference/chi))
+ - **IEEE Transactions on Visualization and Computer Graphics ([IEEE TVCG](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945))**
+ - **ACM conference on human factors in computing systems ([ACM CHI](https://dl.acm.org/conference/chi))**
  - [Computer Graphics Forum](https://onlinelibrary.wiley.com/journal/14678659) (if you want to cast a wider net)
 
 ## What existing work to include and how to discuss
