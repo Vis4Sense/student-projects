@@ -6,7 +6,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 - You will **need to be proactive**, especially if you want a good grade:
   - I will provide general directions, but not step-by-step instructions (you will need to figure these out);
   - Such as finding relevant papers, coming up with new design idea, and exploring implementation options;
-  - I am always here to help if you have any question or difficulty: **ask as soon as you can if something is not clear or you got stuck.Don't wait for the next meeting.**
+  - I am always here to help if you have any question or difficulty: **ask as soon as you can if something is not clear or you got stuck. Don't wait for the next meeting.**
 - Have a look of the **previous student projects**:
   - Someone has worked on your topic already; you don't need to start from scratch.
 - We will have weekly meetings:
@@ -20,10 +20,14 @@ Repository for all the student projects, including UG/PGT final projects and int
 - We will need to further narrow down the scope for your project:
   - I will help you do this;
   - We will define the work for each student if there are more than one working on the same project.  
-- Please read at least one paper (listed at the end of the project idea webpage) **from beginning to end**. 
-  - Figure out what the research question is, and narrow down yours in the same way;
-  - Copy the process from requirements, design, implementation, to evaluation for your project;
-  - You will get 80+ mark if the project results can be published in a similar conference or journal;
+- **You will get 80+ mark if the project results can be published in a good conference or journal**;
+  - This is not a requirement and it will need more work than projects not trying to publish.  
+  - If you want to do this, please read at least one paper (listed on the project idea webpage) **from beginning to end**. 
+    - **This will take a long time (at least a few days)**. There will be many things you never heard of and not explained in the paper, so you need a lot of extra research to understand them. **The worst part is that this is often recursive**.
+  - Figure out what the research question is, and narrow down yours in a similar way;
+  - Find a target paper (whihc is probably not be first you read)
+    - This the baseline for your comparison, so you can show the improvement brought by your work;
+    - Copy the process from requirements, design, implementation, to evaluation for your project. This is the way usually how these are done.
  
 ## [Software and services](instructions/software.md)
 
