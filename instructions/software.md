@@ -3,7 +3,7 @@ We will use this shared github reporsitory for project file and code, so you
 1. will never lose your code (because of corrupted USB or hard drive), and
 2. can easily show it to other people (e.g.,as part of your work portfolio for job application).
 
-Please send me your github account username or email, so I can add you to the repository.
+**Please send me your github account username or email**, so I can add you to the repository.
 
 You probably want to check out [GitHub Student Developer Pack](https://education.github.com/pack) that provides features that you will need to pay otherwise such as GitHub Copilot.
 
@@ -15,16 +15,16 @@ If you never use git before: `git` is the software that maintains different vers
 - You can also use Git inside the Visual Studio Code (the recommended IDE, more below): [video tutorial](https://www.youtube.com/watch?v=i_23KUAEtUM) and [text tutorial](https://code.visualstudio.com/docs/sourcecontrol/intro-to-git).
 
 ## Repository
-The repository is public, so don't upload any data that can't be shared
+**The repository is public, so don't upload any data that can't be shared**
   - You can create a separate private repository for sensitve data. Follow the 'data management plan' of your ethics application.
 
 Each cohort has its folder: the current one is [2023-224](/2023-2024)
 - We will use the `readme.md` in the folder for the meeting notes.
 
 Inside the folder, please make **a subfolder with your name** for your project:
-- Include in your folder a `readme.md` file to list all the things in your folder (e.g., which subfolder contains what) and other information such as how to run your code.
+- Include in your folder a **`readme.md`** file to list all the things in your folder (e.g., which subfolder contains what) and other information such as how to run your code.
 - Use the your folder for your code and everything else such as collected data and design sketches;
-- Don't include large files: as everyone else will download them when they do a 'pull' of the repository.
+- **Don't include large files**: as everyone else will download them when they do a 'pull' of the repository.
 
 ## Markdown
 If you never used markdown before, [this guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) can get you started. 
@@ -43,8 +43,8 @@ Planning and project management (we will come back to this for Project Plan/Prop
 - You can create a kanban board in 'project' (similar to Trello)
 - create "milestones', e.g., one for each iteration
 - add 'issues' to 'milestones', and set deadline
-- An overly detailed example: [this project template](https://github.com/users/kaidatavis/projects/2)
-    
+- **An overly detailed example**: [this project template](https://github.com/users/kaidatavis/projects/2)
+- You don't need to use GitHub Project, but **some form of project planning and progress tracking is essential**.
 
 # Code editor (IDE): 
 Recommended: Visual Studio Code https://code.visualstudio.com/. 
@@ -59,9 +59,12 @@ Recommended: Use Latex instead of Word for all the reports: proposal, progress r
 - This will 
   - make your report look more professional
   - make the references easier
-  - this is how many academic papers and books are written
+  - **This is a must if you want of publish the project**: this is how many academic papers and books are written
 - Recommended editor: Overleaf (https://www.overleaf.com/), like Google Docs for Latex.
   - Overleaf has a ['visual editor' mode](https://www.overleaf.com/learn/how-to/How_do_I_use_Overleaf%3F), which makes it similar to how you would write in Word.
+  - **University of Nottingham has paid overleaf subscription**: just register with your university email.
 - Learn Latex in 30 minutes: https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes;
 - The video recording of my overleaf tutorial: https://youtu.be/PqW8myobrPE
 - How to add references: https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf
+- It is possible to [use Markdonw in Latex](https://www.overleaf.com/learn/how-to/Writing_Markdown_in_LaTeX_Documents), which can be a bit verbose.
+- 
