@@ -12,4 +12,5 @@
   <li>Look at old projects code</li>
   <li>Create a project on Github for Gantt chart</li>
   <li>Simple code, read data, do trade, measure performance</li>
+  <li>Create Latex account for reports</li>
 </ul>
