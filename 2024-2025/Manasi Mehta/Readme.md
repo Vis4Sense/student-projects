@@ -1,1 +1,0 @@
-LLM for automated Trading
