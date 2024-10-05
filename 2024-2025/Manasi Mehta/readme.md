@@ -1,7 +1,7 @@
 # LLM for Automated Trading
 
 ## Meeting Minutes and to:do
-[Meeting Minutes Markdown:](meetingMinutes.md)
+[Meeting Minutes Markdown](meetingMinutes.md)
 
 ## MVP
 # Trading System: Minimal Working Demo To-Do List
