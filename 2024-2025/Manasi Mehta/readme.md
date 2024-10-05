@@ -1,10 +1,11 @@
 # LLM for Automated Trading
+Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 
 ## Meeting Minutes and to:do
 [Meeting Minutes Markdown](meetingMinutes.md)
 
-## MVP
-# Trading System: Minimal Working Demo To-Do List
+# MVP
+## Trading System: Minimal Working Demo To-Do List
 
 ## 1. Data Input
 - [ ] **Obtain historical data**: 
