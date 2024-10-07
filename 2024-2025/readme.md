@@ -18,6 +18,7 @@ Xingyu
 - scenario: User select a column and the LLM tries to find the best matching concept from the ontology
 - there can be more than one matches
 - eventaully this can be done for entire table or database
+- option for front end: https://www.gradio.app/ 
 
 ## To Do
 - Kai
