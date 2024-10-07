@@ -1,5 +1,22 @@
 This is the folder for student projects in 2024-2025.
 
+# Meeting 7 Oct 2024
+
+Abhay, Manais, Ningbo, Xingyu, Kai
+
+Discussed the tasks for minimal working demo.
+- Less ambitious: maximum 2 weeks to complete
+- More implementation details
+
+## To Do
+- Kai
+   - to contact the collaborator about a meeting/example data
+   - check the LLM access settings
+- Everyone:
+   - update the task list with implemention details the for the minimal working demo
+   - add a deadline for each task
+   - start the implementation
+
 # Meeting 2 Oct 2024
 
 Manais, Xingyu, Ningbo, Kai (Abhay is ill)
