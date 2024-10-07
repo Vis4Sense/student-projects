@@ -8,13 +8,24 @@ Discussed the tasks for minimal working demo.
 - Less ambitious: maximum 2 weeks to complete
 - More implementation details
 
+Abhay/Manasi - data access: alapac or yahoo finance
+
+Ningbo
+- it is OK to use data from prevous student projects.
+- choose a very small user task, such as comparing the prices (of a single product) from different website.
+
+Xingyu
+- scenario: User select a column and the LLM tries to find the best matching concept from the ontology
+- there can be more than one matches
+- eventaully this can be done for entire table or database
+
 ## To Do
 - Kai
    - to contact the collaborator about a meeting/example data
    - check the LLM access settings
 - Everyone:
    - update the task list with implemention details the for the minimal working demo
-   - add a deadline for each task
+   - add a deadline for each task (maximum 2 week, by 18 Oct)
    - start the implementation
 
 # Meeting 2 Oct 2024
