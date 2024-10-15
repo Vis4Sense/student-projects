@@ -27,6 +27,7 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - It can generate an mindmap after grouping all the related tabs。 For examples, display the advantage of different schools when search for postgraduate application, or analyise the prices and quality of each product when search for shopping, even Corporate campus recruitment information.
 - It allow user to ask question based on current tab/ current groups of tabs/ known knowledge of the LLM.
 - This time I will try to add LLM api that focusiong image analyise, increase the information from text based api.
+- Will try to apply react/vue to build the front-end, in order to support more functions. 
 
 生成一个最终的思维导图/报告，包括分析物体的优劣等等，并标注来处（即用户访问过的网址）,只显示搜索的final result
 
