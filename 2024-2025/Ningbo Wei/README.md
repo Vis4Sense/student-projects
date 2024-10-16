@@ -4,6 +4,8 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 
 ## Project Tasks
 
+- maybe try to built a software instead of a google chorme extention(16/10/2024)
+
 ### 1. build a demo google chrom extention
 - **why google chrom extention**: For better extract the data from users, including their Browsing History
 - **sub tasks**: build an backend and frontend, ensure that user can have interaction with it.
@@ -21,7 +23,7 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - All the info above, including browsing history and all kinds of summerise, will be stored in a data base so that user can review it.
 
 ### 4. User LLM, provide a interface for user to ask question
-- the material to answer this question comes from tabs that user is viewing/ have viewed.
+- the material to answer this question comes from tabs that user is viewing/ have viewed, together with the knolege that the LLM has already have.
 
 ### What are these different to previous works?
 - It can generate an mindmap after grouping all the related tabs。 For examples, display the advantage of different schools when search for postgraduate application, or analyise the prices and quality of each product when search for shopping, even Corporate campus recruitment information.

@@ -10,6 +10,7 @@
 
 ## week03, oct 14th
 - learn the hello world tutorial for an introduction to the google extension development workflow.
+- Spend time learning javascript and some front-end knowledge, like DOM
 
 
 
