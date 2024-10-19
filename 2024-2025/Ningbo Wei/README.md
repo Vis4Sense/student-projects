@@ -4,8 +4,6 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 
 ## Project Tasks
 
-- maybe try to built a software instead of a google chorme extention(16/10/2024)
-
 ### 1. build a demo google chrom extention
 - **why google chrom extention**: For better extract the data from users, including their Browsing History
 - **sub tasks**: build an backend and frontend, ensure that user can have interaction with it.
@@ -14,6 +12,13 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - access the content of each tabs on the browser
 - extract both text and images, but need to clean those advertesment if necessary
 - show the info of this tab(title, low-image) on the user interface, and link this group of info with the previous tab's info
+
+### 2.5 built a backend and a front end
+- user need to open this throug http8080....
+- **why built a new backend and frontend instead of using chrom extention?**
+    - more flexibility and extentionable. 
+    - It is easier to use api form python comparing to javascripts
+    - But still require to built a google extention to gain the user's info
 
 ###  3. use Large Lanuage Model, summerise the tab and groups tabs with similar/related info
 - first needs to find a proper LLM api
@@ -26,6 +31,7 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - the material to answer this question comes from tabs that user is viewing/ have viewed, together with the knolege that the LLM has already have.
 
 ### What are these different to previous works?
+- build a new backend and frontend different from google extention
 - It can generate an mindmap after grouping all the related tabs。 For examples, display the advantage of different schools when search for postgraduate application, or analyise the prices and quality of each product when search for shopping, even Corporate campus recruitment information.
 - It allow user to ask question based on current tab/ current groups of tabs/ known knowledge of the LLM.
 - This time I will try to add LLM api that focusiong image analyise, increase the information from text based api.
