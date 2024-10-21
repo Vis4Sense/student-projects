@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Open extension API reference",
+  "version": "1.0.0",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://extension-tips.glitch.me/*"],
+
+  "minimum_chrome_version": "102",
+  "omnibox": {
+    "keyword": "api"
+  },
+
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://developer.chrome.com/docs/extensions/reference/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
