@@ -11,6 +11,8 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 - [ ] **Obtain historical data**: 
   - Fetch data from a reliable source (e.g., CSV, API, or other formats).
   - Ensure that data contains required fields like timestamp, price, volume, etc.
+  - ![alt text](./assets/image.png)
+
 - [ ] **Load and preprocess data**: 
   - Clean missing or invalid data.
   - Convert data to suitable formats for processing (e.g., pandas DataFrame).
