@@ -11,7 +11,9 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 - [x] **Obtain historical data**: 
   - Fetch data from a reliable source (Alpaca API).
   - Ensure that data contains required fields like timestamp, price, volume, etc.
-- [x] **Load and preprocess data**: 
+  - ![alt text](./assets/image.png)
+
+- [ ] **Load and preprocess data**: 
   - Clean missing or invalid data.
   - Convert data to suitable formats for processing (Pandas DataFrame).
   - Ensure time is sorted and no out-of-sequence data points.
