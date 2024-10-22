@@ -11,6 +11,13 @@
 ## week03, oct 14th
 - learn the hello world tutorial for an introduction to the google extension development workflow.
 - Spend time learning javascript and some front-end knowledge, like DOM
+- build a small demo extracting web titles
+
+## week04, oct 21st
+- meeting
+    - evaluation, 可以采用interview
+    - proposal要强调与之前work的gap
+    - 创建一个bench mark，指定的浏览信息记录，看看返回的discription表现如何
 
 
 
