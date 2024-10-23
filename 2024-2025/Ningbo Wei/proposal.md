@@ -5,8 +5,7 @@ Project Proposal: Visual Analytic for Sencemaking
 ## Background and motivation
 - definetion of visual analytics and sensemaking
 
-Nowaday, internet has become a key resource for research and information foraging. Applying visualisation into sensemaking has becomes a essential approch for people quickly and smartly anaylise information, especially when using web-based searching doing mulitiple tasks.[] Sensemaking refers to the process by which individuals gather, structure, and represent information, all focused on understanding a specific problem they are trying to solve.[1] 
-
+Nowadays, the internet has become a crucial resource for research and information gathering. Applying visualization to sensemaking has become an essential approach for people to analyze information quickly and intelligently, especially when performing multiple tasks via web-based searches. Sensemaking refers to the process by which individuals gather, structure, and represent information, all aimed at understanding a specific problem they are trying to solve.
 - traditional way of sensemaking and its visual analytics
 
 Traditionally, online browsers including Chrome and Safari use 'tab management' for user to switch between different tasks. However, this is lack of the functionality for user to handle multitasking and quick information retrieval. For example, dozens of tabs could be displayed once user trying to buy a suitable camera online. This task contains several subtasks including understanding basic component and parameters of a camera and comparing different camers. Users might get lost when browsing such big datasets over long period of exploration and analysis, finding it difficult to navigate back to prior pages or miss understanding some information[].
