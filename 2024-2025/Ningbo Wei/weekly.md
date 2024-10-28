@@ -21,6 +21,16 @@
 - finish the proposal
 https://www.overleaf.com/project/670c3752a42288f6df84210c
 
+## week05, oct 28th
+- meeting
+    - do data management plant
+        - data should be stored at one drive. If on a local machine, please say "I have set some passwords"
+        - delete all the personal data after project end.
+        - 对data脱敏，name -> user1
+    - do interview
+        - find target users, shopping/student/tecnichal
+        - ask question, 2-3 people, know what they want
+
 
 
 
