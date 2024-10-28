@@ -15,9 +15,10 @@
 
 ## week04, oct 21st
 - meeting
-    - evaluation, 可以采用interview
-    - proposal要强调与之前work的gap
-    - 创建一个bench mark，指定的浏览信息记录，看看返回的discription表现如何
+    - evaluation, can try to use interview as a way
+    - it is better to mention the gap between previous works in the proposal
+    - creat a bench mark, use pre-set web browsing data to check gpt's discription
+- finish the proposal
 
 
 
