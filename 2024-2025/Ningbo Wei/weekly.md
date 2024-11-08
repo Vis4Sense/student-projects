@@ -30,6 +30,19 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - do interview
         - find target users, shopping/student/tecnichal
         - ask question, 2-3 people, know what they want
+- get api run correctly
+
+## week06, Nov 4th
+- meeting
+    - reading
+        - go to IEEE, ACM or google schoolar
+        - choose the one with highrt impact, the latest one
+        - make use of some tools, manage those materails
+- plant:
+    - data collecting and processing
+    - user questions
+    - draw a simple user interface
+
 
 
 
