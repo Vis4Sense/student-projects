@@ -42,6 +42,17 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - data collecting and processing
     - user questions
     - draw a simple user interface
+- have done:
+    - have drawn an user interface
+    - make a questioner
+
+## week07, Nov 11th
+- meeting
+
+- plant：
+    - data collection and processing
+    - benchmarks
+    - visit **historymap** github page, view the code
 
 
 
