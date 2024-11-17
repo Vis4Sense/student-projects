@@ -1,5 +1,21 @@
 # LLM for Qualitative Analysis:Medical data integration
 
+# Weekly Update: 04/11/2024 - 11/11/2024
+
+## Improve the Interface
+- Split the project into `app.py` for the interface and `backend.py` for core logic. This structure improves readability, maintainability, and allows for easier collaboration.
+- Added a function to save results. Users can now save mapping results as `.xlsx` files and assign custom file names.
+
+## Prepare the Database
+- Downloaded the OMOP Benchmark Synthea Dataset from the ReMatch paper.
+- Wrote a function that checks the accuracy of attribute mappings in the input dictionary by matching them against standard mappings in the database and returns the accuracy rate.
+
+## Prepare the LLM
+- Downloaded `Llama3.1-8B-Instruct` from the website.
+- Attempted to use LLaMA to build an API.
+
+
+
 # Minimal Working Demo for Medical data integration
 
 This README outlines the tasks involved in creating a minimal working demo for this project, focusing on reading medical data, processing it, obtaining encoding schemes, mapping to SNOMED, and providing a user interface for checking and editing mappings.
