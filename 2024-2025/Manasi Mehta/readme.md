@@ -59,3 +59,25 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 <ul>
   <li>Looked into Observable</li>
 </ul>
+
+Features to Include:
+  Sentiment Analysis:
+    Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).
+    Classify market sentiment as positive, neutral, or negative.
+  Technical Analysis:
+    Use technical indicators (e.g., RSI, MACD, Bollinger Bands).
+    Implement price trend analysis and candlestick pattern recognition.
+  Trading Strategies:
+    Combine sentiment scores with technical indicators to make buy/sell decisions.
+    Support multiple trading strategies (e.g., momentum trading, mean reversion).
+  Backtesting:
+    Test strategies on historical data before live trading.
+  Live Trading:
+    Integrate with cryptocurrency exchanges like Binance or Coinbase.
+    Execute trades automatically based on predefined rules.
+  Risk Management:
+    Stop-loss and take-profit mechanisms.
+    Position sizing based on risk tolerance.
+  Dashboard and Visualization:
+    Real-time price charts, trade history, and sentiment graphs.
+    Detailed logs of trades and analysis.
