@@ -54,3 +54,8 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 - [x] **Write documentation**: 
   - Document the design and functionality of each component.
   - Describe the inputs, outputs, and assumptions made in the system.
+     
+# Development
+<ul>
+  <li>Looked into Observable</li>
+</ul>
