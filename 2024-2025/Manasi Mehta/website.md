@@ -1,7 +1,6 @@
 # Prototype
 ![alt text](./assets/mvpprototype.png)
 
-![alt text](./assets/mvpbentoboxphoto.png)
 
 # Connecting frontend and backend
 ## Main Dashboard 
@@ -16,3 +15,6 @@ This can display multiple cryptocurrencies and shows all the following graphs:
 ### News Dashboard
 ![alt text](./assets/newspagemvpdashboard.png)
 ![alt text](./assets/newspagemvpdashboardmarketmovers.png)
+
+## Bento box style dashboard
+![alt text](./assets/mvpbentoboxphoto.png)
