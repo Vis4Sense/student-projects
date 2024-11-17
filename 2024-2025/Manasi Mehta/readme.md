@@ -61,23 +61,39 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 </ul>
 
 Features to Include:
-  Sentiment Analysis:
-    Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).
-    Classify market sentiment as positive, neutral, or negative.
-  Technical Analysis:
-    Use technical indicators (e.g., RSI, MACD, Bollinger Bands).
-    Implement price trend analysis and candlestick pattern recognition.
-  Trading Strategies:
-    Combine sentiment scores with technical indicators to make buy/sell decisions.
-    Support multiple trading strategies (e.g., momentum trading, mean reversion).
-  Backtesting:
-    Test strategies on historical data before live trading.
-  Live Trading:
-    Integrate with cryptocurrency exchanges like Binance or Coinbase.
-    Execute trades automatically based on predefined rules.
-  Risk Management:
-    Stop-loss and take-profit mechanisms.
-    Position sizing based on risk tolerance.
-  Dashboard and Visualization:
-    Real-time price charts, trade history, and sentiment graphs.
-    Detailed logs of trades and analysis.
+<ul>
+  <li>Sentiment Analysis:</li>
+  <ul>
+    <li>Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).</li>
+    <li>Classify market sentiment as positive, neutral, or negative.</li>
+  </ul>
+  <li>Technical Analysis:</li>
+  <ul>
+    <li>Use technical indicators (e.g., RSI, MACD, Bollinger Bands).</li>
+    <li>Implement price trend analysis and candlestick pattern recognition.</li>
+  </ul>
+  <li>Trading Strategies:
+    <ul>
+    <li>Combine sentiment scores with technical indicators to make buy/sell decisions.</li>
+    <li>Support multiple trading strategies (e.g., momentum trading, mean reversion).</li>
+    </ul>
+  <li>Backtesting:
+    <ul>
+    <li>Test strategies on historical data before live trading.</li>
+    </ul>
+  <li>Live Trading:
+    <ul>
+    <li>Integrate with cryptocurrency exchanges like Alpaca.</li>
+    <li>Execute trades automatically based on predefined rules.</li>
+    </ul>
+  <li>Risk Management:
+    <ul>
+    <li>Stop-loss and take-profit mechanisms.</li>
+    <li>Position sizing based on risk tolerance.</li>
+    </ul>
+  <li>Dashboard and Visualization:
+    <ul>
+    <li>Real-time price charts, trade history, and sentiment graphs.</li>
+    <li>Detailed logs of trades and analysis.</li>
+    </ul>
+</ul>
