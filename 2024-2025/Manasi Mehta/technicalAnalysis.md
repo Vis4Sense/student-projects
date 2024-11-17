@@ -13,3 +13,6 @@
 
 ## 5 - Top 10 gainers and losers
 ![alt text](./assets/cryptomarketmovers.png)
+
+# CNN-LSTM Model
+![alt text](./assets/mvpcnnlstm.png)
