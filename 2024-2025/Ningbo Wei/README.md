@@ -4,7 +4,7 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 
 ## Project Tasks
 
-### 1. build a demo google chrom extention
+### 1. build a demo google chrom extention, with simple frontend and backend
 - **why google chrom extention**: For better extract the data from users, including their Browsing History
 - **sub tasks**: build an backend and frontend, ensure that user can have interaction with it.
 
@@ -13,11 +13,12 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - extract both text and images, but need to clean those advertesment if necessary
 - show the info of this tab(title, low-image) on the user interface, and link this group of info with the previous tab's info
 
-### 2.5 built a backend and a front end
+### 2.5 built a backendand a frontend
 - user need to open this throug http8080....
 - **why built a new backend and frontend instead of using chrom extention?**
-    - more flexibility and extentionable. 
-    - It is easier to use api form python comparing to javascripts
+    - more flexibility and extentionable, easy to achieve complex functions and implementing testing. 
+    - Can implement and manten them individually.
+    - It is easier and more flexble to use api form python comparing to javascripts
     - But still require to built a google extention to gain the user's info
 
 ###  3. use Large Lanuage Model, summerise the tab and groups tabs with similar/related info
@@ -31,15 +32,43 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
 - the material to answer this question comes from tabs that user is viewing/ have viewed, together with the knolege that the LLM has already have.
 
 ### What are these different to previous works?
-- build a new backend and frontend different from google extention
+- build a new backend and frontend different from google extention. Pytthon based Flask for backend, React for frontend.
 - It can generate an mindmap after grouping all the related tabs。 For examples, display the advantage of different schools when search for postgraduate application, or analyise the prices and quality of each product when search for shopping, even Corporate campus recruitment information.
 - It allow user to ask question based on current tab/ current groups of tabs/ known knowledge of the LLM.
 - This time I will try to add LLM api that focusiong image analyise, increase the information from text based api.
-- Will try to apply react/vue to build the front-end, in order to support more functions. 
 
-生成一个最终的思维导图/报告，包括分析物体的优劣等等，并标注来处（即用户访问过的网址）,只显示搜索的final result
 
-增加图片识别gpt的api
 
-每打开一个标签页，先gpt分析主要内容，展示给用户；同时保留交流框，用户有不明白的词的时候，全网搜索/结合前面的标签页搜索，返回给用户
-（插件窗口的持续可见性和可交流性）
+### subtask
+
+- understand basic requirement of the project
+- read through previous works, literature search and review
+- demo development, try differnt framworks
+- project proposal writing
+- write requirements
+    - Usecase Diagrams
+    - activity diagrams
+    - sequence diagrams
+    - hand draw prototype
+- google chrome extension develop
+    - learn how to build chrom extention
+    - extract title of the tabs
+    - extract text info of tabs
+    - extract images info from tabs
+- backend development
+    - accept data from google chrom extention
+    - database development
+    - integration with frontend
+    - apply NLP interface
+- frontend development
+    - learn how to use react
+    - build frontend based on UML diagrams
+    - integration with backend, testing
+- NLP
+    - Investigate NLP models
+    - Design and fine tune NLP model 
+    - apply NLP model into backend
+- user evaluation, testing
+- report
+    - Intern report
+    - Final report

@@ -11,7 +11,9 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 - [x] **Obtain historical data**: 
   - Fetch data from a reliable source (Alpaca API).
   - Ensure that data contains required fields like timestamp, price, volume, etc.
-- [x] **Load and preprocess data**: 
+  - ![alt text](./assets/btcopeningprice.png)
+
+- [ ] **Load and preprocess data**: 
   - Clean missing or invalid data.
   - Convert data to suitable formats for processing (Pandas DataFrame).
   - Ensure time is sorted and no out-of-sequence data points.
@@ -32,6 +34,7 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 ## 4. Performance Tracking
 - [x] **Track trade history**: 
   - Store each executed trade with relevant details (price, quantity, etc.).
+  - [Technical Analysis](./technicalAnalysis.md)
 - [x] **Calculate performance metrics**: 
   - Track portfolio value over time.
   - Calculate metrics such as RSI, MACD, ROI, or Sharpe ratio for simple performance evaluation.
@@ -51,3 +54,46 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 - [x] **Write documentation**: 
   - Document the design and functionality of each component.
   - Describe the inputs, outputs, and assumptions made in the system.
+     
+# Development
+<ul>
+  <li>Looked into Observable</li>
+</ul>
+
+Features to Include:
+<ul>
+  <li>Sentiment Analysis:</li>
+  <ul>
+    <li>Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).</li>
+    <li>Classify market sentiment as positive, neutral, or negative.</li>
+  </ul>
+  <li>Technical Analysis:</li>
+  <ul>
+    <li>Use technical indicators (e.g., RSI, MACD, Bollinger Bands).</li>
+    <li>Implement price trend analysis and candlestick pattern recognition.</li>
+  </ul>
+  <li>Trading Strategies:
+    <ul>
+    <li>Combine sentiment scores with technical indicators to make buy/sell decisions.</li>
+    <li>Support multiple trading strategies (e.g., momentum trading, mean reversion).</li>
+    </ul>
+  <li>Backtesting:
+    <ul>
+    <li>Test strategies on historical data before live trading.</li>
+    </ul>
+  <li>Live Trading:
+    <ul>
+    <li>Integrate with cryptocurrency exchanges like Alpaca.</li>
+    <li>Execute trades automatically based on predefined rules.</li>
+    </ul>
+  <li>Risk Management:
+    <ul>
+    <li>Stop-loss and take-profit mechanisms.</li>
+    <li>Position sizing based on risk tolerance.</li>
+    </ul>
+  <li>Dashboard and Visualization:
+    <ul>
+    <li>Real-time price charts, trade history, and sentiment graphs.</li>
+    <li>Detailed logs of trades and analysis.</li>
+    </ul>
+</ul>
