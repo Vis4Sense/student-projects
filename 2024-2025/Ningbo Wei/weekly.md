@@ -52,9 +52,20 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
 - plant：
     - data collection and processing
     - benchmarks
-    - visit **historymap** github page, view the code
+    - visit **historymap** github page, view the cod+++++e
+- have done
+    - finish drawing offical uasecase diagram and prototype
+    - add a frontend of minmial demo
+    - try to extreact data from a web page as a benchmark Material
 
-
+## week08, Nov 18th
+- meeting
+    - advise to try longchain
+    - try library https://antv.antgroup.com/ , https://www.sigmajs.org/, https://github.com/maxGraph/maxGraph and https://jgraph.github.io/mxgraph/
+- plant：
+    
+- have done
+    
 
 
 

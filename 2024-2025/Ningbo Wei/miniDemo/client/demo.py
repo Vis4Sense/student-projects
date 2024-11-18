@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -17,7 +17,8 @@ def receive_tabs():
 @app.route('/')
 def display_tabs():
     global tab_titles
-    return jsonify({'titles': tab_titles})
+    return render_template("index.html", titles=tab_titles)
+    # return jsonify({'titles': tab_titles})
 
 if __name__ == '__main__':
     app.run(port=8080)
