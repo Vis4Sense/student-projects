@@ -52,7 +52,7 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
 - plant：
     - data collection and processing
     - benchmarks
-    - visit **historymap** github page, view the cod+++++e
+    - visit **historymap** github page, view the code
 - have done
     - finish drawing offical uasecase diagram and prototype
     - add a frontend of minmial demo
@@ -63,9 +63,22 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - advise to try longchain
     - try library https://antv.antgroup.com/ , https://www.sigmajs.org/, https://github.com/maxGraph/maxGraph and https://jgraph.github.io/mxgraph/
 - plant：
-    
+    - update minimal demo
 - have done
+    - successfully extract basic text information from two webpage(wikipek and amazon)
+    - successfully use GPT's API to generate a short summry base on webpage's text information
     
+## week09, Nov 25th
+- meeting
+    - advise to only extract text info within 'main' tag inside the HTML file when extracting text information from a webpage
+    - davise to manage the readme file, re-structer those subtasks and add them with a date.
+- plant：
+    - try to extract text info within 'main' tag by python
+    - refactor this "extract" function using javascript
+    - manage the readme file
+    - start to built a frontend
+    - strat to do the intern report
+- have done
 
 
 
