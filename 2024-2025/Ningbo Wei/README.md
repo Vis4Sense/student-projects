@@ -34,6 +34,7 @@ https://kaixu.me/2024/08/28/analytic-provenance-for-sensemaking/
     - Can implement and manten them individually.
     - It is easier and more flexble to use api form python comparing to javascripts
     - But still require to built a google extention to gain the user's info
+    
 | Subtask Name                    | Expected Completion Date | Current Status | Completion Date | Notes       |
 |---------------------------------|---------------------------|----------------|-----------------|-------------|
 | Accept data from Google Chrome extension | 7/Nov/2024      | Finished   | 7/Nov/2024        |             |
