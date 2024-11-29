@@ -102,7 +102,7 @@ Features to Include:
 <ul>
   <li>[x] Project Proposal - 30th October</li>
   <li>[x] Develop a prototype and GUI, 1st-2nd week November</li>
-  <li>[] Create frontend for the backend machine learning model - working on - 2nd week November - 3rd week of November</li>
+  <li>[x] Create frontend for the backend machine learning model - working on - 2nd week November - 3rd week of November</li>
   <li>[] Interim Report - 11th December</li>
   <li>[x] Research into Machine Learning Algorithms - 4th week of October - 1st week of November</li>
   <li>[] LLM Sentiment Analysis Testing for Social Media - 3rd Week of November - 1st week of December</li>
@@ -112,6 +112,6 @@ Features to Include:
   <li>[] Deep Learning Model Testing and Parameter Tuning - 2nd week of March - 1st week of April</li>
   <li>[] Final Report - 17th April</li> 
 </ul>
-<strong>Backlog: frontend/backend for bot</strong>
+<strong>Backlog: </strong>
 
-## Current Task: create a bot dashboard that has paramter tuning aspects of the bot: indicators, prompt tuning - playground, create a document with all the model values and tuning
+<strong>Current Task: create a document with all the model values and tuning, interim</strong>
