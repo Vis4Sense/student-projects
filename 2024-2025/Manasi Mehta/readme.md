@@ -114,4 +114,4 @@ Features to Include:
 </ul>
 <strong>Backlog: </strong>
 
-<strong>Current Task: create a document with all the model values and tuning, interim</strong>
+<strong>Current Task:interim, LLM Sentiment Analysis Testing for Social Media, model tuning</strong>
