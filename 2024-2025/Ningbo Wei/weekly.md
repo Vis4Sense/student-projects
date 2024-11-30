@@ -73,12 +73,13 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - advise to only extract text info within 'main' tag inside the HTML file when extracting text information from a webpage
     - davise to manage the readme file, re-structer those subtasks and add them with a date.
 - plant：
-    - try to extract text info within 'main' tag by python
-    - refactor this "extract" function using javascript
+    - try to extract text info within 'main' tag by python(First)
+    - refactor this "extract" function using javascript, sent these text info to the backend(First)
     - manage the readme file
-    - start to built a frontend
+    - learn react and start to built a frontend(First)
     - strat to do the intern report
 - have done
+    - manage the readme file
 
 
 
