@@ -32,15 +32,21 @@
 ### Improve the Mapping
 - **LangChain Prompt Optimization**: Explored LangChain features to refine prompts, resulting in improved mapping accuracy and relevance (✅ Completed in the third week of November). ![Result_After_improve_prompt](pictures/11_25.png) 
 
-- **Retrieval Augmented Generation (RAG)**: Explored RAG to enhance performance and implemented an initial function ([map_column_with_rag](projects/RAG_Begin.py)). Note: the function currently contains bugs.
+- **Structured Outputs for Mapping Results**: In the implementation, I optimized the data mapping output format by calling the LLM API twice, [the code](projects/StructuredOutputs.py) (✅ Completed in the fourth week of November). 
+  - **First Call**: Generate an initial mapping result using the LLM. The goal is to provide a best-match suggestion based on the input data item and the controlled vocabulary.
+  - **Second Call**: Use the result from the first call as input and further extract it into a structured dictionary format. The goal is to facilitate subsequent analysis and operations.
+
+  Now the output is like (The last line): ![Structured Outputs](pictures/log/Res5.png)
+
+- **Retrieval Augmented Generation (RAG)**: Acquired knowledge about RAG and implemented a simple RAG-based approach: [the getSimilarDes function](projects/RAG.py). The process involves using the (TableName, ColumnName) from the MIMIC vocabulary as input to retrieve the corresponding ColumnDesc. Then, the ColumnDesc from MIMIC is used to query the top 5 most similar descriptions from the OMOP ColumnDesc. The retrieved results are provided to the LLM during the first call to enhance the quality of its outputs (✅ Completed in the fourth week of November). 
 
 ### Result Checking and Editing
 - **Evaluate Function**: Wrote a [function](projects/CheckResult.py) that checks the accuracy of attribute mappings in the input dictionary by matching them against standard mappings in the database and returns the accuracy rate (✅ Completed in the first week of November).
 
 ### Next Steps
 - **Explore Additional LLMs with Ollama**: (❌ Not yet completed)
-- **Further Modify the Benchmark Dataset**: (❌ Not yet completed)
 - **Attempt Direct Mapping Using GPT**: (❌ Not yet completed)
+- **Improve RAG**: (❌ Not yet completed)
 
 
 
