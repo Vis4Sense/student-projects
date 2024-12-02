@@ -50,28 +50,62 @@ Yahoo finance also has limited support for historical data so for one off use, c
 
 *Alpaca ~ there is a limit on a potential universe of tickers that we can connect at once.*
 
+## Timeline
+
+| Milestone                                    | Target Date     |
+|---------------------------------------------|-----------------|
+| Interim Report first draft                  | 5th Nov         |
+| Interim Report submission                   | 11th Nov        |
+| **EXAMS**                                   |                 |
+| Create model for order creation (trading bot component) | 31st Jan        |
+| Combine with LLM sentiment                  | 10th Feb        |
+| Fine tuning and try different learning techniques | 17th Feb        |
+| Clean code and separate into classes        | 23rd Feb        |
+| Add RAG module as per relevant paper        | 30th Feb        |
+| Investigate semantic search methods         | 12th Mar        |
+| Evaluate output                             | 17th Mar        |
+
+
+
+## Previous tasks
+- Single stock MVD
+- Counting based sentiment analysis
+- SEC filing analysis
+- Connect to alpaca for both news and price data
+- Backtester prototype
+- Single-stock scoring algorithm (can start off with static data)
+    - Extract text data from pdf (SEC filings)
+    - Investigate how to get this from API or scraper:
+        - *scraper is the only way*
+    - Tokenize text data
+    - Score using gemini flash model
+- Headline scoring
+- Investigate SEC latency
+- Investigate use of embeddings
+- Use embeddings to score sentiment
+- Compare various methods till date
+- Investigate correlated events (Trump election)
+- Plot the results once time-series scoring algorithm has been implemented
+- Connect scoring algorithm to simple trading strategy to evaluate performance
+
 ## Backlog:
 - Investigate consensus around various news sources (yahoo finance, benzinga, newsapi, etc)
-- Investigate correlated events (Trump election)
-- Connect scoring algorithm to simple trading strategy to evaluate performance
-- Backtest (**BLOCKED**)
 - Figure out method of storing static data that interacts well with streamed data
-- Implement streamed data scorer using alpaca for starter (**BLOCKED**)
+- Implement streamed data scorer using alpaca for starter
 - Diversified sources (RL should pick this up)
-- Implement class for streaming alpaca news data
-- Devise some benchmarking and evaluation methods
-- Plot the results once time-series scoring algorithm has been implemented
+- Investigate backtesting library found
+- Compile requirements and specification formally
+- Connect to trading platform for paper trading (single stock at first)
+- Connect to SEC filings (web-scraper or Edgar-filings api)
+- Add logging using WandB
 
 ## Current Sprint:
-- Single-stock scoring algorithm (can start off with static data)
-  - How to approach universe of stocks?
-    - *Create a vector and judge sentiment across this vector?*
-- Extract text data from pdf (SEC filings)
-- Investigate how to get this from API or scraper:
-  - *scraper is the only way*
-- Tokenize text data
-- Score using gemini flash model
-
+- Use LLM for embeddings directly
+- Use raw signals as trading strategy (buy and hold / short and hold)
+- Refactor scripts till date
+- Investigate potential alphas
+- Build backtested for signals generated
+- Asynchronous LLM requests
 
 ## Questions for next meeting:
 - Best way to backtest? Alpaca trading platform
@@ -80,3 +114,4 @@ Yahoo finance also has limited support for historical data so for one off use, c
     - No, should we be aiming for a signal that provides use for price movement
     - Yes, how do we measure precision?
 - Parsing big reports. E.g 10k filing?
+

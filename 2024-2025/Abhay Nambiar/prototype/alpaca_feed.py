@@ -1,80 +1,121 @@
-import os
-import pandas as pd
 import matplotlib.pyplot as plt
-
-from datetime import datetime
-from dotenv import load_dotenv
-from alpaca_trade_api.rest import REST
-from alpaca.data.historical.news import NewsClient
-from alpaca.data.historical import StockHistoricalDataClient
-from alpaca.data.requests import NewsRequest
-from alpaca.data.requests import StockBarsRequest, TimeFrame
-from newsapi import NewsApiClient
+from embedding_strat import embedding_strat
+from string_sentiment import standard_sentiment_strategy
+from pure_embedding_strat import pure_embedding_strat
 
 
+def plot_trading(df, strat_name):
 
-load_dotenv()
+    if 'timestamp' in df.index.names:
+        timestamp_idx = df.index.get_level_values('timestamp')
 
-alpaca_api = REST(os.environ["ALPACA_KEY"],os.environ["ALPACA_SECRET"])
-newsapi_object = NewsApiClient(api_key=os.environ["NEWS_API_KEY"])
+        if timestamp_idx.tz is not None:
+            timestamp_idx = timestamp_idx.tz_convert(None)
 
-print(alpaca_api.get_news("NVDA","2021-01-01", "2021-12-31"))
+        df = df.set_index(timestamp_idx)
 
-# Taken from rauls simple-strategy.py code
-def map_news_to_stock_bars(news, bars):
-    news["timestamp"] = pd.to_datetime(news["created_at"])
-    # Aproximate minutes to nearest minute
-    news["timestamp"] = news["timestamp"].dt.floor("min")
-    # Remove duplicates
-    news = news.drop_duplicates(subset=["timestamp"])
-    # Match news to the bars based on timestamp index
-    news = news.set_index("timestamp")
-    bars = bars.join(news, how="left")
+    plt.figure(figsize=(12, 6))
 
-    return bars
-
-
-def get_stock_bars(symbols, start, end):
-    key = os.environ["ALPACA_KEY"]
-    secret = os.environ["ALPACA_SECRET"]
-    client = StockHistoricalDataClient(api_key=key, secret_key=secret)
-
-    request_params = StockBarsRequest(
-        symbol_or_symbols=symbols, timeframe=TimeFrame.Minute, start=start, end=end
+    # Plot close prices and moving averages
+    plt.plot(df.index, df["close"], label="Close", color="blue", linewidth=1)
+    plt.plot(df.index, df["10MA"], label="10MA", color="green", linewidth=1)
+    plt.plot(df.index, df["80MA"], label="80MA", color="orange", linewidth=1)
+    
+    # Scatter plot for sentiment
+    # plt.scatter(
+    #     df[df["sentiment"]>0].index,
+    #     df[df["sentiment"]>0]["close"],
+    #     label="Positive",
+    #     color="green",
+    #     s=50
+    # )
+    # plt.scatter(
+    #     df[df["sentiment"] == 0].index,
+    #     df[df["sentiment"] == 0]["close"],
+    #     label="Neutral",
+    #     color="purple",
+    #     s=50
+    # )
+    # plt.scatter(
+    #     df[df["sentiment"] < 0].index,
+    #     df[df["sentiment"] < 0]["close"],
+    #     label="Negative",
+    #     color="red",
+    #     s=50
+    # )
+    
+    plt.scatter(
+        df[df["signal"] == "buy"].index,
+        df[df["signal"] == "buy"]["close"],
+        label="Buy",
+        color="green",
+        marker="^",
+        s=100
+    )
+    plt.scatter(
+        df[df["signal"] == "sell"].index,
+        df[df["signal"] == "sell"]["close"],
+        label="Sell",
+        color="red",
+        marker="v",
+        s=100
     )
 
-    bars = client.get_stock_bars(request_params)
+    plt.scatter(
+        df[df["signal"] == "buy_embed"].index,
+        df[df["signal"] == "buy_embed"]["close"],
+        label="Buy_Embeddings",
+        color="darkgreen",
+        marker="^",
+        s=100
+    )
+    plt.scatter(
+        df[df["signal"] == "sell_embed"].index,
+        df[df["signal"] == "sell_embed"]["close"],
+        label="Sell_Embeddings",
+        color="brown",
+        marker="v",
+        s=100
+    )
 
-    return bars.df
+    # Titles and labels
+    plt.title(strat_name)
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+
+    plt.legend(title="Legend")
+    plt.xticks(rotation=45)  
+    plt.tight_layout()       
+
+    plt.show()
 
 
-def get_news(symbol, start, end):
-    key = os.environ["ALPACA_KEY"]
-    secret = os.environ["ALPACA_SECRET"]
-    client = NewsClient(api_key=key, secret_key=secret)
 
-    request_params = NewsRequest(symbols=symbol, start=start, end=end, limit=50)
-    news = [x.model_dump() for x in client.get_news(request_params).news]
-    return pd.DataFrame.from_records(news, columns=news[0].keys())
+def main():
+    while True:
+        print("Choose a strategy to run:")
+        print("1. Embedding Strategy")
+        print("2. Standard Sentiment Strategy")
+        print("3. LLM Direct Embedding Strategy")
+        print("4. Exit")
 
+        choice = input("Enter the number of your choice: ")
 
-# using news api (Just has headlines like alpaca but can be used as a different source)
-def fetch_nvidia_news():
-    response = newsapi_object.get_everything(q='Nvidia',
-        from_param = '2024-10-17',
-        to = '2024-10-17',
-        sort_by = 'relevancy',
-        language = 'en')
-    
-    if response["status"] == "ok":
-        print(f"successful retrieval, total results: {response["totalResults"]}")
-        articles = response["articles"]
-        return ['Title:' + article['title'] + '. content:' + article["content"] for article in articles]
-    print(f"response code failed {response.status_code}")
-    return []
+        if choice == "1":
+            tolerance = float(input("What is the tolerance level for similarity? Please enter a float here: "))
+            print("Running Embedding Strategy...")
+            plot_trading(embedding_strat(tolerance), "Embedding Strategy Signals")
+        elif choice == "2":
+            print("Running Standard Sentiment Strategy...")
+            plot_trading(standard_sentiment_strategy(), "Standard Sentiment Strategy")
+        elif choice == "3":
+            print("LLM Direct Embedding Strategy")
+            plot_trading(pure_embedding_strat(), "Pure Embedding Strategy")
+        elif choice == "4":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
 
-def prep_data():
-    df = get_stock_bars(["NVDA"], datetime(2024, 10, 1), datetime(2024, 10, 30))
-    df_news = get_news("NVDA", datetime(2023, 10, 1), datetime(2024, 10, 30))
-    return
-
+if __name__ == "__main__":
+    main()

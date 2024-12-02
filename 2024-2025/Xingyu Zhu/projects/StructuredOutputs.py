@@ -17,15 +17,6 @@ from langchain.text_splitter import CharacterTextSplitter
 
 from sentence_transformers import SentenceTransformer
 
-class LocalEmbeddings:
-    def __init__(self):
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
-
-    def embed_documents(self, texts):
-        return self.model.encode(texts)
-
-# 替代 OpenAIEmbeddings
-embeddings = LocalEmbeddings()
 
 def get_completion( prompt,  model="llama3.2", url="http://localhost:11434/api/generate", temperature=0, max_tokens=100000, timeout=10):
 
@@ -79,90 +70,33 @@ class OllamaLLM(LLM, BaseModel):
         if response is None:
             raise ValueError("Failed to get a valid response from LLaMA server.")
         return response
-    
-
-#k为检测文档的数量
-def map_column_with_rag(
-    mimic_file: str,
-    omop_file: str,
-    column_to_map: str,
-    llm,
-    retriever_k: int = 5,
-):
-    mimic_schema = pd.read_csv(mimic_file)
-    omop_schema = pd.read_csv(omop_file)
-
-    mimic_schema["doc"] = mimic_schema["ATT"] + ": " + mimic_schema["DES"]
-    omop_schema["doc"] = omop_schema["ATT"] + ": " + omop_schema["DES"]
-
-    docs = pd.concat([mimic_schema[["doc"]], omop_schema[["doc"]]], ignore_index=True)
-    documents = [Document(page_content=doc) for doc in docs["doc"].tolist()]
-
-    text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
-    split_documents = text_splitter.split_documents(documents)
-
-    embeddings = LocalEmbeddings()
-    db = FAISS.from_texts(
-    texts=[doc.page_content for doc in split_documents],
-    embedding=embeddings.embed_documents 
-    )   
-
-    retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": retriever_k})
-
-    def retrieve_context(column_name, retriever):
-        query = f"Find relevant columns for '{column_name}'"
-        results = retriever.get_relevant_documents(query)
-        return "\n".join([result.page_content for result in results])
-
-    context = retrieve_context(column_to_map, retriever)
-
-    prompt = PromptTemplate(
-        input_variables=["column_name", "context"],
-        template=(
-            "You are mapping a column from the MIMIC dataset to the OMOP dataset.\n"
-            "Here is the MIMIC column you need to map: '{column_name}'.\n"
-            "Relevant OMOP columns are provided below:\n"
-            "{context}\n\n"
-            "Based on this context, suggest the best mapping."
-        )
-    )
-
-    mapping_chain = RunnableSequence([prompt, llm])
-    result = mapping_chain.invoke({"column_name": column_to_map, "context": context})
-
-    return result
-
-
-
-    #VALUENUM:value_as_number
-
-
 
 
 if __name__ == "__main__":
-    #print(get_completion("What is 1+10"))
-
     llm = OllamaLLM(model_name="llama32")
-    #response = llm.invoke("What is LangChain?")
-    #print(response)
 
     # 读取 CSV 文件
     df = pd.read_csv('data/Cleaned_Mapping.csv')
 
     # 将第一列和第二列内容分别存入列表
-    src = df.iloc[:, 0].tolist()  # 第一列
-    tgt = df.iloc[:, 1].tolist()  # 第二列
+    src = df.iloc[:, :2].values.tolist()  # 第一列和第二列
+    tgt = df.iloc[:, 2:4].values.tolist()  # 第三列和第四列
 
-    # 随机选择一个数据项
+    #print(src)
+    #print(tgt)
+
     random_data_item = random.choice(src)
-    random_data_item = "VALUENUM"
+    #先稳定选择第一个
+    random_data_item = src[0]
+    #print(random_data_item)
 
-    #random_data_item = "SUBJECT_ID"
+    #mapping的对象
+    flat_tgt = [" ".join(map(str, row)) for row in tgt]  # 每行的元素合并为字符串
+    vocabulary = "\n".join(flat_tgt)  # 以换行符拼接每行
 
-    # 提取目标词汇表作为 vocabulary
-    vocabulary = "\n".join(tgt)
-
-    # 定义 PromptTemplate
+    #print(vocabulary)
+    
+    #设置第一轮输入的格式
     prompt = PromptTemplate(
     input_variables=["data_item", "vocabulary"],
     template=(
@@ -172,16 +106,34 @@ if __name__ == "__main__":
         )
     )
 
+    print("--------------------------------")
 
     print("Randomly Selected Data Item:", random_data_item)
-    #print("Generated Prompt:")
-    #print(prompt_text)
 
     mapping_chain = LLMChain(llm=llm, prompt=prompt)
     result = mapping_chain.run(data_item=random_data_item, vocabulary=vocabulary)
     print("Mapping Suggestion:", result)
 
-    #print("----------------")
-    #map_column_with_rag("data/Cleaned_MIMIC.csv","data/Cleaned_OMOP_Schema.csv",random_data_item, llm )
+    print("---------------------------------")
+
+    second_prompt = PromptTemplate(
+    input_variables=["data_item", "mapping_result"],
+    template=(
+        "You are converting mapping results into a structured dictionary format.\n"
+        "Do not give my code just give me the result.\n"
+        "Given the input data item {data_item} and its mapping result {mapping_result},\n"
+        "directly output a dictionary in the following format:\n"
+        "  'input': [SRC_ENT, SRC_ATT],\n"
+        "  'mapping_result': [TGT_ENT, TGT_ATT]\n"
+        "Ensure the dictionary values accurately reflect the given data."
+        )
+    )
+
+
+    # 第二轮：调用 LLM 提炼结果
+    refine_chain = LLMChain(llm=llm, prompt=second_prompt)
+    refined_result = refine_chain.run(data_item=random_data_item, mapping_result=result)
+    print("Refined Dictionary Output:", refined_result)
+   
 
 
