@@ -3,13 +3,17 @@ from enum import Enum
 import os
 from dotenv import load_dotenv
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-
+from alpaca_trade_api.rest import REST
+import csv
+from datetime import datetime
 import PyPDF2
 import google.generativeai as genai
 
 load_dotenv()
 
 genai.configure(api_key=os.environ["GEMINI_KEY"])
+api = REST(os.environ["ALPACA_KEY"],os.environ["ALPACA_SECRET"])
+api.get_news()
 model = genai.GenerativeModel("gemini-1.5-flash")
 model_pro = genai.GenerativeModel("gemini-1.5-pro")
 
@@ -39,7 +43,7 @@ def test():
 
 def analyze_sentiment(article, ticker):
     
-    chat = model_pro.start_chat()
+    chat = model.start_chat()
     response = chat.send_message(f"You are a expert on analyzing market sentiment across US tech stocks. I will give you a python list of sentences in a report given by {ticker}. Please go through the list and return respond with only a new list where each element is either positive, negative or neutral in sentiment and only those options. This should be judged based on whether a sentence has implications toward market sentiment and potential price movement in the stock. Each element will map to the list I provided and remember to only reply with a list. Here are the sentences : {article}")
     return extract_text_from_response(response)
         
@@ -96,15 +100,33 @@ def extract_text_from_pdf(pdf_path):
                 extracted_text += text
         return extracted_text
     
-files = ["sec-filings/FinancialStatement","sec-filings/EarningsReport"]
+
+
+files = ["sec-filings/FinancialStatement", "sec-filings/EarningsReport"]
 # ,"sec-filings/2023AnnualReport"]
+
+csv_file = "sentiment_scores.csv"
+
+header = ["File", "Timestamp", "All-in-One Score", "Vader Score", "Gemini Score"]
+
+try:
+    with open(csv_file, "x", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+except FileExistsError:
+    pass
 
 for file in files:
     text = extract_text_from_pdf(f"{file}.pdf")
-    scores = analyze_sentiment(tokenize_article(text),"NVDA")
-    print(f"File {file}.pdf has score with all in one scoring: {analyze_sentiment_zero_to_one(text,"NVDA")}")
-    print(f"Vader score: {vader_benchmark(scores)}")
-    scores = ast.literal_eval(scores)
-    print(f"Gemini score: {score_sentiment(scores)}")
+    scores = analyze_sentiment(tokenize_article(text), "NVDA")
+    all_in_one_score = analyze_sentiment_zero_to_one(text, "NVDA")
+    vader_score = vader_benchmark(scores)
+    gemini_score = score_sentiment(ast.literal_eval(scores))
 
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    with open(csv_file, "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([file, timestamp, all_in_one_score, vader_score, gemini_score])
+
+    print(f"File {file}.pdf processed and scores saved to {csv_file}")
