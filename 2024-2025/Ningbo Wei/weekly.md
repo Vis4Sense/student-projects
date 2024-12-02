@@ -80,6 +80,9 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - strat to do the intern report
 - have done
     - manage the readme file
+    - successfully extract text info within 'main' tag by python, together with an outline in markdown format
+    - successfully refactor this "extract" function using javascript, though with some bugs
+    - have learnt react and built a simple frontend
 
 
 
