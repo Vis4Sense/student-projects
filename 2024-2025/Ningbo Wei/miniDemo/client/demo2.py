@@ -5,30 +5,26 @@ app = Flask(__name__)
 CORS(app)  # 允许跨域请求
 
 # 存储从 Chrome Extension 接收到的标签标题
-tab_titles = []    # 创建一个类，包含ID，title，，，，
+tabs = []    # 创建一个类，包含ID，title，，，，
 
 @app.route('/tabs', methods=['POST'])
 def receive_tabs():
-    global tab_titles
-    tab_titles = []
+    global tabs
     data = request.json
-    tab_titles = data.get('titles', [])
-    print(tab_titles)
-
-    #  # 提取数据并存储
-    # tab_titles.append({
-    #     "id": data['id'],
-    #     "title": data['title'],
-    #     "textContent": data['textContent'],
-    #     "markdownOutline": data['markdownOutline']
-    # })
-
+    if isinstance(data, dict) and 'tabs' in data:
+        tabs = data['tabs']  # 提取 tabs 数组
+    else:
+        return jsonify({"error": "Invalid JSON format/missing of tabs info"}), 400
+    # for i in tabs:
+    #     print(i['title'])
+    print(tabs[0])
+    print("detect tabs number: " + str(len(tabs)))
     return jsonify({"message": "Titles received successfully!"})
 
 @app.route('/api/tabs', methods=['GET'])
 def get_tabs():
-    global tab_titles
-    return jsonify({"titles": tab_titles})
+    global tabs
+    return jsonify({"tabs": tabs})
 
 if __name__ == '__main__':
     app.run(port=8080)

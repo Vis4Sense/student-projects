@@ -81,8 +81,17 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
 - have done
     - manage the readme file
     - successfully extract text info within 'main' tag by python, together with an outline in markdown format
-    - successfully refactor this "extract" function using javascript, though with some bugs
+    - successfully refactor this "extract" function using javascript, though with some bugs (eg.sleeping pages(read it when open), or pages that display a PDF file instead of a webpage, but some can be online)
+        - time
+        - can give up PDF file reading, just try some library
     - have learnt react and built a simple frontend
 
+## week10, Dec 2nd
+- meeting
+    - use overleaf default template, decription of work(project desciprtion)可以往后面放一放或者和design放在一起; Introduction为back ground；可以加一个future plant
+- plant：
+    - fix the bugs in prototypes
+    - do the intern report
+- have done
 
 
