@@ -4,8 +4,7 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
 ## Meeting Minutes and to:do
 [Meeting Minutes Markdown](meetingMinutes.md)
 
-# MVP
-## Trading System: Minimal Working Demo To-Do List
+# Trading System
 
 ## 1. Data Input
 - [x] **Obtain historical data**: 
@@ -13,7 +12,7 @@ Project Link: https://kaixu.me/2023/09/15/llm-for-automated-trading/
   - Ensure that data contains required fields like timestamp, price, volume, etc.
   - ![alt text](./assets/btcopeningprice.png)
 
-- [ ] **Load and preprocess data**: 
+- [x] **Load and preprocess data**: 
   - Clean missing or invalid data.
   - Convert data to suitable formats for processing (Pandas DataFrame).
   - Ensure time is sorted and no out-of-sequence data points.
@@ -64,36 +63,55 @@ Features to Include:
 <ul>
   <li>Sentiment Analysis:</li>
   <ul>
-    <li>Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).</li>
-    <li>Classify market sentiment as positive, neutral, or negative.</li>
+    <li> [x] Analyze cryptocurrency-related news, social media (e.g., Twitter), and forums (e.g., Reddit).</li>
+    <li> [x] Classify market sentiment as positive, neutral, or negative.</li>
   </ul>
   <li>Technical Analysis:</li>
   <ul>
-    <li>Use technical indicators (e.g., RSI, MACD, Bollinger Bands).</li>
-    <li>Implement price trend analysis and candlestick pattern recognition.</li>
+    <li> [x] Use technical indicators (e.g., RSI, MACD, Bollinger Bands).</li>
+    <li> [] Implement price trend analysis and candlestick pattern recognition.</li>
   </ul>
   <li>Trading Strategies:
     <ul>
-    <li>Combine sentiment scores with technical indicators to make buy/sell decisions.</li>
-    <li>Support multiple trading strategies (e.g., momentum trading, mean reversion).</li>
+    <li>[] Combine sentiment scores with technical indicators to make buy/sell decisions.</li>
+    <li>[] Support multiple trading strategies (e.g., momentum trading, mean reversion).</li>
     </ul>
   <li>Backtesting:
     <ul>
-    <li>Test strategies on historical data before live trading.</li>
+    <li>[] Test strategies on historical data before live trading.</li>
     </ul>
   <li>Live Trading:
     <ul>
-    <li>Integrate with cryptocurrency exchanges like Alpaca.</li>
-    <li>Execute trades automatically based on predefined rules.</li>
+    <li>[] Integrate with cryptocurrency exchanges like Alpaca.</li>
+    <li>[] Execute trades automatically based on predefined rules.</li>
     </ul>
   <li>Risk Management:
     <ul>
-    <li>Stop-loss and take-profit mechanisms.</li>
-    <li>Position sizing based on risk tolerance.</li>
+    <li>[] Stop-loss and take-profit mechanisms.</li>
+    <li>[] Position sizing based on risk tolerance.</li>
     </ul>
   <li>Dashboard and Visualization:
     <ul>
-    <li>Real-time price charts, trade history, and sentiment graphs.</li>
-    <li>Detailed logs of trades and analysis.</li>
+    <li>[x] Real-time price charts, trade history, and sentiment graphs.</li>
+    <li>[] Detailed logs of trades and analysis.</li>
     </ul>
 </ul>
+
+
+# Timeline
+<ul>
+  <li>[x] Project Proposal - 30th October</li>
+  <li>[x] Develop a prototype and GUI, 1st-2nd week November</li>
+  <li>[x] Create frontend for the backend machine learning model - working on - 2nd week November - 3rd week of November</li>
+  <li>[] Interim Report - 11th December</li>
+  <li>[x] Research into Machine Learning Algorithms - 4th week of October - 1st week of November</li>
+  <li>[] LLM Sentiment Analysis Testing for Social Media - 3rd Week of November - 1st week of December</li>
+  <li>EXAM BREAK + REVISION</li>
+  <li>[] LLM Sentiment Analysis Testing and Tuning - 2nd week of December - 3rd week of February</li>
+  <li>[] Deep Learning Technical Analaysis Development - 1st week of February - 2nd week of March</li>
+  <li>[] Deep Learning Model Testing and Parameter Tuning - 2nd week of March - 1st week of April</li>
+  <li>[] Final Report - 17th April</li> 
+</ul>
+<strong>Backlog: </strong>
+
+<strong>Current Task:interim, LLM Sentiment Analysis Testing for Social Media, model tuning</strong>

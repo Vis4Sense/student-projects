@@ -14,3 +14,11 @@ This image shows the VEDAR sentiment analysis which is a libarary in Python that
 ## News 
 This image shows the last 50 articles of news after Trump's reelection for Bitcoin and it's sentiment analysis between -2 and 2.
 ![alt text](./assets/sentimentOfNewsGemini.png)
+
+
+## Model Training
+![alt text](./assets/sentimentAnalysisModelTraining.png)
+![alt text](./assets/tunedGeminiModel.png)
+![alt text](./assets/sentimentAnalysisModelTrainingLoss.png)
+
+The model trains well on positive sentiment but needs to be tuned more to negative.

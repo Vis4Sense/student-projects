@@ -18,3 +18,10 @@ This can display multiple cryptocurrencies and shows all the following graphs:
 
 ## Bento box style dashboard
 ![alt text](./assets/mvpbentoboxphoto.png)
+
+## Updated dashboard
+![alt text](./assets/updateddashboardoverview2.png)
+![alt text](./assets/updateddashboardreddit.png)
+![alt text](./assets/updateddashboardnews.png)
+![alt text](./assets/updateddashboardportfolio.png)
+![alt text](./assets/updateddashboardbot.png)
