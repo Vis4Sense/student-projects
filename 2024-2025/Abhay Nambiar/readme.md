@@ -87,7 +87,6 @@ Yahoo finance also has limited support for historical data so for one off use, c
 - Investigate correlated events (Trump election)
 - Plot the results once time-series scoring algorithm has been implemented
 - Connect scoring algorithm to simple trading strategy to evaluate performance
-- 
 
 ## Backlog:
 - Investigate consensus around various news sources (yahoo finance, benzinga, newsapi, etc)
