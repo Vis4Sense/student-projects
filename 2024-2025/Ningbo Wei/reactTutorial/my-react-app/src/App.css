@@ -5,7 +5,7 @@ body {
 }
 
 header {
-  background-color: #282c34;
+  background-color: #f67564;
   color: white;
   padding: 20px;
   text-align: center;
@@ -27,7 +27,7 @@ header {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f67564;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,6 +39,16 @@ header {
 
 .App-link {
   color: #61dafb;
+}
+
+.tab-title {
+  font-size: 1.5em; /* 调整标题的字号 */
+  font-weight: bold; /* 可选：加粗 */
+}
+
+.tab-text {
+  font-size: 0.9em; /* 调整正文的字号 */
+  color: #666; /* 可选：修改正文颜色 */
 }
 
 @keyframes App-logo-spin {

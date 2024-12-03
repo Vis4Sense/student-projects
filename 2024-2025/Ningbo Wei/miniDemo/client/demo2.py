@@ -15,9 +15,8 @@ def receive_tabs():
         tabs = data['tabs']  # 提取 tabs 数组
     else:
         return jsonify({"error": "Invalid JSON format/missing of tabs info"}), 400
-    # for i in tabs:
-    #     print(i['title'])
-    print(tabs[0])
+    for i in tabs:
+        print(i['title'])
     print("detect tabs number: " + str(len(tabs)))
     return jsonify({"message": "Titles received successfully!"})
 

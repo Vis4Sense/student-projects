@@ -11,7 +11,7 @@ function App() {
       axios.get('http://127.0.0.1:8080/api/tabs') // 假设后端的 GET 路由返回新的数据结构
       .then(response => {
         console.log('Response data:', response.data); // 正确打印数据
-        setTabs(response.data.titles || []); // 提取 titles 数组，确保其存在
+        setTabs(response.data.tabs || []); // 提取 titles 数组，确保其存在
         // setTabs(response.data); // 假设直接返回数组 [{ id, title, textContent, markdownOutline }]
       })
       .catch(error => console.error('Error fetching tabs:', error));
@@ -36,8 +36,8 @@ function App() {
         <ul>
           {tabs.map((tab, index) => (
             <li key={tab.id || index}>
-              <strong>{tab.title}</strong>
-              <p>{tab.textContent.slice(0, 100)}...</p> {/* 显示正文的前 100 个字符 */}
+              <strong className="tab-title">{tab.title}</strong>
+              <p className="tab-text">{tab.main_text.slice(0, 100)}...</p> 
             </li>
           ))}
         </ul>
