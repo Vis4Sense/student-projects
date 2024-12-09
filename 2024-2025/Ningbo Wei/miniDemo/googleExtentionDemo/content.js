@@ -2,6 +2,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_content") {
         const id = message.id; // 使用从 background.js 传递过来的顺序 ID
         const title = document.title || "No title found";
+
+        let article = new Readability(document).parse();
+
+        // const mainText = article ? article.textContent.trim() : "No main content found";
+
         const mainElement = document.querySelector('main') || document.body;
         const mainText = mainElement ? mainElement.innerText.trim() : "No main content found";
 
@@ -12,7 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         const outline = headings.join("\n");
 
-        sendResponse({ id, title, main_text: mainText, outline, links: Array.from(document.links).map(link => link.href) });
+        sendResponse({ id, title, main_text: mainText, outline, links: Array.from(document.links).map(link => link.href) });  // sent to the backend
 
         console.log("reading: " + title)
     }

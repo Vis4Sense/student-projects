@@ -93,5 +93,8 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
     - fix the bugs in prototypes
     - do the intern report
 - have done
+    - question
+        - 使用了腾讯混元大模型API，是否要把api文档作为reference放进去？？？不妨总觉得怪怪的(eg.收费比gpt低很多)
+    - successful apply Hunyuan model
 
 
