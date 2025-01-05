@@ -95,6 +95,34 @@ https://www.overleaf.com/project/670c3752a42288f6df84210c
 - have done
     - question
         - 使用了腾讯混元大模型API，是否要把api文档作为reference放进去？？？不妨总觉得怪怪的(eg.收费比gpt低很多)
-    - successful apply Hunyuan model
+    - successful apply Hunyuan model(both text and images related)
+    - have try amazon's SW3 cloud based storage to support image related api
+
+## week11, Dec 9nd
+- meeting
+    - can try `qianwen` apis and their open sorce LLM, can try to delopy them on school's server
+    - try to find a benchmark for multymodel, especially the one for text+image. This helps pick the best LLMs.
+    - suggest to built the front-end first as a minimal demo, then pick the best LLM.
+- plant：
+    - finish interim report
+    - modify the time managment plant
+- have done
+    - interim report and plant
+
+## week12, Dec 16nd
+## week13, Dec 23nd
+sleeping and having fun...
+
+## week14, Dec 30nd
+- have done
+    - improve the chrome extension.
+        - It can now load new opened tab immediatly(but have new problem)
+        - able to extract image in both url and base64
+    - front end
+- question
+    - url of a tab could change, eg. google map(it url will changed base on cordinate). Not important, but might need to be solve in the future. 
+
+
+## week15, Jan 6nd
 
 
