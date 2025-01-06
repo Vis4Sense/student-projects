@@ -118,7 +118,8 @@ sleeping and having fun...
     - improve the chrome extension.
         - It can now load new opened tab immediatly(but have new problem)
         - able to extract image in both url and base64
-    - front end
+    - start building offical front-end based on react
+        - creat a component displaying tabs 
 - question
     - url of a tab could change, eg. google map(it url will changed base on cordinate). Not important, but might need to be solve in the future. 
 

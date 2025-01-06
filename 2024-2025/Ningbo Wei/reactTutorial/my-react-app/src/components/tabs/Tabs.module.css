@@ -1,0 +1,30 @@
+.tabs {
+    flex: 0 0 30%; /* tabs 占 30% 高度 */
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+    background-color: #e9ecef;
+  }
+  
+.tab {
+    flex: 0 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+  
+    /* 调整宽高 */
+    width: 20%; /* 设置每个 tab 的宽度 */
+    height: 80%; /* 设置每个 tab 的高度 */
+  }
+
+.tab h3 {
+    font-size: 3em; /* 标题字体大小 */
+    font-weight: bold; /* 加粗标题 */
+  }
+  
+.tab p {
+    font-size: 2em; /* 正文字体大小 */
+    color: #666; /* 正文字体颜色 */
+  }

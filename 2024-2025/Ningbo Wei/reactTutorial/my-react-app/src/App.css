@@ -26,7 +26,7 @@ header {
   }
 }
 
-.App-header {
+/* .App-header {
   background-color: #f67564;
   min-height: 100vh;
   display: flex;
@@ -35,6 +35,14 @@ header {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+} */
+
+.App-header {
+  background-color: #f4f4f4; /* 设置背景颜色 */
+  padding: 30px; /* 设置合理的内边距 */
+  text-align: center; /* 居中标题 */
+  font-size: 40px; /* 设置标题字号 */
+  height: auto; /* 根据内容调整高度 */
 }
 
 .App-link {
@@ -58,4 +66,66 @@ header {
   to {
     transform: rotate(360deg);
   }
+}
+
+.App {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1ft 3fr 4fr; /* 增加中间部分高度 */
+  gap: 10px;
+  height: 100vh; /* 填满视口 */
+}
+
+.task-list, .qa-section {
+  background-color: #f4f4f4;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.task-list ul {
+  list-style-type: none;
+  padding: 0;
+  height: 100%;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tabs {
+  flex: 0 0 30%; /* tabs 占 30% 高度 */
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+  background-color: #e9ecef;
+}
+
+.tab {
+  flex: 0 0 auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 5px;
+
+  /* 调整宽高 */
+  width: 20%; /* 设置每个 tab 的宽度 */
+  height: 80%; /* 设置每个 tab 的高度 */
+}
+
+.mindmap {
+  flex: 1; /* mindmap 填充剩余空间 */
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fafafa;
 }
