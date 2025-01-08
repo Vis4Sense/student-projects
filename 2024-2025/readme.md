@@ -3,8 +3,15 @@ This is the folder for student projects in 2024-2025.
 # Meeting 13 Jan 2025
 
 ## Interim report feedback
-- Abhay:
-  - the project focus should be on the trading, not just improve sentiment analysis by itself
+- Abhay
+  - the report is quite good
+- Manasi
+  - the report is very good;
+  - is 'fundamental analysis' possible for crypto?
+  - fine tune LLM and parallelism are optional/less a priority
+  - what is the output of the CNN-LSTM, sentiment score?
+- Abhay & Manasi
+  - the focus now should be on the trading, not just improve sentiment analysis by itself
   - need to find/create a trading strategy that can take advantage of sentiment results
   - improve/update sentiment if it helps with trading
 
