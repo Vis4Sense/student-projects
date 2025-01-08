@@ -18,6 +18,12 @@ This is the folder for student projects in 2024-2025.
   - need to find/create a trading strategy that can take advantage of sentiment results
   - improve/update sentiment if it helps with trading
   - **next step: focus on a specific scenario when there is a large/sudden price change?**
+- Ningbo
+  - good report
+  - develop a back end model or use a hosted one such as those on HuggingFace?
+  - database or browser local storage?
+  - chat box: allow users to ask questions about the opened pages (by including those in the prompt)?
+  - **next step: pick a specific sensemaking task to target.** Currently it is a bit too broad.
 
 # Meeting 7 Oct 2024
 
