@@ -9,7 +9,9 @@ This is the folder for student projects in 2024-2025.
   - the report is very good;
   - is 'fundamental analysis' possible for crypto?
   - fine tune LLM and parallelism are optional/less a priority
-  - what is the output of the CNN-LSTM, sentiment score?
+  - CNN-LSTM
+    - Is this one or two models?
+    - what is the output, sentiment score?
 - Abhay & Manasi
   - the focus now should be on the trading, not just improve sentiment analysis by itself
   - need to find/create a trading strategy that can take advantage of sentiment results
