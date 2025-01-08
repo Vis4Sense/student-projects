@@ -17,7 +17,7 @@ This is the folder for student projects in 2024-2025.
   - the focus now should be on the trading, not just improve sentiment analysis by itself
   - need to find/create a trading strategy that can take advantage of sentiment results
   - improve/update sentiment if it helps with trading
-  - next step: focus on a specific scenario when there is a large/sudden price change?
+  - **next step: focus on a specific scenario when there is a large/sudden price change?**
 
 # Meeting 7 Oct 2024
 
