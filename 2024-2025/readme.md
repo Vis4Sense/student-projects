@@ -5,6 +5,7 @@ This is the folder for student projects in 2024-2025.
 ## Interim report feedback
 - Abhay:
   - the project focus should be on the trading, not just improve sentiment analysis by itself
+  - need to find/create a trading strategy that can take advantage of sentiment results
   - improve/update sentiment if it helps with trading
 
 # Meeting 7 Oct 2024
