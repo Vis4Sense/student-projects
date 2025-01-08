@@ -12,6 +12,7 @@ This is the folder for student projects in 2024-2025.
   - CNN-LSTM
     - Is this one or two models?
     - what is the output, sentiment score?
+    - CNN spatial vs. historical data?
 - Abhay & Manasi
   - the focus now should be on the trading, not just improve sentiment analysis by itself
   - need to find/create a trading strategy that can take advantage of sentiment results
