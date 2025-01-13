@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // });
 
 // 监听 Tab 更新事件
+// handle the redirection-----search api()
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
         console.log("Tab updated:", tab.url);

@@ -124,6 +124,8 @@ sleeping and having fun...
     - url of a tab could change, eg. google map(it url will changed base on cordinate). Not important, but might need to be solve in the future. 
 
 
-## week15, Jan 6nd
-
-
+## week15, Jan 6th and week16, Jan 13th
+- no meeting this week
+- find a specific task and modiy the front-end plan
+- check the chrome api for handling re-direct
+- consider using google chrome as the backend, instead of using python-flask. Additionally, this allowed using browser storage.
