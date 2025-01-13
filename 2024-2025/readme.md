@@ -11,8 +11,12 @@ This is the folder for student projects in 2024-2025.
   - fine tune LLM and parallelism are optional/less a priority
   - CNN-LSTM
     - Is this one or two models?
-    - what is the output, sentiment score?
-    - CNN spatial vs. historical data?
+      - one model  
+    - what is the input and output, sentiment score?
+      - Input: news and prices of all the stocks or cryptos (not a single one)
+      - Output: which stock/crypto to invest, ~~and how much/many~~
+    - Both CNN and LSTM are for historical data?
+      - CNN is not for 'spatial' data? 
 - Abhay & Manasi
   - the focus now should be on the trading, not just improve sentiment analysis by itself
   - need to find/create a trading strategy that can take advantage of sentiment results
