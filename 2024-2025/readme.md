@@ -22,19 +22,28 @@ This is the folder for student projects in 2024-2025.
   - need to find/create a trading strategy that can take advantage of sentiment results
   - improve/update sentiment if it helps with trading
   - **next step: focus on a specific scenario when there is a large/sudden price change?**
-## To Do
-Manasi and Abhay
-1. Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?
-1. Build some very simple model, such as decision tree, to see how accurate we can predict such sudden changes
-   1. This can be binary, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.
-   1. Besides price prediction (e.g., using linear regression), we can also use decision tree to predict change range: 0-50%, 50-100%, etc.
-   2. We don't need to predict too far ahead, from a few minutes to a few hours maximum. This is also when the model prediction has a better accuracy. The results are usually not good for longer periods, e.g., a few days to a few weeks.
 - Ningbo
   - good report
   - develop a back end model or use a hosted one such as those on HuggingFace?
   - database or browser local storage?
   - chat box: allow users to ask questions about the opened pages (by including those in the prompt)?
   - **next step: pick a specific sensemaking task to target.** Currently it is a bit too broad.
+
+## To Do
+Manasi and Abhay
+1. Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?
+1. Build some very simple model, such as decision tree, to see how accurate we can predict such sudden changes
+   1. This can be binary, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.
+   1. Besides price prediction (e.g., using linear regression), we can also use decision tree to predict change range: 0-50%, 50-100%, etc.
+   1. We don't need to predict too far ahead, from a few minutes to a few hours maximum. This is also when the model prediction has a better accuracy. The results are usually not good for longer periods, e.g., a few days to a few weeks.
+1. The portofolio algorithm can work like this:
+   1. Predict the price (or momentum?) for all the stocks/cryptos for the next 1/5/10 mintues, etc.
+   2. Pick the one with the largest increase **and confidence**.
+   3. Put all the fund into that stock/crypto, including selling any stock/crypto currently holding, if this is not the case already
+   4. Repeat this process for every minute (or however fast we can do)
+   - Cash is also always an option, with almost constant small but positive returns 
+   - This would cover when to unload a stock/crypto (step 3)
+   - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
 
 # Meeting 7 Oct 2024
 
