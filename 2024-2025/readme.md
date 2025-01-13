@@ -36,6 +36,7 @@ Manasi and Abhay
    1. This can be binary, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.
    1. Besides price prediction (e.g., using linear regression), we can also use decision tree to predict change range: 0-50%, 50-100%, etc.
    1. We don't need to predict too far ahead, from a few minutes to a few hours maximum. This is also when the model prediction has a better accuracy. The results are usually not good for longer periods, e.g., a few days to a few weeks.
+   1. A possibility is to just use the 'top movers' list, but the remaining further increase may be limited by the time a stock/crypto makes to the list (something we can test)
 1. The portofolio algorithm can work like this:
    1. Predict the price (or momentum?) for all the stocks/cryptos for the next 1/5/10 mintues, etc.
    2. Pick the one with the largest increase **and confidence**.
