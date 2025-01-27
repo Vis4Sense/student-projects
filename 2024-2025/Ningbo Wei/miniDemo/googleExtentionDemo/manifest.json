@@ -4,6 +4,7 @@
     "version": "1.0",
     "permissions": [
       "tabs",
+      "storage",
       "activeTab",
       "scripting"
     ],
@@ -20,7 +21,7 @@
       }
     ],
     "action": {
-      "default_popup": "popup.html"
+      "default_popup": "build/index.html"
     }
   }
   

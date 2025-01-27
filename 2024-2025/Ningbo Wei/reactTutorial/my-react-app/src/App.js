@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import axios from 'axios';
 import Header from './components/Header';
 import Tabs from './components/tabs/Tabs';
 
@@ -8,12 +7,22 @@ function App() {
   const [tabs, setTabs] = useState([]); // 用于存储标签页数据
 
   useEffect(() => {
-    const fetchData = () => {
-      axios.get('http://127.0.0.1:8080/api/tabs') // 后端返回的数据
-      .then(response => {
-        console.log('Response data:', response.data); // 正确打印数据
-        setTabs(response.data.tabs || []); // 提取 titles 数组，确保其存在
-        // return sample data
+    const fetchTabs = () => {
+      if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
+        chrome.runtime.sendMessage({ action: "get_tabs" }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error("Error fetching tabs:", chrome.runtime.lastError);
+            return;
+          }
+          console.log("Received tabs:", response?.tabs);
+          setTabs(response?.tabs || []);
+        });
+      } else {
+        console.warn("Chrome API is not available. Running in non-extension environment.");
+      }
+    };
+
+    // return sample data
         // {[
         //     "id": 1,
         //     "title": "Sample Page",
@@ -31,16 +40,12 @@ function App() {
         //       }
         //     ]
         //   ]}
-      })
-      .catch(error => console.error('Error fetching tabs:', error));
-        
-    };
 
     // 初次加载数据
-    fetchData();
+    fetchTabs();
 
     // 每隔 3 秒轮询一次
-    const interval = setInterval(fetchData, 3000);
+    const interval = setInterval(fetchTabs, 3000);
 
     // 清理定时器
     return () => clearInterval(interval);

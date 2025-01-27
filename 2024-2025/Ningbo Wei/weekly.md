@@ -129,3 +129,9 @@ sleeping and having fun...
 - find a specific task and modiy the front-end plan
 - check the chrome api for handling re-direct
 - consider using google chrome as the backend, instead of using python-flask. Additionally, this allowed using browser storage.
+
+
+## Jan 20th
+- have done
+    - choose specific task: planing a group holiday ( a task with multiple tabs; needed for group work; might have some sub-task(Hierachical classtering))
+    - 

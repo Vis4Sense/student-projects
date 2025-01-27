@@ -1,7 +1,7 @@
 const results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 
-// 监听 fetch_titles 消息
+// 监听 fetch_titles 按钮消息(来自popup.js)
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_titles") {
         chrome.tabs.query({}, (tabs) => {
@@ -13,10 +13,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
 
         });
-        sendToBackend(); // 每次处理完所有 Tab，都发送一次结果
+        // saveTabsLocally()
     }
     return true; // 支持异步响应
 });
+
+// 监听来自前端react的请求信息
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "get_tabs") {
+        console.log("sending result, with length:", results.length);
+        sendResponse({tabs:results})
+        // chrome.storage.local.get("tabs", (result) => {
+        //     sendResponse({ tabs: result.tabs || [] });
+        // });
+        return true; 
+    }
+});
+
 
 // // 监听新建 Tab
 // chrome.tabs.onCreated.addListener((tab) => {
@@ -30,7 +43,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
         console.log("Tab updated:", tab.url);
         processTab(tab, null); // 处理更新后的 Tab
-        sendToBackend(); // 发送一次结果
+        saveTabsLocally()
+        // sendToBackend(); // 发送一次结果
     }
 });
 
@@ -73,24 +87,13 @@ function processTab(tab, sendResponse) {
     );
 }
 
-// 将结果发送到后端
-function sendToBackend() {
-    console.log("Final results count:", results.length);
-    fetch('http://localhost:8080/tabs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tabs: results })
-    })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            console.log("Sent tabs count:", results.length);
-            return res.json();
-        })
-        .then(data => console.log("Data sent successfully:", data))
-        .catch(err => console.error("Error sending data:", err));
+// store page data at the chrome.storage.local
+function saveTabsLocally() {
+    chrome.storage.local.set({ tabs: results }, () => {
+        console.log("Tabs data stored successfully in Chrome storage.");
+    });
 }
+
 
 function normalizeUrl(url) {
     try {

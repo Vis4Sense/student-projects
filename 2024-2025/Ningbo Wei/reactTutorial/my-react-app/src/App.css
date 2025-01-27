@@ -1,3 +1,9 @@
+#root{
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
