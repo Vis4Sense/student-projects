@@ -20,9 +20,24 @@ This is the folder for student projects in 2024-2025.
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
 
 # Meeting 28 Jan 2025
+## Manasi and Abhay
 Manasi
 - Top moving crypto for one day
 - predicting price for the next 5 minutes using linear regression
+
+## Ningbo and Xingyu
+Rescheduled the meeting with Xingyu to Friday
+Ningbo
+- removed the backend and use chrome extension only
+- 3 second delay to wait for page redirection
+- choose a task: group holiday planning
+   - sub task: different location (tokyo or osaka), but also different tasks (travel, hotel, attractions)
+   - group task
+   - start with one person and one sub task
+- deepseek
+   - summary
+   - cluster
+- local storage
 
 # Meeting 13 Jan 2025
 
