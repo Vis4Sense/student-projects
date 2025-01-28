@@ -134,4 +134,8 @@ sleeping and having fun...
 ## Jan 20th
 - have done
     - choose specific task: planing a group holiday ( a task with multiple tabs; needed for group work; might have some sub-task(Hierachical classtering))
-    - 
+    - successfully removed the python-flask based back-end
+- plant to do
+    - Draw a front-end special design for the holiday palning(may be can built a map function? 地图功能), then try to finish the front-end for a minimal demo
+    - try to apply chrome storage
+    - try to make use of deepseek api
