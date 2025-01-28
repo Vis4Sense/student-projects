@@ -1,5 +1,10 @@
 This is the folder for student projects in 2024-2025.
 
+# Meeting 28 Jan 2025
+Manasi
+- Top moving crypto for one day
+- predicting price for the next 5 minutes using linear regression
+
 # Meeting 13 Jan 2025
 
 ## Interim report feedback
@@ -31,9 +36,11 @@ This is the folder for student projects in 2024-2025.
 
 ## To Do
 Manasi and Abhay
-1. Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?
+1.** Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?**
+   1. collect the everyday top movers for the last week/month/year/... (this will be the training data, with the highest time resolution)
+   1. have a look of these price changes (visualise) to see if there is anything interesting/pattern
 1. Build some very simple model, such as decision tree, to see how accurate we can predict such sudden changes
-   1. This can be binary, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.
+   1. **This can be **binary**, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.**
    1. Besides price prediction (e.g., using linear regression), we can also use decision tree to predict change range: 0-50%, 50-100%, etc.
    1. We don't need to predict too far ahead, from a few minutes to a few hours maximum. This is also when the model prediction has a better accuracy. The results are usually not good for longer periods, e.g., a few days to a few weeks.
    1. A possibility is to just use the 'top movers' list, but the remaining further increase may be limited by the time a stock/crypto makes to the list (something we can test)
