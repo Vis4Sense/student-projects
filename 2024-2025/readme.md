@@ -36,7 +36,7 @@ Manasi
 
 ## To Do
 Manasi and Abhay
-1.** Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?**
+1. **Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?**
    1. collect the everyday top movers for the last week/month/year/... (this will be the training data, with the highest time resolution)
    1. have a look of these price changes (visualise) to see if there is anything interesting/pattern
 1. Build some very simple model, such as decision tree, to see how accurate we can predict such sudden changes
