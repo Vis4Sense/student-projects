@@ -20,8 +20,6 @@
         "js": ["content.js"]
       }
     ],
-    "action": {
-      "default_popup": "build/index.html"
-    }
+    "action": {}
   }
   

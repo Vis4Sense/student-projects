@@ -141,3 +141,10 @@ sleeping and having fun...
         - not just location, but also days or aim
     - try to apply chrome storage
     - try to make use of deepseek api(not really critical, but intersting)
+
+## Jan 27th
+- have done
+    - add manully refresh button in the new front-end/back-end
+
+
+- plant to do

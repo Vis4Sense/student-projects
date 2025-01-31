@@ -51,6 +51,14 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const refreshTabs = () => {
+    if (chrome.runtime && chrome.runtime.sendMessage) {
+      chrome.runtime.sendMessage({ action: "fetch_titles" }, (response) => {
+        console.log("Sent refresh request to background.js");
+      });
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -72,6 +80,7 @@ function App() {
         <main className="main-content">
 
           {/* 使用 Tabs 组件 */}
+          <button onClick={refreshTabs}>Refresh</button>
           <Tabs tabs={tabs} />
 
           {/* 思维导图区域 */}

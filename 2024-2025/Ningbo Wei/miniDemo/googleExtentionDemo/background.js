@@ -1,7 +1,7 @@
 const results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 
-// 监听 fetch_titles 按钮消息(来自popup.js)
+// refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_titles") {
         chrome.tabs.query({}, (tabs) => {
@@ -18,7 +18,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true; // 支持异步响应
 });
 
-// 监听来自前端react的请求信息
+// popup the front-end
+chrome.action.onClicked.addListener(() => {
+    chrome.windows.create({
+        url: chrome.runtime.getURL("build/index.html"),
+        type: "popup",
+        width: 1920,
+        height: 1080
+    });
+});
+
+// return the tabs information 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "get_tabs") {
         console.log("sending result, with length:", results.length);
@@ -38,7 +48,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // });
 
 // 监听 Tab 更新事件
-// handle the redirection-----search api()
+// waiting for handle the redirection-----search api()
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
         console.log("Tab updated:", tab.url);
