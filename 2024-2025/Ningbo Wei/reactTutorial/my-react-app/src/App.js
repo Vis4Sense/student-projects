@@ -7,20 +7,23 @@ function App() {
   const [tabs, setTabs] = useState([]); // 用于存储标签页数据
 
   useEffect(() => {
-    const fetchTabs = () => {
-      if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
-        chrome.runtime.sendMessage({ action: "get_tabs" }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("Error fetching tabs:", chrome.runtime.lastError);
-            return;
-          }
-          console.log("Received tabs:", response?.tabs);
-          setTabs(response?.tabs || []);
-        });
-      } else {
-        console.warn("Chrome API is not available. Running in non-extension environment.");
+    // 监听 `background.js` 推送的 tabs 更新
+    const handleMessage = (message) => {
+      if (message.action === "update_tabs") {
+        console.log("Received updated tabs:", message.tabs);
+        setTabs(message.tabs || []);
       }
     };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    // 在组件加载时主动请求一次 tabs
+    chrome.runtime.sendMessage({ action: "get_tabs" });
+    
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
 
     // return sample data
         // {[
@@ -40,16 +43,6 @@ function App() {
         //       }
         //     ]
         //   ]}
-
-    // 初次加载数据
-    fetchTabs();
-
-    // 每隔 3 秒轮询一次
-    const interval = setInterval(fetchTabs, 3000);
-
-    // 清理定时器
-    return () => clearInterval(interval);
-  }, []);
 
   const refreshTabs = () => {
     if (chrome.runtime && chrome.runtime.sendMessage) {

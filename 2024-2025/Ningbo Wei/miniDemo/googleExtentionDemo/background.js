@@ -4,19 +4,38 @@ const currentUrl = [];
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_titles") {
-        chrome.tabs.query({}, (tabs) => {
+        chrome.tabs.query({}, async (tabs) => {
             console.log("Total tabs:", tabs.length);
-            results.length = 0; // 清空结果，重新获取 refresh
+            results.length = 0; // 清空结果
             currentUrl.length = 0;
-            tabs.forEach((tab) => {
-                processTab(tab, sendResponse);
-            });
-
+        
+            // 用 Promise.all 等待所有 processTab 任务完成
+            await Promise.all(tabs.map(tab => processTab(tab)));
+        
+            // 现在所有 tabs 处理完了，才发送更新给前端
+            sendTabsToFrontend();
         });
-        // saveTabsLocally()
     }
     return true; // 支持异步响应
 });
+
+// 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
+function sendTabsToFrontend() {
+    chrome.runtime.sendMessage({ action: "update_tabs", tabs: results }, (response) => {
+      if (chrome.runtime.lastError) {
+        console.warn("No listener for update_tabs, will retry later...");
+      }
+    });
+  }
+  
+  // 防止 service_worker 被 Chrome 杀死
+  chrome.alarms.create("keep_alive", { periodInMinutes: 1 });
+  
+  chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "keep_alive") {
+      console.log("Keeping service worker alive...");
+    }
+  });
 
 // popup the front-end
 chrome.action.onClicked.addListener(() => {
@@ -28,7 +47,7 @@ chrome.action.onClicked.addListener(() => {
     });
 });
 
-// return the tabs information 
+// return the tabs information(design for front-end interval request)
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "get_tabs") {
         console.log("sending result, with length:", results.length);
@@ -36,6 +55,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // chrome.storage.local.get("tabs", (result) => {
         //     sendResponse({ tabs: result.tabs || [] });
         // });
+        // 立即推送更新给前端
+        sendTabsToFrontend();
         return true; 
     }
 });
@@ -52,50 +73,59 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
         console.log("Tab updated:", tab.url);
-        processTab(tab, null); // 处理更新后的 Tab
-        saveTabsLocally()
-        // sendToBackend(); // 发送一次结果
+
+        // 确保 processTab 完成后再执行 sendTabsToFrontend
+        processTab(tab).then(() => {
+            sendTabsToFrontend();
+        });
     }
 });
 
 // 处理单个 Tab 的信息提取和发送逻辑
-function processTab(tab, sendResponse) {
-    if (!tab.url || tab.url.startsWith('chrome://') || tab.url.startsWith('about:') || tab.url.startsWith('http://localhost:')) {
-        console.log("Skipping unsupported tab:", tab.url);
-        return;
-    }
-
-    // 检查 URL 是否已存在于 results 中
-    if(currentUrl.includes(tab.url)){
-        console.log("Skipping duplicate URL:", tab.url);
-        return;
-    }
-    currentUrl.push(tab.url);
-
-    chrome.scripting.executeScript(
-        { target: { tabId: tab.id }, files: ['content.js'] },
-        () => {
-            if (chrome.runtime.lastError) {
-                console.error(`Script injection failed for tab ${tab.url}: ${chrome.runtime.lastError.message}`);
-                return;
-            }
-            const uniqueId = `${Date.now()}-${tab.id}`; // 结合 tabId 和时间戳
-            chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId }, (response) => {
-                if (response) {
-                    results.push(response);
-                    console.log("Added result for:", tab.url);
-                } else {
-                    console.error("Failed to fetch content for tab:", tab.url);
-                }
-                // sendToBackend(); // 每次处理完一个 Tab，都发送一次结果
-                // if (pendingRequests === 1 && sendResponse) {
-                //     // 如果是 fetch_titles 消息最后一个 Tab，发送结果到后端
-                //     sendToBackend();
-                // }
-            });
+function processTab(tab) {
+    return new Promise((resolve) => {
+        if (!tab.url 
+            || tab.url.startsWith('chrome://') 
+            || tab.url.startsWith('about:') 
+            || tab.url.startsWith('http://localhost:')
+            || tab.url.startsWith('chrome-extension://')) {
+            console.log("Skipping unsupported tab:", tab.url);
+            resolve();
+            return;
         }
-    );
+
+        chrome.scripting.executeScript(
+            { target: { tabId: tab.id }, files: ['content.js'] },
+            () => {
+                if (chrome.runtime.lastError) {
+                    console.error(`Script injection failed for tab ${tab.url}: ${chrome.runtime.lastError.message}`);
+                    resolve();
+                    return;
+                }
+                const uniqueId = `${Date.now()}-${tab.id}`;
+                
+                // 确保 sendMessage 完成后再 resolve()
+                chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId }, (response) => {
+                    if (response) {
+                        results.push(response);
+                        console.log("Added result for:", tab.url);
+                    } else {
+                        console.error("Failed to fetch content for tab:", tab.url);
+                    }
+                    resolve(); // 只有在 sendMessage 完成后才执行 resolve()
+                });
+
+                // 加入超时保护，防止某些 tab 无响应导致 Promise 永远不 resolve
+                setTimeout(() => {
+                    console.warn(`Timeout: No response from tab ${tab.url}, resolving anyway.`);
+                    resolve();
+                }, 5000);
+            }
+        );
+    });
 }
+
+
 
 // store page data at the chrome.storage.local
 function saveTabsLocally() {
