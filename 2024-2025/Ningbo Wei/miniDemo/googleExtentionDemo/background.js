@@ -1,3 +1,5 @@
+import { API_CONFIG } from './config.js';  // get config of API
+
 const results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 
@@ -24,9 +26,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     // do summarization of a tab
     if (message.action === "summarize_tab") {
-        console.log("Received tab title for summary:", message.title);
-        // 这里可以继续调用 API 或处理摘要逻辑
-        // sendResponse({ status: "Title received successfully" });
+        // console.log("Received tab title for summary:", message.title);
+        const replySummary = getSummaryByLLM(message.title, message.mainText, message.outline)
         return true; // 支持异步响应
     }
 });
@@ -136,3 +137,49 @@ function normalizeUrl(url) {
     }
 }
 
+async function getSummaryByLLM(title, main_text, outline) {
+    console.log("Sending request to GPT about " + title.slice(0, 100) + " for summary");
+    const { apiBase, apiKey, deploymentName, apiVersion } = API_CONFIG;  // get api key
+
+    const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+    
+    const prompt = `
+        Following text is extracted from a website, including its title, main context, and outline. 
+        Please help me analyze the following content and return a summary of less than 50 English words. 
+        Ignore spam and ads information.
+
+        ####### Title #######
+        ${title.slice(0, 500)}
+
+        ####### Main Context #######
+        ${main_text.slice(0, 5000)}
+
+        ####### Outline #######
+        ${outline.slice(0, 5000)}
+    `;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({
+                messages: [
+                    { role: "system", content: "You are a helpful assistant tasked with summarizing the main content of webpages." },
+                    { role: "user", content: prompt }
+                ],
+                max_tokens: 500
+            })
+        });  // use await to solve the problem of synchronize
+
+        const data = await response.json();
+        const reply = data.choices[0].message.content.trim().replace(/\n/g, "");
+        console.log(reply);
+        return reply;  // 现在可以正确返回 reply
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error fetching summary for this web tabs.";
+    }
+}

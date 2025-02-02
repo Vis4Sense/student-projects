@@ -7,8 +7,8 @@ const tabSummary = (tab) => {
       { 
         action: "summarize_tab", 
         title: tab.title, 
-        url: tab.currentUrl, 
-        images: tab.images 
+        mainText: tab.main_text, 
+        outline: tab.outline 
       }, 
       (response) => {
         // console.log("Tab data sent to background.js:", tab);

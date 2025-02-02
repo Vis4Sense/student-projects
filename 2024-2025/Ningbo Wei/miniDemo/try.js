@@ -3,8 +3,8 @@ console.log("Hello, World!");
 // const fetch = require('node-fetch');  // 如果在 Node.js 环境运行，需安装 node-fetch 模块
 import fetch from 'node-fetch'
 
-const apiBase = "https://ai-rum-swe-a909a5-2.openai.azure.com/";  // API Base URL
-const apiKey = "fb4f676e065c4e238870e2adc0cd5956";  // API Key
+const apiBase = " ";  // API Base URL
+const apiKey = " ";  // API Key
 const deploymentName = "gpt-35-turbo-16k";  // 模型部署名称
 const apiVersion = "2023-06-01-preview";  // API 版本
 

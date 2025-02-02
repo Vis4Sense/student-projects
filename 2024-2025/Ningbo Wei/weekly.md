@@ -145,6 +145,6 @@ sleeping and having fun...
 ## Jan 27th
 - have done
     - add manully refresh button in the new front-end/back-end
-
+    - apply LLM api in demo through javaScripts
 
 - plant to do
