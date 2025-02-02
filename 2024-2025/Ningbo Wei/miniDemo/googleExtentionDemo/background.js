@@ -3,20 +3,32 @@ const currentUrl = [];
 
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    // read currently opened tabs and sent it to the front-end
     if (message.action === "fetch_titles") {
         chrome.tabs.query({}, async (tabs) => {
             console.log("Total tabs:", tabs.length);
             results.length = 0; // 清空结果
             currentUrl.length = 0;
-        
             // 用 Promise.all 等待所有 processTab 任务完成
             await Promise.all(tabs.map(tab => processTab(tab)));
-        
             // 现在所有 tabs 处理完了，才发送更新给前端
             sendTabsToFrontend();
         });
+        return true; // 支持异步响应
     }
-    return true; // 支持异步响应
+    // directly sent the tabs information without reading again
+    if (message.action === "get_tabs") {
+        console.log("sending result, with length:", results.length);
+        sendTabsToFrontend();
+        return true; 
+    }
+    // do summarization of a tab
+    if (message.action === "summarize_tab") {
+        console.log("Received tab title for summary:", message.title);
+        // 这里可以继续调用 API 或处理摘要逻辑
+        // sendResponse({ status: "Title received successfully" });
+        return true; // 支持异步响应
+    }
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
@@ -46,27 +58,6 @@ chrome.action.onClicked.addListener(() => {
         height: 1080
     });
 });
-
-// return the tabs information(design for front-end interval request)
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "get_tabs") {
-        console.log("sending result, with length:", results.length);
-        sendResponse({tabs:results})
-        // chrome.storage.local.get("tabs", (result) => {
-        //     sendResponse({ tabs: result.tabs || [] });
-        // });
-        // 立即推送更新给前端
-        sendTabsToFrontend();
-        return true; 
-    }
-});
-
-
-// // 监听新建 Tab
-// chrome.tabs.onCreated.addListener((tab) => {
-//     console.log("New tab detected:", tab.url);
-//     processTab(tab, results.length, 1, null); // 处理新 Tab
-// });
 
 // 监听 Tab 更新事件
 // waiting for handle the redirection-----search api()
