@@ -6,3 +6,9 @@ header {
 h1 {
 color: darkblue;
 }
+
+.title {
+    color: darkblue;
+    font-size: 24px;     /* 缩小字体大小 */
+    margin: 5px 0;       /* 减少上下间距 */
+  }

@@ -145,6 +145,16 @@ sleeping and having fun...
 ## Jan 27th
 - have done
     - add manully refresh button in the new front-end/back-end
-    - apply LLM api in demo through javaScripts
+    - apply LLM api into demo through javaScripts
+    - fix bugs in the front-end, there is not latency in updating tabs
+    - plant about grouping:
+        - start from one person 
+        - seperate as city (eg. traveling to tokyo, Osaka, Nagoya, Mount Fuji)
+            - why not days? People usually travel a city per day or servel day a city. Use city as parameter is much better and easier for algorithm to do classifycation
+            - can develop Hierachical in the future(eg. ticket booking, hotel booking, different small location in a city)
+- plant to do:
+    - try to apply chrome storage
+    - develop the function of tab grouping, start from traveling with different city
+    - Deepseek api(not really critical, but intersting)
 
 - plant to do

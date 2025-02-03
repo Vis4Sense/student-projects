@@ -2,6 +2,7 @@ import { API_CONFIG } from './config.js';  // get config of API
 
 const results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
+const isTest = false; // 是否为测试模式
 
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -19,15 +20,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true; // 支持异步响应
     }
     // directly sent the tabs information without reading again
-    if (message.action === "get_tabs") {
+    else if (message.action === "get_tabs") {
         console.log("sending result, with length:", results.length);
         sendTabsToFrontend();
         return true; 
     }
     // do summarization of a tab
-    if (message.action === "summarize_tab") {
+    else if (message.action === "summarize_tab") {
         // console.log("Received tab title for summary:", message.title);
-        const replySummary = getSummaryByLLM(message.title, message.mainText, message.outline)
+        const replySummary = getSummaryByLLM(message.title, message.mainText, message.outline) .then((summary) => {
+            chrome.runtime.sendMessage({
+                action: "summary_result",
+                tabId: message.tabId,   // 返回时带上 tabId，方便前端识别
+                summary: summary
+            });
+        });
         return true; // 支持异步响应
     }
 });
@@ -138,6 +145,9 @@ function normalizeUrl(url) {
 }
 
 async function getSummaryByLLM(title, main_text, outline) {
+    if (isTest) {
+        return "This is a test summary";
+    }
     console.log("Sending request to GPT about " + title.slice(0, 100) + " for summary");
     const { apiBase, apiKey, deploymentName, apiVersion } = API_CONFIG;  // get api key
 

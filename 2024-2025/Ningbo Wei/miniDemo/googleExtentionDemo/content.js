@@ -47,9 +47,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     });
                 });
 
+            const summary = "haven't generate summary";
             // 等待所有图片的 Base64 转换完成
             Promise.all(images).then(imagesData => {
-                sendResponse({ id, title, main_text: mainText, outline, currentUrl, images: imagesData });
+                sendResponse({ id, title, main_text: mainText, outline, currentUrl, images: imagesData, summary });
             });
         } catch (err) {
             console.error("Error in content.js:", err.message);

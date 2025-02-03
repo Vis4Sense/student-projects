@@ -45,9 +45,9 @@ header {
 
 .App-header {
   background-color: #f4f4f4; /* 设置背景颜色 */
-  padding: 30px; /* 设置合理的内边距 */
+  padding: 10px; /* 设置合理的内边距 */
   text-align: center; /* 居中标题 */
-  font-size: 40px; /* 设置标题字号 */
+  font-size: 28px; /* 设置标题字号 */
   height: auto; /* 根据内容调整高度 */
 }
 
@@ -83,7 +83,7 @@ header {
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr minmax(600px, 3fr) 1fr;
   grid-template-rows: 1ft 3fr 4fr; /* 增加中间部分高度 */
   gap: 10px;
   height: 100vh; /* 填满视口 */

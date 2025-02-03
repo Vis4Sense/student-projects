@@ -1,30 +1,43 @@
 .tabs {
     flex: 0 0 30%; /* tabs 占 30% 高度 */
     display: flex;
-    overflow-x: auto;
+    flex-wrap: nowrap;    /* 防止换行，保持在一行内 */
+    overflow-x: auto;     /* 超出部分出现横向滚动条 */
+    overflow-y: hidden;   /* 禁止纵向滚动，保持固定高度 */
+    max-height: 300px;    /* 限制 Tabs 区域的最大高度 */
     gap: 10px;
     padding: 10px;
     background-color: #e9ecef;
   }
   
 .tab {
-    flex: 0 0 auto;
+    flex: 0 0 220px;  /* 每个 tab 固定宽度 220px */
+    height: 270px;    /* 固定高度，避免高度变化 */
+
     padding: 10px;
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
-  
-    /* 调整宽高 */
-    width: 20%; /* 设置每个 tab 的宽度 */
-    height: 80%; /* 设置每个 tab 的高度 */
+
+    display: flex;        /* 启用 flex 布局 */
+    flex-direction: column; /* 让内容垂直排列 */
+    justify-content: space-between; /* 内容均匀分布，避免溢出 */
+    overflow: hidden;     /* 隐藏超出 tab 框的内容 */
   }
 
 .tab h3 {
-    font-size: 3em; /* 标题字体大小 */
+    font-size: 1.5em; /* 标题字体大小 */
     font-weight: bold; /* 加粗标题 */
+    margin: 5px 0;            /* 减少上下间距 */
+    overflow: hidden;         /* 隐藏超出边框的内容 */
+    text-overflow: ellipsis;  /* 超出部分显示省略号 */
+    white-space: nowrap;      /* 不换行，超出显示省略号 */
   }
   
 .tab p {
-    font-size: 2em; /* 正文字体大小 */
+    font-size: 1.2em; /* 正文字体大小 */
     color: #666; /* 正文字体颜色 */
+    margin: 3px 0;            /* 控制正文间距，让内容更紧凑 */
+    overflow: hidden;         /* 隐藏超出边框的内容 */
+    word-wrap: break-word;  /* 强制长单词换行 */
   }

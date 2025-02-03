@@ -13,6 +13,20 @@ function App() {
         console.log("Received updated tabs:", message.tabs);
         setTabs(message.tabs || []);
       }
+      else if (message.action === "summary_result") {
+        // 收到后台返回的总结后，更新对应的 tab.summary
+        setTabs(prevTabs => {
+          const updatedTabs = prevTabs.map(tab => {
+            if (tab.id === message.tabId) {
+              return { ...tab, summary: message.summary };
+            }
+            return tab;
+          });
+          console.log("original tabs:", tabs);
+          console.log("Updated tabs with summary:", updatedTabs);
+          return updatedTabs;
+        });
+      }
     };
 
     chrome.runtime.onMessage.addListener(handleMessage);
@@ -61,6 +75,7 @@ function App() {
         {/* 左侧任务列表 */}
         <aside className="task-list">
           <h2>Tasks</h2>
+          <button>New Task</button>
           <ul>
             <li>Cameras comparing</li>
             <li>Jobs searching</li>
@@ -74,7 +89,7 @@ function App() {
 
           {/* 使用 Tabs 组件 */}
           <button onClick={refreshTabs}>Refresh</button>
-          <Tabs tabs={tabs} />
+          <Tabs tabs={tabs} setTabs={setTabs} />
 
           {/* 思维导图区域 */}
           <div className="mindmap">
