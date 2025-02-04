@@ -29,9 +29,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     else if (message.action === "summarize_tab") {
         // console.log("Received tab title for summary:", message.title);
         const replySummary = getSummaryByLLM(message.title, message.mainText, message.outline) .then((summary) => {
+            // update results with the summary
+            const tabIndex = results.findIndex(tab => tab.id === message.tabId);
+            if (tabIndex !== -1) {
+                results[tabIndex].summary = summary;
+                console.log(`Updated summary for tabId ${message.tabId}`);
+            } else {
+                console.warn(`Tab with id ${message.tabId} not found in results.`);
+            }
+            // send the summary back to the front-end
             chrome.runtime.sendMessage({
                 action: "summary_result",
-                tabId: message.tabId,   // 返回时带上 tabId，方便前端识别
+                tabId: message.tabId, 
                 summary: summary
             });
         });

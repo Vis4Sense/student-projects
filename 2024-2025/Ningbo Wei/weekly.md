@@ -152,9 +152,10 @@ sleeping and having fun...
         - seperate as city (eg. traveling to tokyo, Osaka, Nagoya, Mount Fuji)
             - why not days? People usually travel a city per day or servel day a city. Use city as parameter is much better and easier for algorithm to do classifycation
             - can develop Hierachical in the future(eg. ticket booking, hotel booking, different small location in a city)
+            - user can have some dinfe about city(adding some user control)
 - plant to do:
     - try to apply chrome storage
     - develop the function of tab grouping, start from traveling with different city
     - Deepseek api(not really critical, but intersting)
-
+    - update a new prototype based on traveling, inclding Hierachical strcuture
 - plant to do
