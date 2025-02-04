@@ -18,6 +18,15 @@ This is the folder for student projects in 2024-2025.
    - Cash is also always an option, with almost constant small but positive returns 
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
+  
+# Meeting 4 Feb 2025
+
+## Manasi
+- coin history data missing from alpaca
+- using data from polygon.io
+- test on solana
+- input: lots of features, used some feature selection method
+- using the momentum definition from last meeting
 
 # Meeting 28 Jan 2025
 ## Manasi and Abhay
