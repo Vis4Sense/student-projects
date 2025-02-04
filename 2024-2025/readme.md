@@ -11,6 +11,7 @@ This is the folder for student projects in 2024-2025.
       1. Use daily price to find which coins are more volatile
       1. If there is a (daily) top mover list, we can also use that
       1. Then get the minute price/volume data for those
+   1. Put the data in an (onlie) database such as supabsase.
    1. Have a look of these price changes (visualise) to see if there is anything interesting/pattern
       1. Plot out the big price changes on (line) charts, maybe even one chart for each change event
       2. This may provide some clues what drives the changes, i.e., what input to feed the model.
