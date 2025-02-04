@@ -39,6 +39,15 @@ This is the folder for student projects in 2024-2025.
 - output: momentum, using the definition from last meeting, in 1 day in future
 - model: lstm, and decision tree (releative worse, especially for long term)
 
+## Xingyu and Ningbo
+
+Xingyu
+- James replied
+- updated UI
+- next step
+   - update the interface to include output columns in the table
+   - meeting with the Esmond
+
 # Meeting 28 Jan 2025
 ## Manasi and Abhay
 Manasi
