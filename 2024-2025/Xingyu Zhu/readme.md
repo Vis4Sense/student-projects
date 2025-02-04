@@ -9,6 +9,8 @@
 
 - **Save Functionality**:  Implemented a feature to export mapping results as .xlsx files with user-defined filenames (✅ Completed in the first week of November).
 
+- **Improve the interface**: The [interface](projects/app2.py) is now more interactive, and users can select cells and get mapping suggestions (✅ Completed in the fourth week of February).
+
 
 
 ### Data Preprocessing
@@ -40,13 +42,16 @@
 
 - **Retrieval Augmented Generation (RAG)**: Acquired knowledge about RAG and implemented a simple RAG-based approach: [the getSimilarDes function](projects/RAG.py). The process involves using the (TableName, ColumnName) from the MIMIC vocabulary as input to retrieve the corresponding ColumnDesc. Then, the ColumnDesc from MIMIC is used to query the top 5 most similar descriptions from the OMOP ColumnDesc. The retrieved results are provided to the LLM during the first call to enhance the quality of its outputs (✅ Completed in the fourth week of November). 
 
+### Switch to Lettuce 
+- **Deploy**: Read the Lettuce documentation and deploy it locally ![Lettuce Outputs](pictures/Lettuce_first_time.png)(✅ Completed in the fourth week of February).
+
+
 ### Result Checking and Editing
 - **Evaluate Function**: Wrote a [function](projects/CheckResult.py) that checks the accuracy of attribute mappings in the input dictionary by matching them against standard mappings in the database and returns the accuracy rate (✅ Completed in the first week of November).
 
 ### Next Steps
-- **Explore Additional LLMs with Ollama**: (❌ Not yet completed)
-- **Attempt Direct Mapping Using GPT**: (❌ Not yet completed)
-- **Improve RAG**: (❌ Not yet completed)
+- **Meeting with Esmond to obtain user needs**: (❌ Not yet completed)
+
 
 
 
