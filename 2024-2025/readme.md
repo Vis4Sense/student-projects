@@ -4,14 +4,16 @@ This is the folder for student projects in 2024-2025.
 ## Manasi and Abhay
 1. **(4 Feb 2025) Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?**
    1. collect the everyday top movers for the last year or more (this will be the training data, with the highest time resolution)
-   1. have a look of these price changes (visualise) to see if there is anything interesting/pattern
-   2. focus on the short term only, a few hours, max one day
-   3. pick a coin with large volatility
+   1. focus on the short term only, a few hours, max one day
+   1. pick a coin with large volatility
       1. need price data very minute
       1. Try Kraken API?
       1. Use daily price to find which coins are more volatile
-      2. If there is a (daily) top mover list, we can also use that
-      3. Then get the minute price/volume data for those
+      1. If there is a (daily) top mover list, we can also use that
+      1. Then get the minute price/volume data for those
+   1. Have a look of these price changes (visualise) to see if there is anything interesting/pattern
+      1. Plot out the big price changes on (line) charts, maybe even one chart for each change event
+      2. This may provide some clues what drives the changes, i.e., what input to feed the model.
 1. Build some very simple model, such as decision tree, to see how accurate we can predict such sudden changes
    1. **(4 Feb 2025) This can be binary, i.e., whether the price will keep going up in the next 5, 10, 30 minutes.**
    1. Besides price prediction (e.g., using linear regression), we can also use decision tree to predict change range: 0-50%, 50-100%, etc.
