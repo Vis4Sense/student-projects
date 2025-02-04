@@ -47,12 +47,25 @@ Xingyu
 - next step
    - update the interface to include output columns in the table
    - meeting with the Esmond
+ 
+Ningbo
+- updated UI
+   - refresh button to load the tabs
+   - new tab gets added automatically
+   - summary button to generate summary with azure api (gpt 3.5)
+   - tasks and subtasks
+- next step
+   - let user customise tasks and subtasks
+   - update the sketch:
+      - have a hirearchical task tree on the left (UI)
+      - how the tabs are displayed for each task
 
 # Meeting 28 Jan 2025
 ## Manasi and Abhay
 Manasi
 - Top moving crypto for one day
 - predicting price for the next 5 minutes using linear regression
+- summary button to generate summary
 
 ## Ningbo and Xingyu
 Rescheduled the meeting with Xingyu to Friday
