@@ -1,43 +1,7 @@
-// import styles from './Tabs.module.css';
-
-// const tabSummary = (tab) => {
-//   console.log("Tab data trying sent to background.js:", tab);
-//   if (chrome.runtime && chrome.runtime.sendMessage) {
-//     chrome.runtime.sendMessage(  // 打包为一个message类发送
-//       { 
-//         action: "summarize_tab", 
-//         title: tab.title, 
-//         mainText: tab.main_text, 
-//         outline: tab.outline 
-//       }, 
-//       (response) => {
-//         // console.log("Tab data sent to background.js:", tab);
-//       }
-//     );
-//   }
-// };
-
-// const Tabs = ({ tabs }) => {
-//     return (
-//       <div className={styles.tabs}>
-//         {tabs.map((tab, index) => (
-//           <div key={tab.id || index} className={styles.tab}>
-//             <button onClick={() => tabSummary(tab)}>Summary</button>
-//             <h3>{tab.title.slice(0, 50)}</h3>
-//             <p>{tab.currentUrl.slice(0, 150)}...</p>
-//             <p>{tab.summary}...</p>
-//           </div>
-//         ))}
-//       </div>
-//     );
-//   };
-  
-//   export default Tabs;
-
 import React from 'react';
 import styles from './Tabs.module.css';
 
-const Tabs = ({ tabs, setTabs }) => {
+const Tabs = ({ tabs, setTabs, onTabDrop}) => {
 
   const handleSummary = (tab) => {
     // 点击按钮后，立即更新该 tab 的 summary 为 "waiting to generate summary"
@@ -66,10 +30,32 @@ const Tabs = ({ tabs, setTabs }) => {
     }
   };
 
+  const handleDragStart = (event, tab) => {
+    event.dataTransfer.setData('application/json', JSON.stringify(tab));
+  };
+
+  const handleDrop = (event) => {
+    const tabData = JSON.parse(event.dataTransfer.getData('application/json'));
+    onTabDrop(tabData);
+  };
+
+  const allowDrop = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div className={styles.tabs}>
+    <div 
+      className={styles.tabs} 
+      onDragOver={allowDrop} 
+      onDrop={handleDrop}
+    >
       {tabs.map((tab, index) => (
-        <div key={tab.id || index} className={styles.tab}>
+        <div 
+          key={tab.id || index} 
+          className={styles.tab} 
+          draggable 
+          onDragStart={(event) => handleDragStart(event, tab)}
+        >
           <button onClick={() => handleSummary(tab)}>Summary</button>
           <h3>{tab.title.slice(0, 50)}</h3>
           <p>{tab.currentUrl.slice(0, 150)}...</p>

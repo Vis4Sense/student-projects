@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Tabs from './components/tabs/Tabs';
+import Tasks from './components/tasks/Tasks';
 
 function App() {
   const [tabs, setTabs] = useState([]); // 用于存储标签页数据
+  const [tasks, setTasks] = useState([]);  // 用于存储任务数据
+  const [activeTaskId, setActiveTaskId] = useState(null); // 用于存储当前选中的任务 ID
 
   useEffect(() => {
     // 监听 `background.js` 推送的 tabs 更新
@@ -66,6 +69,21 @@ function App() {
     }
   };
 
+  const createNewTask = () => {
+    const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
+    setTasks(prevTasks => [...prevTasks, newTask]);
+    setActiveTaskId(newTask.id);
+  };
+
+  const handleTabDrop = (tab) => {
+    setTasks(prevTasks => prevTasks.map(task => {
+      if (task.id === activeTaskId) {
+        return { ...task, tabs: [...task.tabs, tab] };
+      }
+      return task;
+    }));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -74,14 +92,16 @@ function App() {
       <div className="layout">
         {/* 左侧任务列表 */}
         <aside className="task-list">
-          <h2>Tasks</h2>
-          <button>New Task</button>
-          <ul>
-            <li>Cameras comparing</li>
-            <li>Jobs searching</li>
-            <li>Hotel booking</li>
-            <li>London traveling</li>
-          </ul>
+        <h2>Tasks</h2>
+          <button onClick={createNewTask}>New Task</button>
+          <Tasks tasks={tasks} />
+          {/* <ul>
+            {tasks.map(task => (
+              <li key={task.id} onClick={() => setActiveTaskId(task.id)}>
+                {task.name}
+              </li>
+            ))}
+          </ul> */}
         </aside>
 
         {/* 中间内容区域 */}
@@ -89,11 +109,17 @@ function App() {
 
           {/* 使用 Tabs 组件 */}
           <button onClick={refreshTabs}>Refresh</button>
-          <Tabs tabs={tabs} setTabs={setTabs} />
+          <Tabs tabs={tabs} setTabs={setTabs} onTabDrop={handleTabDrop}/>
 
           {/* 思维导图区域 */}
           <div className="mindmap">
-            <h2>Generated Mindmap</h2>
+            <h2>Mindmap</h2>
+              {tasks.find(task => task.id === activeTaskId)?.tabs.map(tab => (
+                <div key={tab.id} className="tab">
+                  <h3>{tab.title}</h3>
+                  <p>{tab.currentUrl}</p>
+                </div>
+              ))}
             {/* 思维导图展示逻辑 */}
           </div>
         </main>

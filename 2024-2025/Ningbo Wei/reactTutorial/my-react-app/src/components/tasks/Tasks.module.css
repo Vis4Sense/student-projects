@@ -1,0 +1,44 @@
+.tasks{
+    display: flex;
+    flex-direction: column;  /* 垂直排列任务 */
+    align-items: flex-start; /* 左对齐任务 */
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    background-color: #e9ecef;
+}
+
+.task{
+    width: 95%;
+    height: 80px;  /* 固定高度，避免高度变化 */
+
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.task h3{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task p{
+    font-size: 1.2em;
+    color: #666;
+    margin: 3px 0;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
