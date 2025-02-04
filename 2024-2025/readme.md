@@ -26,7 +26,8 @@ This is the folder for student projects in 2024-2025.
 - using data from polygon.io
 - test on solana
 - input: lots of features, used some feature selection method
-- using the momentum definition from last meeting
+- output: momentum, using the definition from last meeting, in 1 day in future
+- model: lstm, and decision tree (releative worse, especially for long term)
 
 # Meeting 28 Jan 2025
 ## Manasi and Abhay
