@@ -10,8 +10,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_titles") {
         chrome.tabs.query({}, async (tabs) => {
             console.log("Total tabs:", tabs.length);
-            results.length = 0; // 清空结果
-            currentUrl.length = 0;
+            // results.length = 0; // 清空结果 // 不能清空，否则前端无法获取到数据，这里主要是为了在原有基础上添加新的tab
             // 用 Promise.all 等待所有 processTab 任务完成
             await Promise.all(tabs.map(tab => processTab(tab)));
             // 现在所有 tabs 处理完了，才发送更新给前端
@@ -115,7 +114,14 @@ function processTab(tab) {
                 // 确保 sendMessage 完成后再 resolve()
                 chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId }, (response) => {
                     if (response) {
+                        // 在此处添加代码，如果respnse中的url出现在了currenturl内，则不添加
+                        if (currentUrl.includes(response.currentUrl)) {
+                            console.log("Tab already fetched:", response.currentUrl);
+                            resolve();
+                            return;
+                        }
                         results.push(response);
+                        currentUrl.push(response.currentUrl);
                         console.log("Added result for:", tab.url);
                     } else {
                         console.error("Failed to fetch content for tab:", tab.url);

@@ -1,0 +1,18 @@
+.mindmap {
+    border: 2px dashed #ccc;
+    min-height: 200px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+.mindmap_tab {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+  }

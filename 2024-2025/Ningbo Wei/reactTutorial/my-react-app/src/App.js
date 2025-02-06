@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Header from './components/Header';
+import Header from './components/Header.module.css';
 import Tabs from './components/tabs/Tabs';
 import Tasks from './components/tasks/Tasks';
+import Mindmap from './components/mindmap/Mindmap';
 
 function App() {
   const [tabs, setTabs] = useState([]); // 用于存储标签页数据
   const [tasks, setTasks] = useState([]);  // 用于存储任务数据
   const [activeTaskId, setActiveTaskId] = useState(null); // 用于存储当前选中的任务 ID
+  const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
 
   useEffect(() => {
     // 监听 `background.js` 推送的 tabs 更新
@@ -75,13 +77,9 @@ function App() {
     setActiveTaskId(newTask.id);
   };
 
-  const handleTabDrop = (tab) => {
-    setTasks(prevTasks => prevTasks.map(task => {
-      if (task.id === activeTaskId) {
-        return { ...task, tabs: [...task.tabs, tab] };
-      }
-      return task;
-    }));
+  // 删除被拖拽到 Mindmap 的 tab
+  const removeTab = (tabId) => {
+    setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
   };
 
   return (
@@ -109,19 +107,10 @@ function App() {
 
           {/* 使用 Tabs 组件 */}
           <button onClick={refreshTabs}>Refresh</button>
-          <Tabs tabs={tabs} setTabs={setTabs} onTabDrop={handleTabDrop}/>
+          <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs}/>
 
           {/* 思维导图区域 */}
-          <div className="mindmap">
-            <h2>Mindmap</h2>
-              {tasks.find(task => task.id === activeTaskId)?.tabs.map(tab => (
-                <div key={tab.id} className="tab">
-                  <h3>{tab.title}</h3>
-                  <p>{tab.currentUrl}</p>
-                </div>
-              ))}
-            {/* 思维导图展示逻辑 */}
-          </div>
+          <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab}/>
         </main>
 
         {/* 右侧问答区域 */}

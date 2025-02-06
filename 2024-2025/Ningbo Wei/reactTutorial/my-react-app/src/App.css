@@ -128,10 +128,4 @@ header {
   height: 80%; /* 设置每个 tab 的高度 */
 }
 
-.mindmap {
-  flex: 1; /* mindmap 填充剩余空间 */
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background: #fafafa;
-}
+
