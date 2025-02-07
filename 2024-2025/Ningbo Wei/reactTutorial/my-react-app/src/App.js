@@ -8,10 +8,17 @@ import Mindmap from './components/mindmap/Mindmap';
 function App() {
   const [tabs, setTabs] = useState([]); // 用于存储标签页数据
   const [tasks, setTasks] = useState([]);  // 用于存储任务数据
-  const [activeTaskId, setActiveTaskId] = useState(null); // 用于存储当前选中的任务 ID
   const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
 
   useEffect(() => {
+    // 从 Chrome storage 中加载 Mindmap tabs
+    chrome.storage.local.get(["mindmapTabs"], (result) => {
+      setMindmapTabs(result.mindmapTabs);
+    });
+    chrome.storage.local.get(["taskList"], (result) => {
+      setTasks(result.taskList || []);
+    });
+
     // 监听 `background.js` 推送的 tabs 更新
     const handleMessage = (message) => {
       if (message.action === "update_tabs") {
@@ -31,6 +38,10 @@ function App() {
           console.log("Updated tabs with summary:", updatedTabs);
           return updatedTabs;
         });
+      }else if (message.action === "update_tasks") {
+        // update tasks
+        console.log("Received updated tasks:", message.tasks);
+        setTasks(message.tasks || []);
       }
     };
 
@@ -72,9 +83,14 @@ function App() {
   };
 
   const createNewTask = () => {
-    const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
-    setTasks(prevTasks => [...prevTasks, newTask]);
-    setActiveTaskId(newTask.id);
+    if(chrome.runtime && chrome.runtime.sendMessage) {
+      chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
+        console.log("Sent create new task request to background.js");
+      });
+    }
+    // const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
+    // setTasks(prevTasks => [...prevTasks, newTask]);
+    // setActiveTaskId(newTask.id);
   };
 
   // 删除被拖拽到 Mindmap 的 tab
@@ -92,7 +108,7 @@ function App() {
         <aside className="task-list">
         <h2>Tasks</h2>
           <button onClick={createNewTask}>New Task</button>
-          <Tasks tasks={tasks} />
+          <Tasks tasks={tasks} setTasks={setTasks} />
           {/* <ul>
             {tasks.map(task => (
               <li key={task.id} onClick={() => setActiveTaskId(task.id)}>

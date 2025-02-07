@@ -3,6 +3,7 @@ import { API_CONFIG } from './config.js';  // get config of API
 const results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 const isTest = false; // 是否为测试模式
+let tasks = []; // 存储任务列表
 
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -15,6 +16,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             await Promise.all(tabs.map(tab => processTab(tab)));
             // 现在所有 tabs 处理完了，才发送更新给前端
             sendTabsToFrontend();
+            sendTasksToFrontend();
         });
         return true; // 支持异步响应
     }
@@ -45,6 +47,35 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true; // 支持异步响应
     }
+    // add a new task
+    else if(message.action === "create_new_task") {
+        let taskName =  `Task ${tasks.length + 1}`;
+        if (message.task_name === undefined ){
+            taskName =  `Task ${tasks.length + 1}`;
+        }else{
+            taskName = message.task_name;
+        }
+        const basicId = crypto.randomUUID();
+        const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId};
+        tasks.push(newTask);
+        // store the tasks in the chrome storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("update taskList with new task", newTask);
+        });
+        sendTasksToFrontend({ tasks });
+        return true;
+    }
+    else if(message.action === "delete_task") {
+        const taskId = message.taskId;
+        // remove the task from the tasks
+        tasks = tasks.filter((t) => t.task_id !== taskId);
+        // remove the task from the storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("Task deleted:", taskId);
+        });
+        // send the updated tasks to the back-end
+        return true;
+    }   
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
@@ -54,16 +85,31 @@ function sendTabsToFrontend() {
         console.warn("No listener for update_tabs, will retry later...");
       }
     });
-  }
+}
+
+function sendTasksToFrontend() {
+    // 加载存储的 Mindmap Tabs
+    chrome.storage.local.get(["taskList"], (result) => {
+        if (result.taskList) {
+            tasks.length = 0;  // 清空原数组，防止旧数据残留
+            tasks.push(...result.taskList); // 直接修改数组内容
+        }
+        chrome.runtime.sendMessage({ action: "update_tasks", tasks: tasks }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.warn("No listener for update_tasks, will retry later...");
+            }
+        });
+    });
+}
   
   // 防止 service_worker 被 Chrome 杀死
-  chrome.alarms.create("keep_alive", { periodInMinutes: 1 });
+chrome.alarms.create("keep_alive", { periodInMinutes: 1 });
   
-  chrome.alarms.onAlarm.addListener((alarm) => {
+chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "keep_alive") {
-      console.log("Keeping service worker alive...");
+    console.log("Keeping service worker alive...");
     }
-  });
+});
 
 // popup the front-end
 chrome.action.onClicked.addListener(() => {

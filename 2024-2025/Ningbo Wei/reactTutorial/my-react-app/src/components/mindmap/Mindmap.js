@@ -23,7 +23,12 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab }) => {
             // 2. 添加到 `mindmapTabs`（避免重复添加）
             setMindmapTabs((prevTabs) => {
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
-                return isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
+                const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
+                // **存储 Mindmap Tabs**
+                chrome.storage.local.set({ mindmapTabs: newTabs }, () => {
+                    console.log("Mindmap tabs updated in storage:", newTabs);
+                });
+                return newTabs;
             });
         } catch (error) {
             console.error("Error parsing dropped tab data:", error);

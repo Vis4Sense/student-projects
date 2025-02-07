@@ -43,9 +43,16 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs}) => {
       const isAlreadyAdded = prevTabs.some((t) => t.id === droppedTab.id);
       return isAlreadyAdded ? prevTabs : [...prevTabs, droppedTab];
     });
-    // 2. remove the dropped tab from the mindmapTabs
-    console.log("droppedTab:", droppedTab);
-    setMindmapTabs((prevTabs) => prevTabs.filter((t) => t.id !== droppedTab.id));
+    // 2. 从 Mindmap 中移除该 Tab 并更新存储
+    setMindmapTabs((prevTabs) => {
+      const newTabs = prevTabs.filter((t) => t.id !== droppedTab.id);
+
+      chrome.storage.local.set({ mindmapTabs: newTabs }, () => {
+          console.log("Mindmap tabs updated in storage:", newTabs);
+      });
+
+      return newTabs;
+    });
   };
 
   const allowDrop = (event) => {
