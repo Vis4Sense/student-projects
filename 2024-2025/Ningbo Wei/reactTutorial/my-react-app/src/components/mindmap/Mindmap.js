@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Mindmap.module.css";
 
-const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab }) => {
+const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId }) => {
 
    // 处理 Tab 拖拽到 Mindmap 的逻辑
     const handleTabDropToMindmap = (event) => {
@@ -25,7 +25,8 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab }) => {
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
                 const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
                 // **存储 Mindmap Tabs**
-                chrome.storage.local.set({ mindmapTabs: newTabs }, () => {
+                const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
+                chrome.storage.local.set({ [mindmapId]: newTabs }, () => {
                     console.log("Mindmap tabs updated in storage:", newTabs);
                 });
                 return newTabs;

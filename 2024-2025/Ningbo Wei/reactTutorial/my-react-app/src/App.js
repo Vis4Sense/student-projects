@@ -6,141 +6,144 @@ import Tasks from './components/tasks/Tasks';
 import Mindmap from './components/mindmap/Mindmap';
 
 function App() {
-  const [tabs, setTabs] = useState([]); // 用于存储标签页数据
-  const [tasks, setTasks] = useState([]);  // 用于存储任务数据
-  const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
+    const [tabs, setTabs] = useState([]); // 用于存储标签页数据
+    const [tasks, setTasks] = useState([]);  // 用于存储任务数据
+    const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
+    const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
 
-  useEffect(() => {
-    // 从 Chrome storage 中加载 Mindmap tabs
-    chrome.storage.local.get(["mindmapTabs"], (result) => {
-      setMindmapTabs(result.mindmapTabs);
-    });
-    chrome.storage.local.get(["taskList"], (result) => {
-      setTasks(result.taskList || []);
-    });
-
-    // 监听 `background.js` 推送的 tabs 更新
-    const handleMessage = (message) => {
-      if (message.action === "update_tabs") {
-        console.log("Received updated tabs:", message.tabs);
-        setTabs(message.tabs || []);
-      }
-      else if (message.action === "summary_result") {
-        // 收到后台返回的总结后，更新对应的 tab.summary
-        setTabs(prevTabs => {
-          const updatedTabs = prevTabs.map(tab => {
-            if (tab.id === message.tabId) {
-              return { ...tab, summary: message.summary };
-            }
-            return tab;
-          });
-          console.log("original tabs:", tabs);
-          console.log("Updated tabs with summary:", updatedTabs);
-          return updatedTabs;
+    useEffect(() => {
+        // 从 Chrome storage 中加载 Mindmap tabs
+        // chrome.storage.local.get(["mindmapTabs"], (result) => {
+        //     setMindmapTabs(result.mindmapTabs || []);
+        //     console.log("begining mindmapTabs:", mindmapTabs);
+        // });
+        setMindmapTabs([]);
+        chrome.storage.local.get(["taskList"], (result) => {
+            setTasks(result.taskList || []);
         });
-      }else if (message.action === "update_tasks") {
-        // update tasks
-        console.log("Received updated tasks:", message.tasks);
-        setTasks(message.tasks || []);
-      }
-    };
 
-    chrome.runtime.onMessage.addListener(handleMessage);
+        // 监听 `background.js` 推送的 tabs 更新
+        const handleMessage = (message) => {
+            if (message.action === "update_tabs") {
+                console.log("Received updated tabs:", message.tabs);
+                setTabs(message.tabs || []);
+            }
+            else if (message.action === "summary_result") {
+                // 收到后台返回的总结后，更新对应的 tab.summary
+                setTabs(prevTabs => {
+                    const updatedTabs = prevTabs.map(tab => {
+                        if (tab.id === message.tabId) {
+                            return { ...tab, summary: message.summary };
+                        }
+                        return tab;
+                    });
+                    console.log("original tabs:", tabs);
+                    console.log("Updated tabs with summary:", updatedTabs);
+                    return updatedTabs;
+                });
+            } else if (message.action === "update_tasks") {
+                // update tasks
+                console.log("Received updated tasks:", message.tasks);
+                setTasks(message.tasks || []);
+            }
+        };
 
-    // 在组件加载时主动请求一次 tabs
-    chrome.runtime.sendMessage({ action: "get_tabs" });
-    
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
-  }, []);
+        chrome.runtime.onMessage.addListener(handleMessage);
+
+        // 在组件加载时主动请求一次 tabs
+        chrome.runtime.sendMessage({ action: "get_tabs" });
+
+        return () => {
+            chrome.runtime.onMessage.removeListener(handleMessage);
+        };
+    }, []);
 
     // return sample data
-        // {[
-        //     "id": 1,
-        //     "title": "Sample Page",
-        //     "main_text": "This is the main content of the page.",
-        //     "outline": "# Heading 1\n## Heading 2",
-        //     "currentUrl": "https://example.com",
-        //     "images": [
-        //       {
-        //         "url": "https://example.com/image1.png",
-        //         "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..."
-        //       },
-        //       {
-        //         "url": "https://example.com/image2.jpg",
-        //         "base64": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABg..."
-        //       }
-        //     ]
-        //   ]}
+    // {[
+    //     "id": 1,
+    //     "title": "Sample Page",
+    //     "main_text": "This is the main content of the page.",
+    //     "outline": "# Heading 1\n## Heading 2",
+    //     "currentUrl": "https://example.com",
+    //     "images": [
+    //       {
+    //         "url": "https://example.com/image1.png",
+    //         "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..."
+    //       },
+    //       {
+    //         "url": "https://example.com/image2.jpg",
+    //         "base64": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABg..."
+    //       }
+    //     ]
+    //   ]}
 
-  const refreshTabs = () => {
-    if (chrome.runtime && chrome.runtime.sendMessage) {
-      chrome.runtime.sendMessage({ action: "fetch_titles" }, (response) => {
-        console.log("Sent refresh request to background.js");
-      });
-    }
-  };
+    const refreshTabs = () => {
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "fetch_titles" }, (response) => {
+                console.log("Sent refresh request to background.js");
+            });
+        }
+    };
 
-  const createNewTask = () => {
-    if(chrome.runtime && chrome.runtime.sendMessage) {
-      chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
-        console.log("Sent create new task request to background.js");
-      });
-    }
-    // const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
-    // setTasks(prevTasks => [...prevTasks, newTask]);
-    // setActiveTaskId(newTask.id);
-  };
+    const createNewTask = () => {
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
+                console.log("Sent create new task request to background.js");
+            });
+        }
+        // const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
+        // setTasks(prevTasks => [...prevTasks, newTask]);
+        // setActiveTaskId(newTask.id);
+    };
 
-  // 删除被拖拽到 Mindmap 的 tab
-  const removeTab = (tabId) => {
-    setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
-  };
+    // 删除被拖拽到 Mindmap 的 tab
+    const removeTab = (tabId) => {
+        setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
+    };
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Sense Making Visualise</h1>
-      </header>
-      <div className="layout">
-        {/* 左侧任务列表 */}
-        <aside className="task-list">
-        <h2>Tasks</h2>
-          <button onClick={createNewTask}>New Task</button>
-          <Tasks tasks={tasks} setTasks={setTasks} />
-          {/* <ul>
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>Sense Making Visualise</h1>
+            </header>
+            <div className="layout">
+                {/* 左侧任务列表 */}
+                <aside className="task-list">
+                    <h2>Tasks</h2>
+                    <button onClick={createNewTask}>New Task</button>
+                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs}/>
+                    {/* <ul>
             {tasks.map(task => (
               <li key={task.id} onClick={() => setActiveTaskId(task.id)}>
                 {task.name}
               </li>
             ))}
           </ul> */}
-        </aside>
+                </aside>
 
-        {/* 中间内容区域 */}
-        <main className="main-content">
+                {/* 中间内容区域 */}
+                <main className="main-content">
 
-          {/* 使用 Tabs 组件 */}
-          <button onClick={refreshTabs}>Refresh</button>
-          <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs}/>
+                    {/* 使用 Tabs 组件 */}
+                    <button onClick={refreshTabs}>Refresh</button>
+                    <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId}/>
 
-          {/* 思维导图区域 */}
-          <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab}/>
-        </main>
+                    {/* 思维导图区域 */}
+                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId}/>
+                </main>
 
-        {/* 右侧问答区域 */}
-        <aside className="qa-section">
-          <h2>QA</h2>
-          <input type="text" placeholder="Ask a question..." />
-          <button>Search</button>
-          <div className="qa-results">
-            {/* 问答结果展示 */}
-          </div>
-        </aside>
-      </div>
-    </div>
-  );
+                {/* 右侧问答区域 */}
+                <aside className="qa-section">
+                    <h2>QA</h2>
+                    <input type="text" placeholder="Ask a question..." />
+                    <button>Search</button>
+                    <div className="qa-results">
+                        {/* 问答结果展示 */}
+                    </div>
+                </aside>
+            </div>
+        </div>
+    );
 }
 
 export default App;
