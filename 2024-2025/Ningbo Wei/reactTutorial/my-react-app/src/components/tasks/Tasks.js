@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 
 const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs }) => {
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editedTitle, setEditedTitle] = useState("");
 
+    const handleDoubleClick = (taskId, currentTitle) => {
+        setEditingTaskId(taskId);
+        setEditedTitle(currentTitle);
+    };
+
+    const handleTitleChange = (e) => {
+        setEditedTitle(e.target.value);
+    };
+
+    const handleBlurOrEnter = (taskId) => {
+        if (!editedTitle.trim()) return; // 避免空标题
+        setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+                task.task_id === taskId ? { ...task, name: editedTitle } : task
+            )
+        );
+
+        // 更新到 Chrome Storage
+        chrome.storage.local.get(["taskList"], (result) => {
+            const updatedTasks = (result.taskList || []).map((task) =>
+                task.task_id === taskId ? { ...task, name: editedTitle } : task
+            );
+            chrome.storage.local.set({ taskList: updatedTasks });
+        });
+
+        setEditingTaskId(null); // 退出编辑模式
+    };
+
+    const handleKeyDown = (e, taskId) => {
+        if (e.key === "Enter") {
+            handleBlurOrEnter(taskId);
+        }
+    };
 
     const deleteTask = (taskId) => {
         // 1. remove the task from the tasks
@@ -41,11 +76,29 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                     className={`${styles.task} ${selectedTaskId === task.task_id ? styles.selected : ""}`}
                     onClick={() => handleTaskClick(task.task_id)}
                 >
-                    <h3>{task.name}</h3>
-                    <button className={styles.deleteButton} onClick={(e) => {
-                        e.stopPropagation(); // 防止点击删除按钮时触发选择任务
-                        deleteTask(task.task_id);
-                    }}>
+                    {editingTaskId === task.task_id ? (
+                        <input
+                            type="text"
+                            value={editedTitle}
+                            onChange={handleTitleChange}
+                            onBlur={() => handleBlurOrEnter(task.task_id)}
+                            onKeyDown={(e) => handleKeyDown(e, task.task_id)}
+                            autoFocus
+                            className={styles.taskInput}
+                        />
+                    ) : (
+                        <h3 onDoubleClick={() => handleDoubleClick(task.task_id, task.name)}>
+                            {task.name}
+                        </h3>
+                    )}
+                    <button
+                        className={styles.deleteButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setTasks((prevTasks) => prevTasks.filter((t) => t.task_id !== task.task_id));
+                            chrome.runtime.sendMessage({ action: "delete_task", taskId: task.task_id });
+                        }}
+                    >
                         ❌ Delete
                     </button>
                 </div>
