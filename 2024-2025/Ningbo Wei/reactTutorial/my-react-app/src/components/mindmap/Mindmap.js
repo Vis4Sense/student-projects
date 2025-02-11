@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Mindmap.module.css";
 
-const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId }) => {
+const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, selectedTaskName }) => {
 
    // 处理 Tab 拖拽到 Mindmap 的逻辑
     const handleTabDropToMindmap = (event) => {
@@ -51,17 +51,19 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId }) =>
             }}
             onDrop={handleTabDropToMindmap}
             >
-            <h2>Mindmap</h2>
-            {mindmapTabs.map((tab) => (
+            <h2>Tasks - {selectedTaskName}</h2>
+            <div className={styles.mindmap_tabs_container}>
+                {mindmapTabs.map((tab) => (
                     <div 
                         key={tab.id} 
                         className={styles.mindmap_tab}
                         draggable
                         onDragStart={(event) => handleDragStart(event, tab)}>
-                <h4>{tab.title.slice(0, 50)}</h4>
-                <p>{tab.currentUrl.slice(0, 70)}</p>
-                </div>
-            ))}
+                        <h4>{tab.title.slice(0, 50)}</h4>
+                        <p>{tab.currentUrl.slice(0, 70)}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

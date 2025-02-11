@@ -10,17 +10,16 @@ function App() {
     const [tasks, setTasks] = useState([]);  // 用于存储任务数据
     const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
+    const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
 
     useEffect(() => {
-        // 从 Chrome storage 中加载 Mindmap tabs
-        // chrome.storage.local.get(["mindmapTabs"], (result) => {
-        //     setMindmapTabs(result.mindmapTabs || []);
-        //     console.log("begining mindmapTabs:", mindmapTabs);
-        // });
         setMindmapTabs([]);
-        chrome.storage.local.get(["taskList"], (result) => {
-            setTasks(result.taskList || []);
-        });
+        chrome.runtime.sendMessage({ action: "get_tasks" }, (response) => {
+            if (response && response.tasks) {
+                console.log("Fetched tasks:", response.tasks);
+                setTasks(response.tasks);
+        }});
+
 
         // 监听 `background.js` 推送的 tabs 更新
         const handleMessage = (message) => {
@@ -45,6 +44,9 @@ function App() {
                 // update tasks
                 console.log("Received updated tasks:", message.tasks);
                 setTasks(message.tasks || []);
+                if (selectedTaskId){
+                    setSelectedTaskName(tasks.find(task => task.task_id === selectedTaskId).task_name);
+                }
             }
         };
 
@@ -111,7 +113,7 @@ function App() {
                 <aside className="task-list">
                     <h2>Tasks</h2>
                     <button onClick={createNewTask}>New Task</button>
-                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs}/>
+                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName}/>
                     {/* <ul>
             {tasks.map(task => (
               <li key={task.id} onClick={() => setActiveTaskId(task.id)}>
@@ -128,8 +130,8 @@ function App() {
                     <button onClick={refreshTabs}>Refresh</button>
                     <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId}/>
 
-                    {/* 思维导图区域 */}
-                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId}/>
+                    {/* task详细内容区域，因为历史原因命名为mindmap */}
+                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName}/>
                 </main>
 
                 {/* 右侧问答区域 */}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 
-const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs }) => {
+const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName }) => {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
 
@@ -16,20 +16,20 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
 
     const handleBlurOrEnter = (taskId) => {
         if (!editedTitle.trim()) return; // 避免空标题
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.task_id === taskId ? { ...task, name: editedTitle } : task
-            )
+        // 立即在前端更新任务名称
+        setTasks((prevTasks) => 
+            prevTasks.map((task) => task.task_id === taskId ? { ...task, name: editedTitle } : task)
         );
-
-        // 更新到 Chrome Storage
-        chrome.storage.local.get(["taskList"], (result) => {
-            const updatedTasks = (result.taskList || []).map((task) =>
-                task.task_id === taskId ? { ...task, name: editedTitle } : task
-            );
-            chrome.storage.local.set({ taskList: updatedTasks });
-        });
-
+        setSelectedTaskName(editedTitle);
+        if(chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "change_task_name", taskId: taskId, taskName: editedTitle }, (response) => {
+                if (chrome.runtime.lastError) {
+                    console.error("Error editing task:", chrome.runtime.lastError);
+                } else {
+                    console.log("Task edited:", response);
+                }
+            });
+        }
         setEditingTaskId(null); // 退出编辑模式
     };
 
@@ -55,9 +55,10 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
     };
 
     // 处理任务选择
-    const handleTaskClick = (taskId) => {
+    const handleTaskClick = (taskId, taskName) => {
         // 1. 更新选中的任务
         setSelectedTaskId(taskId);
+        setSelectedTaskName(taskName);
         console.log("Selected Task:", taskId);
         // 2. 更新 Mindmap Tabs
         const mindmapId = "mindmap" + taskId.replace("task", ""); // 移除 "task" 前缀
@@ -74,7 +75,7 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                 <div
                     key={task.task_id || index}
                     className={`${styles.task} ${selectedTaskId === task.task_id ? styles.selected : ""}`}
-                    onClick={() => handleTaskClick(task.task_id)}
+                    onClick={() => handleTaskClick(task.task_id, task.name)}
                 >
                     {editingTaskId === task.task_id ? (
                         <input

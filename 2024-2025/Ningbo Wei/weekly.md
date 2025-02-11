@@ -170,13 +170,15 @@ sleeping and having fun...
     - apply clustering using api(without Hierachical, without user personal setting)
     - add function of task summary and chat box
     - finished a minimal prototype in two weeks
+    - try to use chrome.storage.sync, instead of the local one
 - question
     - is it ok to use gpt api doing clustering?
+        - yes, no problem. But please leave an option for user to set their api key, or provide a own severice
     - how is the new prototype
+        - delete a block which displaying subtask, see prototype 3.0
     - the management of background and front-end
 
 
 chrom stroage 
     - local (5MB)
     - sycn (100KB), is ok, only text
-- leave an option for user to set their api key, or provide a own severice

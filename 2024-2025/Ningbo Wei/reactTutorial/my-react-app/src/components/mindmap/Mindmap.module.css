@@ -1,18 +1,38 @@
 .mindmap {
-    border: 2px dashed #ccc;
-    min-height: 200px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
+  border: 2px dashed #ccc;
+  min-height: 200px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column; /* 让标题和 tab 在不同的行 */
+  gap: 10px;
+}
+
+.mindmap h2 {
+  text-align: left;  /* 确保文本左对齐 */
+  margin-bottom: 10px; /* 添加底部间距 */
+  padding-left: 10px; /* 让标题稍微偏移，增加层次感 */
+}
+
+
+.mindmap_tabs_container {
+  display: flex;
+  flex-wrap: wrap; /* 让 tabs 换行 */
+  gap: 10px;
+}
+
 .mindmap_tab {
-    padding: 10px;
-    border: 1px solid #ccc;
-    background: #fff;
-    border-radius: 5px;
-    width: 200px;
-    text-align: center;
-  }
+  flex: 0 0 220px;  /* 每个 tab 固定宽度 220px */
+  height: 270px;    /* 固定高度 */
+
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+

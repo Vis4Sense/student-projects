@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
         const basicId = crypto.randomUUID();
         const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId};
-        tasks.push(newTask);
+        tasks.unshift(newTask);
         // store the tasks in the chrome storage
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("update taskList with new task", newTask);
@@ -75,7 +75,30 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         // send the updated tasks to the back-end
         return true;
-    }   
+    }
+    else if (message.action === "get_tasks") {
+        chrome.storage.local.get(["taskList"], (result) => {
+            if (result.taskList) {
+                tasks = result.taskList; // 更新全局 tasks 数组
+            }
+            sendResponse({ tasks: tasks });
+        });
+        return true; // 让 Chrome 保持 sendResponse 可用
+    }
+    
+    else if(message.action === "change_task_name") {
+        const taskId = message.taskId;
+        const taskName = message.taskName;
+        // update the task name
+        tasks = tasks.map((task) => task.task_id === taskId ? { ...task, name: taskName } : task);
+        // update the storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("Task name updated:", taskId, taskName);
+        });
+        // send the updated tasks to the back-end
+        sendTasksToFrontend({ tasks });
+        return true;
+    }
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
