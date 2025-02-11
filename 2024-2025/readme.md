@@ -2,6 +2,14 @@ This is the folder for student projects in 2024-2025.
 
 # To Do
 ## Manasi and Abhay
+1. (online) database storage
+2. universe:
+   3. need to find a list of all the stocks
+   4. nasdaq
+   5. start with stocks with small market capticals
+6. update the binary classification to predict when a big price change, like 5% in 5 minutes, will happen
+7. train a model for each coin and one model with all the coin
+   8. 
 1. **(4 Feb 2025) Get a feeling what the change range is for the daily top movers are like, 10%, 50%, or 200%?**
    1. collect the everyday top movers for the last year or more (this will be the training data, with the highest time resolution)
    1. focus on the short term only, a few hours, max one day
@@ -29,6 +37,38 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# Meeting 11 Feb 2025
+
+Abhay, Manasi, Tianxiang, Kai
+
+## Abhay
+- missing data from Alpaca, but still using it
+- binary prediction: whether will go up or not in 5 minutes
+   - whether increase or decrease
+   - input: price (open, high, low, close), volume, momentum, only look back 5 minutes
+   - decision tree: poor result
+   - random forest: slightly best
+   - lstm: ~60%
+
+## Manasi
+- collect data
+   - universe: all the cryptos from alpaca, ~120, the actual coins may be more
+- Top coins: sol, uni, shib, doge
+- there is almost coin with 20% daily price change every day.
+   - 20% maybe a good threhold   
+
+## Storage issue
+Abhay: 
+- 1 stock, 8 year, 1 minute, 130MB
+- 480 stocks, 15GB
+ 
+Manasi
+- 1 minute resultion, for 1 coin, for 1 year,
+- a few coins alreay over 500MB free Supabase limit
+
+todo: find a solution
+- ask school for database server
+
 # Meeting 4 Feb 2025
 
 ## Manasi
