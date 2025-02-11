@@ -39,9 +39,9 @@ This is the folder for student projects in 2024-2025.
   
 # Meeting 11 Feb 2025
 
-Abhay, Manasi, Tianxiang, Kai
+## Abhay, Manasi, Tianxiang, Kai
 
-## Abhay
+### Abhay
 - missing data from Alpaca, but still using it
 - binary prediction: whether will go up or not in 5 minutes
    - whether increase or decrease
@@ -50,14 +50,14 @@ Abhay, Manasi, Tianxiang, Kai
    - random forest: slightly best
    - lstm: ~60%
 
-## Manasi
+### Manasi
 - collect data
    - universe: all the cryptos from alpaca, ~120, the actual coins may be more
 - Top coins: sol, uni, shib, doge
 - there is almost coin with 20% daily price change every day.
    - 20% maybe a good threhold   
 
-## Storage issue
+### Storage issue
 Abhay: 
 - 1 stock, 8 year, 1 minute, 130MB
 - 480 stocks, 15GB
@@ -68,6 +68,14 @@ Manasi
 
 todo: find a solution
 - ask school for database server
+
+## Xingyu and Ningbo
+
+### Xingyu
+- todo: generate the output table automatically?
+- todo: remove the 'reply' column in the generated table
+- todo: make the input table one column
+- todo: combine the input and output into one table
 
 # Meeting 4 Feb 2025
 
