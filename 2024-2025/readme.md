@@ -77,6 +77,15 @@ todo: find a solution
 - todo: make the input table one column
 - todo: combine the input and output into one table
 
+### Ningbo
+- UI design
+- todo: have one box for each task instead currently two
+- Coding:
+   - creat 'task' and add tabs
+   - storage:
+      - synchronised storage (100kb)
+   - use of LLM for tab clustering (by city)
+
 # Meeting 4 Feb 2025
 
 ## Manasi
