@@ -19,16 +19,20 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
 
             // 1. 从 `tabs` 里删除该 `tab`
             removeTab(tabData.id); 
-
-            // 2. 添加到 `mindmapTabs`（避免重复添加）
-            setMindmapTabs((prevTabs) => {
+            // 2. tell background.js that a tab is removed from the mindmap
+            const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
+            setMindmapTabs((prevTabs) => {  // 注意这个setMindmapTabs是异步的，故把move_tab_to_mindmap放在里面
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
                 const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
-                // **存储 Mindmap Tabs**
-                const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
-                chrome.storage.local.set({ [mindmapId]: newTabs }, () => {
-                    console.log("Mindmap tabs updated in storage:", newTabs);
-                });
+                if (chrome.runtime && chrome.runtime.sendMessage) {
+                    chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error("Error moving tab to mindmap:", chrome.runtime.lastError);
+                        } else {
+                            console.log("Tab moved to mindmap:", response);
+                        }
+                    });
+                }
                 return newTabs;
             });
         } catch (error) {

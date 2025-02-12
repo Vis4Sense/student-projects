@@ -29,6 +29,10 @@ tabs_data = {
             "tabId": "0004",
             "tab_Summary": "this web page introduce the Buckingham Palace"
         },
+        {
+            "tabId": "0005",
+            "tab_Summary": "LeetCode: Classic Interviews - 150 Questions. Master all the interview knowledge points. Valid address and contact information given"
+        }
     ]
 }
 
@@ -52,8 +56,10 @@ begin_prompt = f"""
 You are a helpful assisitant in web tabs clustering. 
 You will be given several summaries of different web tabs.
 These tabs are usually about traveling. 
-What you need to do is do a classification of these tabs based on city information. 
-Please return the result in Json format. 
+What you need to do is do a classification of these tabs based on city. You need to consider information in the summarise, like city name, famous places, train station, air port or famous people. 
+These tabs might belongs to different cities.
+There might have several tabs is not about traveling in a city, you need to ignore them. But some tabs related to traveling should be remained, including the introduction of the city, famous places, train station, air port, famous people, tickets and hotel booking.
+You need to return a list of dictionaries, each dictionary contains a city name and a list of tabId. Please return the result in Json format. 
 Following is an example:
 ###### example input #######
 {tabs_data_text}
@@ -73,12 +79,16 @@ input_prompt_tabs = {
         },
         {
             "tabId": "13000_3",
-            "tab_Summary": "this web page introduce The Golden Gate Bridge, which was built in 1930s"
+            "tab_Summary": "this web page introduce the Golden Gate Bridge, which was built in 1930s. It connectss San Francisco Bay and the Pacific Ocean in California, United States. "
         },
         {
             "tabId": "13000_4",
             "tab_Summary": "this web page introduce the Haneda Airport "
         },
+        {
+            "tabId": "13000_8",
+            "tab_Summary": "The content on the webpage is about the problem of finding the longest common prefix in a list of strings."
+        }
     ]
 }
 

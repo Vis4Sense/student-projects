@@ -1,6 +1,6 @@
 import { API_CONFIG } from './config.js';  // get config of API
 
-const results = []; // 存储已读取的 Tab 信息
+let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 const isTest = false; // 是否为测试模式
 let tasks = []; // 存储任务列表
@@ -46,6 +46,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
         });
         return true; // 支持异步响应
+    }
+    else if(message.action === "move_tab_to_mindmap") {
+        const removedTabId = message.removedTabId;
+        const addedMindmapId = message.addedMindmapId;
+        const newMindmap = message.newMindmap;
+        // remove the tab from theresult_tabs
+        results = results.filter((t) => t.id !== removedTabId);
+        // // add the tab to the mindmapTabs
+        // const mindmapTabs = results.filter((t) => t.id === removedTabId);
+        // update the storage
+        chrome.storage.local.set({ [addedMindmapId]: newMindmap }, () => {
+            console.log("Mindmap tabs updated in storage:", newMindmap);
+        });
+        // send the updated tabs to the back-end
+        sendTabsToFrontend();
+        return true;
     }
     // add a new task
     else if(message.action === "create_new_task") {

@@ -168,6 +168,8 @@ sleeping and having fun...
     - successfully applying chrome storage (can do in sycn)
 - plant to do:
     - apply clustering using api(without Hierachical, without user personal setting)
+        - first, fix bugs in adding tabs to mindmap
+        - second, automatically generate a summary when loading a tab. Delete the plain text information, inorder to reduce the stress of google loacl sotrage
     - add function of task summary and chat box
     - finished a minimal prototype in two weeks
     - try to use chrome.storage.sync, instead of the local one
