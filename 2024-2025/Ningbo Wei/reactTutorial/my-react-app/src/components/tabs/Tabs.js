@@ -75,7 +75,7 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                     <button onClick={() => handleSummary(tab)}>Summary</button>
                     <h3>{tab.title.slice(0, 50)}</h3>
                     <p>{tab.currentUrl.slice(0, 100)}...</p>
-                    <p>{tab.summary || "No summary generated yet"}</p>
+                    <p>{tab.summary ? tab.summary : "waiting..."}</p>
                 </div>
             ))}
         </div>

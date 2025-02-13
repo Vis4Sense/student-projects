@@ -83,12 +83,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if(message.action === "delete_task") {
         const taskId = message.taskId;
+        const mindmapId = "mindmap" + taskId.replace("task", "");
         // remove the task from the tasks
         tasks = tasks.filter((t) => t.task_id !== taskId);
         // remove the task from the storage
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("Task deleted:", taskId);
         });
+        // remove the mindmap tabs from the storage
+        chrome.storage.local.remove([mindmapId], () => {});
         // send the updated tasks to the back-end
         return true;
     }
@@ -173,13 +176,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
-// 处理单个 Tab 的信息提取和发送逻辑
 function processTab(tab) {
     return new Promise((resolve) => {
         if (!tab.url 
             || tab.url.startsWith('chrome://') 
             || tab.url.startsWith('about:') 
-            || tab.url.startsWith('http://localhost:')
+            || tab.url.startsWith('http://localhost:') 
             || tab.url.startsWith('chrome-extension://')) {
             console.log("Skipping unsupported tab:", tab.url);
             resolve();
@@ -195,56 +197,70 @@ function processTab(tab) {
                     return;
                 }
                 const uniqueId = `${Date.now()}-${tab.id}`;
-                
-                // 确保 sendMessage 完成后再 resolve()
+
                 chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId }, (response) => {
                     if (response) {
-                        // 在此处添加代码，如果respnse中的url出现在了currenturl内，则不添加
                         if (currentUrl.includes(response.currentUrl)) {
                             console.log("Tab already fetched:", response.currentUrl);
                             resolve();
                             return;
                         }
+
+                        // 添加默认 summary 为 "waiting..."
+                        response.summary = "waiting...";
                         results.push(response);
                         currentUrl.push(response.currentUrl);
                         console.log("Added result for:", tab.url);
+
+                        // 立即发送更新到前端，让 UI 显示 "waiting..."
+                        sendTabsToFrontend();
+
+                        // 生成摘要, short summary
+                        getSummaryByLLM(response.title, response.main_text, response.outline, 25)
+                            .then((summary) => {
+                                const tabIndex = results.findIndex(t => t.id === response.id);
+                                if (tabIndex !== -1) {
+                                    results[tabIndex].summary = summary;
+                                    console.log(`Updated short summary for tabId ${response.title}`);
+                                    sendTabsToFrontend(); // 再次通知前端更新 UI
+                                }
+                            })
+                            .catch(err => {
+                                console.error("Error generating summary:", err);
+                            });
+                        // 生成摘要, Long summary
+                        getSummaryByLLM(response.title, response.main_text, response.outline, 100)
+                            .then((summary) => {
+                                const tabIndex = results.findIndex(t => t.id === response.id);
+                                if (tabIndex !== -1) {
+                                    results[tabIndex].summaryLong = summary;
+                                    results[tabIndex].mainText = ""; // 清空 mainText，减小数据量
+                                    results[tabIndex].outline = ""; // 清空 outline，减小数据量
+                                    results[tabIndex].images = []; // 清空 images，减小数据量
+                                    console.log(`Updated long summary for tabId ${response.title}`);
+                                    sendTabsToFrontend(); // 再次通知前端更新 UI
+                                }
+                            })
+                            .catch(err => {
+                                console.error("Error generating summary:", err);
+                            });
                     } else {
                         console.error("Failed to fetch content for tab:", tab.url);
                     }
-                    resolve(); // 只有在 sendMessage 完成后才执行 resolve()
+                    resolve();
                 });
 
-                // 加入超时保护，防止某些 tab 无响应导致 Promise 永远不 resolve
                 setTimeout(() => {
                     console.warn(`Timeout: No response from tab ${tab.url}, resolving anyway.`);
                     resolve();
-                }, 5000);
+                }, 6000);
             }
         );
     });
 }
 
 
-
-// store page data at the chrome.storage.local
-function saveTabsLocally() {
-    chrome.storage.local.set({ tabs: results }, () => {
-        console.log("Tabs data stored successfully in Chrome storage.");
-    });
-}
-
-
-function normalizeUrl(url) {
-    try {
-        const parsedUrl = new URL(url);
-        return parsedUrl.toString(); // 返回标准化的 URL
-    } catch (err) {
-        console.error("Failed to normalize URL:", url, err);
-        return url;
-    }
-}
-
-async function getSummaryByLLM(title, main_text, outline) {
+async function getSummaryByLLM(title, main_text, outline, wordCount = 25) {
     if (isTest) {
         return "This is a test summary";
     }
@@ -255,8 +271,8 @@ async function getSummaryByLLM(title, main_text, outline) {
     
     const prompt = `
         Following text is extracted from a website, including its title, main context, and outline. 
-        Please help me analyze the following content and return a summary of less than 50 English words. 
-        Ignore spam and ads information.
+        Please help me analyze the following content and return a summary of less than ${wordCount} English words. 
+        Ignore spam and ads information. Some parts may be irrelevant. Please summarize the main content in English.
 
         ####### Title #######
         ${title.slice(0, 500)}
