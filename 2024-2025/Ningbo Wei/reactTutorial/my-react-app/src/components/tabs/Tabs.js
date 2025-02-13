@@ -72,9 +72,9 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                     draggable
                     onDragStart={(event) => handleDragStart(event, tab)}
                 >
-                    <button onClick={() => handleSummary(tab)}>Summary</button>
+                    {/* <button onClick={() => handleSummary(tab)}>Summary</button> */}
                     <h3>{tab.title.slice(0, 50)}</h3>
-                    <p>{tab.currentUrl.slice(0, 100)}...</p>
+                    <p>{tab.currentUrl.slice(0, 60)}...</p>
                     <p>{tab.summary ? tab.summary : "waiting..."}</p>
                 </div>
             ))}

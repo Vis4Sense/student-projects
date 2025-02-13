@@ -69,8 +69,26 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         });
     };
 
+    const createNewTask = () => {
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
+                console.log("Sent create new task request to background.js");
+            });
+        }
+    };
+
+    const autoGenerateTasks = () => {
+        // if (chrome.runtime && chrome.runtime.sendMessage) {
+        //     chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
+        //         console.log("Sent create new task request to background.js");
+        //     });
+        // }
+    };
+
     return (
         <div className={styles.tasks}>
+            <button onClick={() =>{createNewTask}}>New Blank Task</button>
+            <button onClick={() =>{autoGenerateTasks}}>Automatically Generate Tasks</button>
             {tasks.map((task, index) => (
                 <div
                     key={task.task_id || index}

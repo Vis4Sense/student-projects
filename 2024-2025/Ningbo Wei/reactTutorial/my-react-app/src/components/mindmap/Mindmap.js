@@ -63,8 +63,9 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                         className={styles.mindmap_tab}
                         draggable
                         onDragStart={(event) => handleDragStart(event, tab)}>
-                        <h4>{tab.title.slice(0, 50)}</h4>
+                        <h3>{tab.title.slice(0, 50)}</h3>
                         <p>{tab.currentUrl.slice(0, 70)}</p>
+                        <p>{tab.summary ? tab.summary : "waiting..."}</p>
                     </div>
                 ))}
             </div>

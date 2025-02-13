@@ -67,6 +67,8 @@ function App() {
     //     "main_text": "This is the main content of the page.",
     //     "outline": "# Heading 1\n## Heading 2",
     //     "currentUrl": "https://example.com",
+    //      "summary": "This is a summary of the page.",
+    //     "summaryLong": "This is a long summary of the page.",
     //     "images": [
     //       {
     //         "url": "https://example.com/image1.png",
@@ -87,17 +89,6 @@ function App() {
         }
     };
 
-    const createNewTask = () => {
-        if (chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
-                console.log("Sent create new task request to background.js");
-            });
-        }
-        // const newTask = { id: Date.now(), name: `Task ${tasks.length + 1}`, tabs: [] };
-        // setTasks(prevTasks => [...prevTasks, newTask]);
-        // setActiveTaskId(newTask.id);
-    };
-
     // 删除被拖拽到 Mindmap 的 tab
     const removeTab = (tabId) => {
         setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
@@ -112,15 +103,7 @@ function App() {
                 {/* 左侧任务列表 */}
                 <aside className="task-list">
                     <h2>Tasks</h2>
-                    <button onClick={createNewTask}>New Task</button>
                     <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName}/>
-                    {/* <ul>
-            {tasks.map(task => (
-              <li key={task.id} onClick={() => setActiveTaskId(task.id)}>
-                {task.name}
-              </li>
-            ))}
-          </ul> */}
                 </aside>
 
                 {/* 中间内容区域 */}

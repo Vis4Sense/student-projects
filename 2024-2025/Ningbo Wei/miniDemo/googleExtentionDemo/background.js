@@ -2,7 +2,7 @@ import { API_CONFIG } from './config.js';  // get config of API
 
 let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
-const isTest = false; // 是否为测试模式
+const isTest = true; // 是否为测试模式
 let tasks = []; // 存储任务列表
 
 // refresh the tabs information
