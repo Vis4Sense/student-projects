@@ -87,8 +87,10 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
 
     return (
         <div className={styles.tasks}>
-            <button onClick={() =>{createNewTask}}>New Blank Task</button>
-            <button onClick={() =>{autoGenerateTasks}}>Automatically Generate Tasks</button>
+            <div className={styles["task-buttons"]}>
+                <button className={styles["task-button"]} onClick={createNewTask}>New Blank Task</button>
+                <button className={styles["task-button"]} onClick={autoGenerateTasks}>Automatically Generate Tasks</button>
+            </div>
             {tasks.map((task, index) => (
                 <div
                     key={task.task_id || index}
