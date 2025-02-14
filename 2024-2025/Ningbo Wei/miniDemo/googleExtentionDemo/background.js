@@ -2,7 +2,7 @@ import { API_CONFIG } from './config.js';  // get config of API
 
 let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
-const isTest = true; // 是否为测试模式
+const isTest = false; // 是否为测试模式
 let tasks = []; // 存储任务列表
 
 // refresh the tabs information
@@ -104,7 +104,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true; // 让 Chrome 保持 sendResponse 可用
     }
-    
     else if(message.action === "change_task_name") {
         const taskId = message.taskId;
         const taskName = message.taskName;
@@ -116,6 +115,51 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         // send the updated tasks to the back-end
         sendTasksToFrontend({ tasks });
+        return true;
+    }
+    else if(message.action === "auto_Generate_tasks"){
+        // deadling with result_tabs, only leave tabId and longSummary
+        const tabs_for_classification = results.map((tab) => {
+            return { tabId: tab.id, tab_Summary: tab.summaryLong };
+        });
+        // based on longsummary to classify the tabs
+        getClassificationByLLM(tabs_for_classification).then((outputList) => {
+            // update the new tasks
+            let newTasks = [];
+            console.log("outputList", outputList);
+            outputList.map((output) => {
+                const basicId = crypto.randomUUID();
+                newTasks.push({ task_id: "task"+basicId, name: output.location, MindmapId: "mindmap"+basicId });
+                console.log("new task", newTasks);
+                // for each new task, create a new mindmap
+                let newMindmap = [];
+                output.tabId.map((thisTabId) => {
+                    console.log("thisTabId", thisTabId);
+                    // add the tab to the new mindmap
+                    const tab = results.find((tab) => tab.id === thisTabId);
+                    if (tab) {
+                        newMindmap.push(tab);
+                    }
+                    // delete the tab from the results
+                    const tabIndex = results.findIndex((tab) => tab.id === thisTabId);
+                    console.log("tabIndex", tabIndex);
+                    if (tabIndex !== -1) {
+                        results = results.filter((tab) => tab.id !== thisTabId);
+                    }
+                });
+                // store the mindmap in the chrome storage
+                chrome.storage.local.set({ ["mindmap"+basicId]: newMindmap }, () => {
+                    console.log("update mindmap with new tabs", newMindmap);
+                });
+            });
+            // store the tasks in the chrome storage
+            tasks.unshift(...newTasks);
+            chrome.storage.local.set({ taskList: tasks }, () => {
+                console.log("update taskList with new tasks", tasks);
+            });
+            sendTasksToFrontend({ tasks });
+            sendTabsToFrontend();
+        });
         return true;
     }
 });
@@ -304,6 +348,79 @@ async function getSummaryByLLM(title, main_text, outline, wordCount = 25) {
         const reply = data.choices[0].message.content.trim().replace(/\n/g, "");
         console.log(reply);
         return reply;  // 现在可以正确返回 reply
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error fetching summary for this web tabs.";
+    }
+}
+
+
+async function getClassificationByLLM(tabInfo) {
+    if (isTest) {
+        return "This is a test summary";
+    }
+    console.log("Sending request to GPT about for tabs grouping");
+    const { apiBase, apiKey, deploymentName, apiVersion } = API_CONFIG;  // get api key
+
+    const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
+    const exampleInput = {
+        "tabs": [
+            { "tabId": "1234", "tab_Summary": "this web page is a wiki pedia page introducing London" },
+            { "tabId": "0002", "tab_Summary": "this web page is the official web page of Jubilee line in London underground, showing it prices" },
+            { "tabId": "0003", "tab_Summary": "this web page introduce The Forbidden city" },
+            { "tabId": "0004", "tab_Summary": "this web page introduce the Buckingham Palace" },
+            { "tabId": "0005", "tab_Summary": "LeetCode: Classic Interviews - 150 Questions. Master all the interview knowledge points. Valid address and contact information given" }
+        ]
+    };
+    const exampleOutput = {
+        "output": [
+            { "location": "London", "tabId": ["1234", "0002", "0004"] },
+            { "location": "Beijing", "tabId": ["0003"] }
+        ]
+    };
+    const exampleInputText = JSON.stringify(exampleInput, null, 2);
+    const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
+
+    const beginPrompt = `
+        You are a helpful assistant in web tabs clustering. 
+        You will be given several summaries of different web tabs.
+        These tabs are usually about traveling. 
+        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, or famous people. 
+        Some tabs might not be about traveling in a city, and you need to ignore them. However, tabs related to traveling should be retained, including introductions of cities, famous places, train stations, airports, famous people, tickets, and hotel booking.
+        You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
+        Following is an example:
+        ###### example input #######
+        ${exampleInputText}
+        ###### example output #######
+        ${exampleOutputText}
+    `;
+
+    const tabInfoText = JSON.stringify(tabInfo, null, 2);
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({
+                messages: [
+                    { role: "system", content: beginPrompt },
+                    { role: "user", content: tabInfoText }
+                ],
+                max_tokens: 500
+            })
+        });  // use await to solve the problem of synchronize
+
+        const data = await response.json();
+        const reply = data.choices[0].message.content.trim().replace(/\n/g, ""); // text based reply, not JSON
+
+        const jsonResponse = JSON.parse(reply);  // 解析 JSON 字符串
+        const outputList = jsonResponse.output;  // 获取列表
+        console.log(outputList);
+
+        return outputList;  // 现在可以正确返回 reply
     } catch (error) {
         console.error("Error:", error);
         return "Error fetching summary for this web tabs.";

@@ -78,11 +78,11 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
     };
 
     const autoGenerateTasks = () => {
-        // if (chrome.runtime && chrome.runtime.sendMessage) {
-        //     chrome.runtime.sendMessage({ action: "create_new_task" }, (response) => {
-        //         console.log("Sent create new task request to background.js");
-        //     });
-        // }
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "auto_Generate_tasks" }, (response) => {
+                console.log("Sent tab grouping request to background.js");
+            });
+        }
     };
 
     return (
