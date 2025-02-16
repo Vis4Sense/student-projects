@@ -180,7 +180,9 @@ sleeping and having fun...
         - delete a block which displaying subtask, see prototype 3.0
     - the management of background and front-end
 
-
-chrom stroage 
-    - local (5MB)
-    - sycn (100KB), is ok, only text
+## feb 11th
+- have done 
+    - add tab grouping function(focusing on traveling)
+    - tabs are generate summary automatically
+        - for the convience of tab grouping
+        - decrease the data storage(text of a page, image-base 64)
