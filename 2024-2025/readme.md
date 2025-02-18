@@ -39,11 +39,9 @@ This is the folder for student projects in 2024-2025.
   
 # Meeting 18 Feb 2025
 
-## Abhay, Tiangxiang, Kai
-
 Manasi is not feeling well.
 
-### Abhay
+## Abhay
 Data
 - Daily price for 3000 Nasdaq stocks
 - Currently the difference of the close price of two consecutive days
@@ -58,6 +56,13 @@ Model
 - Currently, tested on random stocks
 - (ToDo) test on the top 10
 - (ToDo) make sure the model input is a time series, such a vector of the previous prices.
+
+## Ningbo
+- Currently, use LLM API summarise webpage
+- (ToDo) need to switch to gpt4o-mini: the gpt3.5 cost is 10 times higher, but probably perform worse
+- (ToDo) reduce the webpage token in the prompt: current there are 10K character in each prompt.
+- Currently, Use LLM to group the webpages
+- (ToDo) allow users to manually create groups and include those in the groups LLM created.
 
 # Meeting 11 Feb 2025
 
