@@ -12,7 +12,7 @@ function App() {
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
 
-    useEffect(() => {
+    useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);
         chrome.runtime.sendMessage({ action: "get_tasks" }, (response) => {
             if (response && response.tasks) {

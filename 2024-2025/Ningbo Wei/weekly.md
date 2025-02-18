@@ -186,3 +186,8 @@ sleeping and having fun...
     - tabs are generate summary automatically
         - for the convience of tab grouping
         - decrease the data storage(text of a page, image-base 64)
+- to do
+    - use gpt-4o-mini
+    - reduce the token needed for a summary
+    - about the tab clustering, allow user personalised
+    - task summary & QA chat box

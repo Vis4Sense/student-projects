@@ -4,6 +4,7 @@ import styles from "./Tasks.module.css";
 const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName }) => {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
+    const [newTaskPrompt, setnewTaskPrompt] = useState("");  // New state for input
 
     const handleDoubleClick = (taskId, currentTitle) => {
         setEditingTaskId(taskId);
@@ -85,8 +86,25 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         }
     };
 
+    const handleAddTask = () => {
+        if (!newTaskPrompt.trim()) return;
+        console.log("New task input:", newTaskPrompt);
+        setnewTaskPrompt(""); // Clear input after adding
+    };
+
     return (
         <div className={styles.tasks}>
+            {/* New Input and Button */}
+            <div className={styles["task-input-row"]}>
+                <input
+                    type="text"
+                    value={newTaskPrompt}
+                    onChange={(e) => setnewTaskPrompt(e.target.value)}
+                    placeholder="Enter keyword for new task"
+                    className={styles.taskInputBox}
+                />
+                <button className={styles["task-button"]} onClick={handleAddTask}>Create</button>
+            </div>
             <div className={styles["task-buttons"]}>
                 <button className={styles["task-button"]} onClick={createNewTask}>New Blank Task</button>
                 <button className={styles["task-button"]} onClick={autoGenerateTasks}>Automatically Generate Tasks</button>
