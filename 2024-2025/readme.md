@@ -39,17 +39,25 @@ This is the folder for student projects in 2024-2025.
   
 # Meeting 18 Feb 2025
 
-Abhay, Tiangxiang, Kai
+## Abhay, Tiangxiang, Kai
 
-## Abhay
+Manasi is not feeling well.
+
+### Abhay
 Data
-- 3000 Nasdaq stocks
-- currently the difference of the close price of two consecutive days
-- change to the difference of open and close price
+- Daily price for 3000 Nasdaq stocks
+- Currently the difference of the close price of two consecutive days
+  - It seems that most of the price change happens at the opening of the next day and this cannot be captured.
+- (ToDo) Maybe change to the difference of open and close price
+- (ToDo) select 10 stocks with the most price changes
+- (ToDo) collect minute data for these 10 stocks
 
 Model
 - predicting if the price will increase by more than 5% in the next day
+- (ToDo) maybe increase this 20%, or the average of the big price changes
 - tested on random stocks
+- (ToDo) test on the top 10
+- (ToDo) make sure the model input is a time series, such a vector of the previous prices.
 
 # Meeting 11 Feb 2025
 
