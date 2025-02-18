@@ -37,6 +37,20 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# Meeting 18 Feb 2025
+
+Abhay, Tiangxiang, Kai
+
+## Abhay
+Data
+- 3000 Nasdaq stocks
+- currently the difference of the close price of two consecutive days
+- change to the difference of open and close price
+
+Model
+- predicting if the price will increase by more than 5% in the next day
+- tested on random stocks
+
 # Meeting 11 Feb 2025
 
 ## Abhay, Manasi, Tianxiang, Kai
