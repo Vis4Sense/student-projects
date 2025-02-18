@@ -64,6 +64,14 @@ Model
 - Currently, Use LLM to group the webpages
 - (ToDo) allow users to manually create groups and include those in the groups LLM created.
 
+## Xingyu
+- (ToDo) create a summary and requirement list from the meeting with Esmond
+- The goal is to capture and display the entire mapping process
+   - Including what has been checked and not included in the mapping
+   - need to include the requred functions, such as search OMOP, so these can be captured in the tool
+   - (ToDo) make a list of required functions
+- (ToDo) create a sketch of how the UI may look like (possibly multiple screens)
+
 # Meeting 11 Feb 2025
 
 ## Abhay, Manasi, Tianxiang, Kai
