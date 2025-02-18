@@ -53,9 +53,9 @@ Data
 - (ToDo) collect minute data for these 10 stocks
 
 Model
-- predicting if the price will increase by more than 5% in the next day
+- Currently, predicting if the price will increase by more than 5% in the next day
 - (ToDo) maybe increase this 20%, or the average of the big price changes
-- tested on random stocks
+- Currently, tested on random stocks
 - (ToDo) test on the top 10
 - (ToDo) make sure the model input is a time series, such a vector of the previous prices.
 
