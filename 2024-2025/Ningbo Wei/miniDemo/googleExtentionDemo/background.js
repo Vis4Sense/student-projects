@@ -259,29 +259,20 @@ function processTab(tab) {
                         // 立即发送更新到前端，让 UI 显示 "waiting..."
                         sendTabsToFrontend();
 
-                        // 生成摘要, short summary
-                        getSummaryByLLM(response.title, response.main_text, response.outline, 25)
+                        // 获取summary，包含long和short
+                        getSummaryByLLM(response.title, response.main_text, response.outline)
                             .then((summary) => {
+                                const longSummary = summary.summary[1].longSummary;
+                                const shortSummary = summary.summary[0].shortSummary;
                                 const tabIndex = results.findIndex(t => t.id === response.id);
+                                console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
                                 if (tabIndex !== -1) {
-                                    results[tabIndex].summary = summary;
-                                    console.log(`Updated short summary for tabId ${response.title}`);
-                                    sendTabsToFrontend(); // 再次通知前端更新 UI
-                                }
-                            })
-                            .catch(err => {
-                                console.error("Error generating summary:", err);
-                            });
-                        // 生成摘要, Long summary
-                        getSummaryByLLM(response.title, response.main_text, response.outline, 100)
-                            .then((summary) => {
-                                const tabIndex = results.findIndex(t => t.id === response.id);
-                                if (tabIndex !== -1) {
-                                    results[tabIndex].summaryLong = summary;
-                                    results[tabIndex].mainText = ""; // 清空 mainText，减小数据量
+                                    results[tabIndex].summary = shortSummary;
+                                    results[tabIndex].summaryLong = longSummary;
+                                    results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
                                     results[tabIndex].outline = ""; // 清空 outline，减小数据量
                                     results[tabIndex].images = []; // 清空 images，减小数据量
-                                    console.log(`Updated long summary for tabId ${response.title}`);
+                                    // console.log(`Updated tow summary for tabId ${response.title}`);
                                     sendTabsToFrontend(); // 再次通知前端更新 UI
                                 }
                             })
@@ -304,7 +295,7 @@ function processTab(tab) {
 }
 
 
-async function getSummaryByLLM(title, main_text, outline, wordCount = 25) {
+async function getSummaryByLLM(title, main_text, outline) {
     if (isTest) {
         return "This is a test summary";
     }
@@ -313,19 +304,37 @@ async function getSummaryByLLM(title, main_text, outline, wordCount = 25) {
 
     const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
     
+    const exampleOutput = {
+        "summary": [
+            { "shortSummary": "xxx" },
+            { "longSummary": "xxxxxx"}
+        ]
+    };
+    const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
+
     const prompt = `
         Following text is extracted from a website, including its title, main context, and outline. 
-        Please help me analyze the following content and return a summary of less than ${wordCount} English words. 
+        Due to the limitation of the display, the given information may be truncated. 
+        Please help me analyze the following content and return two summary of this website in json fromat. 
         Ignore spam and ads information. Some parts may be irrelevant. Please summarize the main content in English.
-
+        
+        You can do this job through following stetps:
+        1. Read the title, main context, and outline.
+        2. Guess the main content of the website, including the main topic and key points.
+        3. Write a short summary of less than 25 words and a long summary of less than 100 words.
+        4. Return only a valid JSON object, with no extra text or formatting. You should return a dictionary with two keys: shortSummary and longSummary, shown as below:
+        ###### example output #######
+        ${exampleOutputText}
+        
+        ----------Following is the title, main context, and outline----------
         ####### Title #######
-        ${title.slice(0, 500)}
+        ${title.slice(0, 100)}
 
         ####### Main Context #######
-        ${main_text.slice(0, 5000)}
+        ${main_text.slice(0, 1000)}
 
         ####### Outline #######
-        ${outline.slice(0, 5000)}
+        ${outline.slice(0, 500)}
     `;
 
     try {
@@ -345,9 +354,30 @@ async function getSummaryByLLM(title, main_text, outline, wordCount = 25) {
         });  // use await to solve the problem of synchronize
 
         const data = await response.json();
-        const reply = data.choices[0].message.content.trim().replace(/\n/g, "");
-        console.log(reply);
-        return reply;  // 现在可以正确返回 reply
+        console.log("API Response:", data);
+
+        if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            throw new Error("Invalid API response format");
+        }
+
+        // 提取返回的内容
+        let responseContent = data.choices[0].message.content.trim();
+
+        // **去除 Markdown 代码块格式**（API 可能会返回 ` ```json ... ``` `）
+        responseContent = responseContent.replace(/^```json|```$/g, "").trim();
+
+        // **去除 JSON 中的多余逗号**，避免解析错误
+        responseContent = responseContent.replace(/,\s*([\]}])/g, '$1');
+
+        // **尝试解析 JSON**
+        const summary = JSON.parse(responseContent);
+        console.log("Summary:", summary);
+
+        // **检查 JSON 结构是否正确**
+        if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[1].longSummary) {
+            throw new Error("JSON 数据缺少必要的字段");
+        }
+        return summary;
     } catch (error) {
         console.error("Error:", error);
         return "Error fetching summary for this web tabs.";
@@ -369,7 +399,8 @@ async function getClassificationByLLM(tabInfo) {
             { "tabId": "0002", "tab_Summary": "this web page is the official web page of Jubilee line in London underground, showing it prices" },
             { "tabId": "0003", "tab_Summary": "this web page introduce The Forbidden city" },
             { "tabId": "0004", "tab_Summary": "this web page introduce the Buckingham Palace" },
-            { "tabId": "0005", "tab_Summary": "LeetCode: Classic Interviews - 150 Questions. Master all the interview knowledge points. Valid address and contact information given" }
+            { "tabId": "0005", "tab_Summary": "LeetCode: Classic Interviews - 150 Questions. Master all the interview knowledge points. Valid address and contact information given" },
+            { "tabId": "0006", "tab_Summary": "this web page introduce the Tsinghua University." }
         ]
     };
     const exampleOutput = {

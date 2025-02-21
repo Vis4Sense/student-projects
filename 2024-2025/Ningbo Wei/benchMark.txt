@@ -1,0 +1,2103 @@
+Toggle the table of contents
+Camera
+103 languages
+Afrikaans
+Ænglisc
+العربية
+تۆرکجه
+বাংলা
+閩南語 / Bân-lâm-gú
+भोजपुरी
+Български
+Boarisch
+བོད་ཡིག
+Bosanski
+Català
+Cymraeg
+Dansk
+الدارجة
+Deutsch
+Eesti
+Español
+Esperanto
+Euskara
+فارسی
+Français
+Frysk
+Gaeilge
+Galego
+贛語
+客家語 / Hak-kâ-ngî
+한국어
+हिन्दी
+Hrvatski
+Ido
+Bahasa Indonesia
+Iñupiatun
+Íslenska
+עברית
+Jawa
+ಕನ್ನಡ
+कॉशुर / کٲشُر
+Kiswahili
+Kurdî
+Latina
+Latviešu
+Lietuvių
+Limburgs
+Lingua Franca Nova
+Magyar
+Македонски
+Malagasy
+മലയാളം
+मराठी
+მარგალური
+Bahasa Melayu
+閩東語 / Mìng-dĕ̤ng-ngṳ̄
+မြန်မာဘာသာ
+Na Vosa Vakaviti
+Nederlands
+Nedersaksies
+नेपाली
+日本語
+Nordfriisk
+Norsk bokmål
+ଓଡ଼ିଆ
+Oromoo
+ਪੰਜਾਬੀ
+پنجابی
+پښتو
+Patois
+ភាសាខ្មែរ
+Polski
+Português
+Runa Simi
+Русский
+संस्कृतम्
+ᱥᱟᱱᱛᱟᱲᱤ
+Sesotho sa Leboa
+Shqip
+සිංහල
+Simple English
+Slovenščina
+Soomaaliga
+کوردی
+Српски / srpski
+Srpskohrvatski / српскохрватски
+Sunda
+Suomi
+Svenska
+Tagalog
+தமிழ்
+తెలుగు
+ไทย
+Тоҷикӣ
+Türkçe
+Українська
+اردو
+Tiếng Việt
+Winaray
+吴语
+ייִדיש
+Yorùbá
+粵語
+Zazaki
+中文
+Betawi
+Edit links
+Article
+Talk
+English
+Read
+Edit
+View history
+Tools
+Tools
+move to sidebar
+hide
+Actions
+Read
+Edit
+View history
+General
+What links here
+Related changes
+Upload file
+Special pages
+Permanent link
+Page information
+Cite this page
+Get shortened URL
+Download QR code
+Print/export
+Download as PDF
+Printable version
+In other projects
+Wikimedia Commons
+Wikidata item
+Appearance
+move to sidebar
+hide
+From Wikipedia, the free encyclopedia
+Optical device for recording images
+For other uses, see
+Camera (disambiguation)
+.
+Leica
+camera (1950s)
+Hasselblad
+500 C/M with
+Zeiss
+lens
+A
+camera
+is an instrument used to capture and store images and videos, either digitally via an electronic
+image sensor
+, or chemically via a light-sensitive material such as
+photographic film
+. As a pivotal technology in the fields of photography and videography, cameras have played a significant role in the progression of visual arts, media, entertainment, surveillance, and scientific research. The invention of the camera dates back to the 19th century and has since evolved with advancements in technology, leading to a vast array of types and models in the 21st century.
+Cameras function through a combination of multiple mechanical components and principles. These include exposure control, which regulates the amount of light reaching the sensor or film; the lens, which focuses the light; the viewfinder, which allows the user to preview the scene; and the film or sensor, which captures the image.
+Several types of cameras exist, each suited to specific uses and offering unique capabilities.
+Single-lens reflex (SLR) cameras
+provide real-time, exact imaging through the lens.
+Large-format
+and
+medium-format
+cameras offer higher image resolution and are often used in professional and artistic photography. Compact cameras, known for their portability and simplicity, are popular in consumer photography.
+Rangefinder cameras
+, with separate viewing and imaging systems, were historically widely used in photojournalism.
+Motion picture cameras
+are specialized for filming cinematic content, while
+digital cameras
+, which became prevalent in the late 20th and early 21st century, use electronic sensors to capture and store images.
+The rapid development of
+smartphone camera
+technology in the 21st century has blurred the lines between dedicated cameras and multifunctional devices, profoundly influencing how society creates, shares, and consumes visual content.
+History
+[
+edit
+]
+Main article:
+History of the camera
+19th century
+[
+edit
+]
+Beginning with the use of the
+camera obscura
+and transitioning to complex photographic cameras, the evolution of the technology in the 19th century was driven by pioneers like
+Thomas Wedgwood
+,
+Nicéphore Niépce
+, and
+Henry Fox Talbot
+. First using the camera obscura for chemical experiments, they ultimately created cameras specifically for chemical photography, and later reduced the camera's size and optimized lens configurations.
+The introduction of the
+daguerreotype
+process in 1839 facilitated commercial camera manufacturing, with various producers contributing diverse designs. As camera manufacturing became a specialized trade in the 1850s, designs and sizes were standardized.
+The latter half of the century witnessed the advent of
+dry plates
+and
+roll-film
+, prompting a shift towards smaller and more cost-effective cameras, epitomized by the original Kodak camera, first produced in 1888. This period also saw significant advancements in lens technology and the emergence of color photography, leading to a surge in camera ownership.
+[
+1
+]
+[
+2
+]
+[
+3
+]
+20th century
+[
+edit
+]
+The first half of the 20th century saw continued miniaturization and the integration of new manufacturing materials. After World War I, Germany took the lead in camera development, spearheading industry consolidation and producing precision-made cameras. The industry saw significant product launches such as the
+Leica
+camera and the
+Contax
+, which were enabled by advancements in film and lens designs. Additionally, there was a marked increase in accessibility to cinematography for amateurs with Eastman Kodak's production of the first
+16-mm
+and
+8-mm
+reversal safety films. The World War II era saw a focus on the development of specialized aerial reconnaissance and instrument-recording equipment, even as the overall pace of non-military camera innovation slowed.
+In the second half of the century, Japanese manufacturers in particular advanced camera technology. From the introduction of the affordable Ricohflex III TLR in 1952 to the first 35mm SLR with automatic exposure, the Olympus AutoEye in 1960, new designs and features continuously emerged. Electronics became integral to camera design in the 1970s, evident in models like
+Polaroid's SX-70
+and
+Canon's AE-1
+.
+Transition to digital photography marked the late 20th century, culminating in digital camera sales surpassing film cameras in the United States by 2003. In contrast, the film camera industry in the UK, Western Europe, and the USA declined during this period, while manufacturing continued in the USSR, German Democratic Republic, and China, often mimicking Western designs.
+[
+1
+]
+[
+2
+]
+[
+3
+]
+21st century
+[
+edit
+]
+The 21st century witnessed the mass adoption of digital cameras and significant improvements in sensor technology. A major revolution came with the incorporation of cameras into smartphones, making photography a commonplace activity. The century also marked the rise of
+computational photography
+, using algorithms and AI to enhance image quality. Features like low-light and
+HDR photography
+, optical image stabilization, and depth-sensing became common in smartphone cameras.
+[
+4
+]
+[
+5
+]
+[
+6
+]
+Mechanics
+[
+edit
+]
+Basic elements of a modern digital single-lens reflex (SLR) still camera
+Most cameras capture light from the
+visible spectrum
+, while specialized cameras capture other portions of the
+electromagnetic spectrum
+, such as
+infrared
+.
+[
+7
+]
+: vii
+All cameras use the same basic design: light enters an enclosed box through a
+converging or convex lens
+and an image is recorded on a light-sensitive medium.
+[
+8
+]
+A shutter mechanism controls the length of time that light enters the camera.
+[
+9
+]
+: 1182–1183
+Most cameras also have a viewfinder, which shows the scene to be recorded, along with means to adjust various combinations of
+focus
+, aperture and
+shutter speed
+.
+[
+10
+]
+: 4
+Exposure control
+[
+edit
+]
+Main article:
+Exposure (photography)
+Aperture
+[
+edit
+]
+Main article:
+Aperture
+Different apertures of a lens
+Light enters the camera through an aperture, an opening adjusted by overlapping plates called the aperture ring.
+[
+11
+]
+[
+12
+]
+[
+13
+]
+Typically located in the lens,
+[
+14
+]
+this opening can be widened or narrowed to alter the amount of light that strikes the film or sensor.
+[
+11
+]
+The size of the aperture can be set manually, by rotating the lens or adjusting a dial or automatically based on readings from an internal light meter.
+[
+11
+]
+As the aperture is adjusted, the opening expands and contracts in increments called
+f-stops
+.
+[
+a
+]
+[
+11
+]
+The smaller the f-stop, the more light is allowed to enter the lens, increasing the exposure. Typically, f-stops range from
+f
+/
+1.4 to
+f
+/
+32
+[
+b
+]
+in standard increments: 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22, and 32.
+[
+15
+]
+The light entering the camera is halved with each increasing increment.
+[
+14
+]
+The distance range in which objects appear clear and sharp, called
+depth of field
+, can be adjusted by many cameras. This allows a photographer to control which objects appear in focus, and which do not.
+The wider opening at lower f-stops narrows the range of focus so the background is blurry while the foreground is in focus. This
+depth of field
+increases as the aperture closes. A narrow aperture results in a high depth of field, meaning that objects at many different distances from the camera will appear to be in focus.
+[
+16
+]
+What is acceptably in focus is determined by the
+circle of confusion
+, the photographic technique, the equipment in use and the degree of magnification expected of the final image.
+[
+17
+]
+Shutter
+[
+edit
+]
+Main article:
+Shutter (photography)
+The shutter, along with the aperture, is one of two ways to control the amount of light entering the camera. The
+shutter
+determines the duration that the light-sensitive surface is exposed to light. The shutter opens, light enters the camera and exposes the film or sensor to light, and then the shutter closes.
+[
+14
+]
+[
+18
+]
+There are two types of mechanical shutters: the leaf-type shutter and the focal-plane shutter. The leaf-type uses a circular iris diaphragm maintained under spring tension inside or just behind the lens that rapidly opens and closes when the shutter is released.
+[
+15
+]
+A focal-plane shutter. In this shutter, the metal shutter blades travel vertically.
+More commonly, a
+focal-plane shutter
+is used.
+[
+14
+]
+This shutter operates close to the film plane and employs metal plates or cloth curtains with an opening that passes across the light-sensitive surface. The curtains or plates have an opening that is pulled across the film plane during exposure. The focal-plane shutter is typically used in single-lens reflex (SLR) cameras, since covering the film (rather than blocking the light passing through the lens) allows the photographer to view the image through the lens at all times, except during the exposure itself. Covering the film also facilitates removing the lens from a loaded camera, as many SLRs have interchangeable lenses.
+[
+11
+]
+[
+15
+]
+A
+digital camera
+may use a mechanical or electronic shutter, the latter of which is common in smartphone cameras. Electronic shutters either record data from the entire sensor simultaneously (a global shutter) or record the data line by line across the sensor (a rolling shutter).
+[
+11
+]
+In movie cameras, a rotary shutter opens and closes in sync with the advancement of each frame of film.
+[
+11
+]
+[
+19
+]
+The duration for which the shutter is open is called the
+shutter speed
+or
+exposure time
+. Typical exposure times can range from one second to 1/1,000 of a second, though longer and shorter durations are not uncommon. In the early stages of photography, exposures were often several minutes long. These long exposure times often resulted in blurry images, as a single object is recorded in multiple places across a single image for the duration of the exposure. To prevent this, shorter exposure times can be used. Very short exposure times can capture fast-moving action and eliminate motion blur.
+[
+20
+]
+[
+15
+]
+[
+11
+]
+[
+14
+]
+However, shorter exposure times require more light to produce a properly exposed image, so shortening the exposure time is not always possible.
+Like aperture settings, exposure times increment in powers of two. The two settings determine the exposure value (EV), a measure of how much light is recorded during the exposure. There is a direct relationship between the exposure times and aperture settings so that if the exposure time is lengthened one step, but the aperture opening is also narrowed one step, then the amount of light that contacts the film or sensor is the same.
+[
+14
+]
+Light meter
+[
+edit
+]
+Main article:
+Light meter
+A handheld digital light meter showing an exposure of 1/200th at an aperture of f/11, at ISO 100. The light sensor is on top, under the white diffusing hemisphere.
+In most modern cameras, the amount of light entering the camera is measured using a built-in light meter or exposure meter.
+[
+c
+]
+Taken through the lens (called
+TTL
+metering
+), these readings are taken using a panel of light-sensitive
+semiconductors
+.
+[
+12
+]
+They are used to calculate optimal exposure settings. These settings are typically determined automatically as the reading is used by the camera's
+microprocessor
+. The reading from the light meter is incorporated with aperture settings, exposure times, and film or sensor sensitivity to calculate the optimal exposure.
+[
+d
+]
+Light meters
+typically average the light in a scene to 18% middle gray. More advanced cameras are more nuanced in their metering—weighing the center of the frame more heavily (center-weighted metering), considering the differences in light across the image (matrix metering), or allowing the photographer to take a light reading at a specific point within the image (spot metering).
+[
+16
+]
+[
+20
+]
+[
+21
+]
+[
+11
+]
+Lens
+[
+edit
+]
+Main articles:
+Camera lens
+and
+Photographic lens design
+A camera lens is an assembly of multiple optical elements, typically made from high-quality glass.
+[
+22
+]
+Its primary function is to focus light onto a camera's film or digital sensor, thereby producing an image.
+[
+12
+]
+This process significantly influences image quality, the overall appearance of the photo, and which parts of the scene are brought into focus.
+[
+22
+]
+A camera lens is constructed from a series of lens elements, small pieces of glass arranged to form an image accurately on the light-sensitive surface. Each element is designed to reduce
+optical aberrations
+, or distortions, such as
+chromatic aberration
+(a failure of the lens to focus all colors at the same point),
+vignetting
+(darkening of image corners), and
+distortion
+(bending or warping of the image). The degree of these distortions can vary depending on the subject of the photo.
+[
+22
+]
+The
+focal length
+of the lens, measured in millimeters, plays a critical role as it determines how much of the scene the camera can capture and how large the objects appear. Wide-angle lenses provide a broad view of the scene, while telephoto lenses capture a narrower view but magnify the objects. The focal length also influences the ease of taking clear pictures handheld, with longer lengths making it more challenging to avoid blur from small camera movements.
+[
+22
+]
+Two primary types of lenses include zoom and prime lenses. A zoom lens allows for changing its focal length within a certain range, providing the convenience of adjusting the scene capture without moving the camera or changing the lens. A prime lens, in contrast, has a fixed focal length. While less flexible, prime lenses often provide superior image quality, are typically lighter, and perform better in low light.
+[
+22
+]
+Focus involves adjusting the lens elements to sharpen the image of the subject at various distances.
+[
+23
+]
+The focus is adjusted through the focus ring on the lens, which moves the lens elements closer or further from the sensor.
+Autofocus
+is a feature included in many lenses, which uses a motor within the lens to adjust the focus quickly and precisely based on the lens's detection of contrast or phase differences. This feature can be enabled or disabled using switches on the lens body.
+[
+12
+]
+Advanced lenses may include mechanical
+image stabilization
+systems that move lens elements or the image sensor itself to counteract camera shake, especially beneficial in low-light conditions or at slow shutter speeds.
+[
+22
+]
+Lens hoods, filters, and caps are accessories used alongside a lens to enhance image quality, protect the lens, or achieve specific effects.
+[
+12
+]
+Viewfinder
+[
+edit
+]
+The camera's viewfinder provides a real-time approximation of what will be captured by the sensor or film. It assists photographers in aligning, focusing, and adjusting the composition, lighting, and exposure of their shots, enhancing the accuracy of the final image.
+[
+14
+]
+Viewfinders fall into two primary categories: optical and electronic. Optical viewfinders, commonly found in Single-Lens Reflex (SLR) cameras, use a system of mirrors or prisms to reflect light from the lens to the viewfinder, providing a clear, real-time view of the scene. Electronic viewfinders, typical in mirrorless cameras, project an electronic image onto a small display, offering a wider range of information such as live exposure previews and histograms, albeit at the cost of potential lag and higher battery consumption.
+[
+11
+]
+Specialized viewfinder systems exist for specific applications, like
+subminiature cameras
+for spying or
+underwater photography
+.
+[
+18
+]
+Parallax error
+, resulting from misalignment between the viewfinder and lens axes, can cause inaccurate representations of the subject's position. While negligible with distant subjects, this error becomes prominent with closer ones. Some viewfinders incorporate parallax-compensating devices to mitigate that issue.
+[
+15
+]
+Film and sensor
+[
+edit
+]
+Image capture in a camera occurs when light strikes a light-sensitive surface:
+photographic film
+or a
+digital sensor
+.
+[
+18
+]
+Housed within the camera body, the film or sensor records the light's pattern when the shutter is briefly opened to allow light to pass during the exposure.
+[
+16
+]
+Loading film into a film camera is a manual process. The film, typically housed in a cartridge, is loaded into a designated slot in the camera. One end of the film strip, the film leader, is manually threaded onto a take-up spool. Once the back of the camera is closed, the film advance lever or knob is used to ensure the film is correctly placed. The photographer then winds the film, either manually or automatically depending on the camera, to position a blank portion of the film in the path of the light. Each time a photo is taken, the film advance mechanism moves the exposed film out of the way, bringing a new, unexposed section of film into position for the next shot.
+[
+16
+]
+The film must be advanced after each shot to prevent
+double exposure
+— where the same section of film is exposed to light twice, resulting in overlapped images. Once all frames on the film roll have been exposed, the film is rewound back into the cartridge, ready to be removed from the camera for developing.
+[
+18
+]
+In digital cameras, sensors typically comprise
+Charge-Coupled Devices (CCDs)
+or Complementary Metal-Oxide-Semiconductor (CMOS) chips, both of which convert incoming light into electrical charges to form digital images.
+[
+11
+]
+CCD sensors, though power-intensive, are recognized for their excellent light sensitivity and image quality. Conversely, CMOS sensors offer individual pixel readouts, leading to less power consumption and faster frame rates, with their image quality having improved significantly over time.
+Digital cameras convert light into electronic data that can be directly processed and stored. The volume of data generated is dictated by the sensor's size and properties, necessitating storage media such as
+Compact Flash
+,
+Memory Sticks
+, and
+SD (Secure Digital) cards
+.
+[
+18
+]
+Modern digital cameras typically feature a built-in monitor for immediate image review and adjustments.
+[
+11
+]
+Digital images are also more readily handled and manipulated by computers, offering a significant advantage in terms of flexibility and post-processing potential over traditional film.
+[
+18
+]
+Camera accessories
+[
+edit
+]
+Flash
+[
+edit
+]
+A
+flash
+provides a short burst of bright light during exposure and is a commonly used artificial light source in photography. Most modern flash systems use a battery-powered high-voltage discharge through a gas-filled tube to generate bright light for a very short time (1/1,000 of a second or less).
+[
+e
+]
+[
+21
+]
+Many flash units measure the light reflected from the flash to help determine the appropriate duration of the flash. When the flash is attached directly to the camera—typically in a slot at the top of the camera (the flash shoe or hot shoe) or through a cable—activating the shutter on the camera triggers the flash, and the camera's internal light meter can help determine the duration of the flash.
+[
+21
+]
+[
+16
+]
+Additional flash equipment can include a
+light diffuser
+, mount and stand, reflector,
+soft box
+, trigger and cord.
+Other accessories
+[
+edit
+]
+Accessories for cameras are mainly used for care, protection, special effects, and functions.
+Lens hood
+: used on the end of a lens to block the sun or other light source to prevent glare and lens flare (see also
+matte box
+).
+Lens cap
+: covers and protects the camera lens when not in use.
+Lens adapter
+: allows the use of lenses other than those for which the camera was designed.
+Filter
+: allows artificial colors or changes light density.
+Lens extension tube
+: allows close focus in
+macro photography
+.
+Care and protection: including camera case and cover, maintenance tools, and screen protector.
+Camera monitor
+: provides an off-camera view of the composition with a brighter and more colorful screen, and typically exposes more advanced tools such as framing guides,
+focus peaking
+,
+zebra stripes
+,
+waveform monitors
+(oftentimes as an "RGB parade"),
+vectorscopes
+and
+false color
+to highlight areas of the image critical to the photographer.
+Tripod
+: primarily used for keeping the camera steady while recording video, doing a long exposure, and
+time-lapse
+photography.
+Microscope adapter: used to connect a camera to a microscope to photograph what the microscope is examining.
+Cable release
+: used to remotely control the shutter using a remote shutter button that can be connected to the camera via a cable. It can be used to lock the shutter open for the desired period, and it is also commonly used to prevent the camera shake from pressing the built-in camera shutter button.
+Dew shield
+: prevents moisture build-up on the lens.
+UV filter
+: can protect the front element of a lens from scratches, cracks, smudges, dirt, dust, and moisture while keeping a minimum impact on image quality.
+Battery and sometimes a charger.
+Large format cameras
+use special equipment that includes a magnifier loupe, view finder, angle finder, and focusing rail/truck. Some professional SLRs can be provided with interchangeable
+finders
+for eye-level or waist-level focusing,
+focusing screens
+, eyecup, data backs,
+motor-drives
+for film transportation or external battery packs.
+Primary types
+[
+edit
+]
+Single-lens reflex (SLR) camera
+[
+edit
+]
+Main article:
+Single-lens reflex camera
+Further information:
+Instant return mirror
+Nikon D200 digital camera
+In photography, the single-lens reflex camera (SLR) is provided with a mirror to redirect light from the lens to the viewfinder prior to releasing the shutter for composing and focusing an image. When the shutter is released, the mirror swings up and away, allowing the exposure of the
+photographic medium
+, and instantly returns after the exposure is finished. No SLR camera before 1954 had this feature, although the mirror on some early SLR cameras was entirely operated by the force exerted on the shutter release and only returned when the finger pressure was released.
+[
+24
+]
+[
+25
+]
+The
+Asahiflex II
+, released by Japanese company
+Asahi (Pentax)
+in 1954, was the world's first SLR camera with an instant return mirror.
+[
+26
+]
+In the single-lens reflex camera, the photographer sees the scene through the camera lens. This avoids the problem of
+parallax
+which occurs when the viewfinder or viewing lens is separated from the taking lens. Single-lens reflex cameras have been made in several formats including sheet film 5x7" and 4x5", roll film 220/120 taking 8,10, 12, or 16 photographs on a 120 roll, and twice that number of a 220 film. These correspond to 6x9, 6x7, 6x6, and 6x4.5 respectively (all dimensions in cm). Notable manufacturers of large format and roll film SLR cameras include
+Bronica
+,
+Graflex
+,
+Hasselblad
+,
+Seagull
+,
+Mamiya
+and
+Pentax
+. However, the most common format of SLR cameras has been 35 mm and subsequently the migration to
+digital SLR
+cameras, using almost identical sized bodies and sometimes using the same lens systems.
+Almost all SLR cameras use a front-surfaced mirror in the optical path to direct the light from the lens via a viewing screen and
+pentaprism
+to the eyepiece. At the time of exposure, the mirror is flipped up out of the light path before the shutter opens. Some early cameras experimented with other methods of providing through-the-lens viewing, including the use of a semi-transparent
+pellicle
+as in the
+Canon Pellix
+[
+27
+]
+and others with a small periscope such as in the
+Corfield Periflex
+series.
+[
+28
+]
+Large-format camera
+[
+edit
+]
+Main article:
+View camera
+The large-format camera, taking sheet film, is a direct successor of the early plate cameras and remained in use for high-quality photography and technical, architectural, and industrial photography. There are three common types: the view camera, with its
+monorail
+and
+field camera
+variants, and the
+press camera
+. They have extensible bellows with the lens and shutter mounted on a lens plate at the front. Backs taking
+roll film
+and later
+digital backs
+are available in addition to the standard dark slide back. These cameras have a wide range of movements allowing very close control of focus and perspective. Composition and focusing are done on view cameras by viewing a
+ground-glass
+screen which is replaced by the film to make the exposure; they are suitable for static subjects only and are slow to use.
+Plate camera
+[
+edit
+]
+19th-century studio camera with bellows for focusing
+Main article:
+Photographic plate
+The earliest cameras produced in significant numbers were
+plate cameras
+, using sensitized glass plates. Light entered a lens mounted on a lens board which was separated from the plate by extendible bellows. There were simple box cameras for glass plates but also single-lens reflex cameras with interchangeable lenses and even for color photography (
+Autochrome Lumière
+). Many of these cameras had controls to raise, lower, and tilt the lens forwards or backward to control perspective.
+Focusing of these plate cameras was by the use of a ground glass screen at the point of focus. Because
+lens design
+only allowed rather small aperture lenses, the image on the ground glass screen was faint and most
+photographers
+had a dark cloth to cover their heads to allow focusing and composition to be carried out more quickly. When focus and composition were satisfactory, the ground glass screen was removed, and a sensitized plate was put in its place protected by a
+dark slide
+. To make the exposure, the dark decline was carefully slid out and the shutter opened, and then closed and the dark fall replaced.
+Glass plates were later replaced by sheet film in a dark slide for sheet film; adapter sleeves were made to allow sheet film to be used in plate holders. In addition to the ground glass, a simple optical viewfinder was often fitted.
+Medium-format camera
+[
+edit
+]
+Main article:
+Medium format
+Hasselblad
+medium format camera
+Medium-format cameras have a film size between the large-format cameras and smaller 35 mm cameras.
+[
+29
+]
+Typically these systems use 120 or 220 roll film.
+[
+30
+]
+The most common image sizes are 6×4.5 cm, 6×6 cm and 6×7 cm; the older 6×9 cm is rarely used. The designs of this kind of camera show greater variation than their larger brethren, ranging from monorail systems through the classic
+Hasselblad
+model with separate backs, to smaller rangefinder cameras. There are even compact amateur cameras available in this format.
+Twin-lens reflex camera
+[
+edit
+]
+Main article:
+Twin-lens reflex camera
+Twin-lens reflex camera
+Twin-lens reflex cameras used a pair of nearly identical lenses: one to form the image and one as a viewfinder.
+[
+31
+]
+The lenses were arranged with the viewing lens immediately above the taking lens. The viewing lens projects an image onto a viewing screen which can be seen from above. Some manufacturers such as Mamiya also provided a reflex head to attach to the viewing screen to allow the camera to be held to the eye when in use. The advantage of a TLR was that it could be easily focused using the viewing screen and that under most circumstances the view seen on the viewing screen was identical to that recorded on film. At close distances, however, parallax errors were encountered, and some cameras also included an indicator to show what part of the composition would be excluded.
+Some TLRs had interchangeable lenses, but as these had to be paired lenses, they were relatively heavy and did not provide the range of focal lengths that the SLR could support. Most TLRs used 120 or 220 films; some used the smaller 127 films.
+Compact cameras
+[
+edit
+]
+Instant camera
+[
+edit
+]
+Main article:
+Instant camera
+Instant Camera
+After exposure, every photograph is taken through pinch rollers inside the instant camera. Thereby the developer paste contained in the paper 'sandwich' is distributed on the image. After a minute, the cover sheet just needs to be removed and one gets a single original positive image with a fixed format. With some systems, it was also possible to create an instant image negative, from which then could be made copies in the photo lab. The ultimate development was the SX-70 system of
+Polaroid
+, in which a row of ten shots – engine driven – could be made without having to remove any cover sheets from the picture. There were instant cameras for a variety of formats, as well as adapters for instant film use in medium- and large-format cameras.
+Subminiature camera
+[
+edit
+]
+Main article:
+Subminiature camera
+Subminiature spy camera
+Subminiature cameras were first produced in the twentieth century and use film significantly smaller than 35mm. The expensive 8×11mm
+Minox
+, the only type of camera produced by the company from 1937 to 1976, became very widely known and was often used for espionage (the Minox company later also produced larger cameras). Later inexpensive subminiatures were made for general use, some using rewound 16 mm cine film. Image quality with these small film sizes was limited.
+Folding camera
+[
+edit
+]
+Main article:
+Folding camera
+Folding camera
+The introduction of films enabled the existing designs for plate cameras to be made much smaller and for the baseplate to be hinged so that it could be folded up, compressing the bellows. These designs were very compact and small models were dubbed
+vest pocket
+cameras. One of the smallest and best-selling cameras was the
+Vest Pocket Kodak
+, sold in two generations between 1912 and 1934. Folding roll film cameras were preceded by folding plate cameras, more compact than other designs.
+Box camera
+[
+edit
+]
+Main article:
+Box camera
+Kodak box camera
+Box cameras were introduced as budget-level cameras and had few if any controls. The original box Brownie models had a small reflex viewfinder mounted on the top of the camera and had no aperture or focusing controls and just a simple shutter. Later models such as the Brownie 127 had larger direct view optical viewfinders together with a curved film path to reduce the impact of deficiencies in the lens.
+Rangefinder camera
+[
+edit
+]
+Main article:
+Rangefinder camera
+Rangefinder camera,
+Leica
+c. 1936
+As camera lens technology developed and wide aperture lenses became more common,
+rangefinder cameras
+were introduced to make focusing more precise. Early rangefinders had two separate viewfinder windows, one of which is linked to the focusing mechanisms and moved right or left as the focusing ring is turned. The two separate images are brought together on a ground glass viewing screen. When vertical lines in the object being photographed meet exactly in the combined image, the object is in focus. A normal composition viewfinder is also provided. Later the viewfinder and rangefinder were combined. Many rangefinder cameras had
+interchangeable lenses
+, each lens requiring its range- and viewfinder linkages.
+Rangefinder cameras were produced in
+half-
+and full-frame 35 mm and roll film (medium format).
+Motion picture cameras
+[
+edit
+]
+Main article:
+Movie camera
+Further information:
+Digital movie camera
+A
+movie camera
+or a
+video camera
+operates similarly to a still camera, except it records a series of static images in rapid succession, commonly at a
+rate
+of 24 frames per second. When the images are combined and displayed in order, the illusion of motion is achieved.
+[
+32
+]
+: 4
+Cameras that capture many images in sequence are known as movie cameras or as cine cameras in Europe; those designed for single images are still cameras. However, these categories overlap as still cameras are often used to capture moving images in
+special effects
+work and many modern cameras can quickly switch between still and motion recording modes.
+A ciné camera or movie camera takes a rapid sequence of photographs on an image sensor or strips of film. In contrast to a still camera, which captures a single snapshot at a time, the ciné camera takes a series of images, each called a
+frame
+, through the use of an intermittent mechanism.
+The frames are later played back in a ciné projector at a specific speed, called the
+frame rate
+(number of frames per second). While viewing, a person's visual system
+merge the separate pictures
+to create the illusion of motion. The first ciné camera was built around 1888 and by 1890 several types were being manufactured. The standard film size for ciné cameras was quickly established as
+35mm film
+and this remained in use until the transition to digital cinematography. Other professional standard formats include
+70 mm film
+and 16 mm film whilst amateur filmmakers used 9.5 mm film, 8 mm film, or Standard 8 and Super 8 before the move into digital format.
+The size and complexity of ciné cameras vary greatly depending on the uses required of the camera. Some professional equipment is very large and too heavy to be handheld whilst some amateur cameras were designed to be very small and light for single-handed operation.
+Professional video camera
+[
+edit
+]
+Arri Alexa
+, a digital movie camera
+Main article:
+Professional video camera
+Further information:
+Video camera
+A
+professional video camera
+(often called a
+television camera
+even though the use has spread beyond television) is a high-end device for creating electronic moving images (as opposed to a movie camera, that earlier recorded the images on
+film
+). Originally developed for use in television studios, they are now also used for music videos,
+direct-to-video
+movies, corporate and educational videos, marriage videos, etc.
+These cameras earlier used
+vacuum tubes
+and later electronic
+image sensors
+.
+Camcorders
+[
+edit
+]
+Sony HDR-HC1E, a
+HDV
+camcorder.
+Main article:
+Camcorders
+A camcorder is an electronic device combining a video camera and a video recorder. Although marketing materials may use the colloquial term "camcorder", the name on the package and manual is often "video camera recorder". Most devices capable of recording video are camera phones and digital cameras primarily intended for still pictures; the term "camcorder" is used to describe a portable, self-contained device, with video capture and recording its primary function.
+Digital camera
+[
+edit
+]
+Main article:
+Digital camera
+Disassembled digital camera
+Further information:
+Digital image
+,
+Digital imaging
+,
+Digital photography
+,
+Digital single-lens reflex camera
+, and
+Digital video
+A digital camera (or digicam) is a camera that encodes
+digital images
+and videos and stores them for later reproduction.
+[
+33
+]
+They typically use semiconductor image sensors.
+[
+34
+]
+Most cameras sold today are digital,
+[
+35
+]
+and they are incorporated into many devices ranging from mobile phones (called
+camera phones
+) to vehicles.
+Digital and film cameras share an optical system, typically using a lens of variable aperture to focus light onto an image pickup device.
+[
+36
+]
+The aperture and shutter admit the correct amount of light to the imager, just as with film but the image pickup device is electronic rather than chemical. However, unlike film cameras, digital cameras can display images on a screen immediately after being captured or recorded, and store and delete images from
+memory
+. Most digital cameras can also record moving videos with
+sound
+. Some digital cameras can
+crop
+and
+stitch
+pictures & perform other elementary
+image editing
+.
+Consumers adopted digital cameras in the 1990s. Professional video cameras transitioned to digital around the 2000s–2010s. Finally, movie cameras transitioned to digital in the 2010s.
+The first camera using digital electronics to capture and store images was developed by Kodak engineer
+Steven Sasson
+in 1975. He used a charge-coupled device (CCD) provided by
+Fairchild Semiconductor
+, which provided only 0.01 megapixels to capture images. Sasson combined the CCD device with movie camera parts to create a digital camera that saved black and white images onto a
+cassette tape
+.
+[
+37
+]
+: 442
+The images were then read from the cassette and viewed on a TV monitor.
+[
+38
+]
+: 225
+Later, cassette tapes were replaced by flash memory.
+In 1986, Japanese company
+Nikon
+introduced an analog-recording electronic single-lens reflex camera, the Nikon SVC.
+[
+39
+]
+Sony Alpha 1
+, a
+full-frame
+mirrorless
+digital camera
+The first
+full-frame digital SLR
+cameras were developed in Japan from around 2000 to 2002: the MZ-D by Pentax,
+[
+40
+]
+the
+N Digital
+by
+Contax
+'s Japanese R6D team,
+[
+41
+]
+and the
+EOS-1Ds
+by
+Canon
+.
+[
+42
+]
+Gradually in the 2000s, the full-frame DSLR became the dominant camera type for professional photography.
+[
+citation needed
+]
+On most digital cameras a display, often a
+liquid crystal display
+(LCD), permits the user to view the scene to be recorded and settings such as
+ISO speed
+, exposure, and shutter speed.
+[
+10
+]
+: 6–7
+[
+43
+]
+: 12
+Camera phone
+[
+edit
+]
+Smartphone with built-in camera
+Main article:
+Camera phone
+Further information:
+Front-facing camera
+and
+Selfie
+In 2000,
+Sharp
+introduced the world's first digital camera phone, the
+J-SH04
+J-Phone
+, in Japan.
+[
+44
+]
+By the mid-2000s, higher-end
+cell phones
+had an integrated digital camera, and by the beginning of the 2010s, almost all
+smartphones
+had an integrated digital camera.
+See also
+[
+edit
+]
+Film portal
+Camera matrix
+History of the camera
+List of camera types
+List of digital camera brands
+Footnotes
+[
+edit
+]
+^
+These f-stops are also referred to as
+f-numbers
+,
+stop numbers
+,
+steps
+or
+stops
+. The f-number is the focal length of the lens divided by the diameter of the effective aperture.
+^
+Theoretically, they can extend to
+f
+/
+64 or higher.
+[
+13
+]
+^
+Some photographers use handheld
+exposure meters
+independent of the camera and use the readings to manually set the exposure settings on the camera.
+[
+21
+]
+^
+Film canisters typically contain a DX code that can be read by modern cameras so that the camera's computer knows the sensitivity of the film, the ISO.
+[
+14
+]
+]
+^
+The older type of disposable flashbulb uses an aluminum or zirconium wire in a glass tube filled with oxygen. During the exposure, the wire is burned away, producing a bright flash.
+[
+21
+]
+References
+[
+edit
+]
+^
+a
+b
+Pritchard, Michael; Nicholson, Angela (2005).
+"Camera development"
+.
+The Oxford Companion to the Photograph
+. Oxford University Press.
+ISBN
+978-0-19-866271-6
+.
+Archived
+from the original on 10 November 2023
+. Retrieved
+12 December
+2019
+.
+^
+a
+b
+Lagasse, Paul, ed. (2018).
+"camera"
+.
+The Columbia Encyclopedia
+(8 ed.). Columbia University Press.
+^
+a
+b
+The Focal encyclopedia of photography: digital imaging, theory and applications history and science
+. Michael R. Peres (ed.) (4th ed.). Amsterdam: Elsevier. 2007.
+ISBN
+978-0-240-80740-9
+.
+{{
+cite book
+}}
+:  CS1 maint: others (
+link
+)
+^
+"A snapshot history of digital camera technology"
+.
+VentureBeat
+. 26 June 2014.
+Archived
+from the original on 10 November 2023
+. Retrieved
+5 July
+2023
+.
+^
+"Timeline: The history of digital cameras"
+.
+Digital Spy
+. 19 August 2014.
+Archived
+from the original on 5 July 2023
+. Retrieved
+5 July
+2023
+.
+^
+"History of digital cameras: From '70s prototypes to iPhone and Galaxy's everyday wonders"
+.
+CNET
+.
+Archived
+from the original on 8 April 2023
+. Retrieved
+5 July
+2023
+.
+^
+Gustavson, Todd (2009).
+Camera: a history of photography from daguerreotype to digital
+. New York: Sterling Publishing Co., Inc.
+ISBN
+978-1-4027-5656-6
+.
+^
+"camera design | designboom.com"
+.
+designboom | architecture & design magazine
+.
+Archived
+from the original on 18 September 2021
+. Retrieved
+18 September
+2021
+.
+^
+Young, Hugh D.; Freedman, Roger A.; Ford, A. Lewis (2008).
+Sears and Zemansky's University Physics
+(12 ed.). San Francisco, California: Pearson Addison-Wesley.
+ISBN
+978-0-321-50147-9
+.
+^
+a
+b
+London, Barbara; Upton, John; Kobré, Kenneth; Brill, Betsy (2002).
+Photography
+(7 ed.). Upper Saddle River, New Jersey: Prentice Hall.
+ISBN
+978-0-13-028271-2
+.
+^
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+Columbia University (2018).
+"camera"
+. In Paul Lagasse (ed.).
+The Columbia Encyclopedia
+(8 ed.). Columbia University Press.
+^
+a
+b
+c
+d
+e
+"How Cameras Work"
+.
+How Stuff Works
+. 21 March 2001.
+Archived
+from the original on 14 December 2019
+. Retrieved
+13 December
+2019
+.
+^
+a
+b
+Laney, Dawn A. ..BA, MS, CGC, CCRC. “Camera Technologies.”
+Salem Press Encyclopedia of Science
+, June 2020. Accessed 6 February 2022.
+^
+a
+b
+c
+d
+e
+f
+g
+h
+Lynne Warren, ed. (2006). "Camera: An Overview".
+Encyclopedia of twentieth-century photography
+. New York: Routledge.
+ISBN
+978-1-57958-393-4
+.
+^
+a
+b
+c
+d
+e
+"technology of photography"
+.
+Britannica Academic
+.
+Archived
+from the original on 10 November 2023
+. Retrieved
+13 December
+2019
+.
+^
+a
+b
+c
+d
+e
+Lynne Warren, ed. (2006). "Camera: 35 mm".
+Encyclopedia of twentieth-century photography
+. New York: Routledge.
+ISBN
+978-1-57958-393-4
+.
+^
+The British Journal Photographic Almanac
+. Henry Greenwood and Co. Ltd. 1956. pp. 468–471.
+^
+a
+b
+c
+d
+e
+f
+Rose, B (2007).
+"The Camera Defined"
+.
+The Focal Encyclopedia of Photography
+. Elsevier. pp. 770–771.
+doi
+:
+10.1016/B978-0-240-80740-9.50152-5
+.
+ISBN
+978-0-240-80740-9
+.
+Archived
+from the original on 14 December 2019
+. Retrieved
+12 December
+2019
+.
+^
+"Motion-picture camera"
+.
+Encyclopedia Britannica
+. Retrieved
+12 December
+2019
+.
+[
+dead link
+‍
+]
+^
+a
+b
+"Camera"
+.
+World Encyclopedia
+. Philip's. 2004.
+ISBN
+978-0-19-954609-1
+. Retrieved
+12 December
+2019
+.
+^
+a
+b
+c
+d
+e
+"camera"
+.
+Britannica Academic
+.
+Archived
+from the original on 10 November 2023
+. Retrieved
+12 December
+2019
+.
+^
+a
+b
+c
+d
+e
+f
+"Understanding Camera Lenses"
+.
+Cambridge in Color
+.
+Archived
+from the original on 19 June 2023
+. Retrieved
+13 December
+2019
+.
+^
+Adams, Ansel; Baker, Robert (1980).
+The camera
+. Boston: Little, Brown.
+ISBN
+978-0-8212-1092-5
+.
+^
+Roger Hicks (1984).
+A History of the 35 mm Still Camera
+. Focal Press, London & Boston. p. 137.
+ISBN
+978-0-240-51233-4
+.
+^
+Rudolph Lea (1993).
+Register of 35 mm SLR cameras
+. Wittig Books, Hückelhoven. p. 23.
+ISBN
+978-3-88984-130-8
+.
+^
+Michael R. Peres (2013),
+The Focal Encyclopedia of Photography
+, p. 779
+,
+Taylor & Francis
+^
+"Canon Pellix Camera"
+.
+Photography in Malaysia
+. Archived from
+the original
+on 16 October 2013.
+^
+Parker, Bev.
+"Corfield Cameras – The Periflex Era"
+. Wolverhampton Museum of Industry.
+Archived
+from the original on 22 October 2013
+. Retrieved
+22 October
+2013
+.
+^
+Wildi, Ernst (2001).
+The medium format advantage
+(2nd ed.). Boston: Focal Press.
+ISBN
+978-1-4294-8344-5
+.
+OCLC
+499049825
+.
+^
+The manual of photography
+. Elizabeth Allen, Sophie Triantaphillidou (10th ed.). Oxford: Elsevier/Focal Press. 2011.
+ISBN
+978-0-240-52037-7
+.
+OCLC
+706802878
+.
+{{
+cite book
+}}
+:  CS1 maint: others (
+link
+)
+^
+Burrows, Paul (13 September 2021).
+"The rise and fall of the TLR: why the twin-lens reflex camera is a real classic"
+.
+Digital Camera World
+. Future US Inc.
+Archived
+from the original on 27 December 2021
+. Retrieved
+27 December
+2021
+.
+^
+Ascher, Steven; Pincus, Edward (2007).
+The Filmmaker's Handbook: A Comprehensive Guide for the Digital Age
+(3 ed.). New York: Penguin Group.
+ISBN
+978-0-452-28678-8
+.
+^
+Farlex Inc:
+definition of digital camera at the Free Dictionary
+Archived
+9 December 2014 at the
+Wayback Machine
+; retrieved 7 September 2013
+^
+Williams, J. B. (2017).
+The Electronics Revolution: Inventing the Future
+. Springer. pp. 245–8.
+ISBN
+978-3-319-49088-5
+.
+Archived
+from the original on 10 November 2023
+. Retrieved
+26 November
+2019
+.
+^
+Musgrove, Mike (12 January 2006).
+"Nikon Says It's Leaving Film-Camera Business"
+.
+Washington Post
+.
+Archived
+from the original on 13 October 2008
+. Retrieved
+23 February
+2007
+.
+^
+MakeUseOf:
+How does a Digital Camera Work
+Archived
+4 December 2017 at the
+Wayback Machine
+; retrieved 7 September 2013
+^
+Gustavson, Todd (1 November 2011).
+500 Cameras: 170 Years of Photographic Innovation
+. Toronto, Ontario: Sterling Publishing, Inc.
+ISBN
+978-1-4027-8086-8
+.
+^
+Hitchcock, Susan (20 September 2011). Hitchcock, Susan Tyler (ed.).
+National Geographic complete photography
+. Washington, D.C.: National Geographic Society.
+ISBN
+978-1-4351-3968-8
+.
+^
+Nikon SLR-type digital cameras
+Archived
+9 August 2011 at the
+Wayback Machine
+, Pierre Jarleton
+^
+The long, difficult road to Pentax full-frame The long, difficult road to Pentax full-frame
+Archived
+4 July 2017 at the
+Wayback Machine
+,
+Digital Photography Review
+^
+British Journal of Photography
+,
+Issues 7410-7422
+, 2003, p. 2
+^
+Canon EOS-1Ds, 11 megapixel full-frame CMOS
+Archived
+26 January 2021 at the
+Wayback Machine
+,
+Digital Photography Review
+^
+Burian, Peter; Caputo, Robert (2003).
+National Geographic photography field guide
+(2 ed.). Washington, D.C.: National Geographic Society.
+ISBN
+978-0-7922-5676-2
+.
+^
+"Evolution of the Camera phone: From Sharp J-SH04 to Nokia 808 Pureview"
+. Hoista.net. 28 February 2012.
+Archived
+from the original on 31 July 2013
+. Retrieved
+21 June
+2013
+.
+Further reading
+[
+edit
+]
+Ascher, Steven; Pincus, Edward (2007).
+The Filmmaker's Handbook: A Comprehensive Guide for the Digital Age
+(3 ed.). New York: Penguin Group.
+ISBN
+978-0-452-28678-8
+.
+Frizot, Michel (January 1998). "Light machines: On the threshold of invention". In Michel Frizot (ed.).
+A New History of Photography
+. Koln, Germany: Konemann.
+ISBN
+978-3-8290-1328-4
+.
+Gernsheim, Helmut (1986).
+A Concise History of Photography
+(3 ed.). Mineola, New York: Dover Publications, Inc.
+ISBN
+978-0-486-25128-8
+.
+Hirsch, Robert (2000).
+Seizing the Light: A History of Photography
+. New York: McGraw-Hill Companies, Inc.
+ISBN
+978-0-697-14361-7
+.
+Hitchcock, Susan Tyler (20 September 2011). Hitchcock, Susan Tyler (ed.).
+National Geographic complete photography
+. Washington, D.C.: National Geographic Society.
+ISBN
+978-1-4351-3968-8
+.
+Johnson, William S.; Rice, Mark; Williams, Carla (2005). Therese Mulligan; David Wooters (eds.).
+A History of Photography
+. Los Angeles, California: Taschen America.
+ISBN
+978-3-8228-4777-0
+.
+Spira, S.F.
+; Lothrop, Easton S. Jr.; Spira, Jonathan B. (2001).
+The History of Photography as Seen Through the Spira Collection
+. New York: Aperture.
+ISBN
+978-0-89381-953-8
+.
+Starl, Timm (January 1998). "A New World of Pictures: The Daguerreotype". In Michel Frizot (ed.).
+A New History of Photography
+. Koln, Germany: Konemann.
+ISBN
+978-3-8290-1328-4
+.
+Wenczel, Norma (2007).
+"Part I – Introducing an Instrument"
+(PDF)
+. In Wolfgang Lefèvre (ed.).
+The Optical Camera Obscura II Images and Texts
+. Max Planck Institute for the History of Science. pp. 13–30. Archived from
+the original
+(PDF)
+on 2 April 2012.
+{{
+cite book
+}}
+:
+|work=
+ignored (
+help
+)
+External links
+[
+edit
+]
+Wikimedia Commons has media related to
+Camera
+.
+How cameras works at How stuff works.
+v
+t
+e
+Photography
+Equipment
+Camera
+light-field
+digital
+field
+instant
+phone
+pinhole
+press
+rangefinder
+SLR
+still
+TLR
+toy
+view
+Darkroom
+enlarger
+safelight
+Film
+base
+format
+holder
+stock
+available films
+discontinued films
+Filter
+Flash
+beauty dish
+cucoloris
+gobo
+hot shoe
+lens hood
+monolight
+reflector
+snoot
+softbox
+Lens
+long-focus
+prime
+zoom
+wide-angle
+fisheye
+swivel
+telephoto
+Manufacturers
+Monopod
+Movie projector
+Slide projector
+Tripod
+head
+Zone plate
+Terminology
+35 mm equivalent focal length
+Angle of view
+Aperture
+Backscatter
+Black-and-white
+Chromatic aberration
+Circle of confusion
+Clipping
+Color balance
+Color temperature
+Depth of field
+Depth of focus
+Exposure
+Exposure compensation
+Exposure value
+Zebra patterning
+F-number
+Film format
+large
+medium
+Film speed
+Focal length
+Guide number
+Hyperfocal distance
+Lens flare
+Metering mode
+Perspective distortion
+Photograph
+Photographic printing
+Albumen
+Photographic processes
+Reciprocity
+Red-eye effect
+Science of photography
+Shutter speed
+Sync
+Zone System
+Genres
+Abstract
+Aerial
+Aircraft
+Architectural
+Astrophotography
+Banquet
+Candid
+Conceptual
+Conservation
+Cloudscape
+Documentary
+Eclipse
+Ethnographic
+Erotic
+Fashion
+Fine-art
+Fire
+Forensic
+Glamour
+High-speed
+Landscape
+Monochrome
+Nature
+Neues Sehen
+Nude
+Photojournalism
+Pictorialism
+Pornography
+Portrait
+Post-mortem
+Ruins
+Selfie
+space selfie
+Social documentary
+Sports
+Still life
+Stock
+Straight photography
+Street
+Toy camera
+Underwater
+Vernacular
+Wedding
+Wildlife
+Techniques
+Afocal
+Bokeh
+Brenizer
+Burst mode
+Contre-jour
+ETTR
+Fill flash
+Fireworks
+Hand-colouring
+Harris shutter
+High-speed
+Holography
+Infrared
+Intentional camera movement
+Kirlian
+Kite aerial
+Lo-fi photography
+Long-exposure
+Luminogram
+Macro
+Mordançage
+Multiple exposure
+Multi-exposure HDR capture
+Night
+Panning
+Panoramic
+Photogram
+Print toning
+Pigeon photography
+Redscale
+Rephotography
+Rollout
+Scanography
+Schlieren photography
+Sabattier effect
+Slow motion
+Stereoscopy
+Stopping down
+Strip
+Slit-scan
+Sun printing
+Tilt–shift
+Miniature faking
+Time-lapse
+Ultraviolet
+Vignetting
+Xerography
+Zoom burst
+Composition
+Diagonal method
+Framing
+Headroom
+Lead room
+Rule of thirds
+Simplicity
+Golden triangle (composition)
+History
+Timeline of photography technology
+Ambrotype
+Analog photography
+Autochrome Lumière
+Box camera
+Calotype
+Camera obscura
+Daguerreotype
+Dufaycolor
+Heliography
+Lippmann plate
+Painted photography backdrops
+Photography and the law
+Glass plate
+Tintype
+Visual arts
+Regional
+Albania
+Bangladesh
+Canada
+China
+Denmark
+Greece
+India
+Japan
+Korea
+Luxembourg
+Norway
+Philippines
+Serbia
+Slovenia
+Sudan
+Taiwan
+Turkey
+Ukraine
+United States
+Uzbekistan
+Vietnam
+Digital photography
+Digital camera
+D-SLR
+comparison
+MILC
+camera back
+Digiscoping
+Comparison of digital and film photography
+Film scanner
+Image sensor
+CMOS APS
+CCD
+Three-CCD camera
+Foveon X3 sensor
+Image sharing
+Pixel
+Color photography
+Print film
+Chromogenic print
+Reversal film
+Color management
+color space
+primary color
+CMYK color model
+RGB color model
+Photographic
+processing
+Bleach bypass
+C-41 process
+Collodion process
+Cross processing
+Cyanotype
+Developer
+Digital image processing
+Dye coupler
+E-6 process
+Fixer
+Gelatin silver process
+Gum printing
+Instant film
+K-14 process
+Print permanence
+Push processing
+Stop bath
+Lists
+Largest photographs
+Most expensive photographs
+Museums devoted to one photographer
+Photographs considered the most important
+Photographers
+Norwegian
+Polish
+street
+women
+Photography periodicals
+Related
+Conservation and restoration of photographs
+film
+photographic plates
+Lomography
+Polaroid art
+Stereoscopy
+Category
+Outline
+v
+t
+e
+Camera brands
+ADOX
+AgfaPhoto
+Aigo
+Aiptek
+Alpa
+Arri
+Argus
+Asahiflex
+Beier (Beirette)
+BenQ
+Blackmagic Design
+Bolex
+Braun
+Bronica
+Canon
+Casio
+Contax
+Corfield
+Coronet
+Diana
+Edixa
+Exakta
+FED
+Fujica
+Fujifilm
+Gateway
+Graflex
+Hasselblad
+Hewlett-Packard
+Holga
+Honeywell
+Ilford Photo
+Kodak
+Konica
+Konica Minolta
+Leica Camera
+Leidolf
+Linhof
+LOMO
+Lumix
+Mamiya
+Micro Precision Products
+Minolta
+Minox
+Miranda
+Newman & Guardia
+Nikon
+Olympus
+Oregon Scientific
+Panasonic
+Pentax
+Petri
+Phase One
+Plaubel
+Polaroid
+Praktica
+Reid
+Ricoh
+Rollei
+Samsung
+Seagull
+Sharp
+Sigma
+Silvestri
+Sinar
+Sony
+Tessina
+Thornton-Pickard
+Tokina
+(lenses)
+Topcon
+Vivitar
+Voigtländer
+Wray
+(lenses)
+Yashica
+Zeiss
+Zenit
+Zorki
+Authority control databases
+: National
+Germany
+United States
+France
+BnF data
+Japan
+Czech Republic
+Spain
+Israel
+Retrieved from "
+https://en.wikipedia.org/w/index.php?title=Camera&oldid=1261051632
+"
+Categories
+:
+Cameras
+Photography equipment
+Optical devices
+Hidden categories:
+CS1 maint: others
+All articles with dead external links
+Articles with dead external links from November 2023
+Webarchive template wayback links
+Articles with short description
+Short description is different from Wikidata
+Use American English from January 2022
+All Wikipedia articles written in American English
+Use dmy dates from January 2020
+All articles with unsourced statements
+Articles with unsourced statements from March 2019
+CS1 errors: periodical ignored
+Commons link from Wikidata
