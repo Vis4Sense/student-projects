@@ -191,3 +191,10 @@ sleeping and having fun...
     - reduce the token needed for a summary
     - about the tab clustering, allow user personalised
     - task summary & QA chat box
+
+## Feb 18th
+- have done
+    - acheive using gpt-4o-mini
+    - reduce the character neeed for summary(combine the process for generating two summarise of a tab; apply prompt engineering to lead the gpt guess what the full webpage is talking about before doing summary)
+- problem
+    - gpt-4o-mini is easy to meet the token limitation, sometime have to wait for 50 seconds(never meet this problem in gpt-3.5)

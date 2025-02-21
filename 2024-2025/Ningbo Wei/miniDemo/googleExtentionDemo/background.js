@@ -1,5 +1,8 @@
 import { API_CONFIG } from './config.js';  // get config of API
 
+const deploymentName = "gpt-4o-mini" // 模型部署名称
+const apiVersion = "2024-08-01-preview"  // API 版本
+
 let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 const isTest = false; // 是否为测试模式
@@ -300,7 +303,7 @@ async function getSummaryByLLM(title, main_text, outline) {
         return "This is a test summary";
     }
     console.log("Sending request to GPT about " + title.slice(0, 100) + " for summary");
-    const { apiBase, apiKey, deploymentName, apiVersion } = API_CONFIG;  // get api key
+    const { apiBase, apiKey } = API_CONFIG;  // get api key
 
     const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
     
@@ -371,7 +374,7 @@ async function getSummaryByLLM(title, main_text, outline) {
 
         // **尝试解析 JSON**
         const summary = JSON.parse(responseContent);
-        console.log("Summary:", summary);
+        // console.log("Summary:", summary);
 
         // **检查 JSON 结构是否正确**
         if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[1].longSummary) {
@@ -390,7 +393,7 @@ async function getClassificationByLLM(tabInfo) {
         return "This is a test summary";
     }
     console.log("Sending request to GPT about for tabs grouping");
-    const { apiBase, apiKey, deploymentName, apiVersion } = API_CONFIG;  // get api key
+    const { apiBase, apiKey } = API_CONFIG;  // get api key
 
     const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
     const exampleInput = {
@@ -445,6 +448,7 @@ async function getClassificationByLLM(tabInfo) {
         });  // use await to solve the problem of synchronize
 
         const data = await response.json();
+        console.log("API Response for tab grouping", data);
         const reply = data.choices[0].message.content.trim().replace(/\n/g, ""); // text based reply, not JSON
 
         const jsonResponse = JSON.parse(reply);  // 解析 JSON 字符串
