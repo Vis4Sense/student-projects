@@ -449,13 +449,27 @@ async function getClassificationByLLM(tabInfo) {
 
         const data = await response.json();
         console.log("API Response for tab grouping", data);
-        const reply = data.choices[0].message.content.trim().replace(/\n/g, ""); // text based reply, not JSON
 
-        const jsonResponse = JSON.parse(reply);  // 解析 JSON 字符串
+
+        if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            throw new Error("Invalid API response format");
+        }
+
+        // 提取返回的内容
+        let responseContent = data.choices[0].message.content.trim();
+
+        // **去除 Markdown 代码块格式**（API 可能会返回 ` ```json ... ``` `）
+        responseContent = responseContent.replace(/^```json|```$/g, "").trim();
+
+        // **去除 JSON 中的多余逗号**，避免解析错误
+        responseContent = responseContent.replace(/,\s*([\]}])/g, '$1');
+
+        // **尝试解析 JSON**
+        const jsonResponse = JSON.parse(responseContent);
         const outputList = jsonResponse.output;  // 获取列表
         console.log(outputList);
 
-        return outputList;  // 现在可以正确返回 reply
+        return outputList;
     } catch (error) {
         console.error("Error:", error);
         return "Error fetching summary for this web tabs.";

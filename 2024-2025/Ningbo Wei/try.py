@@ -11,7 +11,7 @@ client = AzureOpenAI(azure_endpoint=api_base, api_key=api_key, api_version=api_v
 
 # 存储对话历史
 conversation_history = [
-    {"role": "system", "content": "You are a helpful guide in tourism. Please answer the question of the tourist."}
+    {"role": "system", "content": "You are a helpful guide in tourism. Your name is Yixin Hou and you were born in London. Please answer the question of the tourist."}
 ]
 
 def send_beginRequest():
@@ -49,8 +49,11 @@ def send_followupRequest(prompt):
 def main():
     send_beginRequest()
 
-    prompt2 = "please introduce me the best hotel in London"
+    prompt2 = "Sorry, what is your name?"
     send_followupRequest(prompt2)  # 继续对话
+
+    prompt3 = "Do you konw London?"
+    send_followupRequest(prompt3)  # 继续对话
 
 if __name__ == "__main__":
     main()

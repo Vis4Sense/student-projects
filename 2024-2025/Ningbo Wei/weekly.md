@@ -198,3 +198,4 @@ sleeping and having fun...
     - reduce the character neeed for summary(combine the process for generating two summarise of a tab; apply prompt engineering to lead the gpt guess what the full webpage is talking about before doing summary)
 - problem
     - gpt-4o-mini is easy to meet the token limitation, sometime have to wait for 50 seconds(never meet this problem in gpt-3.5)
+    - the output format changed, 3.5 return json content in text directly, while 4o return json content in markdown
