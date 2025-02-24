@@ -165,6 +165,53 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true;
     }
+    else if(message.action === "personlise_Generate_tasks"){
+        // deadling with result_tabs, only leave tabId and longSummary
+        const tabs_for_classification = results.map((tab) => {
+            return { tabId: tab.id, tab_Summary: tab.summaryLong };
+        });
+        const taskKeyWord = message.taskKeyWord;
+        tabs_for_classification.taskKeyWord = taskKeyWord;
+        // based on longsummary to classify the tabs
+        getClassificationByLLMWithKeyWord(tabs_for_classification, taskKeyWord).then((outputList) => {
+            // update the new tasks
+            let newTasks = [];
+            console.log("outputList", outputList);
+            outputList.map((output) => {
+                const basicId = crypto.randomUUID();
+                newTasks.push({ task_id: "task"+basicId, name: output.task_title, MindmapId: "mindmap"+basicId });
+                console.log("new task", newTasks);
+                // for each new task, create a new mindmap
+                let newMindmap = [];
+                output.tabId.map((thisTabId) => {
+                    console.log("thisTabId", thisTabId);
+                    // add the tab to the new mindmap
+                    const tab = results.find((tab) => tab.id === thisTabId);
+                    if (tab) {
+                        newMindmap.push(tab);
+                    }
+                    // delete the tab from the results
+                    const tabIndex = results.findIndex((tab) => tab.id === thisTabId);
+                    console.log("tabIndex", tabIndex);
+                    if (tabIndex !== -1) {
+                        results = results.filter((tab) => tab.id !== thisTabId);
+                    }
+                });
+                // store the mindmap in the chrome storage
+                chrome.storage.local.set({ ["mindmap"+basicId]: newMindmap }, () => {
+                    console.log("update mindmap with new tabs", newMindmap);
+                });
+            });
+            // store the tasks in the chrome storage
+            tasks.unshift(...newTasks);
+            chrome.storage.local.set({ taskList: tasks }, () => {
+                console.log("update taskList with new tasks", tasks);
+            });
+            sendTasksToFrontend({ tasks });
+            sendTabsToFrontend();
+        });
+        return true;
+    }
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
@@ -337,7 +384,7 @@ async function getSummaryByLLM(title, main_text, outline) {
         ${main_text.slice(0, 1000)}
 
         ####### Outline #######
-        ${outline.slice(0, 500)}
+        ${outline.slice(0, 350)}
     `;
 
     try {
@@ -352,7 +399,7 @@ async function getSummaryByLLM(title, main_text, outline) {
                     { role: "system", content: "You are a helpful assistant tasked with summarizing the main content of webpages." },
                     { role: "user", content: prompt }
                 ],
-                max_tokens: 500
+                max_tokens: 1500
             })
         });  // use await to solve the problem of synchronize
 
@@ -360,6 +407,9 @@ async function getSummaryByLLM(title, main_text, outline) {
         console.log("API Response:", data);
 
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            // 输出请求的prompt长度，以便调试
+            console.log("Prompt length:", prompt.length);
+            console.log("Prompt:", prompt);
             throw new Error("Invalid API response format");
         }
 
@@ -419,8 +469,95 @@ async function getClassificationByLLM(tabInfo) {
         You are a helpful assistant in web tabs clustering. 
         You will be given several summaries of different web tabs.
         These tabs are usually about traveling. 
-        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, or famous people. 
-        Some tabs might not be about traveling in a city, and you need to ignore them. However, tabs related to traveling should be retained, including introductions of cities, famous places, train stations, airports, famous people, tickets, and hotel booking.
+        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, well known company or famous people. 
+        Some tabs might not related to a city, and you need to ignore them. For example, a tab about a programming website should be ignored.
+        You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
+        Following is an example:
+        ###### example input #######
+        ${exampleInputText}
+        ###### example output #######
+        ${exampleOutputText}
+    `;
+
+    const tabInfoText = JSON.stringify(tabInfo, null, 2);
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({
+                messages: [
+                    { role: "system", content: beginPrompt },
+                    { role: "user", content: tabInfoText }
+                ],
+                max_tokens: 1500
+            })
+        });  // use await to solve the problem of synchronize
+
+        const data = await response.json();
+        console.log("API Response for tab grouping", data);
+
+
+        if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            throw new Error("Invalid API response format");
+        }
+
+        // 提取返回的内容
+        let responseContent = data.choices[0].message.content.trim();
+
+        // **去除 Markdown 代码块格式**（API 可能会返回 ` ```json ... ``` `）
+        responseContent = responseContent.replace(/^```json|```$/g, "").trim();
+
+        // **去除 JSON 中的多余逗号**，避免解析错误
+        responseContent = responseContent.replace(/,\s*([\]}])/g, '$1');
+
+        // **尝试解析 JSON**
+        const jsonResponse = JSON.parse(responseContent);
+        const outputList = jsonResponse.output;  // 获取列表
+        console.log(outputList);
+
+        return outputList;
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error fetching summary for this web tabs.";
+    }
+}
+
+async function getClassificationByLLMWithKeyWord(tabInfo, keyWord) {
+    if (isTest) {
+        return "This is a test summary";
+    }
+    console.log("Sending request to GPT about for tabs grouping");
+    const { apiBase, apiKey } = API_CONFIG;  // get api key
+    const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
+    const exampleInput = {
+        "tabs": [
+            { "tabId": "1234", "tab_Summary": "this web page is a wiki pedia page introducing London" },
+            { "tabId": "0002", "tab_Summary": "this web page is the official web page of Jubilee line in London underground, showing it prices" },
+            { "tabId": "0003", "tab_Summary": "this web page introduce The Forbidden city" },
+            { "tabId": "0004", "tab_Summary": "LeetCode: Classic Interviews - 150 Questions. Master all the interview knowledge points. Valid address and contact information given" },
+            { "tabId": "0005", "tab_Summary": "This linkedin webpage is the profile page of Ningbo Wei, who has 30 connections " },
+            { "tabId": "0006", "tab_Summary": "this web page is about amazon jobs. Recommended position are 2025 Graduate Software Dev Engineer and Embedded Software Development Engineer" }
+        ],
+        "taskKeyWord": "job applying"
+    };
+    const exampleOutput = {
+        "output": [
+            { "task_title": "job applying", "tabId": ["0004", "0005", "0006"] }
+        ]
+    };
+    const exampleInputText = JSON.stringify(exampleInput, null, 2);
+    const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
+
+    const beginPrompt = `
+        You are a helpful assistant in web tabs clustering. 
+        You will be given several summaries of different web tabs.
+        These tabs are usually about traveling. 
+        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, well known company or famous people. 
+        Some tabs might not related to a city, and you need to ignore them. For example, a tab about a programming website should be ignored.
         You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
         Following is an example:
         ###### example input #######

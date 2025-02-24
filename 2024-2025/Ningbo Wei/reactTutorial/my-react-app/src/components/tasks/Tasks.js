@@ -86,9 +86,14 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         }
     };
 
-    const handleAddTask = () => {
+    const personaliseGenerateTasks = () => {
         if (!newTaskPrompt.trim()) return;
-        console.log("New task input:", newTaskPrompt);
+        console.log("New task key word input:", newTaskPrompt);
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ action: "personlise_Generate_tasks", taskKeyWord: newTaskPrompt }, (response) => {
+                console.log("Sent tab grouping request with key word to background.js");
+            });
+        }
         setnewTaskPrompt(""); // Clear input after adding
     };
 
@@ -103,7 +108,7 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                     placeholder="Enter keyword for new task"
                     className={styles.taskInputBox}
                 />
-                <button className={styles["task-button"]} onClick={handleAddTask}>Create</button>
+                <button className={styles["task-button"]} onClick={personaliseGenerateTasks}>Create</button>
             </div>
             <div className={styles["task-buttons"]}>
                 <button className={styles["task-button"]} onClick={createNewTask}>New Blank Task</button>
