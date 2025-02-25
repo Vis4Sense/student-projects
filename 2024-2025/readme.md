@@ -37,6 +37,27 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# Meeting 25 Feb 2025
+
+## Kai
+- School says can set up a database
+- Oracle seems promising 200GB free tier?
+
+## Abhay
+- largest daily changes for all nasdaq stocks every day: increase or decrease
+- 75% of the changes are above 50% increase or decrease
+- but for each stock, this happens at most 4 times a year
+- get the hourly data
+- calculated volitality based on RSI
+- ranked the stocks based on weighted values of 5 features: price, volume, etc.
+- collected minute data for the top 5 stocks for 1 year
+   - about 1MB for one stack by minute data for one year   
+- Questions: how to code the alphas
+   - Don't need to code all the alphas
+   - Maybe there are libraries implemented some of these
+- (todo) write down the details of model training
+- (todo) and then train the model
+
 # Meeting 18 Feb 2025
 
 Manasi is not feeling well.
