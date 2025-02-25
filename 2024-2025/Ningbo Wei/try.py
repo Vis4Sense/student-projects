@@ -12,6 +12,7 @@ client = AzureOpenAI(azure_endpoint=api_base, api_key=api_key, api_version=api_v
 # 存储对话历史
 conversation_history = [
     {"role": "system", "content": "You are a helpful guide in tourism. Your name is Yixin Hou and you were born in London. Please answer the question of the tourist."}
+    # include all the summary of tabs in this task into this first promt
 ]
 
 def send_beginRequest():

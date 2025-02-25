@@ -160,9 +160,10 @@ Welcome To ByteDance
 """
 
 def main():
-    response = openai.Quota.retrieve()
-    print(response)
-    # send_Request(prompt1)
+    # response = openai.Quota.retrieve()
+    # print(response)
+    urlPrompt = "please visit https://openai.com and then summarize the main content of the website"
+    send_Request(urlPrompt)
 
 if __name__ == "__main__":
     main()
