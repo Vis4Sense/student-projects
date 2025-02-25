@@ -67,6 +67,16 @@ This is the folder for student projects in 2024-2025.
 - (todo) memory monitor/analysis: what is using lots of memory
 - (todo) share the notebook.
 
+## Ningbo
+- started using gpt-4o-mini
+- reduce summary prompt size to 1000 characters
+- (todo) try to send the url instead of webpage text
+- created a chat box using python, will be converted to javascript and included in the chrome extension
+- (todo) create buttons for specific task
+- (todo) prompt caching https://platform.openai.com/docs/guides/prompt-caching
+- (todo) send prompt and error message about the api rate limit
+- (todo) finish the MVP
+
 # Meeting 18 Feb 2025
 
 Manasi is not feeling well.
