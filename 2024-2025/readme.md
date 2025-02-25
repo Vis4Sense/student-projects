@@ -58,6 +58,15 @@ This is the folder for student projects in 2024-2025.
 - (todo) write down the details of model training
 - (todo) and then train the model
 
+## Manasi
+- trained on solano, doesn't work well for other coins
+- when trained on data of multiple coins, the results are better
+- price, volume, moving average prices/volume, standard deviation
+- predicting mometum (price) of next minute, and then repeat for one day
+- (todo) write down the details of model training
+- (todo) memory monitor/analysis: what is using lots of memory
+- (todo) share the notebook.
+
 # Meeting 18 Feb 2025
 
 Manasi is not feeling well.
