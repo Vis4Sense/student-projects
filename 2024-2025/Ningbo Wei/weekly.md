@@ -203,24 +203,22 @@ sleeping and having fun...
         - increas the quota? or sending the request one by one?
         - quota of gpt-4o-mini should be ?
     - the output format changed, 3.5 return json content in text directly, while 4o return json content in markdown
+- meeting(at 25th)
+    - try to just pass the url
+    - chat box: need well management
+        - not need for a general cat box, can ask for intersting things, 
+        - can switch the prompt
+        - can use button with specifict prompt 
+    - can use chash to store the summary, key-URL, 
+        - Prompt caching: https://platform.openai.com/docs/guides/prompt-caching
+    - sent the error message and prompt , email if nessary
+        - try to sent the url first -- Done!
 
+## Feb 25th
+- have done
+    - apply url prmpt request
+    - try to allow api request again if meet 429-limitation(with chosen restart time)
+- problem
+    - api limit problem is due to user setting?
+    - gpt-4o-mini do not support online searching. Asking it with an Url is only searching in it local training data(update till 10.2023)
 
-
-- try to just pass the url
-- chat box: need well management
-    - not a general cat box, can ask for intersting things, 
-    - can switch the prompt
-    - can use button with specifict prompt 
-- can use chash to store the summary, key-URL, 
-    - Prompt caching: https://platform.openai.com/docs/guides/prompt-caching
-
-- sent the error message and prompt , email
-    - try to sent the url first
-
-
-{
-    "error": {
-        "code": "429",
-        "message": "Requests to the ChatCompletions_Create Operation under Azure OpenAI API version 2024-08-01-preview have exceeded token rate limit of your current OpenAI S0 pricing tier. Please retry after 14 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit."
-    }
-}

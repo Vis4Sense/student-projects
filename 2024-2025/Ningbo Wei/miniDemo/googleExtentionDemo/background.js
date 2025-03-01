@@ -1,7 +1,10 @@
 import { API_CONFIG } from './config.js';  // get config of API
 
 const deploymentName = "gpt-4o-mini" // 模型部署名称
-const apiVersion = "2024-08-01-preview"  // API 版本
+const apiVersion = "2025-01-01-preview"  // API 版本
+
+const retryTime = 23; // openai API 重试次数
+const retryInterval = 2000; // openai API 重试间隔
 
 let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
@@ -306,11 +309,55 @@ function processTab(tab) {
                         currentUrl.push(response.currentUrl);
                         console.log("Added result for:", tab.url);
 
-                        // 立即发送更新到前端，让 UI 显示 "waiting..."
+                        // 立即发送更新到前端，让 UI 显示"waiting..."
                         sendTabsToFrontend();
+                        // 首先根据url获取summary
+                        // getSummarywithUrlWithRateLimitHandling(response.currentUrl)
+                        //     .then((summary) => {
+                        //         // 先确保summaries不是“ERROR”，否则发送main_text和outline
+                        //         if (summary.summary[1].longSummary !== "ERROR") {
+                        //             const longSummary = summary.summary[1].longSummary;
+                        //             const shortSummary = summary.summary[0].shortSummary;
+                        //             const tabIndex = results.findIndex(t => t.id === response.id);
+                        //             console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
+                        //             if (tabIndex !== -1) {
+                        //                 results[tabIndex].summary = shortSummary;
+                        //                 results[tabIndex].summaryLong = longSummary;
+                        //                 results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
+                        //                 results[tabIndex].outline = ""; // 清空 outline，减小数据量
+                        //                 results[tabIndex].images = []; // 清空 images，减小数据量
+                        //                 // console.log(`Updated tow summary for tabId ${response.title}`);
+                        //                 sendTabsToFrontend(); // 再次通知前端更新 UI
+                        //             }
+                        //         }
+                        //         else {
+                        //             // 通过main_text获取summary，包含long和short
+                        //             getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
+                        //             .then((summary) => {
+                        //                 const longSummary = summary.summary[1].longSummary;
+                        //                 const shortSummary = summary.summary[0].shortSummary;
+                        //                 const tabIndex = results.findIndex(t => t.id === response.id);
+                        //                 console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
+                        //                 if (tabIndex !== -1) {
+                        //                     results[tabIndex].summary = shortSummary;
+                        //                     results[tabIndex].summaryLong = longSummary;
+                        //                     results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
+                        //                     results[tabIndex].outline = ""; // 清空 outline，减小数据量
+                        //                     results[tabIndex].images = []; // 清空 images，减小数据量
+                        //                     // console.log(`Updated tow summary for tabId ${response.title}`);
+                        //                     sendTabsToFrontend(); // 再次通知前端更新 UI
+                        //                 }
+                        //             })
+                        //             .catch(err => {
+                        //                 console.error("Error generating summary:", err);
+                        //             });
+                        //         }
+                        //     })
+                        //     .catch(err => {
+                        //         console.error("Error generating summary:", err);
+                        //     });
 
-                        // 获取summary，包含long和short
-                        getSummaryByLLM(response.title, response.main_text, response.outline)
+                        getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
                             .then((summary) => {
                                 const longSummary = summary.summary[1].longSummary;
                                 const shortSummary = summary.summary[0].shortSummary;
@@ -338,14 +385,114 @@ function processTab(tab) {
                 setTimeout(() => {
                     console.warn(`Timeout: No response from tab ${tab.url}, resolving anyway.`);
                     resolve();
-                }, 6000);
+                }, 8000);
             }
         );
     });
 }
 
+function getRetrySeconds(errorMessage_object){
+    // 获取 message 里的文字
+    const messageText = errorMessage_object.error.message;
 
-async function getSummaryByLLM(title, main_text, outline) {
+    // 使用正则提取 "Please retry after X seconds." 里的数字
+    const match = messageText.match(/Please retry after (\d+) seconds\./);
+    const retrySeconds = match ? parseInt(match[1], 10) : null;
+
+    return retrySeconds;
+}
+
+async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getSummaryWithRateLimitHandling(title, mainText, outline) {
+    await delay(700);  // 每个请求间隔 700ms，避免 API 速率超限
+    return await getSummaryByLLM(title, mainText, outline);
+}
+
+async function getSummarywithUrlWithRateLimitHandling(webpageUrl) {
+    await delay(700);  // 每个请求间隔 700ms，避免 API 速率超限
+    return await getSummaryByLLMwithUrl(webpageUrl);
+}
+
+async function getSummaryByLLMwithUrl(webpageUrl, retryCount = retryTime) {
+    if (isTest) {  
+        return "This is a test summary";
+    }
+
+    const { apiBase, apiKey } = API_CONFIG;  // get API key
+    const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+    
+    const exampleOutput = {
+        "summary": [
+            { "shortSummary": "xxx" },
+            { "longSummary": "xxxxxx" }
+        ]
+    };
+    const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
+    
+    const prompt = `
+    You will be given a URL of a webpage.
+    Please help me analyze the that webpage and return two summary of this website in JSON format. 
+    Ignore spam and ads information. Some parts may be irrelevant. Please summarize the webpage in English.
+    Two summaries are required. You should return them in a dictionary with two keys: shortSummary(less than 25 words) and longSummary(less than 100 words). If you are unable to access the webpage, please return "ERROR" in both summaries. 
+    ###### example output #######
+        ${exampleOutputText}
+
+    -----Following is the URL of the webpage-----
+    ${webpageUrl}
+    `;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({
+                messages: [
+                    { role: "system", content: "You are a helpful assistant tasked with summarizing the main content of webpages." },
+                    { role: "user", content: prompt }
+                ],
+                max_tokens: 300
+            })
+        });
+        const data = await response.json();
+        // 如果遇到 429 状态码，则等待 1.5 秒后重试（最多 3 次）
+        if (response.status === 429 && retryCount > 0) {
+            const retrySeconds = getRetrySeconds(data);
+            console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, retryInterval));
+            return await getSummaryByLLMwithUrl(webpageUrl, retryCount - 1);
+        }
+
+        console.log("API Response:", data);
+
+        if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            console.log("Prompt length:", prompt.length);
+            console.log("Prompt:", prompt);
+            throw new Error("Invalid API response format");
+        }
+
+        let responseContent = data.choices[0].message.content.trim();
+        responseContent = responseContent.replace(/^```json|```$/g, "").trim();
+        responseContent = responseContent.replace(/,\s*([\]}])/g, '$1');
+        
+        const summary = JSON.parse(responseContent);
+        if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[1].longSummary) {
+            throw new Error("JSON 数据缺少必要的字段");
+        }
+
+        return summary;
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error fetching summary for this web tab.";
+    }
+}
+
+async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime) {
     if (isTest) {
         return "This is a test summary";
     }
@@ -381,7 +528,7 @@ async function getSummaryByLLM(title, main_text, outline) {
         ${title.slice(0, 100)}
 
         ####### Main Context #######
-        ${main_text.slice(0, 1000)}
+        ${main_text.slice(0, 1500)}
 
         ####### Outline #######
         ${outline.slice(0, 350)}
@@ -399,11 +546,18 @@ async function getSummaryByLLM(title, main_text, outline) {
                     { role: "system", content: "You are a helpful assistant tasked with summarizing the main content of webpages." },
                     { role: "user", content: prompt }
                 ],
-                max_tokens: 1500
+                max_tokens: 300
             })
         });  // use await to solve the problem of synchronize
-
         const data = await response.json();
+
+        // 如果遇到 429 状态码，则等待 1.5 秒后重试（最多 3 次）
+        if (response.status === 429 && retryCount > 0) {
+            const retrySeconds = getRetrySeconds(data);
+            console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, retryInterval));
+            return await getSummaryByLLM(title, main_text, outline, retryCount - 1);
+        }
         console.log("API Response:", data);
 
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
@@ -438,7 +592,7 @@ async function getSummaryByLLM(title, main_text, outline) {
 }
 
 
-async function getClassificationByLLM(tabInfo) {
+async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
     if (isTest) {
         return "This is a test summary";
     }
@@ -496,11 +650,18 @@ async function getClassificationByLLM(tabInfo) {
                 max_tokens: 1500
             })
         });  // use await to solve the problem of synchronize
-
         const data = await response.json();
+
+        if(response.status === 429 && retryCount > 0) {
+            const retrySeconds = getRetrySeconds(data);
+            console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
+            return await getClassificationByLLM(tabInfo, retryCount - 1);  // 递归重试
+        }
         console.log("API Response for tab grouping", data);
-
-
+        console.log("prompt length", beginPrompt.length+tabInfoText.length);
+        console.log("prompt", beginPrompt+tabInfoText);
+        
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
             throw new Error("Invalid API response format");
         }
@@ -526,7 +687,7 @@ async function getClassificationByLLM(tabInfo) {
     }
 }
 
-async function getClassificationByLLMWithKeyWord(tabInfo, keyWord) {
+async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = retryTime) {
     if (isTest) {
         return "This is a test summary";
     }
@@ -554,12 +715,9 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord) {
 
     const beginPrompt = `
         You are a helpful assistant in web tabs clustering. 
-        You will be given several summaries of different web tabs.
-        These tabs are usually about traveling. 
-        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, well known company or famous people. 
-        Some tabs might not related to a city, and you need to ignore them. For example, a tab about a programming website should be ignored.
-        You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
-        Following is an example:
+        You will be given several summaries of different web tabs and a keyword. Please pick some tabs which are related to the keyword.
+        Please return the result in JSON format. 
+        Following is an example of input and output:
         ###### example input #######
         ${exampleInputText}
         ###### example output #######
@@ -585,9 +743,14 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord) {
         });  // use await to solve the problem of synchronize
 
         const data = await response.json();
+        
+        if(response.status === 429 && retryCount > 0) {
+            const retrySeconds = getRetrySeconds(data);
+            console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
+            return await getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount - 1);  // 递归重试
+        }
         console.log("API Response for tab grouping", data);
-
-
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
             throw new Error("Invalid API response format");
         }

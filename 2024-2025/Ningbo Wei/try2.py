@@ -1,5 +1,7 @@
 import openai
-from openai import AzureOpenAI
+import httpx
+import asyncio
+from openai import AzureOpenAI, AsyncOpenAI
 from miniDemo.config import api_base, api_key
 
 api_base = api_base
@@ -8,14 +10,30 @@ deployment_name = "gpt-4o-mini"
 api_version = "2024-08-01-preview"
 
 client = AzureOpenAI(azure_endpoint=api_base, api_key=api_key, api_version=api_version)
+client_async = AsyncOpenAI(api_key=api_key)
 
-# 存储对话历史
-conversation_history = [
-    {"role": "system", "content": "You are a helpful assistant tasked with summarizing the main content of webpages."}
-]
+async def send_Request_async_SDK(prompt):
+    """基于SDK，创建异步client"""
+    conversation_history = [
+        {"role": "system", "content": "You are a helpful assistant tasked with summarizing the main content of webpages."}
+    ]
+    user_message = {"role": "user", "content": prompt}
+    conversation_history.append(user_message)
 
-def send_Request(prompt):
-    """发送请求并存储对话记录"""
+    response = await client_async.chat.completions.create(
+        model=deployment_name,
+        messages=conversation_history,
+        max_tokens=500
+    )
+
+    assistant_reply = {"role": "assistant", "content": response.choices[0].message.content}
+    print(assistant_reply["content"])  # 打印回复
+
+def send_Request_SDK(prompt):
+    """基于SDK，创建client"""
+    conversation_history = [
+        {"role": "system", "content": "You are a helpful assistant tasked with summarizing the main content of webpages."}
+    ]
     user_message = {"role": "user", "content": prompt}
     conversation_history.append(user_message)
 
@@ -26,11 +44,46 @@ def send_Request(prompt):
     )
 
     assistant_reply = {"role": "assistant", "content": response.choices[0].message.content}
-    conversation_history.append(assistant_reply)
+    # conversation_history.append(assistant_reply)
 
     print(assistant_reply["content"])  # 打印回复
 
-prompt1 = """ Following text is extracted from a website, including its title, main context, and outline. 
+async def sent_Request_HTTP(prompt):
+    """模仿 background.js 的 fetch() 请求，即使用 http发送请求"""
+    headers = {
+		"Content-Type": "application/json",
+		"api-key": api_key
+	}
+    body = {
+		"messages": [
+			{"role": "system", "content": "You are a helpful assistant tasked with summarizing webpages."},
+			{"role": "user", "content": prompt}
+		],
+		"max_tokens": 300
+	}
+    URL = f"{api_base}/openai/deployments/{deployment_name}/chat/completions?api-version={api_version}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(URL, headers=headers, json=body, timeout=10.0)
+            print(response.headers)
+            response.raise_for_status()  # 如果 HTTP 失败，抛出异常
+            data = response.json()
+            print(data["choices"][0]["message"]["content"].strip())
+            return data["choices"][0]["message"]["content"].strip()
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 429:  # 速率限制
+                print("------ Rate limit exceeded. --------")
+                print(e.response.json())
+                await asyncio.sleep(2)
+                return await sent_Request_HTTP(prompt)
+            else:
+                print(f"HTTP Error: {e}")
+        except Exception as e:
+            print(f"Request failed: {e}")
+
+# prompt that use content for a page to get sumary
+prompt_mainTextBased = """ Following text is extracted from a website, including its title, main context, and outline. 
         Due to the limitation of the display, the given information may be truncated. 
         Please help me analyze the following content and return two summary of this website in json fromat. 
         Ignore spam and ads information. Some parts may be irrelevant. Please summarize the main content in English.
@@ -159,11 +212,50 @@ Welcome To ByteDance
 #### 和优秀的人 做有挑战的事"
 """
 
+# prompt that use URL for a page to get sumary
+Prompt_urlBased = """
+    You will be given a URL of a webpage.
+    Please help me analyze the that webpage and return two summary of this website in json fromat. 
+    Ignore spam and ads information. Some parts may be irrelevant. Please summarize the main content in English.
+    Two summaries are required: short summary less than 25 words and long summary less than 100 words.
+    Return only a valid JSON object, with no extra text or formatting. You should return a dictionary with two keys: shortSummary and longSummary, shown as below:
+    ###### example output #######
+        {
+  "summary": [
+    {
+      "shortSummary": "xxx"
+    },
+    {
+      "longSummary": "xxxxxx"
+    }
+  ]
+}
+    If you are unable to access the webpage, please return "ERROR" in both summaries.
+
+    ----------Following is the URL of the webpage----------
+    https://en.wikipedia.org/wiki/Shenzhen
+    """
+
+# prompt that use URL for a page to get sumary, but simply version
+quickPromt = """
+    visit https://en.wikipedia.org/wiki/Tower_of_London and return a summary of the webpage. The summary should be less than 25 words.
+    """
+
 def main():
     # response = openai.Quota.retrieve()
     # print(response)
-    urlPrompt = "please visit https://openai.com and then summarize the main content of the website"
-    send_Request(urlPrompt)
+    
+    for i in range(6):
+        sent_Request_HTTP(prompt_mainTextBased)
+        # sent_Request_HTTP(quickPromt)
+
+async def main_async():
+    tasks = []
+    for i in range(6):  # 发送 6 个请求
+        tasks.append(sent_Request_HTTP(prompt_mainTextBased))   # use http, often 429(even in the first request)
+        # tasks.append(send_Request_SDK(quickPromt))   # use SDK, seldom 429
+    await asyncio.gather(*tasks)  # 执行所有请求
 
 if __name__ == "__main__":
-    main()
+    # main()
+    asyncio.run(main_async())
