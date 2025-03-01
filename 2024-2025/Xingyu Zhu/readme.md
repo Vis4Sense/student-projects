@@ -2,6 +2,14 @@
 
 ## Project Tasks
 
+### Meeting With Esmond
+- **Meeting Summary**：[Figma](https://www.figma.com/board/bm5jM20xhpcBa6fw2yWMhy/FYP?node-id=0-1&t=0QMEeDVAwMR8SyFx-1) (✅ Completed in the week starting from February 24)
+- **Sketch of the UI**：Currently three screens have been created. (✅ Completed in the week starting from February 24)
+  - The first screen is the search interface (Esmond mentioned in the meeting that this is the most commonly used function in Usagi for him)
+  ![First Screen](pictures/First%20Screen.jpg)
+  - The second screen is for detailed mapping suggestions ![Second Screen](pictures/Second%20Screen.jpg)
+  - The third screen is for general enquiries ![Third Screen](pictures/Third%20Screen.jpg)
+
 ### Interface
 - **Gradio**: Created a simple interface using Gradio (✅ Completed in the Minimal Working Demo). ![Gradio Interface](pictures/GradioInterface.png)
 
