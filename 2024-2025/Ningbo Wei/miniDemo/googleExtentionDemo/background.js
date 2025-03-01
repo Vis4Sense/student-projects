@@ -170,11 +170,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if(message.action === "personlise_Generate_tasks"){
         // deadling with result_tabs, only leave tabId and longSummary
+        console.log("result tabs are", results);
         const tabs_for_classification = results.map((tab) => {
             return { tabId: tab.id, tab_Summary: tab.summaryLong };
         });
         const taskKeyWord = message.taskKeyWord;
         tabs_for_classification.taskKeyWord = taskKeyWord;
+        console.log("tabs_for_classification", tabs_for_classification);
         // based on longsummary to classify the tabs
         getClassificationByLLMWithKeyWord(tabs_for_classification, taskKeyWord).then((outputList) => {
             // update the new tasks
@@ -714,14 +716,17 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
     const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
 
     const beginPrompt = `
-        You are a helpful assistant in web tabs clustering. 
-        You will be given several summaries of different web tabs and a keyword. Please pick some tabs which are related to the keyword.
+        You are a helpful assistant in web tabs picking. 
+        You will be given several summaries of different web tabs and a keyword. Please pick those tabs which related to the keyword as a group(task). The title of the new task is the keyword.
         Please return the result in JSON format. 
-        Following is an example of input and output:
+        Following is an example of input and output. Its key word is "job applying" hence the output task_title is "job applying".:
         ###### example input #######
         ${exampleInputText}
         ###### example output #######
         ${exampleOutputText}
+
+        If the key word changed, the choosen tabs and task_title might be different. 
+        For example, when the key word is "London traveling", the slected tabId might become ["1234", "0002"] and task_title: "London traveling" .
     `;
 
     const tabInfoText = JSON.stringify(tabInfo, null, 2);
