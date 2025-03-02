@@ -4,6 +4,7 @@ import Header from './components/Header.module.css';
 import Tabs from './components/tabs/Tabs';
 import Tasks from './components/tasks/Tasks';
 import Mindmap from './components/mindmap/Mindmap';
+import QAchatBox from './components/QAchatBox/chatBox';
 
 function App() {
     const [tabs, setTabs] = useState([]); // 用于存储标签页数据
