@@ -753,8 +753,8 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
         ###### example output #######
         ${exampleOutputText}
 
-        If the key word changed, the choosen tabs and task_title might be different. 
-        For example, when the key word is "London traveling", the slected tabId might become ["1234", "0002"] and task_title: "London traveling" .
+        If "taskKeyWord" changed, the choosen tabs and task_title might be different. 
+        For example, under same "tabs", when the "taskKeyWord" is "London traveling", the output selected tabId might become ["1234", "0002"] and task_title: "London traveling". Or, when the "taskKeyWord" is "Beijing traveling", the output selected tabId might become ["0003"] and task_title: "Beijing traveling".
     `;
 
     const tabInfoText = JSON.stringify(tabInfo, null, 2);
