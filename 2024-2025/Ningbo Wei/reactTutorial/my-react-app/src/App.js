@@ -5,6 +5,7 @@ import Tabs from './components/tabs/Tabs';
 import Tasks from './components/tasks/Tasks';
 import Mindmap from './components/mindmap/Mindmap';
 import QAchatBox from './components/QAchatBox/chatBox';
+import TaskSummary from './components/taskSummary/TaskSummary';
 
 function App() {
     const [tabs, setTabs] = useState([]); // 用于存储标签页数据
@@ -12,6 +13,7 @@ function App() {
     const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
+    const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
 
     useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);
@@ -48,6 +50,10 @@ function App() {
                 if (selectedTaskId){
                     setSelectedTaskName(tasks.find(task => task.task_id === selectedTaskId).task_name);
                 }
+            } else if (message.action === "LLM_conversation_reply") {
+                // update chat box reply
+                console.log("Received chat box reply:", message.reply);
+                setChatBoxReply(message.reply);
             }
         };
 
@@ -120,12 +126,10 @@ function App() {
 
                 {/* 右侧问答区域 */}
                 <aside className="qa-section">
-                    <h2>QA</h2>
-                    <input type="text" placeholder="Ask a question..." />
-                    <button>Search</button>
-                    <div className="qa-results">
-                        {/* 问答结果展示 */}
-                    </div>
+                    {/* <h2>QA Chat Box</h2> */}
+                    <QAchatBox chatBoxReply={chatBoxReply} setChatBoxReply={setChatBoxReply} />
+                    {/* <TaskSummary /> */}
+                    <TaskSummary selectedTaskId={selectedTaskId}/>
                 </aside>
             </div>
         </div>

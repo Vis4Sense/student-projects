@@ -222,3 +222,5 @@ sleeping and having fun...
     - api limit problem is due to user setting?
     - gpt-4o-mini do not support online searching. Asking it with an Url is only searching in it local training data(update till 10.2023)
 
+- can use LLM to generate buttom with fixed prompt
+- since we use summary with summary, how do we get the detailed information when asking for a proper hotel? (this might takes a lot of tokens)

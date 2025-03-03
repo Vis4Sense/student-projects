@@ -217,6 +217,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true;
     }
+    else if(message.action === "LLM_conversation") {
+        const prompt = message.prompt;
+        const reply = chat(prompt).then((reply) => {
+            console.log("Reply from LLM:", reply);
+            chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
+        });
+        return true;
+    }else if(message.action === "generate_task_summary"){
+        const taskId = message.taskId;
+        const mindmapId = "mindmap" + taskId.replace("task", "");
+        chrome.storage.local.get([mindmapId], (result) => {
+            const mindmapTabs = result[mindmapId] || [];
+
+            const tabsWithSummary = mindmapTabs.map(tab => {
+                return { id: tab.id, summary: tab.summaryLong };
+            });
+            console.log("tabsWithSummary", tabsWithSummary);
+            // get the summary of the task
+            
+
+            // 调用chat接口，修改prompt以及begin prompt
+
+            // 结构化返回，处理好返回的内容后，更新storage（切换task的同时，显示的summary也要切换，最好也留一个接口给用户自己更新summary）
+
+
+        });
+        return true;
+    }
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
@@ -779,4 +807,46 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
         console.error("Error:", error);
         return "Error fetching summary for this web tabs.";
     }
+}
+
+async function chat(prompt, retryCount = retryTime) {
+    if(isTest){
+        return "This is a test summary";
+    }
+    console.log("Sending request to GPT about " + prompt.slice(0, 100) + " for summary");
+    const { apiBase, apiKey } = API_CONFIG;  // get api key
+    const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({
+                messages: [
+                    { role: "system", content: "You are a good assistant in helping user solve problem or explaining concept." },
+                    { role: "user", content: prompt }
+                ],
+                max_tokens: 300
+            })
+        });  // use await to solve the problem of synchronize
+        const data = await response.json();
+        if(response.status === 429 && retryCount > 0) {
+            const retrySeconds = getRetrySeconds(data);
+            console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
+            return await chat(prompt, retryCount - 1);  // 递归重试
+        }
+        if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
+            throw new Error("Invalid API response format");
+        }
+        // 提取返回的内容
+        let responseContent = data.choices[0].message.content.trim();
+        return responseContent;
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error getting response form LLM.";
+    }
+    
 }

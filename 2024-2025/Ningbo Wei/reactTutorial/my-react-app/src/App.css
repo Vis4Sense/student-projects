@@ -90,7 +90,7 @@ header {
 }
 
 .task-list, .qa-section {
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   padding: 10px;
   overflow-y: auto;
 }
