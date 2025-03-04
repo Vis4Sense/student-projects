@@ -6,6 +6,18 @@ import os
 import requests
 import json
 
+import random
+from pydantic import BaseModel  # 确保正确导入
+from typing import Optional, List
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+from langchain.prompts import PromptTemplate
+from langchain.llms.base import LLM
+from langchain.chains import LLMChain
+
+base_url = "http://localhost:11434/api/generate"
+
 # display xlsx
 def display_xlsx(file, sheet_name):
     if file is None:
@@ -45,11 +57,14 @@ def extract_important_info(parsed_data):
             extracted_data['search_term'] = data.get('search_term', '')
             for concept in data.get('CONCEPT', []):
                 extracted_data['CONCEPT'].append({
+                    #下面添加了domain和class
                     'Concept Name': concept.get('concept_name', ''),
                     'Concept ID': concept.get('concept_id', ''),
-                    'Vocabulary ID': concept.get('vocabulary_id', ''),
+                    'Domain': concept.get('domain_id', ''),
+                    'Class': concept.get('concept_class_id', ''),
                     'Concept Code': concept.get('concept_code', ''),
-                    'Similarity Score': concept.get('concept_name_similarity_score', '')
+                    'Vocabulary ID': concept.get('vocabulary_id', ''),              
+                    'Similarity Score': concept.get('concept_name_similarity_score', '')                 
                 })
     
     return extracted_data
@@ -78,7 +93,7 @@ def query_pipeline(names, url = "http://127.0.0.1:8000/pipeline/"):
                 print(f"JSON 解析失败: {e}")
 
     return extract_important_info(parsed_data)
-    
+
 
 # get the name of all sheets
 def get_sheet_names(file):
