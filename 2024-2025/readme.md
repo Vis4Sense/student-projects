@@ -62,6 +62,14 @@ This is the folder for student projects in 2024-2025.
 - show a ontology graph including all the concepts in the search results
 - save the current state including the search/llm query and the results table and llm response
 
+## Ningbo
+- (todo) send Kai the details of api request and rate limit error message
+- using own gpt-4o-mini api no rate limit issue (uk south)
+- using python sdk has less rate limit error than javascript api
+- chat box: (todo) use information from the opened tabs
+- automatically add opened webpage to a task
+- generate summary of pages in a task. (todo) add the summary to the displayed task box
+
 # Meeting 25 Feb 2025
 
 ## Kai
