@@ -14,6 +14,7 @@ function App() {
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
     const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
+    const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // 用于存储task summary
 
     useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);
@@ -54,6 +55,10 @@ function App() {
                 // update chat box reply
                 console.log("Received chat box reply:", message.reply);
                 setChatBoxReply(message.reply);
+            } else if(message.action === "generate_task_summary_reply"){
+                // update task summary
+                console.log("Received task summary:", message.summary);
+                setchosenTaskSummary(message.summary);
             }
         };
 
@@ -129,7 +134,7 @@ function App() {
                     {/* <h2>QA Chat Box</h2> */}
                     <QAchatBox chatBoxReply={chatBoxReply} setChatBoxReply={setChatBoxReply} />
                     {/* <TaskSummary /> */}
-                    <TaskSummary selectedTaskId={selectedTaskId}/>
+                    <TaskSummary selectedTaskId={selectedTaskId} chosenTaskSummary={chosenTaskSummary}/>
                 </aside>
             </div>
         </div>

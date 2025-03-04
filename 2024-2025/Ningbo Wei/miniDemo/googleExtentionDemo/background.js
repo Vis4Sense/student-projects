@@ -227,6 +227,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }else if(message.action === "generate_task_summary"){
         const taskId = message.taskId;
         const mindmapId = "mindmap" + taskId.replace("task", "");
+        const beginPrompt = message.beginPrompt;
         chrome.storage.local.get([mindmapId], (result) => {
             const mindmapTabs = result[mindmapId] || [];
 
@@ -234,8 +235,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 return { id: tab.id, summary: tab.summaryLong };
             });
             console.log("tabsWithSummary", tabsWithSummary);
+            const tabsWithSummaryText = JSON.stringify(tabsWithSummary, null, 2);
+            const prompt = beginPrompt + tabsWithSummaryText;
             // get the summary of the task
-            
+            const reply = chat(prompt).then((reply) => {
+                console.log("Reply from LLM:", reply);
+                chrome.runtime.sendMessage({ action: "generate_task_summary_reply", summary: reply });
+            });
+            // update this task with the summary in the storage
+
 
             // 调用chat接口，修改prompt以及begin prompt
 
@@ -755,6 +763,8 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
 
         If "taskKeyWord" changed, the choosen tabs and task_title might be different. 
         For example, under same "tabs", when the "taskKeyWord" is "London traveling", the output selected tabId might become ["1234", "0002"] and task_title: "London traveling". Or, when the "taskKeyWord" is "Beijing traveling", the output selected tabId might become ["0003"] and task_title: "Beijing traveling".
+
+        Remember, the returned task_title should be the same as the input "taskKeyWord".
     `;
 
     const tabInfoText = JSON.stringify(tabInfo, null, 2);

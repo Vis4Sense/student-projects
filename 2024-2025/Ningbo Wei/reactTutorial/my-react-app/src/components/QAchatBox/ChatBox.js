@@ -33,7 +33,6 @@ const ChatBox = ({chatBoxReply, setChatBoxReply}) => {
         <input 
             type="text" 
             placeholder="Enter text..." 
-            value={inputText} 
             onChange={(e) => setInputText(e.target.value)}
         />
         <button onClick={() => {

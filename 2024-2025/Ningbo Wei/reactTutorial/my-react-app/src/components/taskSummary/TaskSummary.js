@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TaskSummary.module.css";
 
-const TaskSummary = ({selectedTaskId}) => {
-    const [summary, setSummary] = useState( "currently no summary");
+const TaskSummary = ({selectedTaskId, chosenTaskSummary}) => {
     const [editing, setEditing] = useState(false);
 
     const handleSummaryChange = (e) => {
@@ -26,7 +25,15 @@ const TaskSummary = ({selectedTaskId}) => {
         if(selectedTaskId){
             console.log("generate summary for task:", selectedTaskId);
             if (chrome.runtime && chrome.runtime.sendMessage) {
-                chrome.runtime.sendMessage({ action: "generate_task_summary", taskId: selectedTaskId }, (response) => {
+                const beginPrompt = `
+                Please generate a summary for a task.
+                This task consists of a serise of webpages.
+                You will be given a list of summarise of those webpages, please analyise these information and return a summary of less than 100 words.
+
+                ##### Webpages #####
+                
+                `;
+                chrome.runtime.sendMessage({ action: "generate_task_summary", taskId: selectedTaskId, beginPrompt: beginPrompt}, (response) => {
                     if (chrome.runtime.lastError) {
                         console.error("Error generating summary:", chrome.runtime.lastError);
                     } else {
@@ -43,8 +50,7 @@ const TaskSummary = ({selectedTaskId}) => {
         <div className={styles["task-summary"]}>
             <h2>Summary of Task</h2>
             <textarea
-                value={summary}
-                onChange={handleSummaryChange}
+                value={chosenTaskSummary}
                 readOnly={!editing}
             />
             <button onClick={generateSummary}>generate task summary</button>
