@@ -39,13 +39,17 @@ This is the folder for student projects in 2024-2025.
   
 # Meeting 4 Mar 2025
 
-Abhay
+## Abhay
 - read the survey paper on time series classfication
    - time wrapping: expensive, most effective, 
    - shapelet: like it, expensive,
    - start with univariate (price), and then later add multivariate like volumn and other (similar) stock price
 - collected data for 20 tickers: from 2015 by minute
    - labeling data: based on the interval size and threshold 
+
+## Manasi
+- seasonality, noise, and the residule is anomaly
+- just start the survey
 
 # Meeting 25 Feb 2025
 
