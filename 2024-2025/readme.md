@@ -46,10 +46,17 @@ This is the folder for student projects in 2024-2025.
    - start with univariate (price), and then later add multivariate like volumn and other (similar) stock price
 - collected data for 20 tickers: from 2015 by minute
    - labeling data: based on the interval size and threshold 
+- (todo) complete the literature review paper
+- (todo) 
 
 ## Manasi
 - seasonality, noise, and the residule is anomaly
 - just start the survey
+
+## Xingyu
+- move 'details' to the same page under the 'results table'
+- move 'filters' under the search
+- move 'general search using llm' to where the 'filters' currently is
 
 # Meeting 25 Feb 2025
 
