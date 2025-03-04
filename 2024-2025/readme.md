@@ -47,16 +47,20 @@ This is the folder for student projects in 2024-2025.
 - collected data for 20 tickers: from 2015 by minute
    - labeling data: based on the interval size and threshold 
 - (todo) complete the literature review paper
-- (todo) 
+- (todo) select the most promising a few techniques and test their performance
 
 ## Manasi
 - seasonality, noise, and the residule is anomaly
 - just start the survey
+- (todo) complete the literature review paper
+- (todo) select the most promising a few techniques and test their performance
 
 ## Xingyu
 - move 'details' to the same page under the 'results table'
 - move 'filters' under the search
 - move 'general search using llm' to where the 'filters' currently is
+- show a ontology graph including all the concepts in the search results
+- save the current state including the search/llm query and the results table and llm response
 
 # Meeting 25 Feb 2025
 
