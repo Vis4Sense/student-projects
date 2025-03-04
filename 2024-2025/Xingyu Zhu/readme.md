@@ -10,6 +10,17 @@
   - The second screen is for detailed mapping suggestions ![Second Screen](pictures/Second%20Screen.jpg)
   - The third screen is for general enquiries ![Third Screen](pictures/Third%20Screen.jpg)
 
+- **Sketch of Sidebar**: Designed Sidebay (used to record every step of the user's actions) (✅ Completed in the week starting from March 3)
+  - Default
+  ![Sidebar1](pictures/sidebar1.jpeg)
+  - Expand Sidebar
+  ![Sidebar2](pictures/sidebar2.jpeg)
+
+### Interface 3.0
+The basic framework of the Interface has been constructed according to specific user requirements, and some fundamental features have been implemented, including Get Mapping Suggestions and General Search. The corresponding code can be found in [here](projects/app3.py) (✅ Completed in the week starting from March 3)
+![app3.1](pictures/Interface%203.0/1.png)
+![app3.2](pictures/Interface%203.0/2.png)
+
 ### Interface
 - **Gradio**: Created a simple interface using Gradio (✅ Completed in the Minimal Working Demo). ![Gradio Interface](pictures/GradioInterface.png)
 

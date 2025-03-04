@@ -37,6 +37,39 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# Meeting 4 Mar 2025
+
+## Abhay
+- read the survey paper on time series classfication
+   - time wrapping: expensive, most effective, 
+   - shapelet: like it, expensive,
+   - start with univariate (price), and then later add multivariate like volumn and other (similar) stock price
+- collected data for 20 tickers: from 2015 by minute
+   - labeling data: based on the interval size and threshold 
+- (todo) complete the literature review paper
+- (todo) select the most promising a few techniques and test their performance
+
+## Manasi
+- seasonality, noise, and the residule is anomaly
+- just start the survey
+- (todo) complete the literature review paper
+- (todo) select the most promising a few techniques and test their performance
+
+## Xingyu
+- move 'details' to the same page under the 'results table'
+- move 'filters' under the search
+- move 'general search using llm' to where the 'filters' currently is
+- show a ontology graph including all the concepts in the search results
+- save the current state including the search/llm query and the results table and llm response
+
+## Ningbo
+- (todo) send Kai the details of api request and rate limit error message
+- using own gpt-4o-mini api no rate limit issue (uk south)
+- using python sdk has less rate limit error than javascript api
+- chat box: (todo) use information from the opened tabs
+- automatically add opened webpage to a task
+- generate summary of pages in a task. (todo) add the summary to the displayed task box
+
 # Meeting 25 Feb 2025
 
 ## Kai
