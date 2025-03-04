@@ -216,12 +216,27 @@ sleeping and having fun...
 
 ## Feb 25th
 - have done
-    - apply url prmpt request
-    - try to allow api request again if meet 429-limitation(with chosen restart time)
+    - use serval ways to fix the problem of 429:
+        - apply url prmpt request
+        - doing request from SDK using python/flask (SDK have better data flow control comparing to http request)
+        - try to allow api request again if meet 429-limitation(design a SDK by our self, with chosen restart time) -- fix the problem of 429
+    - set up simple chat box(without fixed button)
+    - set up simple summary page(haven't linked with storage)
+    - finish the MVP
 - problem
-    - api limit problem is due to user setting?
+    - api limit problem is due to user setting(due to multiple user using at the same time)?
     - gpt-4o-mini do not support online searching. Asking it with an Url is only searching in it local training data(update till 10.2023)
+    - since we use summary with summary, how do we get the detailed information when asking for a proper hotel? (this might takes a lot of tokens)
+- plant
+    - link the summary with storage
+    - try to apply Hierachical tasks(still based on LLM)
+    - fix bugs in MVP, enhance user friendly
+        - add a samll window showing api waiting time, for user friendly
+    - if possible, improve the usage of prompt(eg. when sending text of a webpage, not just using the first 1500 charater, but first+mid+tail)
+        - need to make compartion
+        - need more test(bench march) on more pages to see if it works
 
-- can use LLM to generate buttom with fixed prompt
-- since we use summary with summary, how do we get the detailed information when asking for a proper hotel? (this might takes a lot of tokens)
-- 为了user friendly, add a samll window showing api waiting time...
+    - chat box improvement
+        - link with the webpage info, generate button question
+
+    - summary can ba at the middle
