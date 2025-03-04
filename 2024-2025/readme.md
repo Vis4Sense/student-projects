@@ -37,6 +37,16 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# Meeting 4 Mar 2025
+
+Abhay
+- read the survey paper on time series classfication
+   - time wrapping: expensive, most effective, 
+   - shapelet: like it, expensive,
+   - start with univariate (price), and then later add multivariate like volumn and other (similar) stock price
+- collected data for 20 tickers: from 2015 by minute
+   - labeling data: based on the interval size and threshold 
+
 # Meeting 25 Feb 2025
 
 ## Kai
