@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             taskName = message.task_name;
         }
         const basicId = crypto.randomUUID();
-        const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId};
+        const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId, summary: "Haven't generate summary" };
         tasks.unshift(newTask);
         // store the tasks in the chrome storage
         chrome.storage.local.set({ taskList: tasks }, () => {
@@ -86,6 +86,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         sendTasksToFrontend({ tasks });
         return true;
+    }
+    else if(message.action === "update_task_summary") {
+        const taskId = message.taskId;  // get the task id
+        const taskSummary = message.summary;  // get the task summary
+        // update the task summary
+        tasks = tasks.map((task) => task.task_id === taskId ? { ...task, summary: taskSummary } : task);
+        // update the storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("Task summary updated:", taskId, taskSummary);
+        });
+        // send the updated tasks to the back-end
+        sendTasksToFrontend({ tasks });
+        return "success update summary in storage";
+    }
+    else if(message.action === "get_task_summary_from_storage") {
+        const taskId = message.taskId;
+        const task = tasks.find((task) => task.task_id === taskId);
+        if (task) {
+            if (task.summary){
+                console.log("Task summary found:", task.summary);
+                return task.summary;
+            }else{
+                console.log("Task summary not found");
+                return "Task not found";
+            }
+            // return "Task not found";
+        }
+        return "Task not found";
     }
     else if(message.action === "delete_task") {
         const taskId = message.taskId;
@@ -244,8 +272,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
             // update this task with the summary in the storage
 
-
-            // 调用chat接口，修改prompt以及begin prompt
 
             // 结构化返回，处理好返回的内容后，更新storage（切换task的同时，显示的summary也要切换，最好也留一个接口给用户自己更新summary）
 

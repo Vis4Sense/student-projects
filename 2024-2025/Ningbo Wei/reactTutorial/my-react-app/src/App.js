@@ -56,9 +56,25 @@ function App() {
                 console.log("Received chat box reply:", message.reply);
                 setChatBoxReply(message.reply);
             } else if(message.action === "generate_task_summary_reply"){
-                // update task summary
+                // update task summary in front end
                 console.log("Received task summary:", message.summary);
                 setchosenTaskSummary(message.summary);
+                // update task summary in back end
+                if (chrome.runtime && chrome.runtime.sendMessage) {
+                    /*后期开发（鉴于summary的生成有一定时间，需要引入消息队列）：
+                         1. 创建一个新的队列，用于存储请求生成summary的taskId
+                         2. 每次请求生成summary时，将taskId加入队列
+                         3. summary返回时，更新对应taskId的summary，并从队列中删除taskId
+                     */
+                    chrome.runtime.sendMessage({ action: "update_task_summary", taskId: selectedTaskId, summary: message.summary }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error("Error updating task summary:", chrome.runtime.lastError);
+                        } else {
+                            console.log("Task summary updated:", response);
+                        }
+                    });
+                }
+
             }
         };
 
@@ -115,7 +131,7 @@ function App() {
                 {/* 左侧任务列表 */}
                 <aside className="task-list">
                     <h2>Tasks</h2>
-                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName}/>
+                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName} setchosenTaskSummary={setchosenTaskSummary}/>
                 </aside>
 
                 {/* 中间内容区域 */}

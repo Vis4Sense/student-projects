@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 
-const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName }) => {
+const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName, setchosenTaskSummary }) => {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
     const [newTaskPrompt, setnewTaskPrompt] = useState("");  // New state for input
@@ -67,6 +67,15 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
             const newTabs = result[mindmapId] || [];
             setMindmapTabs(newTabs);
             console.log("Updated mindmapTabs:", newTabs);
+        });
+        // 3. 更新 Task Summary
+        chrome.runtime.sendMessage({ action: "get_task_summary", taskId: taskId }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error("Error getting task summary:", chrome.runtime.lastError);
+            } else {
+                console.log("Task Summary:", response);
+                setchosenTaskSummary(response);
+            }
         });
     };
 
