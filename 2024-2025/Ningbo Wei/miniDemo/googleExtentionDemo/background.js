@@ -90,47 +90,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     else if(message.action === "update_task_summary") {
         const taskId = message.taskId;  // get the task id
         const taskSummary = message.summary;  // get the task summary
-        // // update the task summary
-        // tasks = tasks.map((task) => task.task_id === taskId ? { ...task, summary: taskSummary } : task);
-        // // update the storage
-        // chrome.storage.local.set({ taskList: tasks }, () => {
-        //     console.log("Task summary updated:", taskId, taskSummary);
-        // });
-        // // send the updated tasks to the back-end
-        // sendTasksToFrontend({ tasks });
-        // sendResponse("success update summary in storage"); 
-        // return true;
-
         // 更新内存变量 tasks
         tasks = tasks.map((task) => task.task_id === taskId ? { ...task, summary: taskSummary } : task);
-        
         // **等待 storage 存储完成后再发送响应**
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("Task summary updated:", taskId, taskSummary);
-            
             // 确保存储完成后再发消息
             sendResponse("success update summary in storage"); 
         });
-
         return true;  // 保证异步操作能够完成
     }
     else if(message.action === "get_task_summary_from_storage") {
         const taskId = message.taskId;
-        // const task = tasks.find((task) => task.task_id === taskId);
-        // console.log("Task found:", task);
-        // if (task) {
-        //     if (task.summary){
-        //         console.log("Task summary found:", task.summary);
-        //         sendResponse(task.summary); 
-        //     }else{
-        //         console.log("Task summary not found");
-        //         sendResponse("Task summary not found");
-        //     }
-        //     // return "Task not found";
-        // }
-        // sendResponse("Task not found"); // 使用 sendResponse
-        // return true;
-
          // 直接从 Chrome Storage 里获取最新数据
         chrome.storage.local.get(["taskList"], (result) => {
             const storedTasks = result.taskList || [];  // 读取最新存储的任务列表

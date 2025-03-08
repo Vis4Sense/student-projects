@@ -240,3 +240,7 @@ sleeping and having fun...
         - link with the webpage info, generate button question
 
     - summary can ba at the middle
+
+## March 4th
+- have done
+    - successfully linke the summary with storage 
