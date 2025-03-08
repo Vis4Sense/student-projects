@@ -60,16 +60,43 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         // 1. 更新选中的任务
         setSelectedTaskId(taskId);
         setSelectedTaskName(taskName);
-        console.log("Selected Task:", taskId);
+        // console.log("Selected Task:", taskId);
+        // console.log("Selected selectedTaskId:", selectedTaskId);
+        // // 2. 更新 Mindmap Tabs
+        // const mindmapId = "mindmap" + taskId.replace("task", ""); // 移除 "task" 前缀
+        // chrome.storage.local.get([mindmapId], (result) => {
+        //     const newTabs = result[mindmapId] || [];
+        //     setMindmapTabs(newTabs);
+        //     console.log("Updated mindmapTabs:", newTabs);
+        // });
+        // // 3. 更新 Task Summary
+        // console.log("Requesting task summary for:", taskId);
+        // chrome.runtime.sendMessage({ action: "get_task_summary_from_storage", taskId: taskId }, (response) => {
+        //     if (chrome.runtime.lastError) {
+        //         console.error("Error getting task summary:", chrome.runtime.lastError);
+        //     } else {
+        //         console.log("Task Summary:", response);
+        //         setchosenTaskSummary(response);
+        //     }
+        // });
+    };
+
+    // 监听 selectedTaskId 变化，在更新后执行后续操作
+    useEffect(() => {
+        if (!selectedTaskId) return; // 避免初始状态执行
+        console.log("Selected Task Updated:", selectedTaskId);
+
         // 2. 更新 Mindmap Tabs
-        const mindmapId = "mindmap" + taskId.replace("task", ""); // 移除 "task" 前缀
+        const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
         chrome.storage.local.get([mindmapId], (result) => {
             const newTabs = result[mindmapId] || [];
             setMindmapTabs(newTabs);
             console.log("Updated mindmapTabs:", newTabs);
         });
+
         // 3. 更新 Task Summary
-        chrome.runtime.sendMessage({ action: "get_task_summary", taskId: taskId }, (response) => {
+        console.log("Requesting task summary for:", selectedTaskId);
+        chrome.runtime.sendMessage({ action: "get_task_summary_from_storage", taskId: selectedTaskId }, (response) => {
             if (chrome.runtime.lastError) {
                 console.error("Error getting task summary:", chrome.runtime.lastError);
             } else {
@@ -77,7 +104,8 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                 setchosenTaskSummary(response);
             }
         });
-    };
+
+    }, [selectedTaskId]); // 当 selectedTaskId 发生变化时执行
 
     const createNewTask = () => {
         if (chrome.runtime && chrome.runtime.sendMessage) {

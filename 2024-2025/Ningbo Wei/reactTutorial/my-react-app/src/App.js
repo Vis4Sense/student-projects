@@ -56,6 +56,7 @@ function App() {
                 console.log("Received chat box reply:", message.reply);
                 setChatBoxReply(message.reply);
             } else if(message.action === "generate_task_summary_reply"){
+                const taskToUpdate = message.taskId;
                 // update task summary in front end
                 console.log("Received task summary:", message.summary);
                 setchosenTaskSummary(message.summary);
@@ -66,7 +67,8 @@ function App() {
                          2. 每次请求生成summary时，将taskId加入队列
                          3. summary返回时，更新对应taskId的summary，并从队列中删除taskId
                      */
-                    chrome.runtime.sendMessage({ action: "update_task_summary", taskId: selectedTaskId, summary: message.summary }, (response) => {
+                    console.log("taskToUpdate:", taskToUpdate);
+                    chrome.runtime.sendMessage({ action: "update_task_summary", taskId: taskToUpdate, summary: message.summary }, (response) => {
                         if (chrome.runtime.lastError) {
                             console.error("Error updating task summary:", chrome.runtime.lastError);
                         } else {
