@@ -144,7 +144,7 @@ function App() {
                     <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId}/>
 
                     {/* task详细内容区域，因为历史原因命名为mindmap */}
-                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName}/>
+                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName} chosenTaskSummary={chosenTaskSummary}/>
                 </main>
 
                 {/* 右侧问答区域 */}

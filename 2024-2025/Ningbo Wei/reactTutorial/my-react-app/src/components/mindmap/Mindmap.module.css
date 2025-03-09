@@ -14,8 +14,17 @@
   padding-left: 10px; /* 让标题稍微偏移，增加层次感 */
 }
 
+.mindmap h3 {
+  text-align: left;  /* 确保文本左对齐 */
+  margin-bottom: 10px; /* 添加底部间距 */
+  padding-left: 10px; /* 让标题稍微偏移，增加层次感 */
+  word-wrap: break-word; /* 允许长单词换行 */
+  white-space: normal; /* 让文本正常换行 */
+  max-width: 60ch; /* 设定最大宽度为 60 个字符 */
+}
 
 .mindmap_tabs_container {
+  font-size: 1.5em; /* 标题字体大小 */
   display: flex;
   flex-wrap: wrap; /* 让 tabs 换行 */
   gap: 10px;
