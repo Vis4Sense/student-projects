@@ -12,7 +12,10 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             console.warn("No tab data received during drop.");
             return;
         }
-
+        if(!selectedTaskId) {
+            console.warn("No task selected for the tab.");
+            return;
+        }
         try {
             const tabData = JSON.parse(data);
             console.log("Dropped tab to Mindmap:", tabData);

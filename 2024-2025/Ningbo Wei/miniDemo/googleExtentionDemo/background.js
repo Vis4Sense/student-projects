@@ -1,5 +1,7 @@
 import { API_CONFIG } from './config.js';  // get config of API
 
+const MAIN_TEXT_SIGMENT = 1000; // 主要文本的分段长度
+
 const deploymentName = "gpt-4o-mini" // 模型部署名称
 const apiVersion = "2025-01-01-preview"  // API 版本
 
@@ -382,53 +384,7 @@ function processTab(tab) {
                         currentUrl.push(response.currentUrl);
                         console.log("Added result for:", tab.url);
 
-                        // 立即发送更新到前端，让 UI 显示"waiting..."
                         sendTabsToFrontend();
-                        // 首先根据url获取summary
-                        // getSummarywithUrlWithRateLimitHandling(response.currentUrl)
-                        //     .then((summary) => {
-                        //         // 先确保summaries不是“ERROR”，否则发送main_text和outline
-                        //         if (summary.summary[1].longSummary !== "ERROR") {
-                        //             const longSummary = summary.summary[1].longSummary;
-                        //             const shortSummary = summary.summary[0].shortSummary;
-                        //             const tabIndex = results.findIndex(t => t.id === response.id);
-                        //             console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
-                        //             if (tabIndex !== -1) {
-                        //                 results[tabIndex].summary = shortSummary;
-                        //                 results[tabIndex].summaryLong = longSummary;
-                        //                 results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
-                        //                 results[tabIndex].outline = ""; // 清空 outline，减小数据量
-                        //                 results[tabIndex].images = []; // 清空 images，减小数据量
-                        //                 // console.log(`Updated tow summary for tabId ${response.title}`);
-                        //                 sendTabsToFrontend(); // 再次通知前端更新 UI
-                        //             }
-                        //         }
-                        //         else {
-                        //             // 通过main_text获取summary，包含long和short
-                        //             getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
-                        //             .then((summary) => {
-                        //                 const longSummary = summary.summary[1].longSummary;
-                        //                 const shortSummary = summary.summary[0].shortSummary;
-                        //                 const tabIndex = results.findIndex(t => t.id === response.id);
-                        //                 console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
-                        //                 if (tabIndex !== -1) {
-                        //                     results[tabIndex].summary = shortSummary;
-                        //                     results[tabIndex].summaryLong = longSummary;
-                        //                     results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
-                        //                     results[tabIndex].outline = ""; // 清空 outline，减小数据量
-                        //                     results[tabIndex].images = []; // 清空 images，减小数据量
-                        //                     // console.log(`Updated tow summary for tabId ${response.title}`);
-                        //                     sendTabsToFrontend(); // 再次通知前端更新 UI
-                        //                 }
-                        //             })
-                        //             .catch(err => {
-                        //                 console.error("Error generating summary:", err);
-                        //             });
-                        //         }
-                        //     })
-                        //     .catch(err => {
-                        //         console.error("Error generating summary:", err);
-                        //     });
 
                         getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
                             .then((summary) => {
@@ -473,6 +429,27 @@ function getRetrySeconds(errorMessage_object){
     const retrySeconds = match ? parseInt(match[1], 10) : null;
 
     return retrySeconds;
+}
+
+function getMainTextSlice(mainText) {
+    // get thress slices of the main text
+    let mainText_length = mainText.length;
+    if(mainText_length <= 3 * MAIN_TEXT_SIGMENT){
+        return mainText;
+    }
+    const midPos = Math.floor(mainText_length / 2);
+    const first_slice = mainText.slice(0, MAIN_TEXT_SIGMENT);
+    const second_slice = mainText.slice(midPos, midPos + MAIN_TEXT_SIGMENT);
+    const last_slice = mainText.slice(-MAIN_TEXT_SIGMENT);
+    return `
+    ---- fist ${MAIN_TEXT_SIGMENT} characters ----
+        ${first_slice}
+    ---- middle ${MAIN_TEXT_SIGMENT} characters ----
+        ${second_slice}
+    ---- last ${MAIN_TEXT_SIGMENT} characters ----
+        ${last_slice}
+    `;
+
 }
 
 async function delay(ms) {
@@ -598,13 +575,13 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
         
         ----------Following is the title, main context, and outline----------
         ####### Title #######
-        ${title.slice(0, 100)}
+        ${title.slice(0, 150)}
 
         ####### Main Context #######
-        ${main_text.slice(0, 1500)}
+        ${getMainTextSlice(main_text)}
 
         ####### Outline #######
-        ${outline.slice(0, 350)}
+        ${outline.slice(0, 800)}
     `;
 
     try {

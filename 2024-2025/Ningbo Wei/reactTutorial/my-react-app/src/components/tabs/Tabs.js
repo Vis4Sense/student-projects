@@ -31,12 +31,20 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
     };
 
     const handleDragStart = (event, tab) => {
+        if (!selectedTaskId){
+            console.log("No task selected for the tab.");
+            return;
+        }
         event.dataTransfer.setData('application/json', JSON.stringify(tab));
         event.dataTransfer.effectAllowed = "move";  // 确保可以移动
     };
 
     const handleDrop = (event) => {
         event.preventDefault();
+        if (!selectedTaskId){
+            console.log("No task selected for the tab.");
+            return;
+        }
         const droppedTab = JSON.parse(event.dataTransfer.getData('application/json'));
         // 1. add the dropped tab to the tabs
         setTabs((prevTabs) => {
