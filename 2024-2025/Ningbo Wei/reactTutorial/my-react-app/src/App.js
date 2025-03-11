@@ -15,6 +15,8 @@ function App() {
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
     const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
     const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // 用于存储task summary
+    const [maxIterationToDo, setMaxIterationToDo] = useState(0);
+    const [apiWaitingTime, setApiWaitingTime] = useState(0);
 
     useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);

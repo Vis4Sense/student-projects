@@ -244,3 +244,5 @@ sleeping and having fun...
 ## March 4th
 - have done
     - successfully linke the summary with storage 
+- plant
+    - built an automatical testing framwork, test the functional ability of summary and tab clustering for different api and prompts
