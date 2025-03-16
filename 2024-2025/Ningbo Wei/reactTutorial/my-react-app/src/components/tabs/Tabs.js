@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './Tabs.module.css';
 
 const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
+
+    const [contextMenu, setContextMenu] = useState(null); // 存储菜单位置
+    const [selectedTabId, setSelectedTabId] = useState(null); // 存储当前右键的 Tab
 
     const handleSummary = (tab) => {
         // 点击按钮后，立即更新该 tab 的 summary 为 "waiting to generate summary"
@@ -28,6 +31,31 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                 }
             );
         }
+    };
+
+    // 右键点击时显示菜单
+    const handleContextMenu = (event, tab) => {
+        event.preventDefault(); // 阻止默认右键菜单
+        setSelectedTabId(tab.id); // 选中当前右键的 tab
+        setContextMenu({
+            mouseX: event.clientX + 2,
+            mouseY: event.clientY - 6,
+        });
+    };
+
+    // 处理菜单点击事件
+    const handleMenuClick = (option, tab) => {
+        // if (option === "A") console.log("a");
+        // if (option === "B") console.log("b");
+        // if (option === "C") console.log("c");
+        console.log(`${option} clicked on tab ${tab.title}`);
+        setContextMenu(null); // 隐藏菜单
+    };
+
+    // 点击空白处隐藏菜单
+    const handleClickAway = () => {
+        setContextMenu(null);
+        setSelectedTabId(null);
     };
 
     const handleDragStart = (event, tab) => {
@@ -72,6 +100,7 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
             className={styles.tabs}
             onDragOver={allowDrop}
             onDrop={handleDrop}
+            onClick={handleClickAway}
         >
             {tabs.map((tab, index) => (
                 <div
@@ -79,11 +108,25 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                     className={styles.tab}
                     draggable
                     onDragStart={(event) => handleDragStart(event, tab)}
+                    onContextMenu={(event) => handleContextMenu(event, tab)}
                 >
                     {/* <button onClick={() => handleSummary(tab)}>Summary</button> */}
                     <h3>{tab.title.slice(0, 50)}</h3>
                     <p>{tab.currentUrl.slice(0, 60)}...</p>
                     <p>{tab.summary ? tab.summary : "waiting..."}</p>
+
+                     {/* 右键菜单只显示在被右键点击的 tab 内 */}
+                     {contextMenu && selectedTabId === tab.id &&(
+                        <div
+                            className={styles.contextMenu}
+                            style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
+                        >
+                            <div onClick={() => handleMenuClick("A", tab)}>Option A</div>
+                            <div onClick={() => handleMenuClick("B", tab)}>Option B</div>
+                            <div onClick={() => handleMenuClick("C", tab)}>Option C</div>
+                        </div>
+                    )}
+
                 </div>
             ))}
         </div>
