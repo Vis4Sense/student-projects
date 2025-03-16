@@ -48,6 +48,13 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
         // if (option === "A") console.log("a");
         // if (option === "B") console.log("b");
         // if (option === "C") console.log("c");
+        if (option === "Open this tab in browser") {
+            chrome.runtime.sendMessage({ action: "open_tab", url: tab.currentUrl });
+        }
+        else if (option === "Delet this tab") {
+            // remove this tab from the tabs
+            setTabs((prevTabs) => prevTabs.filter((t) => t.id !== tab.id));
+        }
         console.log(`${option} clicked on tab ${tab.title}`);
         setContextMenu(null); // 隐藏菜单
     };
@@ -121,8 +128,8 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                             className={styles.contextMenu}
                             style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
                         >
-                            <div onClick={() => handleMenuClick("A", tab)}>Option A</div>
-                            <div onClick={() => handleMenuClick("B", tab)}>Option B</div>
+                            <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
+                            <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
                             <div onClick={() => handleMenuClick("C", tab)}>Option C</div>
                         </div>
                     )}

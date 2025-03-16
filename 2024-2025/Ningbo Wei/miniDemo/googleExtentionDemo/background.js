@@ -34,6 +34,29 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendTabsToFrontend();
         return true; 
     }
+    else if (message.action === "open_tab") {
+        const openUrl = message.url;
+        // 直接查找已经打开的 tab
+        chrome.tabs.query({}, (tabs) => {
+            const existingTab = tabs.find(tab => tab.url === openUrl);
+            
+            if (existingTab) {
+                // 如果找到了已打开的 tab，则切换到该 tab
+                chrome.tabs.update(existingTab.id, { active: true });
+            } else {
+                // 否则创建新的 tab
+                chrome.tabs.create({ url: openUrl });
+            }
+        });
+        // const oepnnUrl =  message.url;
+        // // of url is in the result, open it, else create a new tab
+        // const tab = results.find((tab) => tab.currentUrl === oepnnUrl);
+        // if (tab) {
+        //     chrome.tabs.update(tab.tab_idInBrowser, { active: true });
+        // } else {
+        //     chrome.tabs.create({ url: oepnnUrl });
+        // }
+    }
     // do summarization of a tab
     else if (message.action === "summarize_tab") {
         // console.log("Received tab title for summary:", message.title);
@@ -65,6 +88,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // const mindmapTabs = results.filter((t) => t.id === removedTabId);
         // update the storage
         chrome.storage.local.set({ [addedMindmapId]: newMindmap }, () => {
+            console.log("Mindmap tabs updated in storage:", newMindmap);
+        });
+        // send the updated tabs to the back-end
+        sendTabsToFrontend();
+        return true;
+    }
+    else if(message.action === "remove_tab_from_mindmap") {
+        // remove a tab from the mindmap
+        const removedTabId = message.removedTabId;
+        const mindmapId = message.mindmapId;
+        const newMindmap = message.newMindmap;
+        chrome.storage.local.set({ [mindmapId]: newMindmap }, () => {
             console.log("Mindmap tabs updated in storage:", newMindmap);
         });
         // send the updated tabs to the back-end
@@ -370,7 +405,7 @@ function processTab(tab) {
                 }
                 const uniqueId = `${Date.now()}-${tab.id}`;
 
-                chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId }, (response) => {
+                chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId, tab_idInBrowser: tab.id }, (response) => {
                     if (response) {
                         if (currentUrl.includes(response.currentUrl)) {
                             console.log("Tab already fetched:", response.currentUrl);

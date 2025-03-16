@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./Mindmap.module.css";
 
 const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, selectedTaskName, chosenTaskSummary}) => {
+
+    const [contextMenu, setContextMenu] = useState(null); // 存储菜单位置
+    const [selectedTabId, setSelectedTabId] = useState(null); // 存储当前右键的 Tab
 
    // 处理 Tab 拖拽到 Mindmap 的逻辑
     const handleTabDropToMindmap = (event) => {
@@ -49,6 +52,47 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
         event.dataTransfer.effectAllowed = "move";  // 确保可以移动
     };
 
+    // 右键点击时显示菜单
+    const handleContextMenu = (event, tab) => {
+        event.preventDefault(); // 阻止默认右键菜单
+        setSelectedTabId(tab.id); // 选中当前右键的 tab
+        setContextMenu({
+            mouseX: event.clientX + 2,
+            mouseY: event.clientY - 6,
+        });
+    };
+
+    // 处理菜单点击事件
+    const handleMenuClick = (option, tab) => {
+        if (option === "Open this tab in browser") {
+            chrome.runtime.sendMessage({ action: "open_tab", url: tab.currentUrl });
+        }
+        else if (option === "Delet this tab") {
+            // remove this tab from the current mindmap
+            setMindmapTabs((prevTabs) => prevTabs.filter((t) => t.id !== tab.id));
+            newMindeMapTabs = prevTabs.filter((t) => t.id !== tab.id);
+            // tell background.js to remove this tab from the mindmap
+            const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
+            if (chrome.runtime && chrome.runtime.sendMessage) {
+                chrome.runtime.sendMessage({ action: "remove_tab_from_mindmap", removedTabId: tab.id, mindmapId: mindmapId, newMindmap: newMindeMapTabs }, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("Error removing tab from mindmap:", chrome.runtime.lastError);
+                    } else {
+                        console.log("Tab removed from mindmap:", response);
+                    }
+                });
+            }
+        }
+        console.log(`${option} clicked on tab ${tab.title}`);
+        setContextMenu(null); // 隐藏菜单
+    };
+
+    // 点击空白处隐藏菜单
+    const handleClickAway = () => {
+        setContextMenu(null);
+        setSelectedTabId(null);
+    };
+
     return (
         <div 
             className={styles.mindmap}
@@ -57,6 +101,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 e.dataTransfer.dropEffect = "move";  // 修改光标显示
             }}
             onDrop={handleTabDropToMindmap}
+            onClick={handleClickAway}
             >
             <h2>Tasks - {selectedTaskName}</h2>
             <h3>Summary - {chosenTaskSummary}</h3>
@@ -66,11 +111,26 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                         key={tab.id} 
                         className={styles.mindmap_tab}
                         draggable
-                        onDragStart={(event) => handleDragStart(event, tab)}>
+                        onDragStart={(event) => handleDragStart(event, tab)}
+                        onContextMenu={(event) => handleContextMenu(event, tab)}
+                    >
                         <h3>{tab.title.slice(0, 50)}</h3>
                         <p>{tab.currentUrl.slice(0, 70)}</p>
                         <p>{tab.summary ? tab.summary : "waiting..."}</p>
+
+                        {/* 右键菜单只显示在被右键点击的 tab 内 */}
+                        {contextMenu && selectedTabId === tab.id &&(
+                            <div
+                                className={styles.contextMenu}
+                                style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
+                            >
+                                <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
+                                <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
+                            </div>
+                        )}
+
                     </div>
+                    
                 ))}
             </div>
         </div>

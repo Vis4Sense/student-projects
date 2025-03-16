@@ -5,6 +5,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "fetch_content") {
         try {
             const id = message.id;
+            const tab_idInBrowser = message.tab_idInBrowser;
             const title = document.title || "No title found";
             const mainElement = document.querySelector('main') || document.body;
             const mainText = mainElement ? mainElement.innerText.trim() : "No main content found";
@@ -54,7 +55,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             //     sendResponse({ id, title, main_text: mainText, outline, currentUrl, images: imagesData, summary, summaryLong });
             // });
 
-            sendResponse({ id, title, main_text: mainText, outline, currentUrl, summary, summaryLong });
+            sendResponse({ id, tab_idInBrowser, title, main_text: mainText, outline, currentUrl, summary, summaryLong });
         } catch (err) {
             console.error("Error in content.js:", err.message);
             sendResponse({ error: err.message });
