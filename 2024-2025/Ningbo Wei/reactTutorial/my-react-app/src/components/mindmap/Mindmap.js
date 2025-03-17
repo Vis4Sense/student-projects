@@ -70,7 +70,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
         else if (option === "Delet this tab") {
             // remove this tab from the current mindmap
             setMindmapTabs((prevTabs) => prevTabs.filter((t) => t.id !== tab.id));
-            newMindeMapTabs = prevTabs.filter((t) => t.id !== tab.id);
+            const newMindeMapTabs = mindmapTabs.filter((t) => t.id !== tab.id);
             // tell background.js to remove this tab from the mindmap
             const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
             if (chrome.runtime && chrome.runtime.sendMessage) {

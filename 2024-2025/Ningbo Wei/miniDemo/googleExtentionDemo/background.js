@@ -96,6 +96,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if(message.action === "remove_tab_from_mindmap") {
         // remove a tab from the mindmap
+        console.log("remove_tab_from_mindmap: remove tab from mindmap", message);
         const removedTabId = message.removedTabId;
         const mindmapId = message.mindmapId;
         const newMindmap = message.newMindmap;
