@@ -21,6 +21,13 @@ The basic framework of the Interface has been constructed according to specific 
 ![app3.1](pictures/Interface%203.0/1.png)
 ![app3.2](pictures/Interface%203.0/2.png)
 
+Improve the interface structure (✅ Completed in the week starting from March 10)
+![app3.3](pictures/Interface%203.0/3.png)
+
+Implementing the Filter Function (✅ Completed in the week starting from March 10)
+![app3.4](pictures/Interface%203.0/4.png)
+
+
 ### Interface
 - **Gradio**: Created a simple interface using Gradio (✅ Completed in the Minimal Working Demo). ![Gradio Interface](pictures/GradioInterface.png)
 
@@ -33,9 +40,6 @@ The basic framework of the Interface has been constructed according to specific 
 - **Easier-to-Understand Output**: The interface now displays mapping suggestions using charts, making the results clearer and more intuitive (✅ Completed in the week beginning February 10).
 
 - **Mapping Result Storage**:  Users can now save the mapping suggestions as an Excel file, and they can review all mapping suggestions before saving (✅ Completed in the week beginning February 10).
-
-
-
 
 
 ### Data Preprocessing
