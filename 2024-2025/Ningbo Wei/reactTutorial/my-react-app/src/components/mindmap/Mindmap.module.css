@@ -20,7 +20,16 @@
   padding-left: 10px; /* 让标题稍微偏移，增加层次感 */
   word-wrap: break-word; /* 允许长单词换行 */
   white-space: normal; /* 让文本正常换行 */
-  max-width: 60ch; /* 设定最大宽度为 60 个字符 */
+  max-width: 120ch; /* 设定最大宽度为 60 个字符 */
+}
+
+.mindmap p{
+  text-align: left;  /* 确保文本左对齐 */
+  margin-bottom: 10px; /* 添加底部间距 */
+  padding-left: 10px; /* 让标题稍微偏移，增加层次感 */
+  word-wrap: break-word; /* 允许长单词换行 */
+  white-space: normal; /* 让文本正常换行 */
+  max-width: 120ch; /* 设定最大宽度为 120 个字符 */
 }
 
 .mindmap_tabs_container {
@@ -28,6 +37,9 @@
   display: flex;
   flex-wrap: wrap; /* 让 tabs 换行 */
   gap: 10px;
+  max-height: 810px; /* 设定最大高度，超过时滚动 */
+  overflow-y: auto; /* 启用垂直滚动 */
+  padding-right: 10px; /* 预留一些空间避免内容贴紧滚动条 */
 }
 
 .mindmap_tab {
@@ -46,7 +58,7 @@
 }
 
 .mindmap_tab h3 {
-  font-size: 1.5em; /* 标题字体大小 */
+  /* font-size: 1.5em; 标题字体大小 */
   font-weight: bold; /* 加粗标题 */
   margin: 5px 0;            /* 减少上下间距 */
   overflow: hidden;         /* 隐藏超出边框的内容 */
@@ -55,7 +67,7 @@
 }
 
 .mindmap_tab p {
-  font-size: 1.2em; /* 正文字体大小 */
+  /* font-size: 1.2em; 正文字体大小 */
   color: #666; /* 正文字体颜色 */
   margin: 3px 0;            /* 控制正文间距，让内容更紧凑 */
   overflow: hidden;         /* 隐藏超出边框的内容 */

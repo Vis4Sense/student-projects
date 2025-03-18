@@ -93,6 +93,31 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
         setSelectedTabId(null);
     };
 
+    const generateSummary = () => {
+        if(selectedTaskId){
+            console.log("generate summary for task:", selectedTaskId);
+            if (chrome.runtime && chrome.runtime.sendMessage) {
+                const beginPrompt = `
+                Please generate a summary for a task.
+                This task consists of a serise of webpages.
+                You will be given a list of summarise of those webpages, please analyise these information and return a summary of less than 100 words.
+
+                ##### Webpages #####
+                
+                `;
+                chrome.runtime.sendMessage({ action: "generate_task_summary", taskId: selectedTaskId, beginPrompt: beginPrompt}, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("Error generating summary:", chrome.runtime.lastError);
+                    } else {
+                        console.log("Summary generated:", response);
+                        setSummary(response.summary);
+                    }
+                });
+            }
+        }
+
+    }
+
     return (
         <div 
             className={styles.mindmap}
@@ -104,8 +129,13 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             onClick={handleClickAway}
             >
             <h2>Tasks - {selectedTaskName}</h2>
-            <h3>Summary - {chosenTaskSummary}</h3>
-            <div className={styles.mindmap_tabs_container}>
+            <button onClick={generateSummary}>generate task summary</button>
+            <h3>Summary : {chosenTaskSummary}</h3>
+            {/* <p>{chosenTaskSummary}</p> */}
+            <div 
+                className={styles.mindmap_tabs_container}  
+                style={{ maxHeight: "400px", overflowY: "auto" }}
+            >
                 {mindmapTabs.map((tab) => (
                     <div 
                         key={tab.id} 
@@ -115,7 +145,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                         onContextMenu={(event) => handleContextMenu(event, tab)}
                     >
                         <h3>{tab.title.slice(0, 50)}</h3>
-                        <p>{tab.currentUrl.slice(0, 70)}</p>
+                        <p>{tab.currentUrl.slice(0, 40)}</p>
                         <p>{tab.summary ? tab.summary : "waiting..."}</p>
 
                         {/* 右键菜单只显示在被右键点击的 tab 内 */}

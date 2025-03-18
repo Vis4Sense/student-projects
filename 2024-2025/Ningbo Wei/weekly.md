@@ -244,5 +244,15 @@ sleeping and having fun...
 ## March 4th
 - have done
     - successfully linke the summary with storage 
+    - user can click front-end to visit a tab
+    - tabs in mindmaps/caches can be deleted
+    - a new window is added to dispaly status of the LLM api
+    - summary is dispalyed in task area
+    - chatbox is linked to the task, which means it can use information from the opened tabs
+- issues
+    - no api limitation meet in the past two weeks(except yesterday)
 - plant
     - built an automatical testing framwork, test the functional ability of summary and tab clustering for different api and prompts
+        - can apply Bilingual Evaluation Understudy//Recall-Oriented Understudy for Gisting Evaluation to check the summary, 词汇相似度, 也考虑使用关键词覆盖率
+    - try to use BERTScore to do the tab clustering(user personal input) -- 余弦相似度
+    - subtask

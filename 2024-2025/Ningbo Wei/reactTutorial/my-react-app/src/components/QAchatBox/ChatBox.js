@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ChatBox.module.css";
 
-const ChatBox = ({chatBoxReply, setChatBoxReply}) => {
+const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs}) => {
     const [inputText, setInputText] = useState("");
     const [displayedText, setDisplayedText] = useState("");
 
@@ -9,8 +9,18 @@ const ChatBox = ({chatBoxReply, setChatBoxReply}) => {
         if(!inputText.trim()) return;
         console.log("chat with LLM:", inputText);
         setChatBoxReply(""); // 清空回复
+        let allTabsSummary = " "
+        if(selectedTaskId){
+            allTabsSummary = JSON.stringify.getSummaryFromTabsInMindmaps();
+        }
+        let pre_prompt = `
+        You are a good assistant in helping user solve problem or explaining concept. User have opened serveral webpages. You will be given a list of summarise of those webpages. Please answer user's question based on these information.
+
+        ##### Webpages #####
+        ${allTabsSummary}
+        `;
         if(chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage({ action: "LLM_conversation", prompt: inputText }, (response) => {
+            chrome.runtime.sendMessage({ action: "LLM_conversation", prompt: inputText, pre_prompt: pre_prompt }, (response) => {
                 if (chrome.runtime.lastError) {
                     console.error("Error chatting with LLM:", chrome.runtime.lastError);
                 } else {
@@ -19,6 +29,15 @@ const ChatBox = ({chatBoxReply, setChatBoxReply}) => {
             });
         }
     };
+
+    function getSummaryFromTabsInMindmaps(){
+        // 从所有的 mindmapTabs 中获取所有的 summary
+        let allTabs = [];
+        mindmapTabs.forEach((tab) => {
+            allTabs.push({url:tab.currentUrl.slice(0,40), summary:tab.summary});
+        });
+        return allTabs;
+    }
 
 
     return (

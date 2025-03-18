@@ -4,8 +4,9 @@ import Header from './components/Header.module.css';
 import Tabs from './components/tabs/Tabs';
 import Tasks from './components/tasks/Tasks';
 import Mindmap from './components/mindmap/Mindmap';
-import QAchatBox from './components/QAchatBox/chatBox';
+import QAchatBox from './components/QAchatBox/ChatBox';
 import TaskSummary from './components/taskSummary/TaskSummary';
+import ProcessWindow from './components/processWindow/ProcessWindow';
 
 function App() {
     const [tabs, setTabs] = useState([]); // 用于存储标签页数据
@@ -15,8 +16,9 @@ function App() {
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
     const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
     const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // 用于存储task summary
-    const [maxIterationToDo, setMaxIterationToDo] = useState(0);
+    const [maxLLMtaskToDo, setMaxLLMtaskToDo] = useState(0);
     const [apiWaitingTime, setApiWaitingTime] = useState(0);
+    const [ifLLMready, setIfLLMready] = useState("checking the api status..."); // READY;FAILD;WORKING
 
     useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);
@@ -25,7 +27,17 @@ function App() {
                 console.log("Fetched tasks:", response.tasks);
                 setTasks(response.tasks);
         }});
-
+        console.log("app.js start checing api status");
+        chrome.runtime.sendMessage({ action: "check_LLM_api" }, (response) => {
+            if (response && response.apiStatus) {
+                console.log("Fetched api status:", response.apiStatus);
+                setIfLLMready(response.apiStatus);
+            }
+            else{
+                console.log("Fetched api status failed");
+                setIfLLMready("FAILD");
+            }
+        });
 
         // 监听 `background.js` 推送的 tabs 更新
         const handleMessage = (message) => {
@@ -64,7 +76,7 @@ function App() {
                 setchosenTaskSummary(message.summary);
                 // update task summary in back end
                 if (chrome.runtime && chrome.runtime.sendMessage) {
-                    /*后期开发（鉴于summary的生成有一定时间，需要引入消息队列）：
+                    /*后期开发（鉴于summary的生成有一定时间，需要引入消息队列）：  -- 好像await就可以？？？
                          1. 创建一个新的队列，用于存储请求生成summary的taskId
                          2. 每次请求生成summary时，将taskId加入队列
                          3. summary返回时，更新对应taskId的summary，并从队列中删除taskId
@@ -78,8 +90,20 @@ function App() {
                         }
                     });
                 }
-
             }
+            else if(message.action === "update_API_request_count"){
+                console.log("update_API_request_count: Received updated maxLLMtaskToDo:", message.count);
+                setMaxLLMtaskToDo(message.count);
+            }
+            else if(message.action === "update_API_waiting_time"){
+                console.log("update_API_waiting_time: Received updated waiting time:", message.waitingTime);
+                setApiWaitingTime(message.waitingTime);
+            }
+            else if(message.action === "update_LLM_api_status"){
+                console.log("update_LLM_api_status: Received updated api status:", message.apiStatus);
+                setIfLLMready(message.apiStatus);
+            }
+
         };
 
         chrome.runtime.onMessage.addListener(handleMessage);
@@ -152,9 +176,11 @@ function App() {
                 {/* 右侧问答区域 */}
                 <aside className="qa-section">
                     {/* <h2>QA Chat Box</h2> */}
-                    <QAchatBox chatBoxReply={chatBoxReply} setChatBoxReply={setChatBoxReply} />
-                    {/* <TaskSummary /> */}
-                    <TaskSummary selectedTaskId={selectedTaskId} chosenTaskSummary={chosenTaskSummary}/>
+                    <QAchatBox chatBoxReply={chatBoxReply} setChatBoxReply={setChatBoxReply} selectedTaskId={selectedTaskId} mindmapTabs={mindmapTabs}/>
+                    {/* Process Window */}
+                    <ProcessWindow ifLLMready={ifLLMready}  maxLLMtaskToDo={maxLLMtaskToDo} apiWaitingTime={apiWaitingTime} />
+                    {/* <TaskSummary />
+                    <TaskSummary selectedTaskId={selectedTaskId} chosenTaskSummary={chosenTaskSummary}/> */}
                 </aside>
             </div>
         </div>

@@ -1,0 +1,515 @@
+
+{
+    "error": {
+        "code": "429",
+        "message": "Requests to the ChatCompletions_Create Operation under Azure OpenAI API version 2025-01-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit."
+    }
+}
+
+Prompt: 
+        Following text is extracted from a website, including its title, main context, and outline. 
+        Due to the limitation of the display, the given information may be truncated. 
+        Please help me analyze the following content and return two summary of this website in json fromat. 
+        Ignore spam and ads information. Some parts may be irrelevant. Please summarize the main content in English.
+        
+        You can do this job through following stetps:
+        1. Read the title, main context, and outline.
+        2. Guess the main content of the website, including the main topic and key points.
+        3. Write a short summary of less than 25 words and a long summary of less than 100 words.
+        4. Return only a valid JSON object, with no extra text or formatting. You should return a dictionary with two keys: shortSummary and longSummary, shown as below:
+        ###### example output #######
+        {
+  "summary": [
+    {
+      "shortSummary": "xxx"
+    },
+    {
+      "longSummary": "xxxxxx"
+    }
+  ]
+}
+        
+        ----------Following is the title, main context, and outline----------
+        ####### Title #######
+        搜索诺丁汉酒店_诺丁汉酒店查询_Booking.com缤客
+
+        ####### Main Context #######
+        
+    ---- fist 1000 characters ----
+        跳至主要内容
+USD
+上线我的住宿
+注册
+登录
+住宿
+机票
+机+酒
+租车
+景点
+机场出租车
+3月21日周五
+—
+3月22日周六
+1位成人 · 0名儿童 · 1间客房
+搜特价
+首页
+英国
+诺丁汉郡
+诺丁汉
+搜索结果
+在地图上查看
+缩小搜索范围
+你的预算（每晚）
+US$30 - US$500+
+诺丁汉热门筛选
+酒店
+51
+3公里内
+151
+距离搜索地址
+免费取消
+140
+含早餐
+27
+公寓
+100
+Spa及健康中心
+3
+私人浴室
+149
+停车场
+172
+住宿类型
+酒店
+51
+青旅
+1
+公寓
+100
+整租民宿短租和公寓
+137
+住宿加早餐旅馆
+7
+旅馆
+26
+胶囊旅馆
+1
+别墅
+3
+度假屋
+31
+民宿
+20
+设施
+停车场
+172
+餐厅
+27
+准许携带宠物
+35
+客房服务
+22
+24小时前台
+28
+显示所有13项
+餐点
+含早餐
+27
+包含早餐和晚餐
+3
+自行烹饪
+140
+住宿评级
+寻找高质量酒店和度假短租
+2星级
+1
+3星级
+50
+4星级
+43
+5星级
+3
+区
+诺丁汉市中心
+37
+霍克利
+1
+蕾丝市场
+8
+最受游客欢迎的地区
+35
+预订政策
+免费取消
+140
+评分
+好极了：9分以上
+50
+非常好：8分以上
+116
+好：7分以上
+144
+令人愉悦：6分以上
+161
+距离诺丁汉中心
+1公里内
+39
+3公里内
+151
+5公里内
+185
+客房设施
+私人浴室
+149
+厨房/小厨房
+140
+浴缸
+76
+洗衣机
+115
+小厨房
+45
+显示所有11项
+床型偏好
+双人床
+209
+两张单人床
+55
+品牌
+宜必思酒店
+1
+希尔顿酒店及度假村
+1
+假日酒店&度假村
+1
+显示所有15项
+卧室和浴室
+卧室
+0
+浴室
+0
+休闲乐活
+健身中心
+18
+健身房
+14
+高尔夫球场（3公里内）
+21
+自行车
+9
+徒步活动
+10
+在线付款
+接受在线付款
+212
+高评分特色
+根据住客点评计算得出
+早餐很好
+15
+认证
+可持续性认证
+9
+住宿无障碍设施
+语音辅助
+1
+视觉辅助：可触摸图标
+3
+视觉辅助：布莱叶盲文
+1
+坐便器 - 带扶手
+13
+带紧急按钮的浴室
+9
+坐便器较高
+4
+盥洗盆较低
+8
+客房无障碍设施
+高层由电梯直达
+19
+整间住宿位于地面楼层
+23
+整间住宿均设无障碍通道，方便残疾客人使用
+13
+步入式淋浴
+36
+浴缸 - 带扶手
+3
+浴室 - 带紧急按钮
+6
+无障碍淋浴
+7
+淋浴座椅
+6
+坐便器 - 带扶
+    ---- middle 1000 characters ----
+        的客房在我们网站上仅剩7间
+1晚，1位成人
+US$90
+价格US$90
+含税费及其他费用
+查看可订选项
+The Birchover Residences Trent Bridge
+在新窗口中打开
+诺丁汉显示在地图上离中心地区2.4千米
+评分8.6
+8.6
+很棒
+1,287条住客点评
+位置 9.3
+高级公寓
+1套整租公寓 • 1间卧室 • 1间浴室 • 24 m²
+1张大号双人床
+该价格在我们网站上仅剩6间
+1晚，1位成人
+US$92
+价格US$92
+含税费及其他费用
+查看可订选项
+The Orchard Hotel & Restaurant
+在新窗口中打开
+诺丁汉显示在地图上离中心地区4.1千米
+可持续性认证
+评分8.8
+8.8
+很棒
+5,831条住客点评
+位置 9.3
+双人间或双床间
+1张双人床
+1晚，1位成人
+US$115
+价格US$115
+含税费及其他费用
+查看可订选项
+诺丁汉市中心美居酒店
+在新窗口中打开
+霍克利, 诺丁汉显示在地图上位于市中心
+评分7.3
+7.3
+好
+3,572条住客点评
+标准特大号床间
+1张超大号双人床
+免费取消
+无需预付 - 到店付款
+1晚，1位成人
+US$111
+价格US$111
+含税费及其他费用
+查看可订选项
+诺丁汉盖特威希尔顿逸林酒店
+在新窗口中打开
+诺丁汉显示在地图上离中心地区5.1千米
+可持续性认证
+评分8.5
+8.5
+非常好
+1,706条住客点评
+大号床间
+1张大号双人床
+无需预付 - 到店付款
+1晚，1位成人
+US$107
+价格US$107
+含税费及其他费用
+查看可订选项
+Delta Hotels by Marriott Nottingham Belfry
+在新窗口中打开
+诺丁汉显示在地图上离中心地区6.7千米
+可持续性认证
+评分7.7
+7.7
+好
+1,668条住客点评
+双人大床间标准客房 - 双人间
+1张双人床
+该价格的客房在我们网站上仅剩7间
+1晚，1位成人
+US$111
+价格US$111
+含税费及其他费用
+查看可订选项
+Lace Market Hotel
+在新窗口中打开
+蕾丝市场, 诺丁汉显示在地图上位于市中心
+评分8.1
+8.1
+非常好
+2,140条住客点评
+位置 9.4
+迷你双人间
+1张双人床
+免费取消
+无需预付 - 到店付款
+该价格的客房在我们网站上仅剩1间
+1晚，1位成人
+US$128
+价格US$128
+含税
+    ---- last 1000 characters ----
+        的客房在我们网站上仅剩6间
+1晚，1位成人
+US$138
+价格US$138
+含税费及其他费用
+查看可订选项
+假日皇冠诺丁汉酒店
+在新窗口中打开
+诺丁汉市中心, 诺丁汉显示在地图上位于市中心
+评分8.5
+8.5
+非常好
+4,711条住客点评
+位置 9.3
+标准间
+1张双人床
+包括早餐
+免费取消
+无需预付 - 到店付款
+1晚，1位成人
+US$163
+价格US$163
+含税费及其他费用
+查看可订选项
+包括早餐
+本迪恩克酒店
+在新窗口中打开
+诺丁汉市中心, 诺丁汉显示在地图上位于市中心
+评分8.3
+8.3
+非常好
+1,500条住客点评
+位置 9.3
+标准双人间 - 带共用浴室
+1张双人床
+包括早餐
+该价格的客房在我们网站上仅剩6间
+1晚，1位成人
+US$103
+价格US$103
+含税费及其他费用
+查看可订选项
+Claremont Hotel
+在新窗口中打开
+由私人房东管理
+诺丁汉显示在地图上离中心地区2千米
+评分8.6
+8.6
+很棒
+1,225条住客点评
+标准客房
+1张双人床
+无需预付 - 到店付款
+该价格的客房在我们网站上仅剩1间
+1晚，1位成人
+US$77
+价格US$77
+含税费及其他费用
+查看可订选项
+
+上线我的住宿
+
+手机版视图
+您的帐户
+在线修改订单
+客服帮助
+成为分销合作伙伴
+Booking.com for Business
+关注Booking.com官方微信号
+国家/地区
+区域
+城市
+区
+机场
+酒店
+周边地标/景点
+民宿短租
+公寓
+度假村
+别墅
+青旅
+住宿加早餐旅馆
+旅馆
+全球独特住宿
+客人点评
+探索月租
+旅行文章
+季节和假日优惠
+Traveller Review Awards
+租车服务
+订机票
+餐厅订位
+Booking.com旅行代理机构中心
+新冠肺炎（COVID-19）疫情常见问题及解答
+关于Booking.com
+客服帮助
+酒店自助平台
+Careers
+可持续发展项目
+新闻中心
+安全旅行信息中心
+投资者关系
+条款与条件
+合作伙伴申诉
+我们如何运作
+隐私和Cookie声明
+管理Cookie设置
+现代反奴隶声明
+人权声明
+其他问题查询
+内容指南和举报
+登录后台
+版权 © 1996–2025 Booking.com™. 版权所有.
+ 
+
+Booking.com隶属于Booking Holdings Inc.，该集团是深受全球用户好评的在线旅行及周边服务供应商。
+    
+
+        ####### Outline #######
+        ## 缩小搜索范围
+# 诺丁汉：共226家住宿
+### 所选日期内，75%的住宿在我们网站上已不可订。 扩大搜索范围至诺丁汉郡
+## 浏览诺丁汉的搜索结果
+### 宜必思诺丁汉中心酒店
+在新窗口中打开
+### 混合冰屋旅舍
+在新窗口中打开
+### 山毛榉休闲俱乐部酒店
+在新窗口中打开
+### Private room N2
+在新窗口中打开
+### St James Hotel; BW Premier Collection
+在新窗口中打开
+### 寻求个人空间？
+### 公园广场诺丁汉酒店
+在新窗口中打开
+### 诺丁汉市客房安眠公寓式酒店
+在新窗口中打开
+### Leonardo Hotel Nottingham
+在新窗口中打开
+### 假日诺丁汉酒店
+在新窗口中打开
+### The Jubilee Hotel
+在新窗口中打开
+### Mercure Nottingham Sherwood
+在新窗口中打开
+### The Birchover Residences Trent Bridge
+在新窗口中打开
+### The Orchard Hotel & Restaurant
+在新窗口中打开
+### 诺丁汉市中心美居酒店
+在新窗口中打开
+### 诺丁汉盖特威希尔顿逸林酒店
+在新窗口中打开
+### Delta Hotels by Marriott Nottingham Belfry
+在新窗口中打开
+### Lace Market Hotel
+在新窗口中打开
+### 希尔顿诺丁汉酒店
+在新窗口中打开
+### Gamston Lock, Nottingham by Marston's Inns
+在新窗口中打开
+### Helena's Place (7 minutes walk to Nottingham Train station)
+在新窗口中打开
+### 都铎酒店
+在新窗口中打开

@@ -12,6 +12,7 @@ let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
 const isTest = false; // 是否为测试模式
 let tasks = []; // 存储任务列表
+let currentAPIrequestCount = 0; // 当前 API 请求次数
 
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -27,6 +28,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendTasksToFrontend();
         });
         return true; // 支持异步响应
+    }
+    else if(message.action === "check_LLM_api"){
+        chat("Hello").then((reply) => {
+            console.log("check_LLM_api: LLM API is ready");
+            sendResponse({ apiStatus: "READY" });
+        }).catch((err) => {
+            console.error("check_LLM_api: LLM API is not ready:", err);
+            sendResponse({ apiStatus: "FAILD" });
+        });
+        return true;
     }
     // directly sent the tabs information without reading again
     else if (message.action === "get_tabs") {
@@ -48,14 +59,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 chrome.tabs.create({ url: openUrl });
             }
         });
-        // const oepnnUrl =  message.url;
-        // // of url is in the result, open it, else create a new tab
-        // const tab = results.find((tab) => tab.currentUrl === oepnnUrl);
-        // if (tab) {
-        //     chrome.tabs.update(tab.tab_idInBrowser, { active: true });
-        // } else {
-        //     chrome.tabs.create({ url: oepnnUrl });
-        // }
     }
     // do summarization of a tab
     else if (message.action === "summarize_tab") {
@@ -294,10 +297,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;
-        const reply = chat(prompt).then((reply) => {
-            console.log("Reply from LLM:", reply);
-            chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
-        });
+        const pre_prompt = message.pre_prompt || "";
+        console.log("LLM_conversation: pre-Prompt from front-end:", pre_prompt);
+        if (pre_prompt===""){
+            const reply = chat(prompt).then((reply) => {
+                console.log("Reply from LLM:", reply);
+                chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
+            });
+        }else{
+            const reply = chat(prompt).then((reply) => {
+                console.log("Reply from LLM:", reply);
+                chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply, pre_prompt: pre_prompt });
+            });
+        }
         return true;
     }else if(message.action === "generate_task_summary"){
         const taskId = message.taskId;
@@ -384,6 +396,33 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
+function updateAPIwaitingTime(waitingTime) {
+    // 更新 API 等待时间
+    chrome.runtime.sendMessage({ action: "update_API_waiting_time", waitingTime: waitingTime }, (response) => {
+        if (chrome.runtime.lastError) {
+            console.warn("update_API_waiting_time: No listener for update_API_waiting_time, will retry later...");
+        }
+    });
+}
+
+function updateAPIrequestCount() {
+    // 更新 API 请求次数
+    chrome.runtime.sendMessage({ action: "update_API_request_count", count: currentAPIrequestCount }, (response) => {
+        if (chrome.runtime.lastError) {
+            console.warn("update_API_request_count: No listener for update_API_request_count, will retry later...");
+        }
+    });
+}
+
+function updateLLMreadyStatus(apiStatus) {
+    // 更新 LLM API 状态
+    chrome.runtime.sendMessage({ action: "update_LLM_api_status", apiStatus: apiStatus }, (response) => {
+        if (chrome.runtime.lastError) {
+            console.warn("update_LLM_api_status: No listener for update_LLM_api_status, will retry later...");
+        }
+    });
+}
+
 function processTab(tab) {
     return new Promise((resolve) => {
         if (!tab.url 
@@ -421,9 +460,10 @@ function processTab(tab) {
                         console.log("Added result for:", tab.url);
 
                         sendTabsToFrontend();
-
+                        // currentAPIrequestCount += 1;
                         getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
                             .then((summary) => {
+                                // currentAPIrequestCount -= 1;
                                 const longSummary = summary.summary[1].longSummary;
                                 const shortSummary = summary.summary[0].shortSummary;
                                 const tabIndex = results.findIndex(t => t.id === response.id);
@@ -439,6 +479,7 @@ function processTab(tab) {
                                 }
                             })
                             .catch(err => {
+                                // currentAPIrequestCount -= 1;
                                 console.error("Error generating summary:", err);
                             });
                     } else {
@@ -549,11 +590,13 @@ async function getSummaryByLLMwithUrl(webpageUrl, retryCount = retryTime) {
         // 如果遇到 429 状态码，则等待 1.5 秒后重试（最多 3 次）
         if (response.status === 429 && retryCount > 0) {
             const retrySeconds = getRetrySeconds(data);
+            currentAPIrequestCount -= 1;
+            updateAPIwaitingTime(retrySeconds);
             console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
             await new Promise(resolve => setTimeout(resolve, retryInterval));
             return await getSummaryByLLMwithUrl(webpageUrl, retryCount - 1);
         }
-
+        updateAPIwaitingTime(0);
         console.log("API Response:", data);
 
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
@@ -582,6 +625,9 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
     if (isTest) {
         return "This is a test summary";
     }
+    currentAPIrequestCount += 1;
+    updateLLMreadyStatus("WORKING");
+    updateAPIrequestCount();
     console.log("Sending request to GPT about " + title.slice(0, 100) + " for summary");
     const { apiBase, apiKey } = API_CONFIG;  // get api key
 
@@ -640,12 +686,14 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
         // 如果遇到 429 状态码，则等待 1.5 秒后重试（最多 3 次）
         if (response.status === 429 && retryCount > 0) {
             const retrySeconds = getRetrySeconds(data);
+            currentAPIrequestCount -= 1;
+            updateAPIwaitingTime(retrySeconds);
             console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
             await new Promise(resolve => setTimeout(resolve, retryInterval));
             return await getSummaryByLLM(title, main_text, outline, retryCount - 1);
         }
         console.log("API Response:", data);
-
+        updateAPIwaitingTime(0);
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
             // 输出请求的prompt长度，以便调试
             console.log("Prompt length:", prompt.length);
@@ -670,9 +718,15 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
         if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[1].longSummary) {
             throw new Error("JSON 数据缺少必要的字段");
         }
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return summary;
     } catch (error) {
         console.error("Error:", error);
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return "Error fetching summary for this web tabs.";
     }
 }
@@ -682,6 +736,9 @@ async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
     if (isTest) {
         return "This is a test summary";
     }
+    currentAPIrequestCount += 1;
+    updateAPIrequestCount();
+    updateLLMreadyStatus("WORKING");
     console.log("Sending request to GPT about for tabs grouping");
     const { apiBase, apiKey } = API_CONFIG;  // get api key
 
@@ -740,10 +797,13 @@ async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
 
         if(response.status === 429 && retryCount > 0) {
             const retrySeconds = getRetrySeconds(data);
+            currentAPIrequestCount -= 1;
+            updateAPIwaitingTime(retrySeconds);
             console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
             await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
             return await getClassificationByLLM(tabInfo, retryCount - 1);  // 递归重试
         }
+        updateAPIwaitingTime(0);
         console.log("API Response for tab grouping", data);
         console.log("prompt length", beginPrompt.length+tabInfoText.length);
         console.log("prompt", beginPrompt+tabInfoText);
@@ -765,10 +825,15 @@ async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
         const jsonResponse = JSON.parse(responseContent);
         const outputList = jsonResponse.output;  // 获取列表
         console.log(outputList);
-
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return outputList;
     } catch (error) {
         console.error("Error:", error);
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return "Error fetching summary for this web tabs.";
     }
 }
@@ -777,6 +842,9 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
     if (isTest) {
         return "This is a test summary";
     }
+    currentAPIrequestCount += 1;
+    updateAPIrequestCount();
+    updateLLMreadyStatus("WORKING");
     console.log("Sending request to GPT about for tabs grouping");
     const { apiBase, apiKey } = API_CONFIG;  // get api key
     const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
@@ -837,10 +905,13 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
         
         if(response.status === 429 && retryCount > 0) {
             const retrySeconds = getRetrySeconds(data);
+            currentAPIrequestCount -= 1;
+            updateAPIwaitingTime(retrySeconds);
             console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
             await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
             return await getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount - 1);  // 递归重试
         }
+        updateAPIwaitingTime(0);
         console.log("API Response for tab grouping", data);
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
             throw new Error("Invalid API response format");
@@ -859,19 +930,30 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
         const jsonResponse = JSON.parse(responseContent);
         const outputList = jsonResponse.output;  // 获取列表
         console.log(outputList);
-
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return outputList;
     } catch (error) {
         console.error("Error:", error);
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return "Error fetching summary for this web tabs.";
     }
 }
 
-async function chat(prompt, retryCount = retryTime) {
+async function chat(prompt, 
+    retryCount = retryTime,
+    pre_prompt = "You are a good assistant in helping user solve problem or explaining concept." 
+) {
     if(isTest){
         return "This is a test summary";
     }
-    console.log("Sending request to GPT about " + prompt.slice(0, 100) + " for summary");
+    currentAPIrequestCount += 1;
+    updateAPIrequestCount();
+    updateLLMreadyStatus("WORKING");
+    console.log("Chat: Sending request to GPT [" + pre_prompt.slice(0,200) +"] ---;--- [" + prompt.slice(0, 100) + " ]");
     const { apiBase, apiKey } = API_CONFIG;  // get api key
     const url = `${apiBase}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`
     try {
@@ -883,7 +965,7 @@ async function chat(prompt, retryCount = retryTime) {
             },
             body: JSON.stringify({
                 messages: [
-                    { role: "system", content: "You are a good assistant in helping user solve problem or explaining concept." },
+                    { role: "system", content: pre_prompt },
                     { role: "user", content: prompt }
                 ],
                 max_tokens: 300
@@ -892,18 +974,27 @@ async function chat(prompt, retryCount = retryTime) {
         const data = await response.json();
         if(response.status === 429 && retryCount > 0) {
             const retrySeconds = getRetrySeconds(data);
+            currentAPIrequestCount -= 1;
+            updateAPIwaitingTime(retrySeconds);
             console.warn(`Rate limit hit (429), api need ${retrySeconds}. Retrying in 1.5s... (${retryCount} retries left)`);
             await new Promise(resolve => setTimeout(resolve, retryInterval));  // 等待 1.5 秒   
             return await chat(prompt, retryCount - 1);  // 递归重试
         }
+        updateAPIwaitingTime(0);
         if (!data.choices || !data.choices[0].message || !data.choices[0].message.content) {
             throw new Error("Invalid API response format");
         }
         // 提取返回的内容
         let responseContent = data.choices[0].message.content.trim();
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return responseContent;
     } catch (error) {
         console.error("Error:", error);
+        currentAPIrequestCount -= 1;
+        updateLLMreadyStatus("READY");
+        updateAPIrequestCount();
         return "Error getting response form LLM.";
     }
     
