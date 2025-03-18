@@ -37,6 +37,22 @@ This is the folder for student projects in 2024-2025.
    - This would cover when to unload a stock/crypto (step 3)
    - This can be extended to short sell as well, i.e., comparing going long or short and see which has the better return
   
+# 18 Mar 2025
+
+## Manasi
+- like reconstruction method, because it is better than forecasting based for volatile coins
+- haven't selected models yet
+   - univariate
+   - point prediction   
+- metrics: ROC
+
+## Abhay
+- reading the time series classification survey
+- understand what DTW is
+- testing shapelet: not working well so far
+- tree-based algorithms: time series random forest - best performing so far, 0.58
+- have not tried bag of words or bag of features
+
 # Meeting 4 Mar 2025
 
 ## Abhay
