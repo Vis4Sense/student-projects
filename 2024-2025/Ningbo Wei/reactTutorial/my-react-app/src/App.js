@@ -9,7 +9,7 @@ import TaskSummary from './components/taskSummary/TaskSummary';
 import ProcessWindow from './components/processWindow/ProcessWindow';
 
 function App() {
-    const [tabs, setTabs] = useState([]); // 用于存储标签页数据
+    const [tabs, setTabs] = useState([]); // 用于存储标签页数据z
     const [tasks, setTasks] = useState([]);  // 用于存储任务数据
     const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task

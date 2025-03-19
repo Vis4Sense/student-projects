@@ -252,7 +252,23 @@ sleeping and having fun...
 - issues
     - no api limitation meet in the past two weeks(except yesterday)
 - plant
-    - built an automatical testing framwork, test the functional ability of summary and tab clustering for different api and prompts
+    - built an automatical testing framwork, test the functional ability of summary and tab clustering for different api and prompts (Try to get a testing result in Mathmatic)
         - can apply Bilingual Evaluation Understudy//Recall-Oriented Understudy for Gisting Evaluation to check the summary, 词汇相似度, 也考虑使用关键词覆盖率
-    - try to use BERTScore to do the tab clustering(user personal input) -- 余弦相似度
+    - try to use BERTScore/ TfidfVectorizer to do the tab clustering(user personal input) -- 余弦相似度 cosine similarty. However it takes some time to achieve this since we can not use node.js directly in chrome enviorment
     - subtask
+
+- foucus on the evalutaion, feedback
+    - testing how well the tools for people
+    - quatitative evaluation, if the tools speed up their task, ranking
+    - which feature do the like
+    - what to compare? 
+- fix bugs
+- set a plan for the final four weeks
+
+- "ask what is this city?"
+    - find the tabs relavetn to this question
+    - sent this tab information with user question to the api?
+
+- "tell me the best hotel near by xxxx"
+    - find the tabs related to hotel booking (tokens) -- summary
+    - sent this tab information together with user question to the api?
