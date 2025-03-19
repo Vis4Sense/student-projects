@@ -301,13 +301,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("LLM_conversation: pre-Prompt from front-end:", pre_prompt);
         if (pre_prompt===""){
             const reply = chat(prompt).then((reply) => {
-                console.log("Reply from LLM:", reply);
-                chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
+                // console.log("Reply from LLM:", reply);
+                // chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
+                sendResponse({ reply: reply});
             });
         }else{
-            const reply = chat(prompt).then((reply) => {
+            const reply = chat(prompt, retryTime, pre_prompt).then((reply) => {
                 console.log("Reply from LLM:", reply);
-                chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply, pre_prompt: pre_prompt });
+                // chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply, pre_prompt: pre_prompt });
+                sendResponse({ reply: reply });
             });
         }
         return true;

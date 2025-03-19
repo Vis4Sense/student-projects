@@ -11,7 +11,8 @@ const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs}) =
         setChatBoxReply(""); // 清空回复
         let allTabsSummary = " "
         if(selectedTaskId){
-            allTabsSummary = JSON.stringify.getSummaryFromTabsInMindmaps();
+            const summaries = getSummaryFromTabsInMindmaps();
+            allTabsSummary = JSON.stringify(summaries, null, 4);
         }
         let pre_prompt = `
         You are a good assistant in helping user solve problem or explaining concept. User have opened serveral webpages. You will be given a list of summarise of those webpages. Please answer user's question based on these information.
@@ -25,6 +26,7 @@ const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs}) =
                     console.error("Error chatting with LLM:", chrome.runtime.lastError);
                 } else {
                     console.log("Chat with LLM:", response);
+                    setChatBoxReply(response.reply);
                 }
             });
         }
