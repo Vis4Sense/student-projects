@@ -1,4 +1,7 @@
 import { API_CONFIG } from './config.js';  // get config of API
+import { TfIdf } from './mytf-idf.js';  // get the TF-IDF model
+// import { TFIDF } from './tfidf.bundle.js';
+
 
 const MAIN_TEXT_SIGMENT = 1000; // 主要文本的分段长度
 
@@ -294,6 +297,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendTabsToFrontend();
         });
         return true;
+    }else if(message.action === "personlise_Generate_tasks_TFIDF"){
+        const taskKeyWord = message.taskKeyWord;
+        const tfidf = new TfIdf();
+        const texts = [
+            "Artificial intelligence is the new electricity.",
+            "Machine learning is a subfield of artificial intelligence.",
+            "today is a good day.",
+            "I like to eat apple."
+        ];
+        
+        // 添加文本
+        texts.forEach(text => tfidf.addDocument(text));
+        tfidf.computeIdf();
+        // 计算关键词与每个文本的相似度
+        texts.forEach((text, i) => {
+            console.log(`文本: "${text}"，TF-IDF 相似度: ${tfidf.analyzeInput(taskKeyWord)}`);
+        });
+
     }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;

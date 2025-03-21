@@ -272,3 +272,10 @@ sleeping and having fun...
 - "tell me the best hotel near by xxxx"
     - find the tabs related to hotel booking (tokens) -- summary
     - sent this tab information together with user question to the api?
+
+
+## March 19th
+- have done
+    - test paln
+    - have tried to import 'tf-idf' for better user-input tab classification. How ever this pakage works under node.js and do not support chrome envoirnment, including it pre-build pakage like 'fs'.
+    

@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Tab Title Fetcher",
-    "version": "1.0",
+    "version": "2.0",
     "permissions": [
       "tabs",
       "storage",
@@ -22,5 +22,6 @@
         "js": ["content.js"]
       }
     ],
+    
     "action": {}
   }
