@@ -1,5 +1,7 @@
 import { API_CONFIG } from './config.js';  // get config of API
 import { TfIdf } from './mytf-idf.js';  // get the TF-IDF model
+// importScripts('transformers.min.js'); 
+// import { pipeline } from '@xenova/transformers';
 // import { TFIDF } from './tfidf.bundle.js';
 
 
@@ -16,6 +18,7 @@ const currentUrl = [];
 const isTest = false; // 是否为测试模式
 let tasks = []; // 存储任务列表
 let currentAPIrequestCount = 0; // 当前 API 请求次数
+let extractor = null;
 
 // refresh the tabs information
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -298,6 +301,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true;
     }else if(message.action === "personlise_Generate_tasks_TFIDF"){
+        // 后期可以考虑用LLM生成多个近义词，然后再用TFIDF计算相似度
         const taskKeyWord = message.taskKeyWord;
         const tfidf = new TfIdf();
         const texts = [
@@ -315,6 +319,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log(`文本: "${text}"，TF-IDF 相似度: ${tfidf.analyzeInput(taskKeyWord)}`);
         });
 
+    }
+    else if(message.action === "personlise_Generate_tasks_embedding") {
+        const text = msg.taskKeyWord;
+        getEmbedding(msg.payload).then(embeddings => {
+            console.log("personlise_Generate_tasks_embedding: Embeddings:", embeddings);
+            // sendResponse({ embeddings });
+        });
+        return true;
     }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;
@@ -387,6 +399,27 @@ function sendTasksToFrontend() {
     });
 }
   
+async function getEmbedding(texts) {
+    if (!extractor) {
+        extractor = await transformers.pipeline(
+            'feature-extraction',
+            'Xenova/all-MiniLM-L6-v2'
+        );
+    }
+
+    const results = [];
+    for (const text of texts) {
+        const result = await extractor(text, {
+            pooling: 'mean',
+            normalize: true
+        });
+        results.push(result.data);
+    }
+
+    return results; // 返回 embedding
+}
+
+
   // 防止 service_worker 被 Chrome 杀死
 chrome.alarms.create("keep_alive", { periodInMinutes: 1 });
   

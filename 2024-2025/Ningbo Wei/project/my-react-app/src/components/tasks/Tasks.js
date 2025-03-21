@@ -127,7 +127,7 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         if (!newTaskPrompt.trim()) return;
         console.log("New task key word input:", newTaskPrompt);
         if (chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage({ action: "personlise_Generate_tasks_TFIDF", taskKeyWord: newTaskPrompt }, (response) => {
+            chrome.runtime.sendMessage({ action: "personlise_Generate_tasks_embedding", taskKeyWord: newTaskPrompt }, (response) => {
                 console.log("Sent tab grouping request with key word to background.js");
             });
         }

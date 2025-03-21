@@ -22,6 +22,15 @@
         "js": ["content.js"]
       }
     ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "embedding-worker.js",
+          "transformers.min.js"
+        ],
+        "matches": ["<all_urls>"]
+      }
+    ],
     
     "action": {}
   }

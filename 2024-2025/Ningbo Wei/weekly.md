@@ -278,4 +278,6 @@ sleeping and having fun...
 - have done
     - test paln
     - have tried to import 'tf-idf' for better user-input tab classification. How ever this pakage works under node.js and do not support chrome envoirnment, including it pre-build pakage like 'fs'.
-    
+    - tried hand made tf-idf, however meet problem in tokenzie. Additionally, it can only do hard encoding
+    - tried to apply word embedding + consine similarity + Mean Pooling, choose to use online embedding method. Local embeding method like transformer.js is hard to apply into chrome extention(take times)
+
