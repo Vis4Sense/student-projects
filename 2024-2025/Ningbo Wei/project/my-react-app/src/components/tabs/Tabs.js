@@ -54,6 +54,7 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
         else if (option === "Delet this tab") {
             // remove this tab from the tabs
             setTabs((prevTabs) => prevTabs.filter((t) => t.id !== tab.id));
+            chrome.runtime.sendMessage({ action: "remove_tab_from_chacheResult", removedTabId: tab.id });
         }
         console.log(`${option} clicked on tab ${tab.title}`);
         setContextMenu(null); // 隐藏菜单

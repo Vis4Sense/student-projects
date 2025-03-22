@@ -71,6 +71,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //     "main_text": "This is the main content of the page.",
 //     "outline": "# Heading 1\n## Heading 2",
 //     "currentUrl": "https://example.com",
+//     "embedding": [],
+//     "shortSummary": "",
+//     "longSummary": "",
 //     "images": [
 //       {
 //         "url": "https://example.com/image1.png",
@@ -82,4 +85,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //       }
 //     ]
 //   }
+
   

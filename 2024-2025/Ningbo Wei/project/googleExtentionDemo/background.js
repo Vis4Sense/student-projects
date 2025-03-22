@@ -8,10 +8,13 @@ import { TfIdf } from './mytf-idf.js';  // get the TF-IDF model
 const MAIN_TEXT_SIGMENT = 1000; // 主要文本的分段长度
 
 const deploymentName = "gpt-4o-mini" // 模型部署名称
+const deploymentName_embedding = "text-embedding-3-small" // 模型部署名称
 const apiVersion = "2025-01-01-preview"  // API 版本
 
 const retryTime = 23; // openai API 重试次数
 const retryInterval = 2000; // openai API 重试间隔
+const EMBEDDING_DIMESION = 256
+const EMBEDDING_SELECTION_THREASHOLD = 0.2
 
 let results = []; // 存储已读取的 Tab 信息
 const currentUrl = [];
@@ -101,6 +104,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         // send the updated tabs to the back-end
         sendTabsToFrontend();
+        return true;
+    }
+    else if(message.action === "remove_tab_from_chacheResult"){
+        const removedTabId = message.removedTabId;
+        // remove the tab from theresult_tabs
+        results = results.filter((t) => t.id !== removedTabId);
         return true;
     }
     else if(message.action === "remove_tab_from_mindmap") {
@@ -321,10 +330,50 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     }
     else if(message.action === "personlise_Generate_tasks_embedding") {
-        const text = msg.taskKeyWord;
-        getEmbedding(msg.payload).then(embeddings => {
-            console.log("personlise_Generate_tasks_embedding: Embeddings:", embeddings);
-            // sendResponse({ embeddings });
+        const text = message.taskKeyWord;
+        getEmbedding(text).then(inputEmbedding => {
+            // get embedding from tabs, and calculate the consine similarty
+            const scoredTabs = results
+                .filter(tab => (tab.embedding.length > 2))
+                .map(tab => ({
+                    tabId: tab.id,
+                    score: cosineSimilarity(inputEmbedding, tab.embedding)
+                }));
+            // rank the tabs based on consine similarty
+            scoredTabs.sort((a, b) => b.score - a.score);
+            console.log("personlise_Generate_tasks_embedding: scoredTabs ", scoredTabs)
+            // 动态挑选：只要分数下降不剧烈就继续保留
+            let topTabs = selectTopByMeanStd(scoredTabs);;
+            // creat a new task
+            const basicId = crypto.randomUUID();
+            let newTask = []
+            newTask.push({ task_id: "task"+basicId, name: text, MindmapId: "mindmap"+basicId });
+            // add picked tabs to the new task(mindmap)
+            let newMindmap = [];
+            topTabs.map((thisScoreItem) => {
+                // add the tab to the new mindmap
+                const tab = results.find((tab) => tab.id === thisScoreItem.tabId);
+                if (tab) {
+                    newMindmap.push(tab);
+                }
+                // delete the tab from the results
+                const tabIndex = results.findIndex((tab) => tab.id === thisScoreItem.tabId);
+                console.log("tabIndex", tabIndex);
+                if (tabIndex !== -1) {
+                    results = results.filter((tab) => tab.id !== thisScoreItem.tabId);
+                }
+            });
+            // store the new mindmap in the chrome storage
+            chrome.storage.local.set({ ["mindmap"+basicId]: newMindmap }, () => {
+                console.log("update mindmap with new tabs", newMindmap);
+            });
+            // store the tasks in chrom storage
+            tasks.unshift(...newTask);
+            chrome.storage.local.set({ taskList: tasks }, () => {
+                console.log("update taskList with new tasks", tasks);
+            });
+            sendTasksToFrontend(tasks);
+            sendTabsToFrontend();
         });
         return true;
     }
@@ -399,25 +448,25 @@ function sendTasksToFrontend() {
     });
 }
   
-async function getEmbedding(texts) {
-    if (!extractor) {
-        extractor = await transformers.pipeline(
-            'feature-extraction',
-            'Xenova/all-MiniLM-L6-v2'
-        );
-    }
+// async function getEmbedding(texts) {
+//     if (!extractor) {
+//         extractor = await transformers.pipeline(
+//             'feature-extraction',
+//             'Xenova/all-MiniLM-L6-v2'
+//         );
+//     }
 
-    const results = [];
-    for (const text of texts) {
-        const result = await extractor(text, {
-            pooling: 'mean',
-            normalize: true
-        });
-        results.push(result.data);
-    }
+//     const results = [];
+//     for (const text of texts) {
+//         const result = await extractor(text, {
+//             pooling: 'mean',
+//             normalize: true
+//         });
+//         results.push(result.data);
+//     }
 
-    return results; // 返回 embedding
-}
+//     return results; // 返回 embedding
+// }
 
 
   // 防止 service_worker 被 Chrome 杀死
@@ -516,28 +565,66 @@ function processTab(tab) {
                         console.log("Added result for:", tab.url);
 
                         sendTabsToFrontend();
+                        let textForEmbedding = "";
                         // currentAPIrequestCount += 1;
                         getSummaryWithRateLimitHandling(response.title, response.main_text, response.outline)
                             .then((summary) => {
                                 // currentAPIrequestCount -= 1;
-                                const longSummary = summary.summary[1].longSummary;
+                                const longSummary = summary.summary[0].longSummary;
                                 const shortSummary = summary.summary[0].shortSummary;
                                 const tabIndex = results.findIndex(t => t.id === response.id);
                                 console.log(`receive two summaries for tabId ${response.title}`, shortSummary, longSummary);
                                 if (tabIndex !== -1) {
                                     results[tabIndex].summary = shortSummary;
                                     results[tabIndex].summaryLong = longSummary;
+                                    textForEmbedding = longSummary;
+                                    results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
+                                    results[tabIndex].outline = ""; // 清空 outline，减小数据量
+                                    results[tabIndex].images = []; // 清空 images，减小数据量
+                                    // console.log(`Updated tow summary for tabId ${response.title}`);
+                                    sendTabsToFrontend(); // 再次通知前端更新 UI
+                                    // calculate embedding
+                                    getEmbedding(textForEmbedding)
+                                    .then((embeddingResult) => {
+                                        const tabIndex = results.findIndex(t => t.id === response.id);
+                                        if(tabIndex !== -1 ){
+                                            results[tabIndex].embedding = embeddingResult;
+                                            sendTabsToFrontend();
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.error("Error generating embedding:", err);
+                                    });
+                                }
+                            })
+                            .catch(err => {
+                                // currentAPIrequestCount -= 1;
+                                console.error("Error generating summary:", err);
+                                const tabIndex = results.findIndex(t => t.id === response.id);
+                                if (tabIndex !== -1) {
+                                    results[tabIndex].summary = "error in generating summary";
+                                    results[tabIndex].summaryLong = "error in generating summary";
+                                    results[tabIndex].embedding = [0];
                                     results[tabIndex].main_text = ""; // 清空 mainText，减小数据量
                                     results[tabIndex].outline = ""; // 清空 outline，减小数据量
                                     results[tabIndex].images = []; // 清空 images，减小数据量
                                     // console.log(`Updated tow summary for tabId ${response.title}`);
                                     sendTabsToFrontend(); // 再次通知前端更新 UI
                                 }
-                            })
-                            .catch(err => {
-                                // currentAPIrequestCount -= 1;
-                                console.error("Error generating summary:", err);
+
                             });
+                        // calculate embedding
+                        // getEmbedding(textForEmbedding)
+                        //     .then((embeddingResult) => {
+                        //         const tabIndex = results.findIndex(t => t.id === response.id);
+                        //         if(tabIndex !== -1 ){
+                        //             results[tabIndex].embedding = embeddingResult;
+                        //             sendTabsToFrontend();
+                        //         }
+                        //     })
+                        //     .catch(err => {
+                        //         console.error("Error generating embedding:", err);
+                        //     });
                     } else {
                         console.error("Failed to fetch content for tab:", tab.url);
                     }
@@ -691,8 +778,10 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
     
     const exampleOutput = {
         "summary": [
-            { "shortSummary": "xxx" },
-            { "longSummary": "xxxxxx"}
+            { 
+                "shortSummary": "xxx",
+                "longSummary": "xxxxxx"
+            }
         ]
     };
     const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
@@ -771,7 +860,7 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
         // console.log("Summary:", summary);
 
         // **检查 JSON 结构是否正确**
-        if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[1].longSummary) {
+        if (!summary.summary || !summary.summary[0].shortSummary || !summary.summary[0].longSummary) {
             throw new Error("JSON 数据缺少必要的字段");
         }
         currentAPIrequestCount -= 1;
@@ -1053,5 +1142,66 @@ async function chat(prompt,
         updateAPIrequestCount();
         return "Error getting response form LLM.";
     }
-    
+}
+
+async function getEmbedding(texts) {
+    // sent the texts to the azure LLM to get the embeddings
+    const{ apiBase, apiKey } = API_CONFIG;
+    const url = `${apiBase}/openai/deployments/${deploymentName_embedding}/embeddings?api-version=${apiVersion}`;
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": apiKey
+            },
+            body: JSON.stringify({ input: texts, dimensions: EMBEDDING_DIMESION })
+        });
+        const data = await response.json();
+        console.log("API Response for embedding", data);
+        if (!data.data[0].embedding) {
+            throw new Error("Invalid API response format");
+        }
+        return data.data[0].embedding;
+    } catch (error) {
+        console.error("getEmbedding(): Error:", error);
+        return "getEmbedding(): Error getting embeddings from LLM.";
+    }
+}
+
+function cosineSimilarity(vecA, vecB) {
+    let dot = 0, normA = 0, normB = 0;
+    for (let i = 0; i < vecA.length; i++) {
+      dot += vecA[i] * vecB[i];
+      normA += vecA[i] * vecA[i];
+      normB += vecB[i] * vecB[i];
+    }
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+  }
+  
+function selectTopByMeanStd(scoredTabs) {
+    // 均值 + 标准差筛选法
+    if (!Array.isArray(scoredTabs) || scoredTabs.length === 0) return [];
+
+    const scores = scoredTabs.map(item => item.score);
+    const mean = scores.reduce((sum, val) => sum + val, 0) / scores.length;
+
+    const variance = scores.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / scores.length;
+    const stdDev = Math.sqrt(variance);
+
+    const threshold = mean + 0.5*stdDev;
+
+    return scoredTabs.filter(item => item.score >= threshold);
+}
+
+function selectTopByScoreGap(scoredTabs, thresholdGap = EMBEDDING_SELECTION_THREASHOLD) {
+    //差值阈值法
+    const result = [];
+    for (let i = 0; i < scoredTabs.length; i++) {
+        result.push(scoredTabs[i]);
+        const next = scoredTabs[i + 1];
+        if (!next) break;
+        if ((scoredTabs[i].score - next.score) > thresholdGap) break;
+    }
+    return result;
 }
