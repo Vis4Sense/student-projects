@@ -3,3 +3,9 @@
 .config
 config.js
 config.py
+
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+try/__pycache__/

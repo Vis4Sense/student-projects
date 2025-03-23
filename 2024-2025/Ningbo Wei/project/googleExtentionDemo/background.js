@@ -54,6 +54,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendTabsToFrontend();
         return true; 
     }
+    else if(message.action === "update_result"){
+        // console.log("update_result: current result ", results);
+        const newTabsList = message.newTabsList;
+        results.length = 0;
+        results.push(...newTabsList);
+        // results.set(addedTab);
+        return true;
+    }
     else if (message.action === "open_tab") {
         const openUrl = message.url;
         // 直接查找已经打开的 tab
@@ -134,7 +142,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             taskName = message.task_name;
         }
         const basicId = crypto.randomUUID();
-        const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId, summary: "Haven't generate summary" };
+        const newTask = { task_id: "task"+basicId, name: taskName , MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString()};
         tasks.unshift(newTask);
         // store the tasks in the chrome storage
         chrome.storage.local.set({ taskList: tasks }, () => {
@@ -228,7 +236,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("outputList", outputList);
             outputList.map((output) => {
                 const basicId = crypto.randomUUID();
-                newTasks.push({ task_id: "task"+basicId, name: output.location, MindmapId: "mindmap"+basicId });
+                newTasks.push({ task_id: "task"+basicId, name: output.location, MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString() });
                 console.log("new task", newTasks);
                 // for each new task, create a new mindmap
                 let newMindmap = [];
@@ -277,7 +285,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("outputList", outputList);
             outputList.map((output) => {
                 const basicId = crypto.randomUUID();
-                newTasks.push({ task_id: "task"+basicId, name: output.task_title, MindmapId: "mindmap"+basicId });
+                newTasks.push({ task_id: "task"+basicId, name: output.task_title, MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString() });
                 console.log("new task", newTasks);
                 // for each new task, create a new mindmap
                 let newMindmap = [];
@@ -347,7 +355,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             // creat a new task
             const basicId = crypto.randomUUID();
             let newTask = []
-            newTask.push({ task_id: "task"+basicId, name: text, MindmapId: "mindmap"+basicId });
+            newTask.push({ task_id: "task"+basicId, name: text, MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString() });
             // add picked tabs to the new task(mindmap)
             let newMindmap = [];
             topTabs.map((thisScoreItem) => {

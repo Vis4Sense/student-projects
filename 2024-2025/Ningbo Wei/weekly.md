@@ -277,7 +277,14 @@ sleeping and having fun...
 ## March 19th
 - have done
     - test paln
-    - have tried to import 'tf-idf' for better user-input tab classification. How ever this pakage works under node.js and do not support chrome envoirnment, including it pre-build pakage like 'fs'.
-    - tried hand made tf-idf, however meet problem in tokenzie. Additionally, it can only do hard encoding
-    - tried to apply word embedding + consine similarity + Mean Pooling, choose to use online embedding method. Local embeding method like transformer.js is hard to apply into chrome extention(take times)
-
+    - fix bugs in user-input tab classification
+        - have tried to import 'tf-idf' for better user-input tab classification. How ever this pakage works under node.js and do not support chrome envoirnment, including it pre-build pakage like 'fs'.
+        - tried hand made tf-idf, however meet problem in tokenzie. Additionally, it can only do hard encoding
+        - tried to apply word embedding + consine similarity + Mean Pooling, choose to use online embedding method. Local embeding method like transformer.js is hard to apply into chrome extention(take times) -- FINAL CHOICE
+    - Fix bugs in tab drogging
+    - achieve task import/export
+    - tab labeling?
+    - have tried to implement LLM with web searching, however
+        - key problem: 信息混乱、结构不清、模型无法准确识别关键信息.
+        - 抓下来的 HTML 纯文本杂乱,没有浏览器javasscript的处理，失去了一些内容的结构化对应关系
+        - 需要针对特定的用户请求/任务，特定的网站网站优化，才能获得结构化数据. eg，酒店预定请求：booking.com，airbnb.com分开专门处理。

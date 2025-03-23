@@ -85,7 +85,10 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
         // 1. add the dropped tab to the tabs
         setTabs((prevTabs) => {
             const isAlreadyAdded = prevTabs.some((t) => t.id === droppedTab.id);
-            return isAlreadyAdded ? prevTabs : [...prevTabs, droppedTab];
+            const newTabsList = isAlreadyAdded ? prevTabs : [...prevTabs, droppedTab];
+            // tell the back-end to re-fresh the "result"
+            chrome.runtime.sendMessage({ action: "update_result", newTabsList: newTabsList });
+            return newTabsList;
         });
         // 2. 从 Mindmap 中移除该 Tab 并更新存储
         setMindmapTabs((prevTabs) => {
@@ -97,6 +100,7 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
             });
             return newTabs;
         });
+        
     };
 
     const allowDrop = (event) => {

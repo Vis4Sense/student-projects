@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 
 const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName, setchosenTaskSummary }) => {
+
+    /*
+    A task contain following component:
+    {
+        task_id: "task" + abcd,
+        name: "xxxxx",
+        MindmapId: "mindmap" + abcd, 
+        summary: "xasfsva",
+        createTime: Date()
+    }
+    */ 
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
     const [newTaskPrompt, setnewTaskPrompt] = useState("");  // New state for input
@@ -60,25 +71,6 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         // 1. 更新选中的任务
         setSelectedTaskId(taskId);
         setSelectedTaskName(taskName);
-        // console.log("Selected Task:", taskId);
-        // console.log("Selected selectedTaskId:", selectedTaskId);
-        // // 2. 更新 Mindmap Tabs
-        // const mindmapId = "mindmap" + taskId.replace("task", ""); // 移除 "task" 前缀
-        // chrome.storage.local.get([mindmapId], (result) => {
-        //     const newTabs = result[mindmapId] || [];
-        //     setMindmapTabs(newTabs);
-        //     console.log("Updated mindmapTabs:", newTabs);
-        // });
-        // // 3. 更新 Task Summary
-        // console.log("Requesting task summary for:", taskId);
-        // chrome.runtime.sendMessage({ action: "get_task_summary_from_storage", taskId: taskId }, (response) => {
-        //     if (chrome.runtime.lastError) {
-        //         console.error("Error getting task summary:", chrome.runtime.lastError);
-        //     } else {
-        //         console.log("Task Summary:", response);
-        //         setchosenTaskSummary(response);
-        //     }
-        // });
     };
 
     // 监听 selectedTaskId 变化，在更新后执行后续操作
@@ -168,9 +160,12 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                             className={styles.taskInput}
                         />
                     ) : (
-                        <h3 onDoubleClick={() => handleDoubleClick(task.task_id, task.name)}>
-                            {task.name}
-                        </h3>
+                        <>
+                            <h3 onDoubleClick={() => handleDoubleClick(task.task_id, task.name)}>
+                                {task.name}
+                            </h3>
+                            <p>create time : {new Date(task.createTime).toLocaleString()} </p>
+                        </>
                     )}
                     <button
                         className={styles.deleteButton}
