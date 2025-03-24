@@ -421,12 +421,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 console.log("Reply from LLM:", reply);
                 chrome.runtime.sendMessage({ action: "generate_task_summary_reply", summary: reply, taskId: taskId });
             });
-            // update this task with the summary in the storage
-
-
-            // 结构化返回，处理好返回的内容后，更新storage（切换task的同时，显示的summary也要切换，最好也留一个接口给用户自己更新summary）
-
-
         });
         return true;
     }

@@ -115,7 +115,24 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 });
             }
         }
+    }
 
+    const exportTask = () =>{
+        const data = { 
+            taskName: selectedTaskName,
+            taskSummary: chosenTaskSummary,
+            taskTabs: mindmapTabs
+        };
+        const jsonStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = selectedTaskName + ".json";
+        a.click();
+        URL.revokeObjectURL(url);
+        console.log("successfully export");
     }
 
     return (
@@ -130,6 +147,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             >
             <h2>Tasks - {selectedTaskName}</h2>
             <button onClick={generateSummary}>generate task summary</button>
+            <button onClick={exportTask}>export current Task</button>
             <h3>Summary : {chosenTaskSummary}</h3>
             {/* <p>{chosenTaskSummary}</p> */}
             <div 

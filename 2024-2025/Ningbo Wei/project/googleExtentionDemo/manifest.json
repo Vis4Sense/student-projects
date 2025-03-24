@@ -7,7 +7,8 @@
       "storage",
       "activeTab",
       "scripting",
-      "alarms"
+      "alarms",
+      "downloads"
     ],
     "host_permissions": [
       "<all_urls>"
@@ -19,7 +20,7 @@
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["content.js"]
+        "js": ["content.js", "exportFile.js"]
       }
     ],
     "web_accessible_resources": [
