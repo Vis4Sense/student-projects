@@ -4,7 +4,7 @@ This is the folder for student projects in 2024-2025.
 
 Manasi, Tianxiang, Kai
 
-## Todo (in the next week or more)
+## Todo (in the next week or two)
 
 For model comparision with the baseline:
 - compare against with Sub-LOF [22], which is the best performing univariate unsupervised model acccording to [Anomaly detection in time series: a comprehensive evaluation](https://dl.acm.org/doi/pdf/10.14778/3538598.3538602)
@@ -23,6 +23,12 @@ For trading, single coin, compare:
 - baseline: buy and hold
 - strategy 1:
    - when there is a positive anomaly, put all the fund into that
+   - sell all the coin if there is a negative anomaly
+ 
+For trading, coin universe, compare:
+- baseline: buy and hold, equal percentage of all the coins, i.e., 20% each if there are five coins?
+- strategy 1:
+   - when there is a positive anomaly, put all the fund into that coin
    - sell all the coin if there is a negative anomaly
 
 # To Do
