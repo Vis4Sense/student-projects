@@ -1,5 +1,18 @@
 This is the folder for student projects in 2024-2025.
 
+# 25 March 2025
+
+Manasi, Tianxiang, Kai
+
+# Todo (in the next week or more)
+
+For model comparision with the baseline:
+- compare against with Sub-LOF [22], which is the best performing univariate unsupervised model acccording to [Anomaly detection in time series: a comprehensive evaluation](https://dl.acm.org/doi/pdf/10.14778/3538598.3538602)
+- compare against ARIMA [65], which is also lstm/ae/cnn/transformer based (the same model type)
+- Only on solana price data, which was used for cnn-lstm-ae?
+
+For 
+
 # To Do
 ## Manasi and Abhay
 1. (online) database storage
