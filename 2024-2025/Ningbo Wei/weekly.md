@@ -283,8 +283,17 @@ sleeping and having fun...
         - tried to apply word embedding + consine similarity + Mean Pooling, choose to use online embedding method. Local embeding method like transformer.js is hard to apply into chrome extention(take times) -- FINAL CHOICE
     - Fix bugs in tab drogging
     - achieve task import/export
-    - tab labeling?
-    - have tried to implement LLM with web searching, however
+    - achieve user tab labeling/note
+    - have tried to implement LLM with web searching (RAG), however
         - key problem: 信息混乱、结构不清、模型无法准确识别关键信息.
         - 抓下来的 HTML 纯文本杂乱,没有浏览器javasscript的处理，失去了一些内容的结构化对应关系
         - 需要针对特定的用户请求/任务，特定的网站网站优化，才能获得结构化数据. eg，酒店预定请求：booking.com，airbnb.com分开专门处理。
+        - current RAG in the industy: make a summary of a webpage, feed it to the LLM, then generate a final output.
+- some simple feedback from pre-test:
+    - better a add a tab labeling/note (have just achieved)
+    - better to implement a heracial task structure (plant to do, if have time)
+    - can we implement a llm which return url directly when asking "in this webpage, which hotel is the best in 80 pounds?". -- failed, need special agent for exact webpage
+- future
+    - write a brife sturcture of the final report
+    - do the test(currently have invite 6 people, will split them into 3-3)
+    - achieve heractical task if possible

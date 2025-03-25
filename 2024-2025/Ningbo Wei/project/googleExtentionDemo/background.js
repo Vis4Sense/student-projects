@@ -385,6 +385,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true;
     }
+    else if(message.action === "import_task"){
+        const task_name = message.task_name;
+        const task_summary = message.task_summary;
+        const mindmap_tabs = message.mindmap_tabs;
+        const basicId = crypto.randomUUID();
+        // store the mindmap into chrome storage
+        chrome.storage.local.set({ ["mindmap"+basicId]: mindmap_tabs }, () => {
+            console.log("import_task: update mindmap with new tabs");
+        });
+        // store the task into chrome storage
+        let newTasks = [];
+        newTasks.push({ task_id: "task"+basicId, name: task_name, MindmapId: "mindmap"+basicId, summary: task_summary, createTime : new Date().toISOString() });
+        tasks.unshift(...newTasks);
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("update taskList with new tasks", tasks);
+        });
+        sendTasksToFrontend({ tasks });
+        sendTabsToFrontend();
+        return true;
+    }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;
         const pre_prompt = message.pre_prompt || "";
@@ -424,6 +444,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         return true;
     }
+    else if (message.action === "open_annotation_page") {
+        const { tabId, title, note } = message;
+        console.log("open_annotation_page: reveived id: ", tabId);
+        const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}`;
+        chrome.windows.create({
+            url,
+            type: "popup",
+            width: 400,
+            height: 400
+        });
+        return true;
+    }
+    else if (message.action === "save_tab_note") {
+        const { tabId, note } = message;
+        console.log("save_tab_note: get note: ", note);
+        console.log("tabid is: ", tabId);
+        const tabIndex = results.findIndex(tab => tab.id === tabId);
+        if (tabIndex !== -1) {
+            results[tabIndex].note = note;
+        }
+        console.log(results);
+        sendTabsToFrontend();
+        return true;
+    }
+    
 });
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)

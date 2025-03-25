@@ -165,7 +165,8 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                         <h3>{tab.title.slice(0, 50)}</h3>
                         <p>{tab.currentUrl.slice(0, 40)}</p>
                         <p>{tab.summary ? tab.summary : "waiting..."}</p>
-
+                        <p>{"----------------"}</p>
+                        {tab.note?.trim() && <p><strong>note:</strong> {tab.note.slice(0, 30)}</p>}
                         {/* 右键菜单只显示在被右键点击的 tab 内 */}
                         {contextMenu && selectedTabId === tab.id &&(
                             <div
@@ -174,6 +175,10 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                             >
                                 <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
                                 <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
+                                <hr />
+                                <div style={{ fontStyle: "italic", color: "#555", pointerEvents: "none" }}>
+                                    {tab.note?.trim() ? `Note: ${tab.note}` : "No note for this tab"}
+                                </div>
                             </div>
                         )}
 

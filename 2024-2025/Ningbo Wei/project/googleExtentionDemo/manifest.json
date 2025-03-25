@@ -27,7 +27,8 @@
       {
         "resources": [
           "embedding-worker.js",
-          "transformers.min.js"
+          "transformers.min.js",
+          "annotate.html"
         ],
         "matches": ["<all_urls>"]
       }

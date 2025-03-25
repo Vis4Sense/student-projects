@@ -56,6 +56,14 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
             setTabs((prevTabs) => prevTabs.filter((t) => t.id !== tab.id));
             chrome.runtime.sendMessage({ action: "remove_tab_from_chacheResult", removedTabId: tab.id });
         }
+        else if (option === "Annotate") {
+            chrome.runtime.sendMessage({
+                action: "open_annotation_page",
+                tabId: tab.id,
+                title: tab.title,
+                note: tab.note || "" // 传递已有注释（如果有）
+            });
+        }
         console.log(`${option} clicked on tab ${tab.title}`);
         setContextMenu(null); // 隐藏菜单
     };
@@ -124,8 +132,10 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                 >
                     {/* <button onClick={() => handleSummary(tab)}>Summary</button> */}
                     <h3>{tab.title.slice(0, 50)}</h3>
-                    <p>{tab.currentUrl.slice(0, 60)}...</p>
+                    <p>{tab.currentUrl.slice(0, 30)}...</p>
                     <p>{tab.summary ? tab.summary : "waiting..."}</p>
+                    <p>{"----------------"}</p>
+                    {tab.note?.trim() && <p><strong>note:</strong> {tab.note.slice(0, 30)}</p>}
 
                      {/* 右键菜单只显示在被右键点击的 tab 内 */}
                      {contextMenu && selectedTabId === tab.id &&(
@@ -135,7 +145,11 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId }) => {
                         >
                             <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
                             <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
-                            <div onClick={() => handleMenuClick("C", tab)}>Option C</div>
+                            <div onClick={() => handleMenuClick("Annotate", tab)}>creat or modify a comment</div>
+                            <hr />
+                            <div style={{ fontStyle: "italic", color: "#555", pointerEvents: "none" }}>
+                                {tab.note?.trim() ? `Note: ${tab.note}` : "No note for this tab"}
+                            </div>
                         </div>
                     )}
 

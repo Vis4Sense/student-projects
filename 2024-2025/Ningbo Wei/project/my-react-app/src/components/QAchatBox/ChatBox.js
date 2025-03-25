@@ -63,15 +63,13 @@ const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs}) =
         }}>Submit</button>
 
         <button onClick={() => {
-            // console.log(inputText);
-            // setDisplayedText(inputText); // 存储输入内容到显示区域
-            // chatWithLLM(inputText); // 发送输入内容到后台
-        }}>Find the best Hotel</button>  
+            setDisplayedText("Give a birfe introduce of the city/locaiton"); // 存储输入内容到显示区域
+            chatWithLLM("please generate a introduction of the city or location related to the tabs"); 
+        }}>brifly introduce of the city/locaiton</button>  
         <button onClick={() => {
-            // console.log(inputText);
-            // setDisplayedText(inputText); // 存储输入内容到显示区域
-            // chatWithLLM(inputText); // 发送输入内容到后台
-        }}>please help me make an breif tourist plant</button> 
+            setDisplayedText("please recommand some place to visit in this city"); // 存储输入内容到显示区域
+            chatWithLLM("please recommand some place to visit in this city"); 
+        }}>please recommand some place to visit in this city</button> 
 
     </div>
     );

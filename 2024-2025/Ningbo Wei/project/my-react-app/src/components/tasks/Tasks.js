@@ -142,12 +142,16 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                 try {
                     const content = e.target.result;
                     const parsedData = JSON.parse(content);
-    
+                    const task_name = parsedData.taskName;
+                    const task_summary = parsedData.taskSummary;
+                    const mindmap_tabs = parsedData.taskTabs;
                     console.log("✅ 导入成功，文件内容如下：", parsedData);
-    
-                    // 👉 你可以在这里使用 parsedData，比如更新 UI、存储到某个状态中等
-                    // 例如：setMindmapTabs(parsedData.tabs);
-    
+                    chrome.runtime.sendMessage({
+                        action: "import_task",
+                        task_name: task_name,
+                        task_summary: task_summary,
+                        mindmap_tabs: mindmap_tabs
+                    });
                 } catch (error) {
                     console.error("❌ 解析 JSON 失败：", error);
                     alert("文件格式不正确，请上传有效的 JSON 文件。");
