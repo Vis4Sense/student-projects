@@ -289,11 +289,17 @@ sleeping and having fun...
         - 抓下来的 HTML 纯文本杂乱,没有浏览器javasscript的处理，失去了一些内容的结构化对应关系
         - 需要针对特定的用户请求/任务，特定的网站网站优化，才能获得结构化数据. eg，酒店预定请求：booking.com，airbnb.com分开专门处理。
         - current RAG in the industy: make a summary of a webpage, feed it to the LLM, then generate a final output.
+        
+        - do more experiments(including using chatgpt), say why we can't do this
+
 - some simple feedback from pre-test:
     - better a add a tab labeling/note (have just achieved)
     - better to implement a heracial task structure (plant to do, if have time)
     - can we implement a llm which return url directly when asking "in this webpage, which hotel is the best in 80 pounds?". -- failed, need special agent for exact webpage
+        - user can selecte the tab to ask for about it, edit the promopt(right click). Or higlt the text in the page
 - future
+    - do more experiments in RAG, say why we can't do this
     - write a brife sturcture of the final report
-    - do the test(currently have invite 6 people, will split them into 3-3)
+    - update the test
+    - do the test(currently have invite 6 people, will split them into 3-3 tool?)
     - achieve heractical task if possible
