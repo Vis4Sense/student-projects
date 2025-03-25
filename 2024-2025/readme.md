@@ -29,7 +29,20 @@ For trading, coin universe, compare:
 - baseline: buy and hold, equal percentage of all the coins, i.e., 20% each if there are five coins?
 - strategy 1:
    - when there is a positive anomaly, put all the fund into that coin
-   - sell all the coin if there is a negative anomaly
+   - if another coin has a positive anomaly, sell the current coin and put all the fund into the new coin
+   - sell all the coin if there is a negative anomaly for this coin (this seems not ideal as if the price of the coin is going down it does not make sense to still hold it even if there is no negative anomaly)
+- strategy 2
+   - put all the fund into the coin with the largest positive prediction error, even this is not an anomaly yet
+   - do not invest in any coin if there is no positive prediction error?
+   - as the coin with the largest positive prediction error changes, move all the fund to the new coin
+      - could this lead to too many reinvestments?
+   - sell all the coin if there is only negative anomaly
+- strategy 3: maybe learn a dynamic threhold?
+   - measurement such as z-score is dynamic, but the threshold, such as 10% change, is not
+   - middle ground between strategy 1 and 2?
+- strategy 4:
+   - invest a certain percentage of the fund, 20%, 30%, etc., every time instead of all the fund
+   - the rest is the same as strategy 1-3
 
 # To Do
 ## Manasi and Abhay
