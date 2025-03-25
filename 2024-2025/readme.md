@@ -19,7 +19,11 @@ For comparison among different coins and coin universe
 For coin universe, plot the prediction error of each coin over time
 - this is to see how often they change order
 
-
+For trading, single coin, compare:
+- baseline: buy and hold
+- strategy 1:
+   - when there is a positive anomaly, put all the fund into that
+   - sell all the coin if there is a negative anomaly
 
 # To Do
 ## Manasi and Abhay
