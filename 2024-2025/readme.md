@@ -46,6 +46,11 @@ For trading, coin universe, compare:
 - strategy 4:
    - invest a certain percentage of the fund, 20%, 30%, etc., every time instead of all the fund
    - the rest is the same as strategy 1-3
+ 
+Integrating news sentiment
+- Plot the price change and news sentiment value change over time to see if there is a strong correlation, i.e., does positive anomaly always associates with very positive news that is very popular
+- Manasi: use news sentiment as a confidence score (how?)
+- Kai: possible lag of the news, i.e., the creation and publishing of the news take time while the event already affects the price.
 
 # To Do
 ## Manasi and Abhay
