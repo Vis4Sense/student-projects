@@ -4,14 +4,22 @@ This is the folder for student projects in 2024-2025.
 
 Manasi, Tianxiang, Kai
 
-# Todo (in the next week or more)
+## Todo (in the next week or more)
 
 For model comparision with the baseline:
 - compare against with Sub-LOF [22], which is the best performing univariate unsupervised model acccording to [Anomaly detection in time series: a comprehensive evaluation](https://dl.acm.org/doi/pdf/10.14778/3538598.3538602)
 - compare against ARIMA [65], which is also lstm/ae/cnn/transformer based (the same model type)
 - Only on solana price data, which was used for cnn-lstm-ae?
 
-For 
+For comparison among different coins and coin universe
+- select 4 more coins besides solana
+- train one cnn-lstm-ae model for each coin
+- train one cnn-lstm-ae model using all the coin prices
+
+For coin universe, plot the prediction error of each coin over time
+- this is to see how often they change order
+
+
 
 # To Do
 ## Manasi and Abhay
