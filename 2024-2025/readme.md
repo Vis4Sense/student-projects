@@ -4,6 +4,9 @@ This is the folder for student projects in 2024-2025.
 
 Manasi, Tianxiang, Kai
 
+Manasi
+- (ablation) test results of cnn/lstm/ae on solana price for one year at 10 minutes interval: using all three has the best results (~90% AOC-ROC)
+
 ## Todo (in the next week or two)
 
 For model comparision with the baseline:
