@@ -298,7 +298,7 @@ sleeping and having fun...
     - can we implement a llm which return url directly when asking "in this webpage, which hotel is the best in 80 pounds?". -- failed, need special agent for exact webpage
         - user can selecte the tab to ask for about it, edit the promopt(right click). Or higlt the text in the page
 - future
-    - do more experiments in RAG, say why we can't do this
+    - do more experiments in RAG, say why we can't do this(actually this can be done!!!)
     - write a brife sturcture of the final report
     - update the test
     - do the test(currently have invite 6 people, will split them into 3-3 tool?)

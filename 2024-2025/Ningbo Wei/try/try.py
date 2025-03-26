@@ -39,13 +39,39 @@ def extract_main_text(url):
     try:
         headers = {"User-Agent": "Mozilla/5.0"}
         r = requests.get(url, headers=headers, timeout=5)
+        r.encoding = r.apparent_encoding  # 自动识别编码
         soup = BeautifulSoup(r.text, "html.parser")
 
-        # 提取所有 <p> 标签的文字作为正文
-        paragraphs = [p.get_text().strip() for p in soup.find_all("p")]
-        content = "\n".join(paragraphs[:50])  # 取前几段
+        # 定义需要提取的标签
+        tags_to_extract = ['p', 'div', 'span', 'article', 'section']
+
+        # 提取文字内容
+        texts = []
+        for tag in tags_to_extract:
+            for elem in soup.find_all(tag):
+                # 过滤掉 class/id 中含有无关关键词的元素
+                if elem.has_attr('class') and any(keyword in ' '.join(elem['class']).lower() for keyword in ['nav', 'footer', 'sidebar', 'header', 'comment', 'ads']):
+                    continue
+                if elem.has_attr('id') and any(keyword in elem['id'].lower() for keyword in ['nav', 'footer', 'sidebar', 'header', 'comment', 'ads']):
+                    continue
+
+                text = elem.get_text(strip=True)
+                # 跳过太短的内容
+                if len(text) >= 30:
+                    texts.append(text)
+
+        # 去重并拼接前几段
+        seen = set()
+        clean_texts = []
+        for t in texts:
+            if t not in seen:
+                clean_texts.append(t)
+                seen.add(t)
+
+        content = "\n".join(clean_texts[:100])  # 可调节数量
+
         domain = tldextract.extract(url).domain
-        return f"[{domain}] {content[:20000]}"  # 限制最大长度
+        return f"[{domain}] {content[:20000]}"
     except Exception as e:
         return f"[{url}] 无法抓取内容 ({e})"
 
@@ -56,7 +82,7 @@ def answer_question_with_web(query):
     # time.sleep(1)  # 防止被限速
 
     snippets = []
-    urls = ["https://www.booking.com/searchresults.zh-cn.html?ss=%E8%AF%BA%E4%B8%81%E6%B1%89&ssne=%E8%AF%BA%E4%B8%81%E6%B1%89&ssne_untouched=%E8%AF%BA%E4%B8%81%E6%B1%89&efdco=1&label=zh-cn-gb-booking-desktop-Zx5vIb*jBbjo53dodt4urgS654267613649%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9046400%3Ali%3Adec%3Adm&aid=2311236&lang=zh-cn&sb=1&src_elem=sb&src=index&dest_id=-2604469&dest_type=city&checkin=2025-03-25&checkout=2025-03-26&group_adults=2&no_rooms=1&group_children=0"]
+    urls = ["https://www.booking.com/searchresults.zh-cn.html?ss=nottingham&ssne=%E5%B7%B4%E9%BB%8E&ssne_untouched=%E5%B7%B4%E9%BB%8E&efdco=1&label=gog235jc-1DCAEoggI46AdIM1gDaFCIAQGYASu4ARfIAQzYAQPoAQGIAgGoAgO4Aoqzjb8GwAIB0gIkNmNiYmFmZDAtYmU3Mi00MzhlLWJhNTgtMzdjZTRiMzUxNzY12AIE4AIB&sid=f3d5d543f1bf61eadfca1ba8d156aa42&aid=397594&lang=zh-cn&sb=1&src_elem=sb&src=index&dest_id=-2604469&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=en&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=7b4f0b055c60010b&ac_meta=GhA3YjRmMGIwNTVjNjAwMTBiIAAoATICZW46Cm5vdHRpbmdoYW1AAEoAUAA%3D&checkin=2025-06-15&checkout=2025-06-17&group_adults=2&no_rooms=1&group_children=0"]
     for url in urls:
         snippet = extract_main_text(url)
         print("length is "+str(len(snippet)))
