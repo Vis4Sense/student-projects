@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import styles from "./Mindmap.module.css";
 
-const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, selectedTaskName, chosenTaskSummary}) => {
+const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, selectedTaskName, chosenTaskSummary, selectedTabId, setSelectedTabId, selectedTabUrl, setSelectedTabUrl}) => {
 
     const [contextMenu, setContextMenu] = useState(null); // 存储菜单位置
-    const [selectedTabId, setSelectedTabId] = useState(null); // 存储当前右键的 Tab
 
    // 处理 Tab 拖拽到 Mindmap 的逻辑
     const handleTabDropToMindmap = (event) => {
@@ -47,6 +46,9 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
     };
 
     const handleDragStart = (event, tab) => {
+        setSelectedTabId(tab.id); // 设置当前被选中的 tab
+        setSelectedTabUrl(tab.currentUrl);
+        setContextMenu(null); // 点击时关闭右键菜单
         console.log("Drag start:", tab);
         event.dataTransfer.setData('application/json', JSON.stringify(tab));
         event.dataTransfer.effectAllowed = "move";  // 确保可以移动
@@ -91,6 +93,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
     const handleClickAway = () => {
         setContextMenu(null);
         setSelectedTabId(null);
+        setSelectedTabUrl(null);
     };
 
     const generateSummary = () => {
@@ -156,11 +159,17 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             >
                 {mindmapTabs.map((tab) => (
                     <div 
-                        key={tab.id} 
-                        className={styles.mindmap_tab}
+                        key={tab.id}
+                        className={`${styles.mindmap_tab} ${selectedTabId === tab.id ? styles.selectedTab : ""}`}
                         draggable
                         onDragStart={(event) => handleDragStart(event, tab)}
                         onContextMenu={(event) => handleContextMenu(event, tab)}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 防止点击空白处导致 selectedTabId 被清空
+                            setSelectedTabId(tab.id); // 设置当前被选中的 tab
+                            setSelectedTabUrl(tab.currentUrl);
+                            setContextMenu(null); // ✅ 关键：点击时关闭右键菜单
+                        }}
                     >
                         <h3>{tab.title.slice(0, 50)}</h3>
                         <p>{tab.currentUrl.slice(0, 40)}</p>

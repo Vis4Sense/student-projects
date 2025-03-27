@@ -57,6 +57,11 @@
   overflow: hidden;
 }
 
+.selectedTab {
+  background-color: #d0ebff !important; /* 选中时的背景颜色，可根据需求修改 */
+  border: 2px solid #339af0;
+}
+
 .mindmap_tab h3 {
   /* font-size: 1.5em; 标题字体大小 */
   font-weight: bold; /* 加粗标题 */

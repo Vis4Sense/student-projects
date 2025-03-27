@@ -411,14 +411,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("LLM_conversation: pre-Prompt from front-end:", pre_prompt);
         if (pre_prompt===""){
             const reply = chat(prompt).then((reply) => {
-                // console.log("Reply from LLM:", reply);
-                // chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply });
                 sendResponse({ reply: reply});
             });
         }else{
             const reply = chat(prompt, retryTime, pre_prompt).then((reply) => {
                 console.log("Reply from LLM:", reply);
-                // chrome.runtime.sendMessage({ action: "LLM_conversation_reply", reply: reply, pre_prompt: pre_prompt });
                 sendResponse({ reply: reply });
             });
         }
@@ -440,6 +437,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             const reply = chat(prompt).then((reply) => {
                 console.log("Reply from LLM:", reply);
                 chrome.runtime.sendMessage({ action: "generate_task_summary_reply", summary: reply, taskId: taskId });
+            });
+        });
+        return true;
+    }
+    else if (message.action === "LLM_conversation_with_url"){
+        const {pre_prompt, prompt, url} = message;
+        fetchTabTextIfOpen(url).then((result) => {
+            const new_pre_prompt = pre_prompt + result.content.slice(0,5000);
+
+            const reply = chat(prompt, retryTime, new_pre_prompt).then((reply) => {
+                console.log("Reply from LLM:", reply);
+                sendResponse({ reply: reply });
             });
         });
         return true;
@@ -495,27 +504,6 @@ function sendTasksToFrontend() {
     });
 }
   
-// async function getEmbedding(texts) {
-//     if (!extractor) {
-//         extractor = await transformers.pipeline(
-//             'feature-extraction',
-//             'Xenova/all-MiniLM-L6-v2'
-//         );
-//     }
-
-//     const results = [];
-//     for (const text of texts) {
-//         const result = await extractor(text, {
-//             pooling: 'mean',
-//             normalize: true
-//         });
-//         results.push(result.data);
-//     }
-
-//     return results; // 返回 embedding
-// }
-
-
   // 防止 service_worker 被 Chrome 杀死
 chrome.alarms.create("keep_alive", { periodInMinutes: 1 });
   
@@ -1252,3 +1240,143 @@ function selectTopByScoreGap(scoredTabs, thresholdGap = EMBEDDING_SELECTION_THRE
     }
     return result;
 }
+
+// 查找是否有 tab 打开了指定 URL
+const findTabByUrl = async (targetUrl) => {
+    return new Promise((resolve) => {
+      chrome.tabs.query({}, (tabs) => {
+        const matchedTab = tabs.find((tab) => tab.url && tab.url.includes(targetUrl));
+        resolve(matchedTab || null);
+      });
+    });
+};
+  
+  // 注入脚本，从 tab 页面中提取 main 或 body 的纯文本
+const getTabMainText = async (tabId) => {
+    return new Promise((resolve) => {
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabId },
+          func: () => {
+            const mainElement = document.querySelector('main') || document.body;
+            const mainText = mainElement ? mainElement.innerText.trim() : "No main content found";
+            return mainText;
+          },
+        },
+        (results) => {
+          if (chrome.runtime.lastError) {
+            resolve({ error: chrome.runtime.lastError.message });
+          } else {
+            resolve({ text: results[0].result });
+          }
+        }
+      );
+    });
+};
+  
+    // 主流程：查找 tab + 获取内容
+const fetchTabTextIfOpen = async (urlToCheck) => {
+    const tab = await findTabByUrl(urlToCheck);
+    
+    // ✅ 情况 1：如果该网页已打开，注入脚本提取 main
+    if (tab) {
+        const content = await getTabMainText(tab.id);
+        return {
+        found: true,
+        fromTab: true,
+        tabId: tab.id,
+        url: tab.url,
+        content: content.text || ""
+        };
+    }
+    
+    // ✅ 情况 2：该网页没打开，fetch + 注入别的 tab 来解析 
+    console.log("trying to visit: ", urlToCheck);
+    const htmlResult = await fetchRawHtml(urlToCheck);  // !!!! 
+    /*
+        What we get is a orignal HTML file, it contains some content like JS.
+        orignal HTML will be load into a webpage by browse, but here we only read info diractly from the orignal HTML.
+
+        Reason why I don't user browser to handle the orignal HTML befor extracting info is that, this will creat a new tab.
+        Hence here might seem to have some bugs...
+    */
+    if (!htmlResult.success) {
+        console.log("failed to visit");
+        return { found: false, error: htmlResult.error };
+    }
+    // 找一个可注入的 tab（任意前台 tab 即可）
+    const candidateTabs = await getInjectableTab();
+    
+    if (!candidateTabs) {
+        console.log("no tab to do injection");
+        return { found: false, error: "No active tab available to inject" };
+    }
+    
+    const injectedTabId = candidateTabs.id;
+    const htmlString = htmlResult.html;
+    
+    // 注入脚本 + 传入 HTML 字符串，提取 main 内容
+    return new Promise((resolve) => {
+        chrome.scripting.executeScript(
+        {
+            target: { tabId: injectedTabId },
+            func: (html) => {
+            try {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const mainElement = doc.querySelector("main") || doc.body;
+                const mainText = mainElement ? mainElement.innerText.trim() : "No main content found";
+                return mainText;
+            } catch (e) {
+                return "DOM parsing failed: " + e.toString();
+            }
+            },
+            args: [htmlString],
+        },
+        (results) => {
+            if (chrome.runtime.lastError) {
+                console.log("error in analyse html", chrome.runtime.lastError.message);
+                resolve({ found: false, error: chrome.runtime.lastError.message });
+            } else {
+                console.log("mainText result: ", results);
+                resolve({
+                    found: true,
+                    fromTab: false,
+                    tabId: injectedTabId,
+                    url: urlToCheck,
+                    content: results?.[0]?.result || ""
+                });
+            }
+        }
+        );
+    });
+};
+
+      
+
+const fetchRawHtml = async (urlToCheck) => {
+    try {
+      const response = await fetch(urlToCheck);
+      const html = await response.text();
+      return { success: true, html };
+    } catch (err) {
+      console.error("Failed to fetch remote HTML:", err);
+      return { success: false, error: err.toString() };
+    }
+};
+
+const getInjectableTab = async () => {
+    return new Promise((resolve) => {
+      chrome.tabs.query({}, (tabs) => {
+        const realPage = tabs.find(
+          (tab) =>
+            tab.url &&
+            !tab.url.startsWith("chrome://") &&
+            !tab.url.startsWith("chrome-extension://")
+        );
+        resolve(realPage || null);
+      });
+    });
+  };
+  
+  

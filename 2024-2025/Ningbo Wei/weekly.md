@@ -303,3 +303,9 @@ sleeping and having fun...
     - update the test
     - do the test(currently have invite 6 people, will split them into 3-3 tool?)
     - achieve heractical task if possible
+
+
+## March 25
+- have done
+    -  achieve RAG. 
+        - Might have some problem in handling those tab which have opened before but currently not.
