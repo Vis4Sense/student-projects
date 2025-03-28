@@ -309,3 +309,5 @@ sleeping and having fun...
 - have done
     -  achieve RAG. 
         - Might have some problem in handling those tab which have opened before but currently not.
+    - try to achieve hight light functions
+    - try to making tab grouping not just focusing on traveling
