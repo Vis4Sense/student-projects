@@ -57,15 +57,23 @@ build a Google Chrome extension with LLM that processes user browsing informatio
 ## prototype walk-through (is this the user handbook?)
 
 ## Evaluation
-### Preliminary Preparation
-- Participant selection
-- Task design 
-- Evalutaion, user question, interview
-- quantitative features, usability analysis
+### Participant selection
+### Task design 
+### user interview
+- question
+### quantitative features
+- SUS question
+### result and discussion
+- use charts to show the result
 - discuss
 
 
-## Discussion
+## Summary and Reflection
+### Project management coversing
+- how do I plant the manage
+- actual progress
+### Contributions and reflection
+- my own achivement
+- LSEPI
 
-## Conclution
 
