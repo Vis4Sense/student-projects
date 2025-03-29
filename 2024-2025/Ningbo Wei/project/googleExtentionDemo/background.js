@@ -109,9 +109,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // update the storage
         chrome.storage.local.set({ [addedMindmapId]: newMindmap }, () => {
             console.log("Mindmap tabs updated in storage:", newMindmap);
+            sendResponse(true);
         });
         // send the updated tabs to the back-end
-        sendTabsToFrontend();
+        // sendTabsToFrontend();
+        // sendResponse(true);
         return true;
     }
     else if(message.action === "remove_tab_from_chacheResult"){
@@ -236,7 +238,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("outputList", outputList);
             outputList.map((output) => {
                 const basicId = crypto.randomUUID();
-                newTasks.push({ task_id: "task"+basicId, name: output.location, MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString() });
+                newTasks.push({ task_id: "task"+basicId, name: output.Them, MindmapId: "mindmap"+basicId, summary: "Haven't generate summary", createTime : new Date().toISOString() });
                 console.log("new task", newTasks);
                 // for each new task, create a new mindmap
                 let newMindmap = [];
@@ -456,7 +458,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     else if (message.action === "open_annotation_page") {
         const { tabId, title, note } = message;
         console.log("open_annotation_page: reveived id: ", tabId);
-        const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}`;
+        const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}&taskId=${""}`;
         chrome.windows.create({
             url,
             type: "popup",
@@ -474,6 +476,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             results[tabIndex].note = note;
         }
         console.log(results);
+        sendResponse("success");
         sendTabsToFrontend();
         return true;
     }
@@ -482,11 +485,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
 function sendTabsToFrontend() {
-    chrome.runtime.sendMessage({ action: "update_tabs", tabs: results }, (response) => {
-      if (chrome.runtime.lastError) {
-        console.warn("No listener for update_tabs, will retry later...");
-      }
-    });
+    chrome.runtime.sendMessage({ action: "update_tabs", tabs: results });
+    // chrome.runtime.sendMessage({ action: "update_tabs", tabs: results }, (response) => {
+    //   if (chrome.runtime.lastError) {
+    //     console.warn("No listener for update_tabs, will retry later...");
+    //   }
+    // });
 }
 
 function sendTasksToFrontend() {
@@ -527,8 +531,15 @@ chrome.action.onClicked.addListener(() => {
 // waiting for handle the redirection-----search api()
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
-        console.log("Tab updated:", tab.url);
-
+        console.log("new Tab updated:", tab.url);
+        if (!tab.url 
+            || tab.url.startsWith('chrome://') 
+            || tab.url.startsWith('about:') 
+            || tab.url.startsWith('http://localhost:') 
+            || tab.url.startsWith('chrome-extension://')) {
+            console.log("Skipp this tab:");
+            return;
+        }
         // 确保 processTab 完成后再执行 sendTabsToFrontend
         processTab(tab).then(() => {
             sendTabsToFrontend();
@@ -538,29 +549,17 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 function updateAPIwaitingTime(waitingTime) {
     // 更新 API 等待时间
-    chrome.runtime.sendMessage({ action: "update_API_waiting_time", waitingTime: waitingTime }, (response) => {
-        if (chrome.runtime.lastError) {
-            console.warn("update_API_waiting_time: No listener for update_API_waiting_time, will retry later...");
-        }
-    });
+    chrome.runtime.sendMessage({ action: "update_API_waiting_time", waitingTime: waitingTime });
 }
 
 function updateAPIrequestCount() {
     // 更新 API 请求次数
-    chrome.runtime.sendMessage({ action: "update_API_request_count", count: currentAPIrequestCount }, (response) => {
-        if (chrome.runtime.lastError) {
-            console.warn("update_API_request_count: No listener for update_API_request_count, will retry later...");
-        }
-    });
+    chrome.runtime.sendMessage({ action: "update_API_request_count", count: currentAPIrequestCount });
 }
 
 function updateLLMreadyStatus(apiStatus) {
     // 更新 LLM API 状态
-    chrome.runtime.sendMessage({ action: "update_LLM_api_status", apiStatus: apiStatus }, (response) => {
-        if (chrome.runtime.lastError) {
-            console.warn("update_LLM_api_status: No listener for update_LLM_api_status, will retry later...");
-        }
-    });
+    chrome.runtime.sendMessage({ action: "update_LLM_api_status", apiStatus: apiStatus });
 }
 
 function processTab(tab) {
@@ -648,28 +647,16 @@ function processTab(tab) {
                                 }
 
                             });
-                        // calculate embedding
-                        // getEmbedding(textForEmbedding)
-                        //     .then((embeddingResult) => {
-                        //         const tabIndex = results.findIndex(t => t.id === response.id);
-                        //         if(tabIndex !== -1 ){
-                        //             results[tabIndex].embedding = embeddingResult;
-                        //             sendTabsToFrontend();
-                        //         }
-                        //     })
-                        //     .catch(err => {
-                        //         console.error("Error generating embedding:", err);
-                        //     });
                     } else {
                         console.error("Failed to fetch content for tab:", tab.url);
                     }
                     resolve();
                 });
 
-                setTimeout(() => {
-                    console.warn(`Timeout: No response from tab ${tab.url}, resolving anyway.`);
-                    resolve();
-                }, 8000);
+                // setTimeout(() => {
+                //     console.warn(`Timeout: No response from tab ${tab.url}, resolving anyway.`);
+                //     resolve();
+                // }, 8000);
             }
         );
     });
@@ -935,26 +922,49 @@ async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
     };
     const exampleOutput = {
         "output": [
-            { "location": "London", "tabId": ["1234", "0002", "0004"] },
-            { "location": "Beijing", "tabId": ["0003"] }
+            { "Them": "London traveling", "tabId": ["1234", "0002", "0004"] },
+            { "Them": "Beijing tourist", "tabId": ["0003", "006"] },
+            { "Them": "Coding practice", "tabId": ["0005"] }
         ]
     };
     const exampleInputText = JSON.stringify(exampleInput, null, 2);
     const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
 
-    const beginPrompt = `
-        You are a helpful assistant in web tabs clustering. 
-        You will be given several summaries of different web tabs.
-        These tabs are usually about traveling. 
-        What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, well known company or famous people. 
-        Some tabs might not related to a city, and you need to ignore them. For example, a tab about a programming website should be ignored.
-        You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
-        Following is an example:
+    const beginPrompt =  `
+        You are an assistant skilled in understanding webpage content and classifying it by topic.
+        I will provide a list of webpages, each with a short summary.
+        Your task is to categorize each webpage into an appropriate topic based on its content.
+
+        Please follow these rules:
+
+        1. Group webpages with similar or related content under the same topic.
+
+        2. Each webpage should be assigned to only one most suitable topic.
+
+        3. Output is a list of dictionaries in JSON format. A example of input and output is given later.
+
+        If multiple pages belong to the same category, make sure the topic name is consistent across them.
+
         ###### example input #######
         ${exampleInputText}
-        ###### example output #######
+
+         ###### example output #######
         ${exampleOutputText}
-    `;
+    `
+
+    // const beginPrompt = `
+    //     You are a helpful assistant in web tabs clustering. 
+    //     You will be given several tabs and their summaries.
+    //     These tabs are usually about traveling. 
+    //     What you need to do is classify these tabs based on city. You need to consider information in the summaries, like city name, famous places, train station, airport, well known company or famous people. 
+    //     Some tabs might not related to a city, and you need to ignore them. For example, a tab about a programming website should be ignored.
+    //     You need to return a list of dictionaries, each containing a city name and a list of tabId. Please return the result in JSON format. 
+    //     Following is an example:
+    //     ###### example input #######
+    //     ${exampleInputText}
+    //     ###### example output #######
+    //     ${exampleOutputText}
+    // `;
 
     const tabInfoText = JSON.stringify(tabInfo, null, 2);
 
