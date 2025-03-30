@@ -49,7 +49,7 @@ build a Google Chrome extension with LLM that processes user browsing informatio
 - code and prompt
 - how to handle 429 problem
 ### node grouping
-- code for embedding and cosine simmilaryty
+- code for embedding + cosine simmilaryty + selection based on mean value
 - code+prompt(LLM)
 - problem of law accuracy in user customize grouping (word embedding + cosine simmilaryty)
 ### Advance searching

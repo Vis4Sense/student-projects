@@ -1,5 +1,5 @@
 import { API_CONFIG } from './config.js';  // get config of API
-import { TfIdf } from './mytf-idf.js';  // get the TF-IDF model
+// import { TfIdf } from './mytf-idf.js';  // get the TF-IDF model
 // importScripts('transformers.min.js'); 
 // import { pipeline } from '@xenova/transformers';
 // import { TFIDF } from './tfidf.bundle.js';
@@ -200,7 +200,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("Task deleted:", taskId);
         });
         // remove the mindmap tabs from the storage
-        chrome.storage.local.remove([mindmapId], () => {});
+        chrome.storage.local.remove([mindmapId], () => {
+            sendResponse("success");
+        });
         // send the updated tasks to the back-end
         return true;
     }
