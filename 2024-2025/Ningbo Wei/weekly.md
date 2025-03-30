@@ -309,7 +309,7 @@ sleeping and having fun...
 - have done
     -  achieve RAG. 
         - Might have some problem in handling those tab which have opened before but currently not.
-    - try to achieve hight light functions
+    - achieve hight light functions
     - made tab grouping not just focusing on traveling
     - fix bugs in user tab labeling. 
         - Bus is caused due to  background.js script is a Service Worker, which behaves differently from traditional persistent background scripts. This service worker is not always alive. Chrome spins it up on demand, and then suspends (terminates) it when idle(simmiler to activity in android). The annotate call back to background.js and end too quickly that Chrome fails to wake up the worker quickly enough to receive the message. Hence what I have done is adding a latency to the annotate.js.
