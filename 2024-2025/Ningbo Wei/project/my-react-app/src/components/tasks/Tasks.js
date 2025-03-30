@@ -16,7 +16,14 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
     const [newTaskPrompt, setnewTaskPrompt] = useState("");  // New state for input
+    const [menuOpenTaskId, setMenuOpenTaskId] = useState(null);
 
+    useEffect(() => {
+        const handleClickOutside = () => setMenuOpenTaskId(null);
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+    
     const handleDoubleClick = (taskId, currentTitle) => {
         setEditingTaskId(taskId);
         setEditedTitle(currentTitle);
@@ -126,6 +133,33 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         setnewTaskPrompt(""); // Clear input after adding
     };
 
+    // const addSubTask = (taskId) => {
+    //     // check if task have already have more than 3 sub tasks
+    //     const task = tasks.find((t) => t.task_id === taskId);
+    //     if (task.subtask.length >= 3) return;
+
+    // }
+
+    const getMenuOptions = (task) => [
+        {
+            label: "Delete",
+            onClick: () => {
+                deleteTask(task.task_id);
+                setMenuOpenTaskId(null);
+            }
+        },
+        {
+            label: "add sub task",
+            onClick: () => {
+                setEditingTaskId(task.task_id);
+                setEditedTitle(task.name);
+                setMenuOpenTaskId(null);
+            }
+        },
+        // 可以继续添加更多按钮，比如导出、分享等
+    ];
+    
+
     const importTask = () => {
         // import a new task
         const input = document.createElement("input");
@@ -186,9 +220,29 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
             {tasks.map((task, index) => (
                 <div
                     key={task.task_id || index}
-                    className={`${styles.task} ${selectedTaskId === task.task_id ? styles.selected : ""}`}
+                    className={`${styles.task} ${styles.taskContainer} ${selectedTaskId === task.task_id ? styles.selected : ""}`}
                     onClick={() => handleTaskClick(task.task_id, task.name)}
                 >
+                    <button
+                        className={styles.menuButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setMenuOpenTaskId((prev) => (prev === task.task_id ? null : task.task_id));
+                        }}
+                    >
+                        ⋯
+                    </button>
+
+                    {menuOpenTaskId === task.task_id && (
+                        <div className={styles.dropdownMenu} onClick={(e) => e.stopPropagation()}>
+                            {getMenuOptions(task).map((option, i) => (
+                                <button key={i} className={styles.dropdownItem} onClick={option.onClick}>
+                                    {option.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
                     {editingTaskId === task.task_id ? (
                         <input
                             type="text"
@@ -207,18 +261,10 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                             <p>create time : {new Date(task.createTime).toLocaleString()} </p>
                         </>
                     )}
-                    <button
-                        className={styles.deleteButton}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setTasks((prevTasks) => prevTasks.filter((t) => t.task_id !== task.task_id));
-                            chrome.runtime.sendMessage({ action: "delete_task", taskId: task.task_id });
-                        }}
-                    >
-                        ❌ Delete
-                    </button>
                 </div>
             ))}
+
+
         </div>
     );
 

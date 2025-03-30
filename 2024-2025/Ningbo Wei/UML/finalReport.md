@@ -35,9 +35,12 @@ build a Google Chrome extension with LLM that processes user browsing informatio
 - use chrome extentsion as backend for page content extraction
 - use chrome local storage
     - reason why not use scync storage and strcuterd data basd like python+sqlite
-- apply gpt-4o-mini in hrome extentsion for page and task summary
+- apply gpt-4o-mini in chrome extentsion for page and task summary
     - reason why given up adding image-to-text summary
-- node grouping: LLM based grouping, word embedding+cosine simmilarty, tf-idf
+- node grouping: 
+    - word/sentence embedding+cosine simmilarty and LLM based grouping
+    - reason why not use Euclidean Distance in embedding resoult comperation
+    - reason why not use tf-idf
 
 ## Implementation
 ### web page recognition
@@ -46,11 +49,12 @@ build a Google Chrome extension with LLM that processes user browsing informatio
 - code and prompt
 - how to handle 429 problem
 ### node grouping
-- code+prompt
+- code for embedding + cosine simmilaryty + selection based on mean value
+- code+prompt(LLM)
 - problem of law accuracy in user customize grouping (word embedding + cosine simmilaryty)
 ### Advance searching
-- answer question in tab/task
 - inspriation of "RAG"
+- answer question in tab/task
 ### main interface
 - fomat/structure of data in the storage
 
