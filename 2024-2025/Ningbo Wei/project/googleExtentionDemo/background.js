@@ -456,9 +456,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if (message.action === "open_annotation_page") {
-        const { tabId, title, note } = message;
+        const { tabId, title, taskId, note } = message;
         console.log("open_annotation_page: reveived id: ", tabId);
-        const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}&taskId=${""}`;
+        const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}&taskId=${encodeURIComponent(taskId || '')}`;
         chrome.windows.create({
             url,
             type: "popup",
@@ -468,16 +468,70 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if (message.action === "save_tab_note") {
-        const { tabId, note } = message;
+        const { tabId, note, taskId} = message;
         console.log("save_tab_note: get note: ", note);
         console.log("tabid is: ", tabId);
-        const tabIndex = results.findIndex(tab => tab.id === tabId);
-        if (tabIndex !== -1) {
-            results[tabIndex].note = note;
+        if(taskId.length <= 2){
+            // this tab is not in a task
+            const tabIndex = results.findIndex(tab => tab.id === tabId);
+            if (tabIndex !== -1) {
+                results[tabIndex].note = note;
+            }
+            sendResponse("success");
+            sendTabsToFrontend();
+        }else{
+            // this tab is in a task
+            const mindmapId = "mindmap" + taskId.replace("task", "");
+            console.log("mindmapId is: ", mindmapId);
+            chrome.storage.local.get([mindmapId], (result) => {
+                const mindmapTabs = result[mindmapId] || [];
+                const tabIndex = mindmapTabs.findIndex(tab => tab.id === tabId);
+                console.log("tabIndex is: ", tabIndex);
+                if (tabIndex !== -1) {
+                    mindmapTabs[tabIndex].note = note;
+                    // update storage
+                    chrome.storage.local.set({ [mindmapId]: mindmapTabs }, () => {
+                        console.log("Mindmap tabs updated in storage:", mindmapTabs);
+                        sendMindmapToFrontend(mindmapId);
+                    });
+                }
+            });
+            sendResponse("success");
         }
-        console.log(results);
-        sendResponse("success");
-        sendTabsToFrontend();
+        
+        return true;
+    }
+    else if(message.action === "change_tab_color") {
+        const { tabId, taskId, color} = message;
+        console.log("get_tab_note: get color: ", color);
+        if(taskId.length <= 2){
+            // this tab is not in a task
+            const tabIndex = results.findIndex(tab => tab.id === tabId);
+            if (tabIndex !== -1) {
+                results[tabIndex].color = color;
+            }
+            sendResponse("success");
+            sendTabsToFrontend();
+        }else{
+            // this tab is in a task
+            const mindmapId = "mindmap" + taskId.replace("task", "");
+            console.log("mindmapId is: ", mindmapId);
+            chrome.storage.local.get([mindmapId], (result) => {
+                const mindmapTabs = result[mindmapId] || [];
+                const tabIndex = mindmapTabs.findIndex(tab => tab.id === tabId);
+                console.log("tabIndex is: ", tabIndex);
+                if (tabIndex !== -1) {
+                    mindmapTabs[tabIndex].color = color;
+                    // update storage
+                    chrome.storage.local.set({ [mindmapId]: mindmapTabs }, () => {
+                        console.log("Mindmap tabs updated in storage:", mindmapTabs);
+                        sendMindmapToFrontend(mindmapId);
+                    });
+                }
+            });
+            sendResponse("success");
+        }
+        
         return true;
     }
     
@@ -486,11 +540,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
 function sendTabsToFrontend() {
     chrome.runtime.sendMessage({ action: "update_tabs", tabs: results });
-    // chrome.runtime.sendMessage({ action: "update_tabs", tabs: results }, (response) => {
-    //   if (chrome.runtime.lastError) {
-    //     console.warn("No listener for update_tabs, will retry later...");
-    //   }
-    // });
+}
+
+function sendMindmapToFrontend(mindmapId) {
+    chrome.storage.local.get([mindmapId], (result) => { 
+        const mindmapTabs = result[mindmapId] || [];
+        console.log("mindmapTabs", mindmapTabs);
+        chrome.runtime.sendMessage({ action: "update_mindmap", mindmapId: mindmapId, mindmapTabs: mindmapTabs });
+    });
 }
 
 function sendTasksToFrontend() {

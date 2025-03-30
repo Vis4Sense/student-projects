@@ -67,6 +67,10 @@ function App() {
                 if (selectedTaskId){
                     setSelectedTaskName(tasks.find(task => task.task_id === selectedTaskId).task_name);
                 }
+            } else if (message.action === "update_mindmap") {
+                // update mindmap tabs
+                // console.log("Received updated mindmap tabs:", message.mindmapTabs);
+                setMindmapTabs(message.mindmapTabs || []);
             } else if (message.action === "LLM_conversation_reply") {
                 // update chat box reply
                 console.log("Received chat box reply:", message.reply);

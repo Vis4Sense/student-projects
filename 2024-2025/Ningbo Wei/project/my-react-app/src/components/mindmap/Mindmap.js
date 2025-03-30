@@ -85,6 +85,24 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 });
             }
         }
+        else if (option === "Annotate") {
+            chrome.runtime.sendMessage({
+                action: "open_annotation_page",
+                tabId: tab.id,
+                title: tab.title,
+                taskId: selectedTaskId,
+                note: tab.note || "" // 传递已有注释（如果有）
+            });
+        }
+        else if (option === "NONE" || option === "GREEN" || option === "BLUE" || option === "PURPLE") {
+            // 设置 tab 的颜色为 NONE
+            chrome.runtime.sendMessage({
+                action: "change_tab_color",
+                tabId: tab.id,
+                taskId: selectedTaskId,
+                color: option
+            });
+        }
         console.log(`${option} clicked on tab ${tab.title}`);
         setContextMenu(null); // 隐藏菜单
     };
@@ -171,7 +189,12 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                             setContextMenu(null); // ✅ 关键：点击时关闭右键菜单
                         }}
                     >
-                        <h3>{tab.title.slice(0, 50)}</h3>
+                        <h3>
+                            {tab.color === "GREEN" && "🟢 "}
+                            {tab.color === "BLUE" && "🔵 "}
+                            {tab.color === "PURPLE" && "🟣 "}
+                            {tab.title.slice(0, 50)}
+                        </h3>
                         <p>{tab.currentUrl.slice(0, 40)}</p>
                         <p>{tab.summary ? tab.summary : "waiting..."}</p>
                         <p>{"----------------"}</p>
@@ -182,8 +205,13 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                                 className={styles.contextMenu}
                                 style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
                             >
+                                <div onClick={() => handleMenuClick("NONE", tab)}>none color ⬜</div>
+                                <div onClick={() => handleMenuClick("GREEN", tab)}>color green 🟢</div>
+                                <div onClick={() => handleMenuClick("BLUE", tab)}>color blue 🔵</div>
+                                <div onClick={() => handleMenuClick("PURPLE", tab)}>color green 🟣</div>
                                 <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
                                 <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
+                                <div onClick={() => handleMenuClick("Annotate", tab)}>creat or modify a comment</div>
                                 <hr />
                                 <div style={{ fontStyle: "italic", color: "#555", pointerEvents: "none" }}>
                                     {tab.note?.trim() ? `Note: ${tab.note}` : "No note for this tab"}

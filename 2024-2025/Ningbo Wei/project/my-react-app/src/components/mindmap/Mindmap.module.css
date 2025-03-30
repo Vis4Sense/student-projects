@@ -33,7 +33,6 @@
 }
 
 .mindmap_tabs_container {
-  font-size: 1.5em; /* 标题字体大小 */
   display: flex;
   flex-wrap: wrap; /* 让 tabs 换行 */
   gap: 10px;
@@ -63,7 +62,7 @@
 }
 
 .mindmap_tab h3 {
-  /* font-size: 1.5em; 标题字体大小 */
+  font-size: 1.4em; /*标题字体大小 */
   font-weight: bold; /* 加粗标题 */
   margin: 5px 0;            /* 减少上下间距 */
   overflow: hidden;         /* 隐藏超出边框的内容 */
@@ -72,10 +71,11 @@
 }
 
 .mindmap_tab p {
-  /* font-size: 1.2em; 正文字体大小 */
+  font-size: 1.2em; /*正文字体大小 */
   color: #666; /* 正文字体颜色 */
   margin: 3px 0;            /* 控制正文间距，让内容更紧凑 */
   overflow: hidden;         /* 隐藏超出边框的内容 */
+  text-overflow: ellipsis;  /* 超出部分显示省略号 */
   word-wrap: break-word;  /* 强制长单词换行 */
 }
 

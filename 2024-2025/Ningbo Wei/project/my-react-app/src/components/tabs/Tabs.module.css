@@ -32,7 +32,7 @@
 
 
 .tab h3 {
-    font-size: 1.5em; /* 标题字体大小 */
+    font-size: 1.4em; /* 标题字体大小 */
     font-weight: bold; /* 加粗标题 */
     margin: 5px 0;            /* 减少上下间距 */
     overflow: hidden;         /* 隐藏超出边框的内容 */

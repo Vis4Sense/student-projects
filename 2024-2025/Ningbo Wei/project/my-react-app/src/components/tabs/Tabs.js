@@ -44,9 +44,6 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, se
 
     // 处理菜单点击事件
     const handleMenuClick = (option, tab) => {
-        // if (option === "A") console.log("a");
-        // if (option === "B") console.log("b");
-        // if (option === "C") console.log("c");
         if (option === "Open this tab in browser") {
             chrome.runtime.sendMessage({ action: "open_tab", url: tab.currentUrl });
         }
@@ -60,7 +57,17 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, se
                 action: "open_annotation_page",
                 tabId: tab.id,
                 title: tab.title,
+                taskId: "",
                 note: tab.note || "" // 传递已有注释（如果有）
+            });
+        }
+        else if (option === "NONE" || option === "GREEN" || option === "BLUE" || option === "PURPLE") {
+            // 设置 tab 的颜色为 NONE
+            chrome.runtime.sendMessage({
+                action: "change_tab_color",
+                tabId: tab.id,
+                taskId: "",
+                color: option
             });
         }
         console.log(`${option} clicked on tab ${tab.title}`);
@@ -141,7 +148,12 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, se
                     }}
                 >
                     {/* <button onClick={() => handleSummary(tab)}>Summary</button> */}
-                    <h3>{tab.title.slice(0, 50)}</h3>
+                    <h3>
+                        {tab.color === "GREEN" && "🟢 "}
+                        {tab.color === "BLUE" && "🔵 "}
+                        {tab.color === "PURPLE" && "🟣 "}
+                        {tab.title.slice(0, 50)}
+                    </h3>
                     <p>{tab.currentUrl.slice(0, 30)}...</p>
                     <p>{tab.summary ? tab.summary : "waiting..."}</p>
                     <p>{"----------------"}</p>
@@ -152,7 +164,11 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, se
                         <div
                             className={styles.contextMenu}
                             style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
-                        >
+                        >   
+                            <div onClick={() => handleMenuClick("NONE", tab)}>none color ⬜</div>
+                            <div onClick={() => handleMenuClick("GREEN", tab)}>color green 🟢</div>
+                            <div onClick={() => handleMenuClick("BLUE", tab)}>color blue 🔵</div>
+                            <div onClick={() => handleMenuClick("PURPLE", tab)}>color green 🟣</div>
                             <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
                             <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
                             <div onClick={() => handleMenuClick("Annotate", tab)}>creat or modify a comment</div>
