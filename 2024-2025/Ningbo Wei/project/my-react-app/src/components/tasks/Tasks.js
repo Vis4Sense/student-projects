@@ -133,12 +133,16 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         setnewTaskPrompt(""); // Clear input after adding
     };
 
-    // const addSubTask = (taskId) => {
-    //     // check if task have already have more than 3 sub tasks
-    //     const task = tasks.find((t) => t.task_id === taskId);
-    //     if (task.subtask.length >= 3) return;
+    const addSubTask = (taskId) => {
+        // // check if task have already have more than 3 sub tasks
+        // const task = tasks.find((t) => t.task_id === taskId);
+        // const subtaskList = task.subtask || []; // 防止 undefined 报错
+        // if (subtaskList.length >= 3) return;
+        chrome.runtime.sendMessage({ action: "add_sub_task", taskId: taskId }, (response) => {
+            console.log("Sent add sub task request to background.js", response);
+        })
+    };
 
-    // }
 
     const getMenuOptions = (task) => [
         {
@@ -149,10 +153,17 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
             }
         },
         {
-            label: "add sub task",
+            label: "Rename",
             onClick: () => {
                 setEditingTaskId(task.task_id);
                 setEditedTitle(task.name);
+                setMenuOpenTaskId(null);
+            }
+        },
+        {
+            label: "add sub task",
+            onClick: () => {
+                addSubTask(task.task_id);
                 setMenuOpenTaskId(null);
             }
         },
@@ -261,6 +272,18 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                             <p>create time : {new Date(task.createTime).toLocaleString()} </p>
                         </>
                     )}
+
+                    {/* 显示 subtasks */}
+                    {selectedTaskId === task.task_id && Array.isArray(task.subtask) && task.subtask.length > 0 && (
+                        <div className={styles.subTaskContainer}>
+                            {task.subtask.map((subId, subIndex) => (
+                                <div key={subId} className={styles.subTask}>
+                                    sub task
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
                 </div>
             ))}
 

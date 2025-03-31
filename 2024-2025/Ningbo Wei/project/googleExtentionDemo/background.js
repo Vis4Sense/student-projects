@@ -409,6 +409,36 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendTabsToFrontend();
         return true;
     }
+    else if(message.action === "add_sub_task"){
+        const taskId = message.taskId;
+        const subTaskName = "new subtask";
+        const subTaskId = taskId+"_"+crypto.randomUUID();
+        // check limit of subtask
+        const targetTask = tasks.find((t) => t.task_id === taskId);
+        const currentSubtasks = Array.isArray(targetTask.subtask) ? targetTask.subtask : [];
+        if (currentSubtasks.length >= 3) {
+            console.log("❌ add_sub_task: Subtask limit reached");
+            return true;  // 不添加，静默返回
+        }
+        // 把新的subtaskId加入到taskId的subtask中
+        tasks = tasks.map((task) => {
+            if (task.task_id === taskId) {
+                const currentSubtasks = task.subtask || [];  // 确保存在
+                return {
+                    ...task,
+                    subtask: [...currentSubtasks, subTaskId],
+                };
+            }
+            return task;
+        });
+        // store the tasks in the chrome storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("add_sub_task: Task summary updated:", tasks);
+            sendTasksToFrontend({ tasks });
+        });
+        
+        return true;
+    }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;
         const pre_prompt = message.pre_prompt || "";
