@@ -4,7 +4,7 @@
     flex-wrap: nowrap;    /* 防止换行，保持在一行内 */
     overflow-x: auto;     /* 超出部分出现横向滚动条 */
     overflow-y: hidden;   /* 禁止纵向滚动，保持固定高度 */
-    max-height: 300px;    /* 限制 Tabs 区域的最大高度 */
+    max-height: 270px;    /* 限制 Tabs 区域的最大高度 */
     gap: 10px;
     padding: 10px;
     background-color: #e9ecef;
@@ -12,7 +12,7 @@
   
 .tab {
     flex: 0 0 220px;  /* 每个 tab 固定宽度 220px */
-    height: 270px;    /* 固定高度，避免高度变化 */
+    height: 250px;    /* 固定高度，避免高度变化 */
 
     padding: 10px;
     border: 1px solid #ccc;

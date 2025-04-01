@@ -1,6 +1,6 @@
 .chat-box {
     flex: 1;
-    height: 660px;
+    height: 770px;
 
     padding: 10px;
     border:  1px solid #ccc;
@@ -20,3 +20,18 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.chatReplyArea {
+    width: 315px; /* ✅ 固定宽度 */
+    height: 450px;  /* ✅ 固定高度 */
+    resize: none;   /* ✅ 禁止用户手动拖拽缩放 */
+    padding: 10px;
+    font-size: 1.2em;
+    font-family: inherit;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    overflow-y: auto; /* ✅ 内容过多可滚动查看 */
+  }
+  

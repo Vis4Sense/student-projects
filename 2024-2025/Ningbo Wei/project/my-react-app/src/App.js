@@ -13,6 +13,7 @@ function App() {
     const [tasks, setTasks] = useState([]);  // 用于存储任务数据
     const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
+    const [selectedTaskSubtaskSet, setSelectedTaskSubtaskSet] = useState([]); // current selected task name
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
     const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
     const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // 用于存储task summary
@@ -21,6 +22,7 @@ function App() {
     const [ifLLMready, setIfLLMready] = useState("checking the api status..."); // READY;FAILD;WORKING
     const [selectedTabId, setSelectedTabId] = useState(null); // 存储当前右键的 Tab
     const [selectedTabUrl, setSelectedTabUrl] = useState(null); // 存储当前右键的 Tab url
+
 
     useEffect(() => {  // a hook to fetch tasks and tabs
         setMindmapTabs([]);
@@ -64,8 +66,15 @@ function App() {
                 // update tasks
                 console.log("Received updated tasks:", message.tasks);
                 setTasks(message.tasks || []);
-                if (selectedTaskId){
-                    setSelectedTaskName(tasks.find(task => task.task_id === selectedTaskId).task_name);
+                const currentTaskId = message.currentTaskId; // 从消息中获取选中的任务 ID
+                console.log("Current Task ID:", currentTaskId);
+                if (currentTaskId){
+                    const task = message.tasks.find((t) => t.task_id === currentTaskId);
+                    console.log("APP.JS:Selected Task:", task);
+                    setSelectedTaskName(task.name); // 更新选中的任务名称
+                    const subtaskList = task.subtask || []; // 防止 undefined 报错
+                    // console.log("Subtask List:", subtaskList);
+                    setSelectedTaskSubtaskSet(subtaskList); // 更新选中的子任务列表
                 }
             } else if (message.action === "update_mindmap") {
                 // update mindmap tabs
@@ -160,7 +169,7 @@ function App() {
                 {/* 左侧任务列表 */}
                 <aside className="task-list">
                     <h2>Tasks</h2>
-                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName} setchosenTaskSummary={setchosenTaskSummary}/>
+                    <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName} setchosenTaskSummary={setchosenTaskSummary} setSelectedTaskSubtaskSet={setSelectedTaskSubtaskSet}/>
                 </aside>
 
                 {/* 中间内容区域 */}
@@ -171,7 +180,7 @@ function App() {
                     <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl}/>
 
                     {/* task详细内容区域，因为历史原因命名为mindmap */}
-                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName} chosenTaskSummary={chosenTaskSummary} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl}/>
+                    <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName} chosenTaskSummary={chosenTaskSummary} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl} selectedTaskSubtaskSet={selectedTaskSubtaskSet}/>
                 </main>
 
                 {/* 右侧问答区域 */}

@@ -150,7 +150,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("update taskList with new task", newTask);
         });
-        sendTasksToFrontend({ tasks });
+        //调用sendTasksToFrontend，发送当前taskId以及tasks
+        sendTasksToFrontend({ currentTaskId: newTask.task_id });
         return true;
     }
     else if(message.action === "update_task_summary") {
@@ -225,7 +226,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("Task name updated:", taskId, taskName);
         });
         // send the updated tasks to the back-end
-        sendTasksToFrontend({ tasks });
+        sendTasksToFrontend(taskId);
         return true;
     }
     else if(message.action === "auto_Generate_tasks"){
@@ -268,7 +269,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.storage.local.set({ taskList: tasks }, () => {
                 console.log("update taskList with new tasks", tasks);
             });
-            sendTasksToFrontend({ tasks });
+            sendTasksToFrontend();
             sendTabsToFrontend();
         });
         return true;
@@ -317,7 +318,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.storage.local.set({ taskList: tasks }, () => {
                 console.log("update taskList with new tasks", tasks);
             });
-            sendTasksToFrontend({ tasks });
+            sendTasksToFrontend();
             sendTabsToFrontend();
         });
         return true;
@@ -384,7 +385,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.storage.local.set({ taskList: tasks }, () => {
                 console.log("update taskList with new tasks", tasks);
             });
-            sendTasksToFrontend(tasks);
+            sendTasksToFrontend();
             sendTabsToFrontend();
         });
         return true;
@@ -405,7 +406,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("update taskList with new tasks", tasks);
         });
-        sendTasksToFrontend({ tasks });
+        sendTasksToFrontend();
         sendTabsToFrontend();
         return true;
     }
@@ -426,7 +427,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 const currentSubtasks = task.subtask || [];  // 确保存在
                 return {
                     ...task,
-                    subtask: [...currentSubtasks, subTaskId],
+                    subtask: [...currentSubtasks, {subTaskId: subTaskId, subTaskName: subTaskName}],
                 };
             }
             return task;
@@ -434,7 +435,59 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // store the tasks in the chrome storage
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("add_sub_task: Task summary updated:", tasks);
-            sendTasksToFrontend({ tasks });
+            sendTasksToFrontend(taskId);
+        });
+        
+        return true;
+    }
+    else if(message.action === "delete_sub_task"){
+        const taskId = message.taskId;
+        const subTaskId = message.subTaskId;
+        // remove the subtask from the task
+        tasks = tasks.map((task) => {
+            if (task.task_id === taskId) {
+                const currentSubtasks = task.subtask || [];  // 确保存在
+                return {
+                    ...task,
+                    subtask: currentSubtasks.filter((subtask) => subtask.subTaskId !== subTaskId),
+                };
+            }
+            return task;
+        });
+        // store the tasks in the chrome storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("delete_sub_task: Task summary updated:", tasks);
+            sendTasksToFrontend(taskId);
+            sendResponse("success delete subtask"); 
+        });
+        
+        return true;
+    }
+    else if(message.action === "rename_sub_task"){
+        const taskId = message.taskId;
+        const subTaskId = message.subTaskId;
+        const subTaskName = message.name;
+        // rename the subtask in the task
+        tasks = tasks.map((task) => {
+            if (task.task_id === taskId) {
+                const currentSubtasks = task.subtask || [];  // 确保存在
+                return {
+                    ...task,
+                    subtask: currentSubtasks.map((subtask) => {
+                        if (subtask.subTaskId === subTaskId) {
+                            return { ...subtask, subTaskName: subTaskName };
+                        }
+                        return subtask;
+                    }),
+                };
+            }
+            return task;
+        });
+        // store the tasks in the chrome storage
+        chrome.storage.local.set({ taskList: tasks }, () => {
+            console.log("rename_sub_task: Task summary updated:", tasks);
+            sendTasksToFrontend(taskId);
+            sendResponse("success rename subtask"); 
         });
         
         return true;
@@ -582,14 +635,14 @@ function sendMindmapToFrontend(mindmapId) {
     });
 }
 
-function sendTasksToFrontend() {
+function sendTasksToFrontend(currentTaskId="") {
     // 加载存储的 Mindmap Tabs
     chrome.storage.local.get(["taskList"], (result) => {
         if (result.taskList) {
             tasks.length = 0;  // 清空原数组，防止旧数据残留
             tasks.push(...result.taskList); // 直接修改数组内容
         }
-        chrome.runtime.sendMessage({ action: "update_tasks", tasks: tasks }, (response) => {
+        chrome.runtime.sendMessage({ action: "update_tasks", tasks: tasks, currentTaskId: currentTaskId }, (response) => {
             if (chrome.runtime.lastError) {
                 console.warn("No listener for update_tasks, will retry later...");
             }

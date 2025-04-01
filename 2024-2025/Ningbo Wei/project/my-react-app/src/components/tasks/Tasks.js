@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 
-const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName, setchosenTaskSummary }) => {
+const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapTabs, setSelectedTaskName, setchosenTaskSummary,setSelectedTaskSubtaskSet }) => {
 
     /*
     A task contain following component:
@@ -10,13 +10,22 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         name: "xxxxx",
         MindmapId: "mindmap" + abcd, 
         summary: "xasfsva",
-        createTime: Date()
+        createTime: Date(),
+        subtask: [
+            {
+                subTaskId: "subtask" + abcd,
+                subTaskName: "xxxxx"
+            }
+        ]
     }
     */ 
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editedTitle, setEditedTitle] = useState("");
     const [newTaskPrompt, setnewTaskPrompt] = useState("");  // New state for input
     const [menuOpenTaskId, setMenuOpenTaskId] = useState(null);
+    const [editingSubTask, setEditingSubTask] = useState(null); // { taskId, subTaskId }
+    const [editedSubTaskTitle, setEditedSubTaskTitle] = useState("");
+
 
     useEffect(() => {
         const handleClickOutside = () => setMenuOpenTaskId(null);
@@ -78,6 +87,11 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
         // 1. 更新选中的任务
         setSelectedTaskId(taskId);
         setSelectedTaskName(taskName);
+        // 获得task下对应的subtask列表
+        const task = tasks.find((t) => t.task_id === taskId);
+        const subtaskList = task.subtask || []; // 防止 undefined 报错
+        // console.log("Subtask List:", subtaskList);
+        setSelectedTaskSubtaskSet(subtaskList); // 更新选中的子任务列表
     };
 
     // 监听 selectedTaskId 变化，在更新后执行后续操作
@@ -208,6 +222,41 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
     
         input.click(); // 触发文件选择
     };
+
+    const deleteSubTask = (taskId, subTaskId) => {
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage(
+                {
+                    action: "delete_sub_task",
+                    taskId: taskId,
+                    subTaskId: subTaskId
+                },
+                (response) => {}
+            );
+        }
+    };
+
+    const handleSubTaskRenameSubmit = (taskId, subTaskId) => {
+        setSelectedTaskId(taskId); // 更新选中的任务
+        setSelectedTaskName(editedSubTaskTitle); // 更新选中的任务名称
+        if (!editedSubTaskTitle.trim()) return;
+        if (chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({
+                action: "rename_sub_task",
+                taskId: taskId,
+                subTaskId: subTaskId,
+                name: editedSubTaskTitle
+            }, (response) => {
+                // const task = tasks.find((t) => t.task_id === taskId);
+                // const subtaskList = task.subtask || []; // 防止 undefined 报错
+                // // console.log("Subtask List:", subtaskList);
+                // setSelectedTaskSubtaskSet(subtaskList); // 更新选中的子任务列表
+            });
+        }
+        setEditingSubTask(null);
+    };
+    
+    
     
 
     return (
@@ -276,14 +325,47 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                     {/* 显示 subtasks */}
                     {selectedTaskId === task.task_id && Array.isArray(task.subtask) && task.subtask.length > 0 && (
                         <div className={styles.subTaskContainer}>
-                            {task.subtask.map((subId, subIndex) => (
-                                <div key={subId} className={styles.subTask}>
-                                    sub task
+                            {task.subtask.map((thisSubTask, subIndex) => (
+                                <div key={thisSubTask} className={styles.subTask}>
+                                    {editingSubTask && editingSubTask.taskId === task.task_id && editingSubTask.subTaskId === thisSubTask.subTaskId ? (
+                                        <input
+                                            type="text"
+                                            value={editedSubTaskTitle}
+                                            onChange={(e) => setEditedSubTaskTitle(e.target.value)}
+                                            onBlur={() => handleSubTaskRenameSubmit(task.task_id, thisSubTask.subTaskId)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleSubTaskRenameSubmit(task.task_id, thisSubTask.subTaskId);
+                                                }
+                                            }}
+                                            autoFocus
+                                            className={styles.taskInput}
+                                        />
+                                    ) : (
+                                        <span
+                                            onDoubleClick={(e) => {
+                                                e.stopPropagation();
+                                                setEditingSubTask({ taskId: task.task_id, subTaskId: thisSubTask.subTaskId });
+                                                setEditedSubTaskTitle(thisSubTask.subTaskName);
+                                            }}
+                                        >
+                                            {thisSubTask.subTaskName}
+                                        </span>
+                                    )}
+
+                                    <button
+                                        className={styles.subTaskDeleteButton}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteSubTask(task.task_id, thisSubTask.subTaskId);
+                                        }}
+                                    >
+                                        ❌
+                                    </button>
                                 </div>
                             ))}
                         </div>
                     )}
-
                 </div>
             ))}
 

@@ -30,7 +30,13 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
                 const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
                 if (chrome.runtime && chrome.runtime.sendMessage) {
-                    chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {});
+                    chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error("Error moving tab to mindmap:", chrome.runtime.lastError);
+                        } else {
+                            console.log("Tab moved to mindmap:", response);
+                        }
+                    });
                 }
                 return newTabs;
             });
@@ -212,10 +218,10 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             <h3>Summary : {chosenTaskSummary}</h3>
             {/* <p>{chosenTaskSummary}</p> */}
             <div className={styles.mindmap_tabs_container}>
-
             {/* ✅ 1. 按照 selectedTaskSubtaskSet 中的每个 subtask 分组显示 tab */}
             {Array.isArray(selectedTaskSubtaskSet) && selectedTaskSubtaskSet.map((subtask) => {
                 const tabsInSubtask = mindmapTabs.filter(tab => tab.subtaskId === subtask.subTaskId);
+                if (tabsInSubtask.length === 0) return null;
                 return (
                 <div key={subtask.subTaskId} className={styles.subtaskBox}>
                     <div className={styles.subtaskBoxTitle}>{subtask.subTaskName}</div>
@@ -236,6 +242,59 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 </div>
             </div>
             </div>
+
+            {/*<div 
+                className={styles.mindmap_tabs_container}  
+                style={{ maxHeight: "400px", overflowY: "auto" }}
+            >
+                {mindmapTabs.map((tab) => (
+                    <div 
+                        key={tab.id}
+                        className={`${styles.mindmap_tab} ${selectedTabId === tab.id ? styles.selectedTab : ""}`}
+                        draggable
+                        onDragStart={(event) => handleDragStart(event, tab)}
+                        onContextMenu={(event) => handleContextMenu(event, tab)}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 防止点击空白处导致 selectedTabId 被清空
+                            setSelectedTabId(tab.id); // 设置当前被选中的 tab
+                            setSelectedTabUrl(tab.currentUrl);
+                            setContextMenu(null); // ✅ 关键：点击时关闭右键菜单
+                        }}
+                    >
+                        <h3>
+                            {tab.color === "GREEN" && "🟢 "}
+                            {tab.color === "BLUE" && "🔵 "}
+                            {tab.color === "PURPLE" && "🟣 "}
+                            {tab.title.slice(0, 50)}
+                        </h3>
+                        <p>{tab.currentUrl.slice(0, 40)}</p>
+                        <p>{tab.summary ? tab.summary : "waiting..."}</p>
+                        <p>{"----------------"}</p>
+                        {tab.note?.trim() && <p><strong>note:</strong> {tab.note.slice(0, 30)}</p>}
+
+                        {contextMenu && selectedTabId === tab.id &&(
+                            <div
+                                className={styles.contextMenu}
+                                style={{ top: contextMenu.mouseY, left: contextMenu.mouseX }}
+                            >
+                                <div onClick={() => handleMenuClick("NONE", tab)}>none color ⬜</div>
+                                <div onClick={() => handleMenuClick("GREEN", tab)}>color green 🟢</div>
+                                <div onClick={() => handleMenuClick("BLUE", tab)}>color blue 🔵</div>
+                                <div onClick={() => handleMenuClick("PURPLE", tab)}>color green 🟣</div>
+                                <div onClick={() => handleMenuClick("Open this tab in browser", tab)}>Open this tab in browser</div>
+                                <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
+                                <div onClick={() => handleMenuClick("Annotate", tab)}>creat or modify a comment</div>
+                                <hr />
+                                <div style={{ fontStyle: "italic", color: "#555", pointerEvents: "none" }}>
+                                    {tab.note?.trim() ? `Note: ${tab.note}` : "No note for this tab"}
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
+                    
+                ))} 
+            </div> */}
         </div>
     );
 }

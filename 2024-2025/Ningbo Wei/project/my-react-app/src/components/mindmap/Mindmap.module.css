@@ -1,11 +1,13 @@
 .mindmap {
   border: 2px dashed #ccc;
-  min-height: 200px;
   padding: 10px;
   background-color: #f9f9f9;
   display: flex;
-  flex-direction: column; /* 让标题和 tab 在不同的行 */
+  flex-direction: column;
   gap: 10px;
+
+  height: 640px;           /* ✅ 明确限制 mindmap 高度 */
+  overflow-y: auto;        /* ✅ 开启滚动 */
 }
 
 .mindmap h2 {
@@ -34,16 +36,16 @@
 
 .mindmap_tabs_container {
   display: flex;
-  flex-wrap: wrap; /* 让 tabs 换行 */
+  flex-direction: column; /* 改为纵向堆叠每个 subtaskBox */
   gap: 10px;
-  max-height: 810px; /* 设定最大高度，超过时滚动 */
-  overflow-y: auto; /* 启用垂直滚动 */
-  padding-right: 10px; /* 预留一些空间避免内容贴紧滚动条 */
+  max-height: none; /* ✅ 移除限制 */
+  overflow-y: visible; /* ✅ 显示全部内容 */
+  padding-right: 10px;
 }
 
 .mindmap_tab {
-  flex: 0 0 220px;  /* 每个 tab 固定宽度 220px */
-  height: 270px;    /* 固定高度 */
+  flex: 0 0 230px;  /* 每个 tab 固定宽度 220px */
+  height: 250px;    /* 固定高度 */
 
   padding: 10px;
   border: 1px solid #ccc;
@@ -96,4 +98,27 @@
 
 .contextMenu div:hover {
   background: #f0f0f0;
+}
+
+.subtaskBox {
+  border: 1px dashed #aaa;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+  background-color: #fdfdfd;
+}
+
+.subtaskBoxTitle {
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.subtaskTabsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 100%;
 }

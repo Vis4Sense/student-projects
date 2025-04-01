@@ -90,10 +90,11 @@ const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs, se
             <h2>QA chat box</h2>
             <p>Input your question here:</p>
             <p>{displayedText}</p>
-        <textarea
-            value={chatBoxReply}
-            readOnly    
-        />
+            <textarea
+                className={styles.chatReplyArea}
+                value={chatBoxReply}
+                readOnly
+            />
         <input 
             type="text" 
             placeholder="Enter text..." 

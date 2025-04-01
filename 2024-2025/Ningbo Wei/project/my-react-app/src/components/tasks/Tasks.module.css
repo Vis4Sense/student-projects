@@ -169,4 +169,20 @@
     padding: 6px 10px;
     font-size: 14px;
     width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subTaskDeleteButton {
+    background: transparent;
+    border: none;
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.subTaskDeleteButton:hover {
+    color: darkred;
 }
