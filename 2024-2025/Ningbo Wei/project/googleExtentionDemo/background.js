@@ -417,6 +417,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const subTaskId = taskId+"_"+crypto.randomUUID();
         // check limit of subtask
         const targetTask = tasks.find((t) => t.task_id === taskId);
+        console.log("add_sub_task:targetTask ", targetTask);
         const currentSubtasks = Array.isArray(targetTask.subtask) ? targetTask.subtask : [];
         if (currentSubtasks.length >= 3) {
             console.log("❌ add_sub_task: Subtask limit reached");

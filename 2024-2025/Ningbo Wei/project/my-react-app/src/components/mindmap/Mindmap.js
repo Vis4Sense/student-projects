@@ -27,14 +27,6 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             removeTab(tabData.id); 
             // 2. tell background.js that a tab is to the mindmap
             const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
-            // setMindmapTabs((prevTabs) => {  // 注意这个setMindmapTabs是异步的，故把move_tab_to_mindmap放在里面
-            //     const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
-            //     const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
-            //     if (chrome.runtime && chrome.runtime.sendMessage) {
-            //         chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {});
-            //     }
-            //     return newTabs;
-            // });
             setMindmapTabs((prevTabs) => {
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
                 let newTabs;
@@ -299,7 +291,23 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             {/* <p>{chosenTaskSummary}</p> */}
             <div className={styles.mindmap_tabs_container}>
 
-            {/* ✅ 1. 按照 selectedTaskSubtaskSet 中的每个 subtask 分组显示 tab */}
+            
+
+            {/* 1. 显示main task 的 tab */}
+            <div 
+                className={styles.subtaskBox}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleTabDropToMindmap(e)}
+            >
+                <div className={styles.subtaskBoxTitle}>main task Tabs</div>
+                <div className={styles.subtaskTabsContainer}>
+                {mindmapTabs
+                    .filter(tab => !tab.subtaskId || !selectedTaskSubtaskSet?.some(sub => sub.subTaskId === tab.subtaskId))
+                    .map((tab) => renderTab(tab))}
+                </div>
+            </div>
+
+            {/* 2. 按照 selectedTaskSubtaskSet 中的每个 subtask 分组显示 tab */}
             {Array.isArray(selectedTaskSubtaskSet) && selectedTaskSubtaskSet.map((subtask) => {
                 const tabsInSubtask = mindmapTabs.filter(tab => tab.subtaskId === subtask.subTaskId);
                 return (
@@ -317,19 +325,6 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 );
             })}
 
-            {/* ✅ 2. 显示未归属任何 subtask 的 tab */}
-            <div 
-                className={styles.subtaskBox}
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleTabDropToMindmap(e)}
-            >
-                <div className={styles.subtaskBoxTitle}>Unassigned Tabs</div>
-                <div className={styles.subtaskTabsContainer}>
-                {mindmapTabs
-                    .filter(tab => !tab.subtaskId || !selectedTaskSubtaskSet?.some(sub => sub.subTaskId === tab.subtaskId))
-                    .map((tab) => renderTab(tab))}
-                </div>
-            </div>
             </div>
         </div>
     );

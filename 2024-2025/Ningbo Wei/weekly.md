@@ -314,9 +314,10 @@ sleeping and having fun...
     - fix bugs in user tab labeling. 
         - Bus is caused due to  background.js script is a Service Worker, which behaves differently from traditional persistent background scripts. This service worker is not always alive. Chrome spins it up on demand, and then suspends (terminates) it when idle(simmiler to activity in android). The annotate call back to background.js and end too quickly that Chrome fails to wake up the worker quickly enough to receive the message. Hence what I have done is adding a latency to the annotate.js.
 - question
-    - In the final report, is prototype walk through belows to user handbook?
-    - reference format for the final report?
+    - In the final report, is prototype walk through belows to user handbook? -- THIS IS NOT A HANDBOOK, JUST EXPLAIN THE INTERACTION OF FRONT-END
+    - reference format for the final report? -- ANY
     - LSEPI???
+        - HOW TO HANDLE USER DATA IN THE EXTENSION
 - plan
     - do final report
     - script for the demo video
