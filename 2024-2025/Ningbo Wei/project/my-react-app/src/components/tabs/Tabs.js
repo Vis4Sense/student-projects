@@ -3,6 +3,20 @@ import styles from './Tabs.module.css';
 
 const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, setSelectedTabId, selectedTabUrl, setSelectedTabUrl}) => {
 
+    /*
+    {
+    "id": 1,
+    "title": "Sample Page",
+    "main_text": "This is the main content of the page.",
+    "outline": "",
+    "currentUrl": "https://example.com",
+    "embedding": [],
+    "shortSummary": "",
+    "longSummary": "",
+    "subtaskId": "xxxxxxx",
+    }
+    */
+
     const [contextMenu, setContextMenu] = useState(null); // 存储菜单位置
 
     const handleSummary = (tab) => {

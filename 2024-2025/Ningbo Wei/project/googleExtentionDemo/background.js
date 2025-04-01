@@ -394,6 +394,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const task_name = message.task_name;
         const task_summary = message.task_summary;
         const mindmap_tabs = message.mindmap_tabs;
+        const task_subtasks = message.task_subtasks;
         const basicId = crypto.randomUUID();
         // store the mindmap into chrome storage
         chrome.storage.local.set({ ["mindmap"+basicId]: mindmap_tabs }, () => {
@@ -401,7 +402,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
         // store the task into chrome storage
         let newTasks = [];
-        newTasks.push({ task_id: "task"+basicId, name: task_name, MindmapId: "mindmap"+basicId, summary: task_summary, createTime : new Date().toISOString() });
+        newTasks.push({ task_id: "task"+basicId, name: task_name, MindmapId: "mindmap"+basicId, summary: task_summary, createTime : new Date().toISOString(), subtask: task_subtasks });
         tasks.unshift(...newTasks);
         chrome.storage.local.set({ taskList: tasks }, () => {
             console.log("update taskList with new tasks", tasks);

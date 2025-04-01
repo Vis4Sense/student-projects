@@ -204,12 +204,14 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                     const task_name = parsedData.taskName;
                     const task_summary = parsedData.taskSummary;
                     const mindmap_tabs = parsedData.taskTabs;
+                    const task_subtasks = parsedData.subtasks;
                     console.log("✅ 导入成功，文件内容如下：", parsedData);
                     chrome.runtime.sendMessage({
                         action: "import_task",
                         task_name: task_name,
                         task_summary: task_summary,
-                        mindmap_tabs: mindmap_tabs
+                        mindmap_tabs: mindmap_tabs,
+                        task_subtasks: task_subtasks
                     });
                 } catch (error) {
                     console.error("❌ 解析 JSON 失败：", error);

@@ -21,23 +21,109 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
         try {
             const tabData = JSON.parse(data);
             console.log("Dropped tab to Mindmap:", tabData);
+            tabData.subtaskId = ""; // 设置 tab 的 subtaskId 为当前选中的 taskId
 
             // 1. 从 `tabs` 里删除该 `tab`
             removeTab(tabData.id); 
             // 2. tell background.js that a tab is to the mindmap
             const mindmapId = "mindmap" + selectedTaskId.replace("task", ""); // 移除 "task" 前缀
-            setMindmapTabs((prevTabs) => {  // 注意这个setMindmapTabs是异步的，故把move_tab_to_mindmap放在里面
+            // setMindmapTabs((prevTabs) => {  // 注意这个setMindmapTabs是异步的，故把move_tab_to_mindmap放在里面
+            //     const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
+            //     const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
+            //     if (chrome.runtime && chrome.runtime.sendMessage) {
+            //         chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {});
+            //     }
+            //     return newTabs;
+            // });
+            setMindmapTabs((prevTabs) => {
                 const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
-                const newTabs = isAlreadyAdded ? prevTabs : [...prevTabs, tabData];
-                if (chrome.runtime && chrome.runtime.sendMessage) {
-                    chrome.runtime.sendMessage({ action: "move_tab_to_mindmap", removedTabId: tabData.id, addedMindmapId: mindmapId, newMindmap: newTabs }, (response) => {});
+                let newTabs;
+              
+                if (isAlreadyAdded) {
+                  // ✅ 如果已存在，更新该 tab 的 subtaskId 为 ""
+                  newTabs = prevTabs.map((t) =>
+                    t.id === tabData.id ? { ...t, subtaskId: "" } : t
+                  );
+                } else {
+                  // ✅ 如果不存在，添加进去并设 subtaskId 为空
+                  newTabs = [...prevTabs, { ...tabData, subtaskId: "" }];
                 }
+              
+                // ✅ 通知后端
+                if (chrome.runtime && chrome.runtime.sendMessage) {
+                  chrome.runtime.sendMessage(
+                    {
+                      action: "move_tab_to_mindmap",
+                      removedTabId: tabData.id,
+                      addedMindmapId: mindmapId,
+                      newMindmap: newTabs,
+                    },
+                    (response) => {}
+                  );
+                }
+              
                 return newTabs;
-            });
+              });
+              
         } catch (error) {
             console.error("Error parsing dropped tab data:", error);
         }
     };
+
+    const handleTabDropToSubtask = (event, subtaskId) => {
+        event.preventDefault();
+        const data = event.dataTransfer.getData('application/json');
+        
+        if (!data) {
+          console.warn("No tab data received during drop.");
+          return;
+        }
+      
+        try {
+          const tabData = JSON.parse(data);
+          tabData.subtaskId = subtaskId; // 设置 tab 的 subtaskId 为当前选中的 taskId
+          if (!selectedTaskId) {
+            console.warn("No task selected for the tab.");
+            return;
+          }
+          // 1. 从 `tabs` 里删除该 `tab`
+          removeTab(tabData.id); 
+      
+          const mindmapId = "mindmap" + selectedTaskId.replace("task", "");
+          setMindmapTabs((prevTabs) => {
+            const isAlreadyAdded = prevTabs.some((t) => t.id === tabData.id);
+            let newTabs;
+          
+            if (isAlreadyAdded) {
+              // ✅ 如果已存在，更新该 tab 的 subtaskId 为 ""
+              newTabs = prevTabs.map((t) =>
+                t.id === tabData.id ? { ...t, subtaskId: subtaskId } : t
+              );
+            } else {
+              // ✅ 如果不存在，添加进去并设 subtaskId
+              newTabs = [...prevTabs, { ...tabData, subtaskId: subtaskId }];
+            }
+          
+            // ✅ 通知后端
+            if (chrome.runtime && chrome.runtime.sendMessage) {
+              chrome.runtime.sendMessage(
+                {
+                  action: "move_tab_to_mindmap",
+                  removedTabId: tabData.id,
+                  addedMindmapId: mindmapId,
+                  newMindmap: newTabs,
+                },
+                (response) => {}
+              );
+            }
+          
+            return newTabs;
+          });
+        } catch (error) {
+          console.error("Error parsing dropped tab data:", error);
+        }
+      };
+      
 
     const handleDragStart = (event, tab) => {
         setSelectedTabId(tab.id); // 设置当前被选中的 tab
@@ -136,6 +222,7 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
         const data = { 
             taskName: selectedTaskName,
             taskSummary: chosenTaskSummary,
+            subtasks: selectedTaskSubtaskSet,
             taskTabs: mindmapTabs
         };
         const jsonStr = JSON.stringify(data, null, 2);
@@ -203,7 +290,6 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
                 e.preventDefault();  // 允许放置
                 e.dataTransfer.dropEffect = "move";  // 修改光标显示
             }}
-            onDrop={handleTabDropToMindmap}
             onClick={handleClickAway}
             >
             <h2>Tasks - {selectedTaskName}</h2>
@@ -217,7 +303,12 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             {Array.isArray(selectedTaskSubtaskSet) && selectedTaskSubtaskSet.map((subtask) => {
                 const tabsInSubtask = mindmapTabs.filter(tab => tab.subtaskId === subtask.subTaskId);
                 return (
-                <div key={subtask.subTaskId} className={styles.subtaskBox}>
+                <div 
+                    key={subtask.subTaskId} 
+                    className={styles.subtaskBox}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleTabDropToSubtask(e, subtask.subTaskId)} 
+                >
                     <div className={styles.subtaskBoxTitle}>{subtask.subTaskName}</div>
                     <div className={styles.subtaskTabsContainer}>
                     {tabsInSubtask.map((tab) => renderTab(tab))}
@@ -227,7 +318,11 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             })}
 
             {/* ✅ 2. 显示未归属任何 subtask 的 tab */}
-            <div className={styles.subtaskBox}>
+            <div 
+                className={styles.subtaskBox}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleTabDropToMindmap(e)}
+            >
                 <div className={styles.subtaskBoxTitle}>Unassigned Tabs</div>
                 <div className={styles.subtaskTabsContainer}>
                 {mindmapTabs
