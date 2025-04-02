@@ -104,27 +104,27 @@ const ChatBox = ({chatBoxReply, setChatBoxReply, selectedTaskId, mindmapTabs, se
             console.log(inputText);
             setDisplayedText(inputText); // 存储输入内容到显示区域
             submitQuestion(inputText); // 发送输入内容到后台
-        }}>Submit</button>
+        }}>🚀 submit</button>
 
         <button onClick={() => {
             setDisplayedText("Give a birfe introduce of the city/locaiton"); // 存储输入内容到显示区域
             chatWithLLM("please generate a introduction of the city or location related to the tabs"); 
-        }}>brifly introduce of the city/locaiton</button>  
+        }}>📍brifly introduce of the city/locaiton</button>  
         <button onClick={() => {
             setDisplayedText("please recommand some place to visit in this city"); // 存储输入内容到显示区域
             chatWithLLM("please recommand some place to visit in this city"); 
-        }}>please recommand some place to visit in this city</button> 
+        }}>🏖️ please recommand some place to visit in this city</button> 
 
         {/* ✅ 新增的互斥选项按钮 */}
         <div style={{ marginTop: '20px' }}>
                 <button 
                     style={{ backgroundColor: selectedOption === 'tab' ? '#339af0' : '#ccc' }}
                     onClick={() => setSelectedOption('tab')}
-                >answer with tab</button>
+                >answer with tab 📄</button>
                 <button 
                     style={{ backgroundColor: selectedOption === 'task' ? '#339af0' : '#ccc' }}
                     onClick={() => setSelectedOption('task')}
-                >answer with task</button>
+                >answer with task 📚</button>
             </div>
     </div>
     );

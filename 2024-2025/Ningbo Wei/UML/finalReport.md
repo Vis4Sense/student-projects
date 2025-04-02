@@ -11,6 +11,7 @@
 - CoSense, -- use shared workspace to support real-time team work
 - Large language model
     - gpt and its usage in tools for sense-make
+- sensecape -- 使用llm辅助sensemaking
 - pervious students work
     - jiaqiLi, --lack of user interaction in tab commenting/high lighting, advance searching functions and group working functions.
 ### Aims and Objectives

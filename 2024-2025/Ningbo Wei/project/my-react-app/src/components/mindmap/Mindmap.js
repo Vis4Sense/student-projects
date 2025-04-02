@@ -273,6 +273,12 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
           )}
         </div>
       );
+
+    const openTabsInTask = () => {
+        // pick all the url in mindmapTabs and open them in the browser
+        const urls = mindmapTabs.map(tab => tab.currentUrl);
+        chrome.runtime.sendMessage({ action: "open_tabs_in_task", urls: urls });
+    }
       
 
     return (
@@ -285,13 +291,15 @@ const Mindmap = ({ mindmapTabs,  setMindmapTabs, removeTab, selectedTaskId, sele
             onClick={handleClickAway}
             >
             <h2>Tasks - {selectedTaskName}</h2>
-            <button onClick={generateSummary}>generate task summary</button>
-            <button onClick={exportTask}>export current Task</button>
+            <div className={styles.titleRow}>
+                
+                <button onClick={openTabsInTask}>🌐 open all tabs</button>
+                <button onClick={generateSummary}>📝 generate summary</button>
+                <button onClick={exportTask}>📦 export current Task</button>
+            </div>
             <h3>Summary : {chosenTaskSummary}</h3>
             {/* <p>{chosenTaskSummary}</p> */}
             <div className={styles.mindmap_tabs_container}>
-
-            
 
             {/* 1. 显示main task 的 tab */}
             <div 

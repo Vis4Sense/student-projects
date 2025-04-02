@@ -176,7 +176,7 @@ function App() {
                 <main className="main-content">
 
                     {/* 使用 Tabs 组件 */}
-                    <button onClick={refreshTabs}>Refresh</button>
+                    <button onClick={refreshTabs}>🔄 refresh</button>
                     <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl}/>
 
                     {/* task详细内容区域，因为历史原因命名为mindmap */}

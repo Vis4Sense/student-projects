@@ -494,6 +494,59 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         return true;
     }
+    else if(message.action === "open_tabs_in_task"){
+        const urlsToOpen = message.urls;
+        if (!Array.isArray(urlsToOpen)) {
+            sendResponse({ success: false, message: 'Invalid URL array' });
+        return;
+        }
+        
+        // 获取所有当前的 tab
+        chrome.tabs.query({}, (allTabs) => {
+        // Map：url -> tab
+        const existingTabsMap = new Map();
+        allTabs.forEach((tab) => {
+            if (tab.url) {
+            existingTabsMap.set(tab.url, tab);
+            }
+        });
+
+        // 记录要移动和要新建的URL
+        const tabsToMove = [];
+        const urlsToCreate = [];
+
+        urlsToOpen.forEach((url) => {
+            if (existingTabsMap.has(url)) {
+                tabsToMove.push(existingTabsMap.get(url));
+            } else {
+                urlsToCreate.push(url);
+            }
+            if(! currentUrl.includes(url)){
+                currentUrl.push(url);
+            }
+        });
+
+        // 创建一个新窗口
+        chrome.windows.create({ url: urlsToCreate.length ? urlsToCreate[0] : undefined }, (newWindow) => {
+            const newWindowId = newWindow.id;
+
+            // 剩余的要创建的 URL（第一个已经在 create 里打开）
+            for (let i = 1; i < urlsToCreate.length; i++) {
+            chrome.tabs.create({ windowId: newWindowId, url: urlsToCreate[i] });
+            }
+
+            // 把已有 tab 移动过去
+            tabsToMove.forEach((tab) => {
+            chrome.tabs.move(tab.id, { windowId: newWindowId, index: -1 });
+            });
+
+            sendResponse({ success: true, message: 'URLs handled' });
+        });
+        });
+
+        // 必须返回 true 以便异步使用 sendResponse
+        return true;
+    }
     else if(message.action === "LLM_conversation") {
         const prompt = message.prompt;
         const pre_prompt = message.pre_prompt || "";
@@ -731,7 +784,7 @@ function processTab(tab) {
                 chrome.tabs.sendMessage(tab.id, { action: "fetch_content", id: uniqueId, tab_idInBrowser: tab.id }, (response) => {
                     if (response) {
                         if (currentUrl.includes(response.currentUrl)) {
-                            console.log("Tab already fetched:", response.currentUrl);
+                            console.log("Tab already fetched/contain:", response.currentUrl);
                             resolve();
                             return;
                         }

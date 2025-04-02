@@ -264,7 +264,7 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
     return (
         <div className={styles.tasks}>
             {/* New Input and Button */}
-            <button onClick={importTask}>Import a task</button>
+            <button onClick={importTask}>📥 import a task</button>
             <div className={styles["task-input-row"]}>
                 <input
                     type="text"
@@ -273,11 +273,11 @@ const Tasks = ({ tasks, setTasks, setSelectedTaskId, selectedTaskId, setMindmapT
                     placeholder="Enter keyword for new task"
                     className={styles.taskInputBox}
                 />
-                <button className={styles["task-button"]} onClick={personaliseGenerateTasks}>Create</button>
+                <button className={styles["task-button"]} onClick={personaliseGenerateTasks}>⚙️ Create</button>
             </div>
             <div className={styles["task-buttons"]}>
-                <button className={styles["task-button"]} onClick={createNewTask}>New Blank Task</button>
-                <button className={styles["task-button"]} onClick={autoGenerateTasks}>Automatically Generate Tasks</button>
+                <button className={styles["task-button"]} onClick={createNewTask}>✳️ New Blank Task</button>
+                <button className={styles["task-button"]} onClick={autoGenerateTasks}>🤖 Automatically Generate Tasks</button>
             </div>
             {tasks.map((task, index) => (
                 <div
