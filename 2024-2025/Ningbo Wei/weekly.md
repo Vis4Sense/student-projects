@@ -322,3 +322,13 @@ sleeping and having fun...
     - do final report
     - script for the demo video
     - user evaluations
+
+## April 1st
+- HAVE DONE
+    - do user evaluation with two people
+    - have plant a shechdual with Xinyu
+    - write 60% of the final report
+    - write a sctipt for demo vide
+- QUESTION
+    - how to make a reference of previous student's work?
+    - how to write a reference of web pages, like model introduct page from openAI?

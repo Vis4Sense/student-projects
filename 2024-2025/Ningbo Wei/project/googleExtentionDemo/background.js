@@ -1004,7 +1004,7 @@ async function getSummaryByLLM(title, main_text, outline, retryCount = retryTime
         ]
     };
     const exampleOutputText = JSON.stringify(exampleOutput, null, 2);
-
+    // role: "system", content: "You are a helpful assistant tasked with summarizing the main content of webpages."
     const prompt = `
         Following text is extracted from a website, including its title, main context, and outline. 
         Due to the limitation of the display, the given information may be truncated. 

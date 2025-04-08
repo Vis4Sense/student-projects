@@ -16,10 +16,9 @@
     - jiaqiLi, --lack of user interaction in tab commenting/high lighting, advance searching functions and group working functions.
 ### Aims and Objectives
 build a Google Chrome extension with LLM that processes user browsing information to improve efficiency in multitasking situations. Comparing to previous approaches, this mainly focuses on improving user’s interaction with the tools, better application of LLM for tab analysis and grouping, achieving result sharing for team collaboration. 
-- Visualise user's massive and chaotic browsing information. (in a chrome extention)
+- Extract user's massive and chaotic browsing information. (in a chrome extention)
 - Apply LLM for information analyze, grouping and filtering.
-- Achieve a chatbot for advance searching.
-- Built an user interface supporting strong user interaction. 
+- Built an user interface supporting strong user interaction and visualization. 
 - Establish information sharing and importing function for group working.
 ## Description of the work
 ### User analysis
