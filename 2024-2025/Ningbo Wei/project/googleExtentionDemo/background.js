@@ -5,38 +5,38 @@ import { API_CONFIG } from './config.js';  // get config of API
 // import { TFIDF } from './tfidf.bundle.js';
 
 
-const MAIN_TEXT_SIGMENT = 1000; // 主要文本的分段长度
+const MAIN_TEXT_SIGMENT = 1000; // length of main text for each segment
 
-const deploymentName = "gpt-4o-mini" // 模型部署名称
-const deploymentName_embedding = "text-embedding-3-small" // 模型部署名称
-const apiVersion = "2025-01-01-preview"  // API 版本
+const deploymentName = "gpt-4o-mini" // deployment name
+const deploymentName_embedding = "text-embedding-3-small" // deployment name for embedding
+const apiVersion = "2025-01-01-preview"  // API version
 
-const retryTime = 23; // openai API 重试次数
-const retryInterval = 2000; // openai API 重试间隔
+const retryTime = 23; // openai API retry times
+const retryInterval = 2000; // openai API retry interval
 const EMBEDDING_DIMESION = 256
 const EMBEDDING_SELECTION_THREASHOLD = 0.2
 
-let results = []; // 存储已读取的 Tab 信息
+let results = []; // save the tabs information
 const currentUrl = [];
-const isTest = false; // 是否为测试模式
-let tasks = []; // 存储任务列表
-let currentAPIrequestCount = 0; // 当前 API 请求次数
+const isTest = false; // indicate whether to use test mode or not
+let tasks = []; // save the tasks information
+let currentAPIrequestCount = 0; //  count the current API request count
 let extractor = null;
 
-// refresh the tabs information
+// a listener for the background update
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // read currently opened tabs and sent it to the front-end
     if (message.action === "fetch_titles") {
         chrome.tabs.query({}, async (tabs) => {
             console.log("Total tabs:", tabs.length);
-            // results.length = 0; // 清空结果 // 不能清空，否则前端无法获取到数据，这里主要是为了在原有基础上添加新的tab
-            // 用 Promise.all 等待所有 processTab 任务完成
+            // results.length = 0; // clear the previous results
+            // use promise.all to process all tabs in parallel
             await Promise.all(tabs.map(tab => processTab(tab)));
-            // 现在所有 tabs 处理完了，才发送更新给前端
+            // send the results to the front-end after processing all tabs
             sendTabsToFrontend();
             sendTasksToFrontend();
         });
-        return true; // 支持异步响应
+        return true; // support async response
     }
     else if(message.action === "check_LLM_api"){
         chat("Hello").then((reply) => {
@@ -64,15 +64,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if (message.action === "open_tab") {
         const openUrl = message.url;
-        // 直接查找已经打开的 tab
+        // check if the tab is already opened
         chrome.tabs.query({}, (tabs) => {
             const existingTab = tabs.find(tab => tab.url === openUrl);
             
             if (existingTab) {
-                // 如果找到了已打开的 tab，则切换到该 tab
+                // if the tab is already opened, just focus on it
                 chrome.tabs.update(existingTab.id, { active: true });
             } else {
-                // 否则创建新的 tab
+                //create a new tab with the URL
                 chrome.tabs.create({ url: openUrl });
             }
         });
@@ -96,9 +96,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 summary: summary
             });
         });
-        return true; // 支持异步响应
+        return true; 
     }
     else if(message.action === "move_tab_to_mindmap") {
+        // move a tab to the mindmap
         const removedTabId = message.removedTabId;
         const addedMindmapId = message.addedMindmapId;
         const newMindmap = message.newMindmap;
@@ -117,6 +118,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if(message.action === "remove_tab_from_chacheResult"){
+        // remove a tab from the cache result
         const removedTabId = message.removedTabId;
         // remove the tab from theresult_tabs
         results = results.filter((t) => t.id !== removedTabId);
@@ -501,7 +503,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return;
         }
         
-        // 获取所有当前的 tab
+        // get the currently opened tabs
         chrome.tabs.query({}, (allTabs) => {
         // Map：url -> tab
         const existingTabsMap = new Map();
@@ -511,7 +513,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
         });
 
-        // 记录要移动和要新建的URL
+        // record the tabs to move and the urls to create
         const tabsToMove = [];
         const urlsToCreate = [];
 
@@ -526,7 +528,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
         });
 
-        // 创建一个新窗口
+        // create a new window for the URLs to create
         chrome.windows.create({ url: urlsToCreate.length ? urlsToCreate[0] : undefined }, (newWindow) => {
             const newWindowId = newWindow.id;
 
@@ -596,6 +598,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if (message.action === "open_annotation_page") {
+        // open the annotation page with the tabId and title
         const { tabId, title, taskId, note } = message;
         console.log("open_annotation_page: reveived id: ", tabId);
         const url = `annotate.html?tabId=${tabId}&title=${encodeURIComponent(title)}&note=${encodeURIComponent(note || '')}&taskId=${encodeURIComponent(taskId || '')}`;
@@ -608,6 +611,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if (message.action === "save_tab_note") {
+        // save the note to the tab
         const { tabId, note, taskId} = message;
         console.log("save_tab_note: get note: ", note);
         console.log("tabid is: ", tabId);
@@ -642,6 +646,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
     else if(message.action === "change_tab_color") {
+        // change the color of the tab
         const { tabId, taskId, color} = message;
         console.log("get_tab_note: get color: ", color);
         if(taskId.length <= 2){
@@ -677,11 +682,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     
 });
 
-// 发送 tabs 信息到 React 前端(直接发送，不需要front-end request)
+// senting the tabs information to the front-end
 function sendTabsToFrontend() {
     chrome.runtime.sendMessage({ action: "update_tabs", tabs: results });
 }
 
+// senting the mindmap information to the front-end
 function sendMindmapToFrontend(mindmapId) {
     chrome.storage.local.get([mindmapId], (result) => { 
         const mindmapTabs = result[mindmapId] || [];
@@ -690,6 +696,8 @@ function sendMindmapToFrontend(mindmapId) {
     });
 }
 
+
+// senting the tasks information to the front-end
 function sendTasksToFrontend(currentTaskId="") {
     // 加载存储的 Mindmap Tabs
     chrome.storage.local.get(["taskList"], (result) => {
@@ -759,13 +767,21 @@ function updateLLMreadyStatus(apiStatus) {
     chrome.runtime.sendMessage({ action: "update_LLM_api_status", apiStatus: apiStatus });
 }
 
+// process the tab and get the content
 function processTab(tab) {
     return new Promise((resolve) => {
         if (!tab.url 
             || tab.url.startsWith('chrome://') 
             || tab.url.startsWith('about:') 
             || tab.url.startsWith('http://localhost:') 
-            || tab.url.startsWith('chrome-extension://')) {
+            || tab.url.startsWith('chrome-extension://')
+            || tab.url.includes('login')
+            || tab.url.includes('sign-in')
+            || tab.url.includes('log-in')
+            || tab.url.includes('register')
+            || tab.url.includes('signin')
+            || tab.url.includes('signup')
+            || tab.url.includes('account'))  {
             console.log("Skipping unsupported tab:", tab.url);
             resolve();
             return;
@@ -1225,6 +1241,7 @@ async function getClassificationByLLM(tabInfo, retryCount = retryTime) {
     }
 }
 
+//sending the tabs information to the LLM for classification
 async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = retryTime) {
     if (isTest) {
         return "This is a test summary";
@@ -1330,6 +1347,7 @@ async function getClassificationByLLMWithKeyWord(tabInfo, keyWord, retryCount = 
     }
 }
 
+// sending the prompt to the LLM and get the response
 async function chat(prompt, 
     retryCount = retryTime,
     pre_prompt = "You are a good assistant in helping user solve problem or explaining concept." 
@@ -1411,6 +1429,7 @@ async function getEmbedding(texts) {
     }
 }
 
+// calculate the cosine similarity between two vectors
 function cosineSimilarity(vecA, vecB) {
     let dot = 0, normA = 0, normB = 0;
     for (let i = 0; i < vecA.length; i++) {
@@ -1421,8 +1440,9 @@ function cosineSimilarity(vecA, vecB) {
     return dot / (Math.sqrt(normA) * Math.sqrt(normB));
   }
   
+// calculate the cosine similarity between two vectors and return the similarity score
 function selectTopByMeanStd(scoredTabs) {
-    // 均值 + 标准差筛选法
+    // use standard deviation to select the top tabs
     if (!Array.isArray(scoredTabs) || scoredTabs.length === 0) return [];
 
     const scores = scoredTabs.map(item => item.score);
@@ -1434,18 +1454,6 @@ function selectTopByMeanStd(scoredTabs) {
     const threshold = mean + 0.5*stdDev;
 
     return scoredTabs.filter(item => item.score >= threshold);
-}
-
-function selectTopByScoreGap(scoredTabs, thresholdGap = EMBEDDING_SELECTION_THREASHOLD) {
-    //差值阈值法
-    const result = [];
-    for (let i = 0; i < scoredTabs.length; i++) {
-        result.push(scoredTabs[i]);
-        const next = scoredTabs[i + 1];
-        if (!next) break;
-        if ((scoredTabs[i].score - next.score) > thresholdGap) break;
-    }
-    return result;
 }
 
 // 查找是否有 tab 打开了指定 URL
@@ -1559,8 +1567,7 @@ const fetchTabTextIfOpen = async (urlToCheck) => {
     });
 };
 
-      
-
+// fetch the raw HTML from the given URL
 const fetchRawHtml = async (urlToCheck) => {
     try {
       const response = await fetch(urlToCheck);
@@ -1572,6 +1579,7 @@ const fetchRawHtml = async (urlToCheck) => {
     }
 };
 
+// get the first tab that is not a chrome page or extension page
 const getInjectableTab = async () => {
     return new Promise((resolve) => {
       chrome.tabs.query({}, (tabs) => {

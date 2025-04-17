@@ -9,19 +9,19 @@ import TaskSummary from './components/taskSummary/TaskSummary';
 import ProcessWindow from './components/processWindow/ProcessWindow';
 
 function App() {
-    const [tabs, setTabs] = useState([]); // 用于存储标签页数据z
-    const [tasks, setTasks] = useState([]);  // 用于存储任务数据
-    const [mindmapTabs, setMindmapTabs] = useState([]); // 存储拖拽到当前 Mindmap 的 tabs
+    const [tabs, setTabs] = useState([]); // used to store the tabs data
+    const [tasks, setTasks] = useState([]);  // used to store the tasks data
+    const [mindmapTabs, setMindmapTabs] = useState([]); // store the mindmap tabs data
     const [selectedTaskId, setSelectedTaskId] = useState(null); // current selected task
     const [selectedTaskSubtaskSet, setSelectedTaskSubtaskSet] = useState([]); // current selected task name
     const [selectedTaskName, setSelectedTaskName] = useState('choose to open a task'); // current selected task name
-    const [chatBoxReply, setChatBoxReply] = useState(''); // 用于存储chatbox的回复
-    const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // 用于存储task summary
+    const [chatBoxReply, setChatBoxReply] = useState(''); // store the chat box reply
+    const [chosenTaskSummary, setchosenTaskSummary] = useState(''); // store the task summary
     const [maxLLMtaskToDo, setMaxLLMtaskToDo] = useState(0);
     const [apiWaitingTime, setApiWaitingTime] = useState(0);
     const [ifLLMready, setIfLLMready] = useState("checking the api status..."); // READY;FAILD;WORKING
-    const [selectedTabId, setSelectedTabId] = useState(null); // 存储当前右键的 Tab
-    const [selectedTabUrl, setSelectedTabUrl] = useState(null); // 存储当前右键的 Tab url
+    const [selectedTabId, setSelectedTabId] = useState(null); // store the selected tab id
+    const [selectedTabUrl, setSelectedTabUrl] = useState(null); // store the selected tab url
 
 
     useEffect(() => {  // a hook to fetch tasks and tabs
@@ -43,14 +43,14 @@ function App() {
             }
         });
 
-        // 监听 `background.js` 推送的 tabs 更新
+        // listen to messages from background script
         const handleMessage = (message) => {
             if (message.action === "update_tabs") {
                 console.log("Received updated tabs:", message.tabs);
                 setTabs(message.tabs || []);
             }
             else if (message.action === "summary_result") {
-                // 收到后台返回的总结后，更新对应的 tab.summary
+                // receive summary result from background script
                 setTabs(prevTabs => {
                     const updatedTabs = prevTabs.map(tab => {
                         if (tab.id === message.tabId) {
@@ -118,7 +118,7 @@ function App() {
 
         chrome.runtime.onMessage.addListener(handleMessage);
 
-        // 在组件加载时主动请求一次 tabs
+        // fetch tabs from background script
         chrome.runtime.sendMessage({ action: "get_tabs" });
 
         return () => {
@@ -166,24 +166,24 @@ function App() {
                 <h1>Sense Making Visualise</h1>
             </header>
             <div className="layout">
-                {/* 左侧任务列表 */}
+                {/* task panle on the left */}
                 <aside className="task-list">
                     <h2>Tasks</h2>
                     <Tasks tasks={tasks} setTasks={setTasks} setSelectedTaskId = {setSelectedTaskId} selectedTaskId={selectedTaskId} setMindmapTabs={setMindmapTabs} setSelectedTaskName={setSelectedTaskName} setchosenTaskSummary={setchosenTaskSummary} setSelectedTaskSubtaskSet={setSelectedTaskSubtaskSet}/>
                 </aside>
 
-                {/* 中间内容区域 */}
+                {/* middle section */}
                 <main className="main-content">
 
-                    {/* 使用 Tabs 组件 */}
+                    {/* tab section */}
                     <button onClick={refreshTabs}>🔄 refresh</button>
                     <Tabs tabs={tabs} setTabs={setTabs} setMindmapTabs={setMindmapTabs} selectedTaskId={selectedTaskId} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl}/>
 
-                    {/* task详细内容区域，因为历史原因命名为mindmap */}
+                    {/* task detail section，name it as mindmap */}
                     <Mindmap mindmapTabs={mindmapTabs} setMindmapTabs={setMindmapTabs} removeTab={removeTab} selectedTaskId={selectedTaskId} selectedTaskName={selectedTaskName} chosenTaskSummary={chosenTaskSummary} selectedTabId={selectedTabId} setSelectedTabId={setSelectedTabId} selectedTabUrl={selectedTabUrl} setSelectedTabUrl={setSelectedTabUrl} selectedTaskSubtaskSet={selectedTaskSubtaskSet}/>
                 </main>
 
-                {/* 右侧问答区域 */}
+                {/* QA chat box section */}
                 <aside className="qa-section">
                     {/* <h2>QA Chat Box</h2> */}
                     <QAchatBox chatBoxReply={chatBoxReply} setChatBoxReply={setChatBoxReply} selectedTaskId={selectedTaskId} mindmapTabs={mindmapTabs} selectedTabUrl={selectedTabUrl}/>

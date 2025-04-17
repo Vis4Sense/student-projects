@@ -1,3 +1,6 @@
+// this script is injected into the current page
+// to fetch the content of the page and send it back to the background script
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // console.log("Message received:", message);
     //使用 chrome.runtime.onMessage.addListener 监听从 background.js 发送的消息
@@ -24,7 +27,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendResponse({ error: err.message });
         }
     }
-    return true; // 必须返回 true 以支持异步响应
+    return true; // keep the message channel open for sendResponse
 });
 
 // return sample data

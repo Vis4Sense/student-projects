@@ -325,10 +325,43 @@ sleeping and having fun...
 
 ## April 1st
 - HAVE DONE
-    - do user evaluation with two people
+    - a new functions: allow user to open all the tab in a task
+    - do user evaluation with two people, shows that this tool help them do a better plan
+        - ahcieve this pan quicker, more detial
+        - they love the functions of QA CHAT BOX
     - have plant a shechdual with Xinyu
     - write 60% of the final report
+        - remeber to mention the key and models in user handbook
+        - don't upload your own key/endpoint
+        - also don;t need to includ public online resource
+        - can say traveling is the main user case, for initial development
     - write a sctipt for demo vide
+        - don't spend too much time in background intro, just high level...
+        - how do pelple plan a trip to zwolle?
 - QUESTION
     - how to make a reference of previous student's work?
+        - just make a refer, if possible just creat a reference
     - how to write a reference of web pages, like model introduct page from openAI?
+
+## April 7th
+- have done
+    - give a name to the tool: SenseChat
+    - finish user evauation
+        - 20% quicker
+        - interaction is good, but less switching the better
+        - SUS:87.5 point, good
+        - QA Chat box is thought to be the best part, it can use information of a web page directly
+        - but some user hope it can be a real RAG, at least it can pick a tab to do the answer based on user question(no need to manualy select)
+        - Some user perfer to use phone APP, not just web browser(in this user task)
+        - Some user don't like doing a plan before traveling, shown a unmotivate during user testing -- just for this case, not for the users. The tool is not suitable for these user to do a travel plant
+    - 90% of report
+    - demo video -- not need to show all the features
+- question 
+    - time limitation of demo video
+    - source code uploading, do I need to submit the react code?
+        - only the final code need to run? Or include some code before compiled? -- includ it, but don't include the node folder
+
+- add more references in related work
+- how this tools match with the user requirement -- user requremtn can be a sub section 
+- include a screen shot of each features. Show the overall user interface first.
+

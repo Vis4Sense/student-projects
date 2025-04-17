@@ -1,3 +1,6 @@
+// this script is injected into the current page
+// aims to export the content of the a task to a json file
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("expoting.js is downloading the file..");
     if (message.action === "startDownload") {

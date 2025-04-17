@@ -187,6 +187,17 @@ const Tabs = ({ tabs, setTabs, setMindmapTabs, selectedTaskId, selectedTabId, se
                             <div onClick={() => handleMenuClick("Delet this tab", tab)}>Delet this tab</div>
                             <div onClick={() => handleMenuClick("Annotate", tab)}>creat or modify a comment</div>
                             <hr />
+                            <div style={{
+                                fontStyle: "italic",
+                                color: "#555",
+                                pointerEvents: "none",
+                                maxWidth: "200px",     // 或你想要的宽度
+                                wordWrap: "break-word",
+                                whiteSpace: "normal"
+                            }}>
+                                {tab.summaryLong?.trim() ? `Summary: ${tab.summaryLong}` : "No summary for this tab"}
+                            </div>
+                            <hr />
                             <div style={{ fontStyle: "italic", color: "#555", pointerEvents: "none" }}>
                                 {tab.note?.trim() ? `Note: ${tab.note}` : "No note for this tab"}
                             </div>

@@ -5,7 +5,7 @@
 - Task is planing a two days trip to Zwolle in Netherlands .  (One city for 6 people, 3 tool, 3 not)
     - reason: Comparing to London or Manchester, Zwolle in Netherlands is more strange to most of potential participants. Better to achieve "sence making".
     - participant need to arrage transporation(start from China Beijing), an restrant for dinner, a hotel and at least three places to visit.
-    - user perference: 
+    - user perference(special need): 
         - You take this trip with one of your firend, both of you are 22 years old
         - Your firend is allergic to seafood.
         - Both of you are interesting in Michelin restaurants, hopping to enjoy it one day.
@@ -14,14 +14,16 @@
 - recorde participants' behaviour and their time spend on this task.
     - just record screen and voice, can be done remotly
 ## 2. User questionnaire
+- ask users after they finish the task
 - Do you think this extention help you finish this task/is it useful? Why?
-    - In functions, 0-5: tab grouping, tab summary, task summary, tab comment, chat box?
+    - In functions, 0-5: tab grouping, tab summary, task summary, tab comment & highlight, chat box?
     - In aims, 0-5: hotel booking? restrant finding? tourist plant? Travel ticket booking?
 - What is the best function you feel about this tool?
 - What is the worst function in this tool, why?
 - Any improvement that you hope to do on this tool?
 ## 3. Quatitive reaserch
 - SUS-System Usability Scale question(totally ten questions)
+- 1:strong disagreen, 5: really agreen
     - I think that I would like to use this system frequently.	我认为我会经常使用这个系统。
     - I found the system unnecessarily complex.	我觉得这个系统不必要地复杂。
     - I thought the system was easy to use.	我觉得这个系统容易使用。
@@ -36,5 +38,17 @@
 - Effect of the tourist plan???
     - test how much do participants know about the city they plan to go?
         - does the place match the special need/background(as a rank)
+
+
+
+
+- 还是需要来回切换（浏览器和插件之间）
+- 用户可能是直接用手机规划，而且不一定走网页端而是各种app
+- 有些人旅游并不会去规划，随心所欲，故testing可以放宽一些选择
+- AI集成QA是很不错的（RAG）
+- AQ chat box的enter可以大一些
+
+- xingyu: 3，1，4，4，
+- ZEFEI：兰州，美食，一周
 
 

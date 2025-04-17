@@ -1,6 +1,8 @@
+// this file is used to annotate the tab with a note
+
 console.log("✅ annotate.js loaded!");
 if (!chrome.runtime || !chrome.runtime.sendMessage) {
-  alert("❌ 当前页面未以扩展方式打开，消息无法发送！");
+  alert("❌ This extension is not running in a Chrome environment. Please open it in a Chrome browser.");
 }
 
 
@@ -26,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       taskId
     }, (response) => {
       console.log("save_tab_note response received:", response);
-      setTimeout(() => window.close(), 200);  // 稍等 200ms 再关闭
+      setTimeout(() => window.close(), 200);  // wait for 200ms before closing the window, otherwise the message may not be sent successfully
     });
   });
 });
