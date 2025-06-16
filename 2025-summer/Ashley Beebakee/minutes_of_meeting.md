@@ -44,7 +44,7 @@ Actions:
   <li>Investigate existing work of configurable interfaces: ML model or simulation (i.e. weather forecast).</li>
   <li>Create GitHub issue for “Preliminary Ethics” form, followed by submission by 18th June, 15:00.</li>
   <li>Create GitHub issue for “Full Ethics” form.</li>
-  <li>Create GitHub issue for “Project Plan”.</li>
+  <li>Create GitHub issue for “Project Proposal”.</li>
   <li>Draft a Gantt chart for the project proposal to visualise whether complexity of project is doable within the implementation time frame.</li>
 </ul>
 
@@ -58,4 +58,4 @@ Actions:
   <li>...</li>
 </ul>
 
-[Last updated: 16/06/2025 13:55]
+[Last updated: 16/06/2025 14:47]
