@@ -9,6 +9,12 @@ Please create a folder with your name for your project code, document, dataset, 
 - Qing Wang: ~~LLM for Qualitative Analysis - Evaluation of psychological counselling~~, Vitality 2 - chat with your papers 
 - Jiajun Huang: Large Action Model 
 
+# Meeting 16 June 2025
+
+## To-do
+1. ethics check list (please create an github issue for this)
+2. full ethics application (please create an github issue for this)
+3. project proposal (please create an github issue for this)
 
 # Meeting 9 June 2025
 
