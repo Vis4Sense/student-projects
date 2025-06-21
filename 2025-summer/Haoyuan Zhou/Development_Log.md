@@ -2,7 +2,7 @@
 # Project: Lettuce Tool Deployment and Testing
 
 ## 1. Project Goal
-Following the official tutorial, successfully install the Lettuce tool on my macOS environment, set up the required OMOP CDM vocabulary database, and run a query as a test.
+Following the official tutorial(https://health-informatics-uon.github.io/lettuce/quickstart), successfully install the Lettuce tool on my macOS environment, set up the required OMOP CDM vocabulary database, and run a query as a test.
 
 ## 2. Development Process and Challenges
 The process was far more complex than expected. The challenges were divided into two main stages: local environment setup and core database configuration.
