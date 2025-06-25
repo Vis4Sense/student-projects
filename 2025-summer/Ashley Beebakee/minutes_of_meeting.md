@@ -48,7 +48,12 @@ Actions:
   <li>Draft a Gantt chart for the project proposal to visualise whether complexity of project is doable within the implementation time frame.</li>
 </ul>
 
-## 23rd June 2025 (13:00 - 14:XX)
+## ~23rd June 2025 (13:00 - 14:00)~
+<ul>
+  <li>Absent due to illness (22nd June - 25th June).</li>
+</ul>
+
+## 30th June 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
   <li>...</li>
@@ -58,4 +63,4 @@ Actions:
   <li>...</li>
 </ul>
 
-[Last updated: 16/06/2025 14:47]
+[Last updated: 25/06/2025 04:55]
