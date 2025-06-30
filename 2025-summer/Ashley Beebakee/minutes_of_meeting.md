@@ -53,7 +53,26 @@ Actions:
   <li>Absent due to illness (22nd June - 25th June).</li>
 </ul>
 
-## 30th June 2025 (13:00 - 14:XX)
+## 30th June 2025 (13:00 - 13:45)
+Discussion:
+<ul>
+  <li>Discussed the Project Plan leading to current work on tasks.</li>
+  <li>Explained why Streamlit was chosen to implement the GUI.</li>
+  <li>Checked available VRAM for AMD RX6600 XT GPU, should be able to run an LLM locally.</li>
+  <li>Discussed O'Reilly course for Prompt Engineering relevancy to Work Package 1 (WP1).</li>
+</ul>
+Actions:
+<ul>
+  <li>Continue to learn about Prompt Engineering and create templates for free-to-use LLM APIs.
+  <li>Begin drafting the Literature Review on any research done (i.e. Prompt Engineering, Configurable Interfaces, etc.).</li>
+  <li>Create the 'base' workflow to test functionality of the system (to be expanded as the weeks pass).</li>
+</ul>
+Suggestions:
+<ul>
+  <li>Do not spend too much on learning Prompt Engineering to avoid delayed implementation of subsequent tasks</li>
+</ul>
+
+## 7th July 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
   <li>...</li>
@@ -62,5 +81,9 @@ Actions:
 <ul>
   <li>...</li>
 </ul>
+Suggestions:
+<ul>
+  <li>...</li>
+</ul>
 
-[Last updated: 25/06/2025 04:55]
+[Last updated: 30/06/2025 13:46]
