@@ -53,7 +53,7 @@ Actions:
   <li>Absent due to illness (22nd June - 25th June).</li>
 </ul>
 
-## 30th June 2025 (13:00 - 14:XX)
+## 30th June 2025 (13:00 - 13:45)
 Discussion:
 <ul>
   <li>Discussed the Project Plan leading to current work on tasks.</li>
