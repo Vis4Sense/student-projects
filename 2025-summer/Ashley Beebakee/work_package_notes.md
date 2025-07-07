@@ -12,3 +12,8 @@
 <ul>
   <li>...</li>
 </ul>
+
+## Notes of Development (NoD)
+<ul>
+  <li>streamlit.py: when saved, the config file structures the details in alphabetical order.</li>
+</ul>
