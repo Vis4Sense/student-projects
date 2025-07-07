@@ -26,6 +26,11 @@
   <li>Full-sized 7B, 13B models will cause the same error even if ran on CPU with the system's RAM.</li>
   <li>Quantised Mixtral ("TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ") and BLOOMZ models were downloaded successfully.</li>
   <li>Optimum library enables faster CPU/GPU inference.</li>
+  <li>Removed all downloaded hugging face models and downloaded quantised 4-bit Llama 3.1 model for AMD ("Llama-3.1-8B-Instruct-bf16-q4_k.gguf").</li>
+  <li>To use CPU only, run: "pip install llama-cpp-python".</li>
+  <li>To use GPU acceleration, run (Windows Powershell): "$env:CMAKE_ARGS="-DLLAMA_CLBLAST=on"; pip install llama-cpp-python --force-reinstall --no-cache-dir"</li>
+  <li>Configured optimised LLM settings for 'AMD RX6600 XT GPU'.</li>
+  <li>n_gpu_layers = 0 (CPU), -1 (GPU), 25 (GPU layers).</li>
 </ul>
 
 ## prompt.py
