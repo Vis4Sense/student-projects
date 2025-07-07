@@ -21,12 +21,16 @@
 <ul>
   <li>Created new token on personal Hugging Face account, called 'Thesis.Token'.</li>
   <li>Requested access to LLaMA 3 ("meta-llama/Meta-Llama-3-8B") model -> permission granted.</li>
-  <li>Downloaded Mixtral ("mistralai/Mixtral-8x7B-Instruct-v0.1") and BLOOMZ ("bigscience/bloomz-7b1-mt") models.</li>
+  <li>Attempted to download Mixtral ("mistralai/Mixtral-8x7B-Instruct-v0.1") and BLOOMZ ("bigscience/bloomz-7b1-mt") models.</li>
+  <li>Downloading the LLMs above result in an 'os error 1455', 'The paging file is too small for this operation to complete' due to low VRAM.</li>
+  <li>Full-sized 7B, 13B models will cause the same error even if ran on CPU with the system's RAM.</li>
+  <li>Quantised Mixtral ("TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ") and BLOOMZ models were downloaded successfully.</li>
+  <li>Optimum library enables faster CPU/GPU inference.</li>
 </ul>
 
 ## prompt.py
 <ul>
-  <li>...</li>
+  <li>Created prompt templates for zero-shot, few-shot and chain-of-thought (CoT).</li>
 </ul>
 
 ## extraction.py
@@ -34,4 +38,4 @@
   <li>...</li>
 </ul>
 
-[Last updated: 07/07/2025 07:37]
+[Last updated: 07/07/2025 09:14]
