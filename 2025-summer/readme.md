@@ -9,6 +9,11 @@ Please create a folder with your name for your project code, document, dataset, 
 - Qing Wang: ~~LLM for Qualitative Analysis - Evaluation of psychological counselling~~, Vitality 2 - chat with your papers 
 - Jiajun Huang: Large Action Model 
 
+# Meeting 7 July 2025
+
+## To do
+1. Everyone: add the project timeline to the readme.md file of your project folder. We will use it to track the progress.
+
 # Meeting 16 June 2025
 
 ## To-do
