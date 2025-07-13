@@ -7,13 +7,15 @@
 <ul>
   <li>When saving the configuration in the Streamlit hosted webpage, the YAML config file's contents are saved in alphabetical order.</li>
   <li>Configuration was simplified to test partial functionality of a simple workflow (to be expanded as the weeks pass by).</li>
-  <li>Dashboard can only be customised to an extent since it doesn't support CSS/JavaScript like HTML does.</li>
+  <li>Streamlit dashboard can only be customised to an extent since it doesn't support CSS/JavaScript like HTML does.</li>
+  <li>Integrated "scraping.py" to scrape cryptocurrency related reddit posts.</li>
+  <li>Added "run" buttons with configured columns to visualise the outputs.</li>
 </ul>
 
 ## scraping.py
 <ul>
   <li>Reddit has implemented features to prevent bots/crawlers from scraping.</li>
-  <li>By extracting the browser's User-Agent information, we can avoid being blocked from scraping.</li>
+  <li>By extracting the browser's "User-Agent" information, we can mimic a browser request to prevent Reddit from detecting our bot.</li>
   <li>Up-to-date Reddit does not display more than 4-5 posts without having to scroll down (infinitely), due to this, scraping old Reddit is the better option since it uses 'Next' buttons to view more posts.</li>
 </ul>
 
