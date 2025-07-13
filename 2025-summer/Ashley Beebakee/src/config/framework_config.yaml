@@ -1,3 +1,3 @@
-llm: LLaMA 3
-prompt: Chain-of-Thought (CoT)
-sentiment: Twitter
+llm: LLaMA 3.1
+prompt: Zero-shot
+sentiment: Reddit
