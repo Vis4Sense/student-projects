@@ -72,7 +72,12 @@ Suggestions:
   <li>Do not spend too much on learning Prompt Engineering to avoid delayed implementation of subsequent tasks</li>
 </ul>
 
-## 7th July 2025 (13:00 - 14:XX)
+## ~7th July 2025 (13:00 - 14:00)~
+<ul>
+  <li>Absent due to unfunctional build of workflow - more time required.</li>
+</ul>
+
+## 14th July 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
   <li>...</li>
@@ -86,4 +91,4 @@ Suggestions:
   <li>...</li>
 </ul>
 
-[Last updated: 30/06/2025 13:46]
+[Last updated: 13/07/2025 01:52]
