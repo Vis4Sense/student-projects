@@ -6,9 +6,9 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 13/07/2025
 # Python Version: 3.10.6
-# Packages Required: transformers, accelerate, safetensors
-#                    auto-gptq, optimum, exllamav2, ninja
-#                    sentencepiece, llama-cpp-python
+# Packages Required: llama-cpp-python (CPU only)
+#                    llama-cpp-python --force-reinstall 
+#                    --no-cache-dir (GPU acceleration)
 # Hugging Face Token: Thesis.Token
 #------------------------------------------------------------#
 
@@ -43,25 +43,13 @@ def llama_optimisation(model_path):
     return llm
 
 # Script for "Instruct Model" sentiment analysis using Llama 3.1
-def analyse_sentiment():
+def analyse_sentiment(prompt):
     model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
     
     # Optimised Llama 3.1 settings for AMD GPU
     llm = llama_optimisation(model_path)
     
-    # Formatted prompt for Llama 3.1
-    prompt = """
-    <|begin_of_text|>
-        <|start_header_id|>system<|end_header_id|>
-            You are a social media analyst. Provide insightful analysis of posts.
-    <|eot_id|>
-        <|start_header_id|>user<|end_header_id|>
-            Analyse this Reddit post: Ethereum is pumping hard today and everyone is thrilled!
-    <|eot_id|>
-        <|start_header_id|>assistant<|end_header_id|>
-    """
-
-    # Generate response using the LLM
+    # Generate response using the LLM and corresponding prompt template
     response = llm(                                                      
         prompt,
         max_tokens=300,
