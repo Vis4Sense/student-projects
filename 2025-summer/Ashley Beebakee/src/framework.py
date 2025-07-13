@@ -8,16 +8,19 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 13/07/2025
 # Python Version: 3.10.6
-# Packages Required: streamlit, pyyaml, os
+# Packages Required: streamlit, pyyaml, time, os
 #------------------------------------------------------------#
 
 # Import required libraries
 import streamlit as st
 import yaml
+import time
 import os
 
 # Import required modules
 from sentiment.scraping import scrape_reddit_posts
+from models.prompt import ZERO_SHOT_PROMPT, FEW_SHOT_PROMPT, CHAIN_OF_THOUGHT_PROMPT
+from models.llm_selection import analyse_sentiment
 
 # Assign model config to constant variable
 CONFIG_PATH = "config/framework_config.yaml"
@@ -48,10 +51,13 @@ def save_config(config):
     with open(CONFIG_PATH, 'w') as f:
         yaml.dump(config, f)
 
-# Streamlit dashboard title
-st.title("Streamlit Modular DL Framework Prototype v2.0")
+# Set page layout to wide
+st.set_page_config(layout="wide")
 
-column1, column2 = st.columns([3, 3]) # Adjust values to change column width
+# Streamlit dashboard title
+st.title("Streamlit Modular DL Framework Prototype v3.0")
+
+column1, column2 = st.columns([8, 10]) # Adjust values to change column width
 
 # N.B: The prefix "r_" denotes the word "run", as in where the run button is placed.
 with column1:
@@ -62,7 +68,7 @@ with column1:
     # 'Sentiment Analysis' section
     st.subheader("Sentiment Analysis")
 
-    news_col, r_news_col = st.columns([3, 1])
+    news_col, r_news_col = st.columns([7, 1]) # Must sum up to column1's width of 8
     with news_col:
         # Variety of crypto news sources
         config['sentiment'] = st.selectbox("Select Crypto News Source:", ["Reddit", "Twitter", "NewsAPI"], index=["Reddit", "Twitter", "NewsAPI"].index(config['sentiment']))
@@ -89,7 +95,7 @@ with column1:
         llm_index = 0
         config['llm'] = llm_options[0]
 
-    llm_col, r_llm_col = st.columns([3, 1])
+    llm_col, r_llm_col = st.columns([7, 1]) # Must sum up to column1's width of 8
     with llm_col:
         # LLM and prompt engineering options
         config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
@@ -114,11 +120,42 @@ with column1:
 with column2:
     if run_news:
         # Run the sentiment analysis scraping function
-        posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=100)
+        posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=5)
         st.subheader("Reddit Posts")
+
         for i, post in enumerate(posts, 1):
             st.write(f"{i}. {post['title']}\n{post['url']}\n")
 
+    elif run_llm:
+        # Assign prompt template based on configuration
+        if config['prompt'] == "Zero-shot":
+            prompt_template = ZERO_SHOT_PROMPT
+        elif config['prompt'] == "Few-shot":
+            prompt_template = FEW_SHOT_PROMPT
+        else:
+            prompt_template = CHAIN_OF_THOUGHT_PROMPT
+
+        # Parse Reddit's 1st scraped post for sentiment analysis
+        posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=1)
+        post_text = posts[0]['title'] if posts else "No posts available."
+        prompt = prompt_template.format(post=post_text)
+
+        # Show progress bar while waiting for response
+        progress = st.progress(0, text="Analysing with LLM...")
+        for percent in range(1, 91, 3):
+            time.sleep(0.05)  # Simulate progress (remove if not needed)
+            progress.progress(percent, text="Analysing with LLM...")
+
+        # Call the sentiment analysis function
+        response = analyse_sentiment(prompt)
+
+        # Show progress bar completion
+        progress.progress(100, text="Analysis complete!")
+        time.sleep(1.5)
+        progress.empty()
+
+        st.subheader("LLM Sentiment Analysis Result")
+        st.write(response)
 
 # Run this in the Powershell terminal to save the file path as a variable
 # $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
