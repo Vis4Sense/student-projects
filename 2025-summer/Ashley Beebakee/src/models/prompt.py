@@ -4,13 +4,13 @@
 #              sentiment analysis tasks using LLMs (Zero-shot,
 #              Few-shot and Chain-of-Thought).
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 13/07/2025
+# Last Updated: 14/07/2025
 # Python Version: 3.10.6
-# Packages Required: ...
+# Packages Required: N/A
 #------------------------------------------------------------#
 
-# Define prompt templates for sentiment analysis tasks using LLMs (i.e. LLama 3.1)
-ZERO_SHOT_PROMPT = """
+# Define prompt templates for sentiment analysis tasks using Llama 3.1 8B 4-bit and 2-bit models, and Bloomz 7B 4-bit model.
+ZERO_SHOT_LLAMA = """
 <|begin_of_text|>
     <|start_header_id|>system<|end_header_id|>
         You are a social media analyst. Provide insightful analysis of posts.
@@ -21,7 +21,7 @@ ZERO_SHOT_PROMPT = """
     <|start_header_id|>assistant<|end_header_id|>
 """
 
-FEW_SHOT_PROMPT = """
+FEW_SHOT_LLAMA = """
 <|begin_of_text|>
     <|start_header_id|>system<|end_header_id|>
         You are a social media analyst. Provide insightful analysis of posts.
@@ -44,7 +44,7 @@ FEW_SHOT_PROMPT = """
     <|start_header_id|>assistant<|end_header_id|>
 """
 
-CHAIN_OF_THOUGHT_PROMPT = """
+CHAIN_OF_THOUGHT_LLAMA = """
 <|begin_of_text|>
     <|start_header_id|>system<|end_header_id|>
         You are a social media analyst. Think step by step and provide insightful analysis of posts.
@@ -54,4 +54,40 @@ CHAIN_OF_THOUGHT_PROMPT = """
 <|eot_id|>
     <|start_header_id|>assistant<|end_header_id|>
         Let's break down the post step by step:
+"""
+
+ZERO_SHOT_BLOOMZ = """
+You are a social media analyst. Analyse the following Reddit post and provide:
+1. A sentiment score between -1 (very negative) and 1 (very positive).
+2. A brief explanation for your score.
+
+Reddit post: {post}
+Sentiment score:
+"""
+
+FEW_SHOT_BLOOMZ = """
+You are a social media analyst. Analyse each Reddit post and provide:
+1. A sentiment score between -1 (very negative) and 1 (very positive).
+2. A brief explanation for your score.
+
+Reddit post: Bitcoin is crashing and investors are worried!
+Sentiment score: -0.8
+Explanation: The post expresses concern and fear due to Bitcoin's price drop.
+
+Reddit post: Dogecoin is trending again and the community is excited!
+Sentiment score: 0.9
+Explanation: The post shows excitement and enthusiasm in the Dogecoin community.
+
+Reddit post: {post}
+Sentiment score:
+"""
+
+CHAIN_OF_THOUGHT_BLOOMZ = """
+You are a social media analyst. Think step by step to analyse the following Reddit post. Provide:
+1. Your reasoning process.
+2. A sentiment score between -1 (very negative) and 1 (very positive).
+3. A brief explanation.
+
+Reddit post: {post}
+Let's break down the post step by step:
 """
