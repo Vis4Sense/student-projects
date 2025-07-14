@@ -20,7 +20,7 @@ def llm_optimisation(model_path):
     
     llm = Llama(
         model_path=model_path,
-        # GPU settings
+        # GPU settings (0 for CPU, -1 for GPU)
         n_gpu_layers=25,  # Use partial GPU offloading (balances speed and VRAM usage)
         
         # Memory settings
