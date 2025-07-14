@@ -6,26 +6,26 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 13/07/2025
 # Python Version: 3.10.6
-# Packages Required: transformers, accelerate, safetensors
-#                    auto-gptq, optimum, exllamav2, ninja
-#                    sentencepiece, llama-cpp-python
+# Packages Required: llama-cpp-python (CPU only)
+#                    llama-cpp-python --force-reinstall 
+#                    --no-cache-dir (GPU acceleration)
 # Hugging Face Token: Thesis.Token
 #------------------------------------------------------------#
 
 # import necessary libraries
 from llama_cpp import Llama
 
-def llama_optimisation(model_path):
-    """Llama 3.1 settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
+def llm_optimisation(model_path):
+    """LLM settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
     
     llm = Llama(
         model_path=model_path,
-        # GPU settings
-        n_gpu_layers=25,  # Use partial GPU offloading
+        # GPU settings (0 for CPU, -1 for GPU)
+        n_gpu_layers=25,  # Use partial GPU offloading (balances speed and VRAM usage)
         
         # Memory settings
-        n_ctx=2048,       # Context size
-        n_batch=256,      # Smaller batch for stability
+        n_ctx=2048,       # Context window size (how much the model can see at once)
+        n_batch=256,      # Smaller batch for stability (controls how many tokens are processed)
         
         # CPU settings
         n_threads=12,     # Use multiple CPU threads
@@ -42,26 +42,16 @@ def llama_optimisation(model_path):
     
     return llm
 
-# Script for "Instruct Model" sentiment analysis using Llama 3.1
-def analyse_sentiment():
-    model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
-    
+# Script for text generation using a variety of LLMs with sentiment analysis prompts
+def analyse_sentiment(prompt, model_path):
+    #model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf" 4-bit model
+    #model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"   2-bit model
+    #model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+     
     # Optimised Llama 3.1 settings for AMD GPU
-    llm = llama_optimisation(model_path)
+    llm = llm_optimisation(model_path)
     
-    # Formatted prompt for Llama 3.1
-    prompt = """
-    <|begin_of_text|>
-        <|start_header_id|>system<|end_header_id|>
-            You are a social media analyst. Provide insightful analysis of posts.
-    <|eot_id|>
-        <|start_header_id|>user<|end_header_id|>
-            Analyse this Reddit post: Ethereum is pumping hard today and everyone is thrilled!
-    <|eot_id|>
-        <|start_header_id|>assistant<|end_header_id|>
-    """
-
-    # Generate response using the LLM
+    # Generate response using the LLM and corresponding prompt template
     response = llm(                                                      
         prompt,
         max_tokens=300,
@@ -74,7 +64,7 @@ def analyse_sentiment():
     
     return response['choices'][0]['text']
 
-# Run sentiment analysis using the LLM
+# Run sentiment analysis using the selected LLM
 if __name__ == "__main__":
     print("--- Analysis Start ---")
     result = analyse_sentiment()
