@@ -15,7 +15,7 @@
 # import necessary libraries
 from llama_cpp import Llama
 
-def llama_optimisation(model_path):
+def llm_optimisation(model_path):
     """Llama 3.1 settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
     
     llm = Llama(
@@ -42,12 +42,14 @@ def llama_optimisation(model_path):
     
     return llm
 
-# Script for "Instruct Model" sentiment analysis using Llama 3.1
-def analyse_sentiment(prompt):
-    model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
-    
+# Script for text generation using a variety of LLMs with sentiment analysis prompts
+def analyse_sentiment(prompt, model_path):
+    #model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf" 4-bit model
+    #model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"   2-bit model
+    #model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+     
     # Optimised Llama 3.1 settings for AMD GPU
-    llm = llama_optimisation(model_path)
+    llm = llm_optimisation(model_path)
     
     # Generate response using the LLM and corresponding prompt template
     response = llm(                                                      
@@ -62,7 +64,7 @@ def analyse_sentiment(prompt):
     
     return response['choices'][0]['text']
 
-# Run sentiment analysis using the LLM
+# Run sentiment analysis using the selected LLM
 if __name__ == "__main__":
     print("--- Analysis Start ---")
     result = analyse_sentiment()
