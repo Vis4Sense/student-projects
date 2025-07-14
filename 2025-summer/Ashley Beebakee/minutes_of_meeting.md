@@ -69,7 +69,7 @@ Actions:
 </ul>
 Suggestions:
 <ul>
-  <li>Do not spend too much on learning Prompt Engineering to avoid delayed implementation of subsequent tasks</li>
+  <li>Do not spend too much time on learning Prompt Engineering to avoid delayed implementation of subsequent tasks</li>
 </ul>
 
 ## ~7th July 2025 (13:00 - 14:00)~
@@ -77,7 +77,30 @@ Suggestions:
   <li>Absent due to unfunctional build of workflow - more time required.</li>
 </ul>
 
-## 14th July 2025 (13:00 - 14:XX)
+## 14th July 2025 (13:00 - 13:45)
+Discussion:
+<ul>
+  <li>Sentiment fusion with time series data at timestamp.</li>
+  <li>The framework should not be expected to train real-time data.</li>
+  <li>The development of the framework is as expected, giving the user freedom in the configuration of the system.</li>
+</ul>
+Actions:
+<ul>
+  <li>Create a database system to store extracted sentiment from news sources (i.e. Reddit, Twitter, NewsAPI, etc.).</li>
+  <li>Fuse the database with time series data aligned with the same timestamp as the sentiment. If unavailable, set the field to null or zero.</li>
+  <li>Search for other AMD supported LLMs for inclusion in the Streamlit framework.</li>
+  <li>Insert the Gantt chart into the readme.md of your project folder 'Ashley Beebakee'.</li>
+  <li>Use a text classification LLM model to disregard any scraped data that is not related to crypto.</li>
+  <li>Attempt to include non-English new sources into the framework.</li>
+</ul>
+Suggestions:
+<ul>
+  <li>Do not spend too much time on refining the scraped data from news sources.</li>
+</ul>
+
+## 21st July 2025 (13:00 - 14:00) - Dr. Kai Xu is away, meeting cancelled.
+
+## 28th July 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
   <li>...</li>
@@ -91,4 +114,4 @@ Suggestions:
   <li>...</li>
 </ul>
 
-[Last updated: 13/07/2025 01:52]
+[Last updated: 14/07/2025 13:44]
