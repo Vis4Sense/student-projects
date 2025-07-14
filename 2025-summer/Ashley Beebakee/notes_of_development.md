@@ -11,6 +11,8 @@
   <li>Integrated "scraping.py" to scrape cryptocurrency related reddit posts.</li>
   <li>Added "run" buttons with configured columns to visualise the outputs.</li>
   <li>Integrated "prompt.py" and "llm_selection" to allow Llama 3.1 .gguf model to analyse 1st scraped reddit post and output on column2 of the Streamlit dashboard.</li>
+  <li>Refined LLM and prompt template selection logic due to addition of two other models.</li>
+  <li>Added functionality to select how many Reddit posts to be scraped through the use of "st.slider".</li>
 </ul>
 
 ## scraping.py
@@ -29,17 +31,21 @@
   <li>Full-sized 7B, 13B models will cause the same error even if ran on CPU with the system's RAM.</li>
   <li>Quantised Mixtral ("TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ") and BLOOMZ models were downloaded.</li>
   <li>Optimum library enables faster CPU/GPU inference.</li>
-  <li>Removed all previously downloaded hugging face models and downloaded quantised 4-bit fine-tuned Llama 3.1 instruct model for AMD ("Llama-3.1-8B-Instruct-bf16-q4_k.gguf").</li>
+  <li>Removed all previously downloaded hugging face models due to incompatibility with AMD/required more VRAM.</li>
+  <li>Downloaded quantised 4-bit fine-tuned Llama 3.1 instruct model for AMD ("Llama-3.1-8B-Instruct-bf16-q4_k.gguf").</li>
   <li>To use CPU only, run: "pip install llama-cpp-python".</li>
   <li>To use GPU acceleration, run (Windows Powershell): $env:CMAKE_ARGS="-DLLAMA_CLBLAST=on". Then, run this command "pip install llama-cpp-python --force-reinstall --no-cache-dir".</li>
   <li>Configured optimised LLM settings for 'AMD RX6600 XT GPU'.</li>
-  <li>n_gpu_layers = 0 (CPU), -1 (GPU), 25 (GPU layers).</li>
-  <li></li>
+  <li>Downloaded quantised 2-bit fine-tuned Llama 3.1 instruct model for AMD ("Llama-3.1-8B-Instruct-iq2_xxs.gguf").</li>
+  <li>Downloaded quantised 4-bit BLLOMZ 7B model for AMD ("bloomz-7b1-mt-Q4_K_M.gguf").</li>
 </ul>
 
 ## prompt.py
 <ul>
-  <li>Created prompt templates for Zero-shot, Few-shot and Chain-of-Thought (CoT) techniques.</li>
+  <li>Defined prompt templates for Zero-shot, Few-shot and Chain-of-Thought (CoT) engineering techniques.</li>
+  <li>Assigned prompt templates for LLaMA 3.1 (4-bit, 2-bit) and BLOOMZ models.</li>
+  <li>Refined prompt templates to extract sentiment with numerical values from -1 (negative), 0 (neutral) to 1 (positive).</li>
+  <li>BLOOMZ prompt needs debugging since it doesn't output a numerical value for the sentiment score.</li>
 </ul>
 
 ## extraction.py
@@ -47,4 +53,11 @@
   <li>...</li>
 </ul>
 
-[Last updated: 13/07/2025 15:33]
+## historical.py
+<ul>
+  <li>Visual Studio Code (VS Code) can glitch and not properly activate conda environments causing import errors.</li>
+  <li>The path in which the 'thesis' conda environment searches for packages is "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages"</li>
+  <li>Run this command to ensure correct path installation: pip install --target "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages" [package_name].</li>
+</ul>
+
+[Last updated: 14/07/2025 12:55]
