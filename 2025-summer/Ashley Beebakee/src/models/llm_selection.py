@@ -16,16 +16,16 @@
 from llama_cpp import Llama
 
 def llm_optimisation(model_path):
-    """Llama 3.1 settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
+    """LLM settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
     
     llm = Llama(
         model_path=model_path,
         # GPU settings
-        n_gpu_layers=25,  # Use partial GPU offloading
+        n_gpu_layers=25,  # Use partial GPU offloading (balances speed and VRAM usage)
         
         # Memory settings
-        n_ctx=2048,       # Context size
-        n_batch=256,      # Smaller batch for stability
+        n_ctx=2048,       # Context window size (how much the model can see at once)
+        n_batch=256,      # Smaller batch for stability (controls how many tokens are processed)
         
         # CPU settings
         n_threads=12,     # Use multiple CPU threads
