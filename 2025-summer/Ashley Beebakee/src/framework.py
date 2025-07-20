@@ -6,13 +6,14 @@
 #              multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 13/07/2025
+# Last Updated: 19/07/2025
 # Python Version: 3.10.6
-# Packages Required: streamlit, pyyaml, time, os
+# Packages Required: streamlit, pandas, pyyaml, time, os
 #------------------------------------------------------------#
 
 # Import required libraries
 import streamlit as st
+import pandas as pd
 import yaml
 import time
 import os
@@ -32,6 +33,8 @@ DEFAULT_CONFIG = {
     "prompt": "Zero-shot",
     "sentiment": "Reddit"
 }
+
+SCRAPING_PATH = "./data/scraping_dataset.xlsx"
 
 # Load model configuration from YAML file
 def load_config():
@@ -56,60 +59,64 @@ def save_config(config):
 st.set_page_config(layout="wide")
 
 # Streamlit dashboard title
-st.title("Streamlit Modular DL Framework Prototype v4.0")
+st.title("Streamlit Modular DL Framework Prototype v5.0")
 
-column1, column2 = st.columns([8, 10]) # Adjust values to change column width
+# Create tabs for configuration and data visualisation
+tab1, tab2, tab3 = st.tabs(["Configuration", "Reddit", "Yahoo Finance"])
 
-# N.B: The prefix "r_" denotes the word "run", as in where the run button is placed.
-with column1:
-    # Load model_config.yaml if it exists, otherwise use default config
-    if os.path.exists(CONFIG_PATH):
-        config = load_config()
+with tab1:
+    column1, column2 = st.columns([8, 10]) # Adjust values to change column width
 
-    # 'Sentiment Analysis' section
-    st.subheader("Sentiment Analysis")
+    # N.B: The prefix "r_" denotes the word "run", as in where the run button is placed.
+    with column1:
+        # Load model_config.yaml if it exists, otherwise use default config
+        if os.path.exists(CONFIG_PATH):
+            config = load_config()
 
-    news_col, r_news_col = st.columns([7, 1]) # Must sum up to column1's width of 8
-    with news_col:
-        # Variety of crypto news sources
-        config['sentiment'] = st.selectbox("Select Crypto News Source:", ["Reddit", "Twitter", "NewsAPI"], index=["Reddit", "Twitter", "NewsAPI"].index(config['sentiment']))
-        # Add slider for number of posts to be scraped
-        num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=100, value=1, help="Select how many posts to scrape (1-100)")
-    
-    with r_news_col:
-        st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
-        run_news = st.button("▶", key="run_news")
+        # 'Sentiment Analysis' section
+        st.subheader("Sentiment Analysis")
 
-    # Open-source and Closed-source LLM Options
-    llm_type = st.radio("Toggle Preferred LLM Type", ["Open-source", "Closed-source"], horizontal=True)
-    # Options based on LLM source type
-    open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "BLOOMZ 7B (4-bit)"]
-    closed_source_llms = ["GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
-
-    # Display corresponding drop-down menu based on LLM source type
-    if llm_type == "Open-source":
-        llm_options = open_source_llms
-    else:
-        llm_options = closed_source_llms
+        news_col, r_news_col = st.columns([7, 1]) # Must sum up to column1's width of 8
+        with news_col:
+            # Variety of crypto news sources
+            config['sentiment'] = st.selectbox("Select Crypto News Source:", ["Reddit", "Twitter", "NewsAPI"], index=["Reddit", "Twitter", "NewsAPI"].index(config['sentiment']))
+            # Add slider for number of posts to be scraped
+            num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
         
-    # Set default index when switching between LLM types
-    if config['llm'] in llm_options:
-        llm_index = llm_options.index(config['llm'])
-    else:
-        llm_index = 0
-        config['llm'] = llm_options[0]
+        with r_news_col:
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            run_news = st.button("▶", key="run_news")
 
-    llm_col, r_llm_col = st.columns([7, 1]) # Must sum up to column1's width of 8
-    with llm_col:
-        # LLM and prompt engineering options
-        config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
-        config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
+        # Open-source and Closed-source LLM Options
+        llm_type = st.radio("Toggle Preferred LLM Type", ["Open-source", "Closed-source"], horizontal=True)
+        # Options based on LLM source type
+        open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "BLOOMZ 7B (4-bit)"]
+        closed_source_llms = ["GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
 
-    with r_llm_col:
-        st.markdown("<div style='height: 4.5em;'></div>", unsafe_allow_html=True) # Empty space for alignment
-        run_llm = st.button("▶", key="run_llm")
+        # Display corresponding drop-down menu based on LLM source type
+        if llm_type == "Open-source":
+            llm_options = open_source_llms
+        else:
+            llm_options = closed_source_llms
+            
+        # Set default index when switching between LLM types
+        if config['llm'] in llm_options:
+            llm_index = llm_options.index(config['llm'])
+        else:
+            llm_index = 0
+            config['llm'] = llm_options[0]
 
-    # To be implemented between 7th July 2025 and 14th July 2025
+        llm_col, r_llm_col = st.columns([7, 1]) # Must sum up to column1's width of 8
+        with llm_col:
+            # LLM and prompt engineering options
+            config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
+            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
+
+        with r_llm_col:
+            st.markdown("<div style='height: 4.5em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            run_llm = st.button("▶", key="run_llm")
+
+    # To be implemented between 14th July 2025 and 28th July 2025
     # config['architecture'] = st.selectbox("Select Deep Learning Architecture", ["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"], index=["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"].index(config['architecture']))
 
     # Save and trigger (for debugging)
@@ -121,74 +128,91 @@ with column1:
     #st.subheader("Current Configuration")
     #st.json(config)
 
-with column2:
-    if run_news:
-        # Run the sentiment analysis scraping function
-        posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=num_posts)
-        st.subheader("Reddit Posts")
+    with column2:
+        if run_news:
+            # Run the sentiment analysis scraping function
+            # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
+            st.subheader("Reddit Posts")
+            st.write(f"Attempting to scrape {num_posts} posts...")
+            num_new_posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=num_posts, excel_path=SCRAPING_PATH)
+            st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
+            st.write(f"You can view the dataset in the 'Reddit' tab.")
 
-        for i, post in enumerate(posts, 1):
-            st.write(f"{i}. {post['title']}\n{post['url']}\n")
-
-    elif run_llm:
-        if config['llm'] == "LLaMA 3.1 8B (4-bit)":
-            model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
-            # Assign prompt template for LLaMA 3.1 8B 4-bit model
-            if config['prompt'] == "Zero-shot":
-                prompt_template = ZERO_SHOT_LLAMA
-            elif config['prompt'] == "Few-shot":
-                prompt_template = FEW_SHOT_LLAMA
+        elif run_llm:
+            if config['llm'] == "LLaMA 3.1 8B (4-bit)":
+                model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
+                # Assign prompt template for LLaMA 3.1 8B 4-bit model
+                if config['prompt'] == "Zero-shot":
+                    prompt_template = ZERO_SHOT_LLAMA
+                elif config['prompt'] == "Few-shot":
+                    prompt_template = FEW_SHOT_LLAMA
+                else:
+                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
+            elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
+                model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
+                # Assign prompt template for LLaMA 3.1 8B 2-bit model
+                if config['prompt'] == "Zero-shot":
+                    prompt_template = ZERO_SHOT_LLAMA
+                elif config['prompt'] == "Few-shot":
+                    prompt_template = FEW_SHOT_LLAMA
+                else:
+                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
+            elif config['llm'] == "BLOOMZ 7B (4-bit)":
+                model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+                # Assign prompt template for Bloomz 7B 4-bit model
+                if config['prompt'] == "Zero-shot":
+                    prompt_template = ZERO_SHOT_BLOOMZ
+                elif config['prompt'] == "Few-shot":
+                    prompt_template = FEW_SHOT_BLOOMZ
+                else:
+                    prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
             else:
-                prompt_template = CHAIN_OF_THOUGHT_LLAMA
-        elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
-            model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
-            # Assign prompt template for LLaMA 3.1 8B 2-bit model
-            if config['prompt'] == "Zero-shot":
-                prompt_template = ZERO_SHOT_LLAMA
-            elif config['prompt'] == "Few-shot":
-                prompt_template = FEW_SHOT_LLAMA
-            else:
-                prompt_template = CHAIN_OF_THOUGHT_LLAMA
-        elif config['llm'] == "BLOOMZ 7B (4-bit)":
-            model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
-            # Assign prompt template for Bloomz 7B 4-bit model
-            if config['prompt'] == "Zero-shot":
-                prompt_template = ZERO_SHOT_BLOOMZ
-            elif config['prompt'] == "Few-shot":
-                prompt_template = FEW_SHOT_BLOOMZ
-            else:
-                prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
-        else:
-            st.error("Apologies, the selected LLM is not supported yet.")
-            model_path = None
-            prompt_template = None
-        
-        # Parse Reddit's 1st scraped post for sentiment analysis
-        posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=1)
-        #post_text = posts[0]['title'] if posts else "No posts available."
-        post_text = "Bitcoin just crossed $120,000, a huge milestone" # From 14th July 2025
-        prompt = prompt_template.format(post=post_text)
+                st.error("Apologies, the selected LLM is not supported yet.")
+                model_path = None
+                prompt_template = None
+            
+            post_text = "Bitcoin just crossed $120,000, a huge milestone" # From 14th July 2025
+            prompt = prompt_template.format(post=post_text)
 
-        # Show progress bar while waiting for response
-        progress = st.progress(0, text="Analysing with LLM...")
-        for percent in range(1, 91, 3):
-            time.sleep(0.05)  # Simulate progress (remove if not needed)
-            progress.progress(percent, text="Analysing with LLM...")
+            # Show progress bar while waiting for response
+            progress = st.progress(0, text="Analysing with LLM...")
+            for percent in range(1, 91, 3):
+                time.sleep(0.05)  # Simulate progress (remove if not needed)
+                progress.progress(percent, text="Analysing with LLM...")
 
-        # Call the sentiment analysis function
-        response = analyse_sentiment(prompt, model_path)
+            # Call the sentiment analysis function
+            response = analyse_sentiment(prompt, model_path)
 
-        # Show progress bar completion
-        progress.progress(100, text="Analysis complete!")
-        time.sleep(1.5)
-        progress.empty()
+            # Show progress bar completion
+            progress.progress(100, text="Analysis complete!")
+            time.sleep(1.5)
+            progress.empty()
 
-        st.subheader("LLM Sentiment Analysis Result")
-        # Visualise the config for debugging
-        st.write(f"**LLM Model:** {config['llm']}")
-        st.write(f"**Prompt Technique:** {config['prompt']}")
-        st.write(f"**Reddit Post:** {post_text}")
-        st.write(response)
+            st.subheader("LLM Sentiment Analysis Result")
+            # Visualise the config for debugging
+            st.write(f"**LLM Model:** {config['llm']}")
+            st.write(f"**Prompt Technique:** {config['prompt']}")
+            st.write(f"**Reddit Post:** {post_text}")
+            st.write(response)
+
+with tab2:
+    st.subheader("Reddit Scraping Dataset")
+    # Load and display the scraped Reddit posts dataset
+    if os.path.exists(SCRAPING_PATH):
+        df = pd.read_excel(SCRAPING_PATH)
+        st.dataframe(df)
+    else:
+        st.warning("No data file found.")
+
+with tab3:
+    st.subheader("Yahoo Finance Historical Dataset")
+    # Load and display the historical cryptocurrency data
+    yfinance_path = ".data/btc_dataset_6m-1d.csv"
+    if os.path.exists(yfinance_path):
+        df = pd.read_csv(yfinance_path)
+        st.dataframe(df)
+    else:
+        st.warning("No historical data file found.")
 
 # Run this in the Powershell terminal to save the file path as a variable
 # $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
