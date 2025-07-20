@@ -9,6 +9,7 @@
 # Packages Required: requests, beautifulsoup4, pandas, os
 #------------------------------------------------------------#
 
+# Import necessary libraries
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
