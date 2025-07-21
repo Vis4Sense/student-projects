@@ -13,6 +13,8 @@
   <li>Integrated "prompt.py" and "llm_selection" to allow Llama 3.1 .gguf model to analyse 1st scraped reddit post and output on column2 of the Streamlit dashboard.</li>
   <li>Refined LLM and prompt template selection logic due to addition of two other models.</li>
   <li>Added functionality to select how many Reddit posts to be scraped through the use of "st.slider".</li>
+  <li>Modified Reddit scraping function and created constant for its dataset path.</li>
+  <li>Created tabs to display scraping and historical datasets.</li>
 </ul>
 
 ## scraping.py
@@ -20,6 +22,10 @@
   <li>Reddit has implemented features to prevent bots/crawlers from scraping.</li>
   <li>Insertion of the browser's "User-Agent" information, we can mimic a browser request to prevent Reddit from detecting our bot.</li>
   <li>Up-to-date Reddit does not display more than four/five posts without having to scroll down (infinitely), due to this, scraping old Reddit is the better option since it uses 'Next' buttons to view more posts.</li>
+  <li>Old Reddit has pagination of up to 789 posts, while new Reddit has pagination of up to only 500 posts. Reddit API is not free-to-use.</li>
+  <li>Created scraping_dataset.xlsx for the Reddit posts, the function was modified to remove duplicate posts (with validation) and sort them with the inclusion of their timestamp, including their IDs.</li>
+  <li>The function now returns the number of "new" scraped posts since the dataset can be visualised in Streamlit at all times.</li>
+  <li>Reddit bot protection may cause "Failed with status code: 429" if too many requests are sent using the function.</li>
 </ul>
 
 ## llm_selection.py
@@ -58,6 +64,7 @@
   <li>Visual Studio Code (VS Code) can glitch and not properly activate conda environments causing import errors.</li>
   <li>The path in which the 'thesis' conda environment searches for packages is "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages"</li>
   <li>Run this command to ensure correct path installation: pip install --target "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages" [package_name].</li>
+  <li>Saved BTC-USD dataset of 6 months with 1-day interval as a .csv file.</li>
 </ul>
 
-[Last updated: 14/07/2025 12:55]
+[Last updated: 20/07/2025 12:55]
