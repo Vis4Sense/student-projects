@@ -98,7 +98,10 @@ Suggestions:
   <li>Do not spend too much time on refining the scraped data from news sources.</li>
 </ul>
 
-## 21st July 2025 (13:00 - 14:00) - Dr. Kai Xu is away, meeting cancelled.
+## ~21st July 2025 (13:00 - 14:00)~
+<ul>
+  <li>Dr. Kai Xu is away, meeting is cancelled.</li>
+</ul>
 
 ## 28th July 2025 (13:00 - 14:XX)
 Discussion:
@@ -114,4 +117,4 @@ Suggestions:
   <li>...</li>
 </ul>
 
-[Last updated: 14/07/2025 13:44]
+[Last updated: 24/07/2025 16:58]

@@ -26,6 +26,9 @@
   <li>Created scraping_dataset.xlsx for the Reddit posts, the function was modified to remove duplicate posts (with validation) and sort them with the inclusion of their timestamp, including their IDs.</li>
   <li>The function now returns the number of "new" scraped posts since the dataset can be visualised in Streamlit at all times.</li>
   <li>Reddit bot protection may cause "Failed with status code: 429" if too many requests are sent using the function.</li>
+  <li>The scraping loop "for thing in things" can be refined for faster execution by reducing pagination.</li>
+  <li>Created API keys for NewsAPI and TheNewsAPI, both can only scrape news headlines from the past 30 days.</li>
+  <li>Merged scraped datasets into one with structured columns</li>
 </ul>
 
 ## llm_selection.py
