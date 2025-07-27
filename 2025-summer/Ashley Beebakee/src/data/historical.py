@@ -4,11 +4,12 @@
 #              cryptocurrency data from various sources like
 #              Alpaca and Yahoo Finance.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 14/07/2025
+# Last Updated: 20/07/2025
 # Python Version: 3.10.6
 # Packages Required: yfinance, pandas, scikit-learn
 #------------------------------------------------------------#
 
+# import necessary libraries
 import yfinance as yf
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -21,7 +22,6 @@ def fetch_price_data(ticker="BTC-USD", start_date="2023-01-01", end_date="2024-0
     df.reset_index(inplace=True)
 
     return df
-
 
 def preprocess_data(df, scaler_type="minmax", columns=["Close"]):
     df_copy = df.copy()
@@ -48,3 +48,8 @@ print(df_scaled.head())
 # Print full dataset
 #pd.set_option('display.max_rows', None)  # Show all rows
 #print(df_scaled)
+
+# Save the scaled dataset to CSV in the historical folder
+#csv_path = "./data/btc_dataset_6m-1d.csv"
+#df_scaled.to_csv(csv_path, index=False)
+#print(f"Saved scaled dataset to {csv_path}")
