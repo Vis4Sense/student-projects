@@ -1,3 +1,5 @@
+cryptocurrency: Bitcoin
 llm: LLaMA 3.1
 prompt: Zero-shot
 sentiment: Reddit
+subreddits: CryptoCurrency
