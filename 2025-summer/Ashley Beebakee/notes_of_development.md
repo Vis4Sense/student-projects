@@ -15,6 +15,8 @@
   <li>Added functionality to select how many Reddit posts to be scraped through the use of "st.slider".</li>
   <li>Modified Reddit scraping function and created constant for its dataset path.</li>
   <li>Created tabs to display scraping and historical datasets.</li>
+  <li>Restructured the interface's tab naming relevancy with sub-tabs for better comprehension of the system.</li>
+  <li>Sentiment analysis components successfully integrated with room for further optimisation.</li>
 </ul>
 
 ## scraping.py
@@ -27,8 +29,9 @@
   <li>The function now returns the number of "new" scraped posts since the dataset can be visualised in Streamlit at all times.</li>
   <li>Reddit bot protection may cause "Failed with status code: 429" if too many requests are sent using the function.</li>
   <li>The scraping loop "for thing in things" can be refined for faster execution by reducing pagination.</li>
-  <li>Created API keys for NewsAPI and TheNewsAPI, both can only scrape news headlines from the past 30 days.</li>
-  <li>Merged scraped datasets into one with structured columns</li>
+  <li>Generated API key for NewsAPI, it can only get news headlines from the past 30 days.</li>
+  <li>Optimised its functionality, each news source has its own dataset (i.e. reddit_crypto_dataset.xlsx).</li>
+  <li>There are multiple language options for NewsAPI to get headlines from, ensure that the selected languages are compatible with one of the available LLMs.</li>
 </ul>
 
 ## llm_selection.py
@@ -67,7 +70,7 @@
   <li>Visual Studio Code (VS Code) can glitch and not properly activate conda environments causing import errors.</li>
   <li>The path in which the 'thesis' conda environment searches for packages is "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages"</li>
   <li>Run this command to ensure correct path installation: pip install --target "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages" [package_name].</li>
-  <li>Saved BTC-USD dataset of 6 months with 1-day interval as a .csv file.</li>
+  <li>Saved BTC-USD dataset of 6 months with 1-day interval to "btc_dataset_6m-1d.csv".</li>
 </ul>
 
 [Last updated: 20/07/2025 12:55]
