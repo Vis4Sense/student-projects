@@ -6,7 +6,7 @@
 #              multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 19/07/2025
+# Last Updated: 27/07/2025
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #------------------------------------------------------------#
@@ -19,7 +19,7 @@ import time
 import os
 
 # Import required modules
-from sentiment.scraping import scrape_reddit_posts
+from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.llm_selection import analyse_sentiment
@@ -29,12 +29,17 @@ CONFIG_PATH = "config/framework_config.yaml"
 
 # Define default config as backup
 DEFAULT_CONFIG = {
+    "cryptocurrency": "Bitcoin",
     "llm": "LLaMA 3.1 8B (4-bit)",
     "prompt": "Zero-shot",
-    "sentiment": "Reddit"
+    "sentiment": "Reddit",
+    "subreddits": "CryptoCurrency"
 }
 
-SCRAPING_PATH = "./data/scraping_dataset.xlsx"
+# Define paths for datasets
+REDDIT_PATH = "./data/reddit_crypto_dataset.xlsx"
+NEWS_API_PATH = "./data/newsapi_crypto_dataset.xlsx"
+BTC_PATH = "./data/btc_dataset_6m-1d.csv"
 
 # Load model configuration from YAML file
 def load_config():
@@ -59,10 +64,10 @@ def save_config(config):
 st.set_page_config(layout="wide")
 
 # Streamlit dashboard title
-st.title("Streamlit Modular DL Framework Prototype v5.0")
+st.title("Streamlit Modular DL Framework Prototype v6.0")
 
 # Create tabs for configuration and data visualisation
-tab1, tab2, tab3 = st.tabs(["Configuration", "Reddit", "Yahoo Finance"])
+tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources", "Time Series Data"])
 
 with tab1:
     column1, column2 = st.columns([8, 10]) # Adjust values to change column width
@@ -73,22 +78,43 @@ with tab1:
         if os.path.exists(CONFIG_PATH):
             config = load_config()
 
-        # 'Sentiment Analysis' section
-        st.subheader("Sentiment Analysis")
+        # 'News Sources' section
+        st.subheader("News Sources")
 
         news_col, r_news_col = st.columns([7, 1]) # Must sum up to column1's width of 8
         with news_col:
             # Variety of crypto news sources
-            config['sentiment'] = st.selectbox("Select Crypto News Source:", ["Reddit", "Twitter", "NewsAPI"], index=["Reddit", "Twitter", "NewsAPI"].index(config['sentiment']))
-            # Add slider for number of posts to be scraped
-            num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
-        
+            config['sentiment'] = st.selectbox("Select Crypto News Source:", ["Reddit", "NewsAPI"], index=["Reddit", "NewsAPI"].index(config['sentiment']))
+            
+            # If Reddit is selected, add slider for number of posts to be scraped
+            # N.B: This is only applicable for Reddit posts scraping
+            if config['sentiment'] == "Reddit":
+                # Add slider for number of posts to be scraped
+                num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
+                subreddit = st.selectbox("Choose Subreddit to Scrape:", ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"], index=["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"].index(config['subreddits']))
+            # If NewsAPI is selected, add radio button for language selection
+            elif config['sentiment'] == "NewsAPI":
+                lang_option = st.radio("Select Language for NewsAPI:", ["English", "German", "French", "Spanish", "Italian"], horizontal=True)
+                # Map language options to NewsAPI language codes
+                language_map = {
+                    "English": "en",
+                    "German": "de",
+                    "French": "fr",
+                    "Spanish": "es",
+                    "Italian": "it"
+                }
+                # Get the selected language code
+                language = language_map.get(lang_option, "en")
+
         with r_news_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_news = st.button("▶", key="run_news")
 
+        # 'Sentiment Analysis' section
+        st.subheader("Sentiment Analysis")
+
         # Open-source and Closed-source LLM Options
-        llm_type = st.radio("Toggle Preferred LLM Type", ["Open-source", "Closed-source"], horizontal=True)
+        llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
         open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "BLOOMZ 7B (4-bit)"]
         closed_source_llms = ["GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
@@ -116,6 +142,21 @@ with tab1:
             st.markdown("<div style='height: 4.5em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_llm = st.button("▶", key="run_llm")
 
+        # 'Time Series Data' section
+        st.subheader("Time Series Data")
+        crypto_col, r_crypto_col = st.columns([7, 1]) # Must sum up to column1's width of 8
+        with crypto_col:
+            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']))
+        with r_crypto_col:
+            run_crypto = st.button("▶", key="run_crypto")
+
+        #start_date, end_date = st.date_input(
+            #"Select Date Range for Historical Data",
+            #value=(pd.to_datetime("2025-01-01"), pd.to_datetime("2025-07-01")),
+            #min_value=pd.to_datetime("2025-01-01"),
+            #max_value=pd.to_datetime("2025-07-01")
+        #)
+    
     # To be implemented between 14th July 2025 and 28th July 2025
     # config['architecture'] = st.selectbox("Select Deep Learning Architecture", ["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"], index=["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"].index(config['architecture']))
 
@@ -127,16 +168,23 @@ with tab1:
     # Display current config (for debugging)
     #st.subheader("Current Configuration")
     #st.json(config)
-
+    
     with column2:
         if run_news:
-            # Run the sentiment analysis scraping function
-            # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
-            st.subheader("Reddit Posts")
-            st.write(f"Attempting to scrape {num_posts} posts...")
-            num_new_posts = scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=num_posts, excel_path=SCRAPING_PATH)
-            st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
-            st.write(f"You can view the dataset in the 'Reddit' tab.")
+            # Check if Reddit or NewsAPI is selected for sentiment analysis
+            if config['sentiment'] == "Reddit":
+                # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
+                st.subheader("Reddit Posts")
+                st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
+                num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
+                st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
+                st.write(f"You can view the dataset in the 'Reddit' tab.")
+            elif config['sentiment'] == "NewsAPI":
+                st.subheader("NewsAPI Headlines")
+                st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
+                num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
+                st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
+                st.write(f"You can view the dataset in the 'NewsAPI' tab.")
 
         elif run_llm:
             if config['llm'] == "LLaMA 3.1 8B (4-bit)":
@@ -196,23 +244,53 @@ with tab1:
             st.write(response)
 
 with tab2:
-    st.subheader("Reddit Scraping Dataset")
-    # Load and display the scraped Reddit posts dataset
-    if os.path.exists(SCRAPING_PATH):
-        df = pd.read_excel(SCRAPING_PATH)
-        st.dataframe(df)
-    else:
-        st.warning("No data file found.")
+    st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
+    # Create tabs for configuration and scraped/API data visualisation
+    merged_tab, reddit_tab, news_api_tab = st.tabs(["Merged", "Reddit", "NewsAPI"])
+
+    with merged_tab:
+        st.subheader("Merged Dataset (Reddit + NewsAPI)")
+        # Load and display the merged dataset
+        if os.path.exists(REDDIT_PATH) and os.path.exists(NEWS_API_PATH):
+            df_reddit = pd.read_excel(REDDIT_PATH)
+            df_newsapi = pd.read_excel(NEWS_API_PATH)
+            df_combined = pd.concat([df_reddit, df_newsapi], ignore_index=True)
+            df_combined = df_combined.sort_values(by="Timestamp", ascending=False)
+            st.dataframe(df_combined)
+        else:
+            st.warning("No data files found.")
+
+    with reddit_tab:
+        st.subheader("Reddit Dataset (4th July 2025 onwards)")
+        # Load and display the Reddit dataset
+        if os.path.exists(REDDIT_PATH):
+            df = pd.read_excel(REDDIT_PATH)
+            st.dataframe(df)
+        else:
+            st.warning("No data file found.")
+
+    with news_api_tab:
+        st.subheader("NewsAPI Dataset (1st July 2025 onwards)")
+        # Load and display the NewsAPI dataset
+        if os.path.exists(NEWS_API_PATH):
+            df = pd.read_excel(NEWS_API_PATH)
+            st.dataframe(df)
+        else:
+            st.warning("No data file found.")
 
 with tab3:
-    st.subheader("Yahoo Finance Historical Dataset")
-    # Load and display the historical cryptocurrency data
-    yfinance_path = ".data/btc_dataset_6m-1d.csv"
-    if os.path.exists(yfinance_path):
-        df = pd.read_csv(yfinance_path)
-        st.dataframe(df)
-    else:
-        st.warning("No historical data file found.")
+    st.write("Here you can visualise historical cryptocurrency data from Yahoo Finance.")
+    # Create tabs for configuration and historical data visualisation
+    btc_tab, eth_tab, dog_tab = st.tabs(["Bitcoin", "Ethereum", "Dogecoin"])
+
+    with btc_tab:
+        st.subheader("Bitcoin Dataset (1st Jan 2025 - 1st July 2025, 1-day interval)")
+        # Load and display the historical bitcoin data
+        if os.path.exists(BTC_PATH):
+            df = pd.read_csv(BTC_PATH)
+            st.dataframe(df)
+        else:
+            st.warning("No historical data file found.")
 
 # Run this in the Powershell terminal to save the file path as a variable
 # $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
