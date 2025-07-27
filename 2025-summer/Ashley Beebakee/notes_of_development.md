@@ -15,8 +15,10 @@
   <li>Added functionality to select how many Reddit posts to be scraped through the use of "st.slider".</li>
   <li>Modified Reddit scraping function and created constant for its dataset path.</li>
   <li>Created tabs to display scraping and historical datasets.</li>
-  <li>Restructured the interface's tab naming relevancy with sub-tabs for better comprehension of the system.</li>
-  <li>Sentiment analysis components successfully integrated with room for further optimisation.</li>
+  <li>Restructured the interface's tab naming relevancy with sub-tabs and descriptions for better comprehension of the system.</li>
+  <li>Added subheaders to section the components.</li>
+  <li>Added multiple language optionality for NewsAPI function call.</li>
+  <li>Added subreddit selection for Reddit scraping function call.</li>
 </ul>
 
 ## scraping.py
