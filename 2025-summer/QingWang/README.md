@@ -1,25 +1,26 @@
 Pain Points
-1.Diverse import formats, high setup cost
+
+1. Diverse import formats, high setup cost
   PDF, BibTeX, web pages, database exports use different schemas;
   Manual import and metadata cleaning are laborious.
 
-2.Low retrieval efficiency, limited keyword search
+2. Low retrieval efficiency, limited keyword search
   Keyword matching misses semantically relevant papers;
   Requires repeated filtering to find truly related work.
 
-3.Scattered notes and highlights
+3. Scattered notes and highlights
   Highlights/annotations spread across PDF readers and docs;
   Hard to locate and reuse notes during writing.
 
-4.Opaque topic structure and citation relations
+4. Opaque topic structure and citation relations
   Hard to see which papers share themes or methods;
   Difficult to grasp the overall field structure and citation network.
 
-5.Time-consuming review writing, lack of structured summaries
+5. Time-consuming review writing, lack of structured summaries
   Manual summarization and citation insertion take too long;
   Difficult to quickly draft a coherent review outline.
 
-6.Cumbersome iterative filtering
+6. Cumbersome iterative filtering
   Filtering by year, author, keywords requires rerunning searches;
   No conversational interface for incremental refinement.
 
