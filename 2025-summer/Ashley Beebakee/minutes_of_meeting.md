@@ -103,18 +103,24 @@ Suggestions:
   <li>Dr. Kai Xu is away, meeting is cancelled.</li>
 </ul>
 
-## 28th July 2025 (13:00 - 14:XX)
+## 28th July 2025 (13:00 - 14:15)
 Discussion:
 <ul>
-  <li>...</li>
+  <li>Old Reddit vs New Reddit post archive limits. Old Reddit's subreddits have <1000 posts while New Reddit has 500 posts.</li>
+  <li>Dataset manipulation to scrape Reddit posts without duplicates and append NewsAPI multilingual headlines.</li>
+  <li>Restructure of Work Packages and their respective milestones.</li>
+  <li>Integration of Orca 2 with quicker execution than LLaMA 3.1.</li>
 </ul>
 Actions:
 <ul>
-  <li>...</li>
+  <li>Begin drafting the Literature Review on any research done (i.e. Prompt Engineering, Configurable Interfaces, etc.).</li>
+  <li>Fuse the database with time series data aligned with the same timestamp as the sentiment. If unavailable, set the field to null or zero.</li>
+  <li>Use a text classification LLM model to disregard any scraped data that is not related to crypto.</li>
+  <li>Populate issues that have been completed with details regarding the implementation.</li>
 </ul>
 Suggestions:
 <ul>
-  <li>...</li>
+  <li>Do not halt progress due to formatting issues or minor bugs, allow for the creation of "prototype_version_1". Additional features and bug fixing can be implemented into "prototype_version_2".</li>
 </ul>
 
-[Last updated: 24/07/2025 16:58]
+[Last updated: 28/07/2025 14:15]
