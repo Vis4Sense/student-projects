@@ -10,9 +10,12 @@
 <li>While prior iterations explored various architectures and sentiment techniques, this project introduces a novel contribution through the development of a fully modular, user-configurable deep learning framework that integrates multilingual LLM-based sentiment fusion for cryptocurrency market forecasting.</li>
 </ul>
 
-### System Architecture
-<img width="538" height="254" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
+### Project Timeline
+<img width="1659" height="1015" alt="project_timeline_status1" src="https://github.com/user-attachments/assets/ae471c94-60ef-4740-a391-fef4f3aa925e" />
 
-[More info to be added soon - including the Gantt chart]
+### System Architecture (est. 24th July 2025)
+<img width="1076" height="508" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
+
+[Last updated: 28/07/2025 10:46]
 
 
