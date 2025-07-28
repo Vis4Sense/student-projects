@@ -125,3 +125,41 @@ Explanation: [brief justification]
 Reddit post: {post}
 Analysis steps:
 """
+
+# Define prompt templates for sentiment analysis tasks using the Orca 2 7B 6-bit model.
+ZERO_SHOT_ORCA = """
+You are a financial sentiment analysis expert. For each Reddit post, provide:
+1. A sentiment score between -1 (very negative) and 1 (very positive)
+2. A brief explanation for your score
+
+Reddit post: {post}
+Sentiment score:
+"""
+
+FEW_SHOT_ORCA = """
+You are a financial sentiment analysis expert. For each Reddit post, provide a sentiment score and a short explanation.
+
+Example 1:
+Reddit post: Bitcoin is crashing and investors are worried!
+Sentiment score: -0.8
+Explanation: The post expresses strong concern and fear about Bitcoin's price drop.
+
+Example 2:
+Reddit post: Dogecoin is trending again and the community is excited!
+Sentiment score: 0.9
+Explanation: The post shows excitement and optimism in the Dogecoin community.
+
+Reddit post: {post}
+Sentiment score:
+"""
+
+CHAIN_OF_THOUGHT_ORCA = """
+You are a financial sentiment analysis expert. Think step by step to analyze the following Reddit post:
+1. Identify the main sentiment indicators in the text
+2. Assess their intensity and direction
+3. Assign a sentiment score between -1 (very negative) and 1 (very positive)
+4. Provide a brief explanation
+
+Reddit post: {post}
+Analysis steps:
+"""

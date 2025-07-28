@@ -46,7 +46,8 @@ def llm_optimisation(model_path):
 def analyse_sentiment(prompt, model_path):
     #model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf" 4-bit model
     #model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"   2-bit model
-    #model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+    #model_path = "./models/orca-2-7b.Q6_K.gguf"                  6-bit model
+    #model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"            4-bit model
      
     # Optimised Llama 3.1 settings for AMD GPU
     llm = llm_optimisation(model_path)
