@@ -22,6 +22,7 @@ import os
 from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
+from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
 from models.llm_selection import analyse_sentiment
 
 # Assign model config to constant variable
@@ -64,7 +65,7 @@ def save_config(config):
 st.set_page_config(layout="wide")
 
 # Streamlit dashboard title
-st.title("Streamlit Modular DL Framework Prototype v6.0")
+st.title("Streamlit Modular DL Framework Prototype v7.0")
 
 # Create tabs for configuration and data visualisation
 tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources", "Time Series Data"])
@@ -91,7 +92,7 @@ with tab1:
             if config['sentiment'] == "Reddit":
                 # Add slider for number of posts to be scraped
                 num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
-                subreddit = st.selectbox("Choose Subreddit to Scrape:", ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"], index=["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"].index(config['subreddits']))
+                subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"].index(config['subreddits']))
             # If NewsAPI is selected, add radio button for language selection
             elif config['sentiment'] == "NewsAPI":
                 lang_option = st.radio("Select Language for NewsAPI:", ["English", "German", "French", "Spanish", "Italian"], horizontal=True)
@@ -116,7 +117,7 @@ with tab1:
         # Open-source and Closed-source LLM Options
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
-        open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "BLOOMZ 7B (4-bit)"]
+        open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "Orca 2 7B (6-bit)", "BLOOMZ 7B (4-bit)"]
         closed_source_llms = ["GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
 
         # Display corresponding drop-down menu based on LLM source type
@@ -136,14 +137,31 @@ with tab1:
         with llm_col:
             # LLM and prompt engineering options
             config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
-            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
+            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
 
+            # Before running the LLM, load merged dataset and let the user pick a post
+            merged_df = None
+            if os.path.exists(REDDIT_PATH) and os.path.exists(NEWS_API_PATH):
+                df_reddit = pd.read_excel(REDDIT_PATH)
+                df_newsapi = pd.read_excel(NEWS_API_PATH)
+                merged_df = pd.concat([df_reddit, df_newsapi], ignore_index=True)
+                merged_df = merged_df.sort_values(by="Timestamp", ascending=False)
+
+            post_text = "Bitcoin just crossed $120,000, a huge milestone"  # Default fallback
+
+            # If the merged DataFrame is not empty, allow user to select a post
+            if merged_df is not None and not merged_df.empty:
+                text_column = "Title" if "Title" in merged_df.columns else merged_df.columns[0]
+                post_options = merged_df[text_column].dropna().unique().tolist()
+                selected_post = st.selectbox("Select Post for Sentiment Analysis:", post_options)
+                post_text = selected_post
+                
         with r_llm_col:
             st.markdown("<div style='height: 4.5em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_llm = st.button("▶", key="run_llm")
 
         # 'Time Series Data' section
-        st.subheader("Time Series Data")
+        st.subheader("Time Series Data (In Progress)")
         crypto_col, r_crypto_col = st.columns([7, 1]) # Must sum up to column1's width of 8
         with crypto_col:
             config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']))
@@ -157,7 +175,7 @@ with tab1:
             #max_value=pd.to_datetime("2025-07-01")
         #)
     
-    # To be implemented between 14th July 2025 and 28th July 2025
+    # To be implemented between 14th July 2025 and 11th August 2025
     # config['architecture'] = st.selectbox("Select Deep Learning Architecture", ["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"], index=["CNN-LSTM-AE", "Transformer-LSTM", "GRU-AE"].index(config['architecture']))
 
     # Save and trigger (for debugging)
@@ -175,10 +193,20 @@ with tab1:
             if config['sentiment'] == "Reddit":
                 # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
                 st.subheader("Reddit Posts")
-                st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
-                num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
-                st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
-                st.write(f"You can view the dataset in the 'Reddit' tab.")
+                if subreddit == "All":
+                    subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
+                    total_new_posts = 0
+                    for sub in subreddits_all:
+                        st.write(f"Scraping {num_posts} posts from r/{sub}...")
+                        num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
+                        st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                        total_new_posts += num_new_posts
+                    st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
+                else:
+                    st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
+                    num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
+                    st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
+                    st.write(f"You can view the dataset in the 'Reddit' tab.")
             elif config['sentiment'] == "NewsAPI":
                 st.subheader("NewsAPI Headlines")
                 st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
@@ -205,6 +233,17 @@ with tab1:
                     prompt_template = FEW_SHOT_LLAMA
                 else:
                     prompt_template = CHAIN_OF_THOUGHT_LLAMA
+            elif config['llm'] == "Orca 2 7B (6-bit)":
+                model_path = "./models/orca-2-7b.Q6_K.gguf"
+                # Assign prompt template for Orca 2 7B 6-bit model
+                if config['prompt'] == "Zero-shot":
+                    prompt_template = ZERO_SHOT_ORCA
+                elif config['prompt'] == "Few-shot":
+                    prompt_template = FEW_SHOT_ORCA
+                elif config['prompt'] == "Chain-of-Thought (CoT)":
+                    prompt_template = CHAIN_OF_THOUGHT_ORCA
+                else:
+                    prompt_template = CLASSIFICATION_ORCA
             elif config['llm'] == "BLOOMZ 7B (4-bit)":
                 model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
                 # Assign prompt template for Bloomz 7B 4-bit model
@@ -219,7 +258,7 @@ with tab1:
                 model_path = None
                 prompt_template = None
             
-            post_text = "Bitcoin just crossed $120,000, a huge milestone" # From 14th July 2025
+            # Apply post_text into corresponding prompt template
             prompt = prompt_template.format(post=post_text)
 
             # Show progress bar while waiting for response

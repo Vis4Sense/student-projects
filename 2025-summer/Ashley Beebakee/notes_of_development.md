@@ -52,6 +52,7 @@
   <li>Configured optimised LLM settings for 'AMD RX6600 XT GPU'.</li>
   <li>Downloaded quantised 2-bit fine-tuned Llama 3.1 instruct model for AMD ("Llama-3.1-8B-Instruct-iq2_xxs.gguf").</li>
   <li>Downloaded quantised 4-bit BLLOMZ 7B model for AMD ("bloomz-7b1-mt-Q4_K_M.gguf").</li>
+  <li>Downloaded quantised 6-bit Orca 2 7B model for AMD ("orca-2-7b.Q6_K.gguf").</li>
 </ul>
 
 ## prompt.py
@@ -75,4 +76,4 @@
   <li>Saved BTC-USD dataset of 6 months with 1-day interval to "btc_dataset_6m-1d.csv".</li>
 </ul>
 
-[Last updated: 20/07/2025 12:55]
+[Last updated: 28/07/2025 14:03]
