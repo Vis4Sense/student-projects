@@ -163,3 +163,8 @@ You are a financial sentiment analysis expert. Think step by step to analyze the
 Reddit post: {post}
 Analysis steps:
 """
+
+CLASSIFICATION_ORCA = """
+Is the following text related to cryptocurrency? Answer "yes" or "no".
+Text: {post}
+"""
