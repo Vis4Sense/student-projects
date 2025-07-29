@@ -121,6 +121,7 @@ Actions:
 Suggestions:
 <ul>
   <li>Do not halt progress due to formatting issues or minor bugs, allow for the creation of "prototype_version_1". Additional features and bug fixing can be implemented into "prototype_version_2".</li>
+  <li>Interchangeably, the sentiment of a financial news source can affect the market but so can a sudden shift in the market cause the creation of a financial news headline.</li>
 </ul>
 
 [Last updated: 28/07/2025 14:15]
