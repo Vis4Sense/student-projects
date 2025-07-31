@@ -95,7 +95,7 @@ with tab1:
                 subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"].index(config['subreddits']))
             # If NewsAPI is selected, add radio button for language selection
             elif config['sentiment'] == "NewsAPI":
-                lang_option = st.radio("Select Language for NewsAPI:", ["English", "German", "French", "Spanish", "Italian"], horizontal=True)
+                lang_option = st.radio("Select Language for NewsAPI:", ["All", "English", "German", "French", "Spanish", "Italian"], horizontal=True)
                 # Map language options to NewsAPI language codes
                 language_map = {
                     "English": "en",
@@ -104,8 +104,12 @@ with tab1:
                     "Spanish": "es",
                     "Italian": "it"
                 }
-                # Get the selected language code
-                language = language_map.get(lang_option, "en")
+                # If "All" is selected, use all languages
+                if lang_option == "All":
+                    language = list(language_map.values())
+                else:
+                    # Get the selected language code
+                    language = language_map.get(lang_option, "en")
 
         with r_news_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
@@ -200,6 +204,7 @@ with tab1:
                         st.write(f"Scraping {num_posts} posts from r/{sub}...")
                         num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
                         st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                        # Update the total count of new posts
                         total_new_posts += num_new_posts
                     st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
                 else:
@@ -209,10 +214,22 @@ with tab1:
                     st.write(f"You can view the dataset in the 'Reddit' tab.")
             elif config['sentiment'] == "NewsAPI":
                 st.subheader("NewsAPI Headlines")
-                st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
-                num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
-                st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
-                st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+                # If "All" is selected, get news headlines for each language
+                if isinstance(language, list):
+                    total_new_headlines = 0
+                    for lang in language:
+                        st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
+                        num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
+                        st.write(f"{num_new_headlines} new headlines added for language '{lang}'.")
+                        # Update the total count of new headlines
+                        total_new_headlines += num_new_headlines
+                    st.write(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
+                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+                else:
+                    st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
+                    num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
+                    st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
+                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
 
         elif run_llm:
             if config['llm'] == "LLaMA 3.1 8B (4-bit)":
