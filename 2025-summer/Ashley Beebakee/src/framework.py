@@ -64,8 +64,23 @@ def save_config(config):
 # Set page layout to wide
 st.set_page_config(layout="wide")
 
+# Add custom CSS for styling columns
+st.markdown(
+    """
+    <style>
+    div[data-testid="stColumn"] {
+        border: 1px solid #fff !important;
+        border-radius: 10px !important;
+        padding: 12px !important;
+        margin: 4px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Streamlit dashboard title
-st.title("Streamlit Modular DL Framework Prototype v7.0")
+st.title("Streamlit Modular DL Framework Prototype v8.0")
 
 # Create tabs for configuration and data visualisation
 tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources", "Time Series Data"])
@@ -114,7 +129,7 @@ with tab1:
         with r_news_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_news = st.button("▶", key="run_news")
-
+        
         # 'Sentiment Analysis' section
         st.subheader("Sentiment Analysis")
 
