@@ -187,6 +187,9 @@ with tab1:
         with r_crypto_col:
             run_crypto = st.button("▶", key="run_crypto")
 
+        # Or from a YouTube link
+        #st.video("https://www.youtube.com/watch?v=B2iAodr0fOo")
+
         #start_date, end_date = st.date_input(
             #"Select Date Range for Historical Data",
             #value=(pd.to_datetime("2025-01-01"), pd.to_datetime("2025-07-01")),
