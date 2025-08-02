@@ -14,8 +14,9 @@
 # $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
 # Then run Streamlit with the saved path as below.
 # streamlit run $sl_path
-# Import required libraries
 #------------------------------------------------------------#
+
+# Import necessary libraries
 import streamlit as st
 import pandas as pd
 import yaml
