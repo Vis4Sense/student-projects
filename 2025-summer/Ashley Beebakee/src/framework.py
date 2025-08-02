@@ -10,8 +10,12 @@
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #------------------------------------------------------------#
-
+# Run this in the Powershell terminal to save the file path as a variable
+# $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
+# Then run Streamlit with the saved path as below.
+# streamlit run $sl_path
 # Import required libraries
+#------------------------------------------------------------#
 import streamlit as st
 import pandas as pd
 import yaml
@@ -365,8 +369,3 @@ with tab3:
             st.dataframe(df)
         else:
             st.warning("No historical data file found.")
-
-# Run this in the Powershell terminal to save the file path as a variable
-# $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
-# Then run Streamlit with the saved path as below.
-# streamlit run $sl_path
