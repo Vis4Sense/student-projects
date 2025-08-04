@@ -219,14 +219,20 @@ with tab1:
             # Check if Reddit or NewsAPI is selected for sentiment analysis
             if config['sentiment'] == "Reddit":
                 # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
+                # Which seems to occurs with the r/Ethereum (midway through scraping) and r/Dogecoin subreddits
                 st.subheader("Reddit Posts")
                 if subreddit == "All":
                     subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
                     total_new_posts = 0
                     for sub in subreddits_all:
                         st.write(f"Scraping {num_posts} posts from r/{sub}...")
-                        num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
-                        st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                        try:
+                            num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
+                            st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                        except Exception as e:
+                            st.warning(f"Error scraping r/{sub}: {e}")
+                            time.sleep(10)  # Wait longer if error 429 occurs
+                        time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
                         # Update the total count of new posts
                         total_new_posts += num_new_posts
                     st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
