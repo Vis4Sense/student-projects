@@ -42,9 +42,11 @@ DEFAULT_CONFIG = {
     "subreddits": "CryptoCurrency"
 }
 
-# Define paths for datasets
+# Define paths for News Sources Data
 REDDIT_PATH = "./data/reddit_crypto_dataset.xlsx"
 NEWS_API_PATH = "./data/newsapi_crypto_dataset.xlsx"
+
+# Define paths for Time Series Data
 BTC_PATH = "./data/btc_dataset_6m-1d.csv"
 
 # Load model configuration from YAML file
@@ -100,7 +102,7 @@ with tab1:
             config = load_config()
 
         # 'News Sources' section
-        st.subheader("News Sources")
+        st.subheader("News Sources Data")
 
         news_col, r_news_col = st.columns([7, 1]) # Must sum up to column1's width of 8
         with news_col:
@@ -181,16 +183,8 @@ with tab1:
                 post_text = selected_post
                 
         with r_llm_col:
-            st.markdown("<div style='height: 4.5em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_llm = st.button("▶", key="run_llm")
-
-        # 'Time Series Data' section
-        st.subheader("Time Series Data (In Progress)")
-        crypto_col, r_crypto_col = st.columns([7, 1]) # Must sum up to column1's width of 8
-        with crypto_col:
-            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']))
-        with r_crypto_col:
-            run_crypto = st.button("▶", key="run_crypto")
 
         # Or from a YouTube link
         #st.video("https://www.youtube.com/watch?v=B2iAodr0fOo")
@@ -215,118 +209,134 @@ with tab1:
     #st.json(config)
     
     with column2:
-        if run_news:
-            # Check if Reddit or NewsAPI is selected for sentiment analysis
-            if config['sentiment'] == "Reddit":
-                # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
-                # Which seems to occurs with the r/Ethereum (midway through scraping) and r/Dogecoin subreddits
-                st.subheader("Reddit Posts")
-                if subreddit == "All":
-                    subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
-                    total_new_posts = 0
-                    for sub in subreddits_all:
-                        st.write(f"Scraping {num_posts} posts from r/{sub}...")
-                        try:
-                            num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
-                            st.write(f"{num_new_posts} new posts added from r/{sub}.")
-                        except Exception as e:
-                            st.warning(f"Error scraping r/{sub}: {e}")
-                            time.sleep(10)  # Wait longer if error 429 occurs
-                        time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
-                        # Update the total count of new posts
-                        total_new_posts += num_new_posts
-                    st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
-                else:
-                    st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
-                    num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
-                    st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
-                    st.write(f"You can view the dataset in the 'Reddit' tab.")
-            elif config['sentiment'] == "NewsAPI":
-                st.subheader("NewsAPI Headlines")
-                # If "All" is selected, get news headlines for each language
-                if isinstance(language, list):
-                    total_new_headlines = 0
-                    for lang in language:
-                        st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
-                        num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
-                        st.write(f"{num_new_headlines} new headlines added for language '{lang}'.")
-                        # Update the total count of new headlines
-                        total_new_headlines += num_new_headlines
-                    st.write(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
-                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
-                else:
-                    st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
-                    num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
-                    st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
-                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+        # 'Time Series Data' section
+        st.subheader("Time Series Data (In Progress)")
+        
+        crypto_col, r_crypto_col = st.columns([9, 1]) # Must sum up to column1's width of 8
+        with crypto_col:
+            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']))
+        with r_crypto_col:
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            run_crypto = st.button("▶", key="run_crypto")
 
-        elif run_llm:
-            if config['llm'] == "LLaMA 3.1 8B (4-bit)":
-                model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
-                # Assign prompt template for LLaMA 3.1 8B 4-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_LLAMA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_LLAMA
-                else:
-                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
-            elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
-                model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
-                # Assign prompt template for LLaMA 3.1 8B 2-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_LLAMA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_LLAMA
-                else:
-                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
-            elif config['llm'] == "Orca 2 7B (6-bit)":
-                model_path = "./models/orca-2-7b.Q6_K.gguf"
-                # Assign prompt template for Orca 2 7B 6-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_ORCA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_ORCA
-                elif config['prompt'] == "Chain-of-Thought (CoT)":
-                    prompt_template = CHAIN_OF_THOUGHT_ORCA
-                else:
-                    prompt_template = CLASSIFICATION_ORCA
-            elif config['llm'] == "BLOOMZ 7B (4-bit)":
-                model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
-                # Assign prompt template for Bloomz 7B 4-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_BLOOMZ
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_BLOOMZ
-                else:
-                    prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
-            else:
-                st.error("Apologies, the selected LLM is not supported yet.")
-                model_path = None
-                prompt_template = None
-            
-            # Apply post_text into corresponding prompt template
-            prompt = prompt_template.format(post=post_text)
+        # Display the output of any run buttons    
+        st.subheader("Console Output") 
 
-            # Show progress bar while waiting for response
-            progress = st.progress(0, text="Analysing with LLM...")
-            for percent in range(1, 91, 3):
-                time.sleep(0.05)  # Simulate progress (remove if not needed)
-                progress.progress(percent, text="Analysing with LLM...")
+        # Create a new row of columns for output
+        output_col, spacer_col = st.columns([9, 1]) # Must sum up to column2's width of 8
+        with output_col:
+            if run_news:
+                # Check if Reddit or NewsAPI is selected for sentiment analysis
+                if config['sentiment'] == "Reddit":
+                    # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
+                    # Which seems to occurs with the r/Ethereum (midway through scraping) and r/Dogecoin subreddits
+                    st.subheader("Reddit Posts")
+                    if subreddit == "All":
+                        subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
+                        total_new_posts = 0
+                        for sub in subreddits_all:
+                            st.write(f"Scraping {num_posts} posts from r/{sub}...")
+                            try:
+                                num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
+                                st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                            except Exception as e:
+                                st.warning(f"Error scraping r/{sub}: {e}")
+                                time.sleep(10)  # Wait longer if error 429 occurs
+                            time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
+                            # Update the total count of new posts
+                            total_new_posts += num_new_posts
+                        st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
+                    else:
+                        st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
+                        num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
+                        st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
+                        st.write(f"You can view the dataset in the 'Reddit' tab.")
+                elif config['sentiment'] == "NewsAPI":
+                    st.subheader("NewsAPI Headlines")
+                    # If "All" is selected, get news headlines for each language
+                    if isinstance(language, list):
+                        total_new_headlines = 0
+                        for lang in language:
+                            st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
+                            num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
+                            st.write(f"{num_new_headlines} new headlines added for language '{lang}'.")
+                            # Update the total count of new headlines
+                            total_new_headlines += num_new_headlines
+                        st.write(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
+                        st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+                    else:
+                        st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
+                        num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
+                        st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
+                        st.write(f"You can view the dataset in the 'NewsAPI' tab.")
 
-            # Call the sentiment analysis function
-            response = analyse_sentiment(prompt, model_path)
+            elif run_llm:
+                if config['llm'] == "LLaMA 3.1 8B (4-bit)":
+                    model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
+                    # Assign prompt template for LLaMA 3.1 8B 4-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_LLAMA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_LLAMA
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_LLAMA
+                elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
+                    model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
+                    # Assign prompt template for LLaMA 3.1 8B 2-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_LLAMA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_LLAMA
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_LLAMA
+                elif config['llm'] == "Orca 2 7B (6-bit)":
+                    model_path = "./models/orca-2-7b.Q6_K.gguf"
+                    # Assign prompt template for Orca 2 7B 6-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_ORCA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_ORCA
+                    elif config['prompt'] == "Chain-of-Thought (CoT)":
+                        prompt_template = CHAIN_OF_THOUGHT_ORCA
+                    else:
+                        prompt_template = CLASSIFICATION_ORCA
+                elif config['llm'] == "BLOOMZ 7B (4-bit)":
+                    model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+                    # Assign prompt template for Bloomz 7B 4-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_BLOOMZ
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_BLOOMZ
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
+                else:
+                    st.error("Apologies, the selected LLM is not supported yet.")
+                    model_path = None
+                    prompt_template = None
+                
+                # Apply post_text into corresponding prompt template
+                prompt = prompt_template.format(post=post_text)
 
-            # Show progress bar completion
-            progress.progress(100, text="Analysis complete!")
-            time.sleep(1.5)
-            progress.empty()
+                # Show progress bar while waiting for response
+                progress = st.progress(0, text="Analysing with LLM...")
+                for percent in range(1, 91, 3):
+                    time.sleep(0.05)  # Simulate progress (remove if not needed)
+                    progress.progress(percent, text="Analysing with LLM...")
 
-            st.subheader("LLM Sentiment Analysis Result")
-            # Visualise the config for debugging
-            st.write(f"**LLM Model:** {config['llm']}")
-            st.write(f"**Prompt Technique:** {config['prompt']}")
-            st.write(f"**Reddit Post:** {post_text}")
-            st.write(response)
+                # Call the sentiment analysis function
+                response = analyse_sentiment(prompt, model_path)
+
+                # Show progress bar completion
+                progress.progress(100, text="Analysis complete!")
+                time.sleep(1.5)
+                progress.empty()
+
+                st.subheader("LLM Sentiment Analysis Result")
+                # Visualise the config for debugging
+                st.write(f"**LLM Model:** {config['llm']}")
+                st.write(f"**Prompt Technique:** {config['prompt']}")
+                st.write(f"**Reddit Post:** {post_text}")
+                st.write(response)
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
