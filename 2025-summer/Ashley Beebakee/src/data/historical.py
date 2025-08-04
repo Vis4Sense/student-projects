@@ -31,8 +31,10 @@ def preprocess_data(df, scaler_type="minmax", columns=["Close"]):
 
     # Ensure the specified columns exist in the DataFrame
     if scaler_type == "minmax":
+        # Initialize MinMaxScaler to scale the data between 0 and 1
         scaler = MinMaxScaler()
     elif scaler_type == "standard":
+        # Initialize StandardScaler to standardize the data (mean=0, std=1)
         scaler = StandardScaler()
     else:
         raise ValueError("scaler_type must be 'minmax' or 'standard'.")
