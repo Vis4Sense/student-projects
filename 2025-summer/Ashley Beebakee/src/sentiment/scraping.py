@@ -12,6 +12,7 @@
 
 # Import necessary libraries
 from newsapi import NewsApiClient
+from dateutil.relativedelta import relativedelta
 from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -101,8 +102,9 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
     api_key = load_api_key("./keys/newsapi_key.txt")
     newsapi = NewsApiClient(api_key=api_key)
     
-    # Define the date range for the news articles
-    from_date = '2025-07-01'
+    # Define the from and to dates for the news articles
+    # N.B: The from date is set to 1 month ago from today to adhere with the API's free plan limits
+    from_date = from_date = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d')
     to_date = datetime.now().strftime('%Y-%m-%d')
     
     # N.B: Supported languages: ar, de, en, es, fr, he, it, nl, no, pt, ru, sv, ud, zh

@@ -1,3 +1,4 @@
 **/__pycache__/
 *.gguf
 *src/keys/
+src/data/*.csv

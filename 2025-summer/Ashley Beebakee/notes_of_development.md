@@ -19,12 +19,14 @@
   <li>Added subheaders to section the components.</li>
   <li>Added multiple language optionality for NewsAPI function call.</li>
   <li>Added subreddit selection for Reddit scraping function call.</li>
+  <li>Integrated "historical.py" to allow the user to download time series data for their chosen cryptocurrency with custom date ranges and time interval.</li>
+  <li>Created naming convention to save downloaded time series data based on parameters, i.e. "btc_dataest_20250101_20250701_1d".</li>
 </ul>
 
 ## scraping.py
 <ul>
   <li>Reddit has implemented features to prevent bots/crawlers from scraping.</li>
-  <li>Insertion of the browser's "User-Agent" information, we can mimic a browser request to prevent Reddit from detecting our bot.</li>
+  <li>Inserting the browser "User-Agent" information, we can mimic a legitimate browser request to prevent Reddit from detecting our bot.</li>
   <li>Up-to-date Reddit does not display more than four/five posts without having to scroll down (infinitely), due to this, scraping old Reddit is the better option since it uses 'Next' buttons to view more posts.</li>
   <li>Old Reddit has pagination of up to 789 posts, while new Reddit has pagination of up to only 500 posts. Reddit API is not free-to-use.</li>
   <li>Created scraping_dataset.xlsx for the Reddit posts, the function was modified to remove duplicate posts (with validation) and sort them with the inclusion of their timestamp, including their IDs.</li>
@@ -60,7 +62,8 @@
   <li>Defined prompt templates for Zero-shot, Few-shot and Chain-of-Thought (CoT) engineering techniques.</li>
   <li>Assigned prompt templates for LLaMA 3.1 (4-bit, 2-bit) and BLOOMZ models.</li>
   <li>Refined prompt templates to extract sentiment with numerical values from -1 (negative), 0 (neutral) to 1 (positive).</li>
-  <li>BLOOMZ prompt needs debugging since it doesn't output a numerical value for the sentiment score.</li>
+  <li>BLOOMZ prompt templates need debugging since they do not output a numerical value for the sentiment score.</li>
+  <li>Assigned prompt templates for Orca 2 (6-bit) model.</li>
 </ul>
 
 ## extraction.py
@@ -74,6 +77,8 @@
   <li>The path in which the 'thesis' conda environment searches for packages is "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages"</li>
   <li>Run this command to ensure correct path installation: pip install --target "C:/Users/zetra/anaconda3/envs/thesis/Lib/site-packages" [package_name].</li>
   <li>Saved BTC-USD dataset of 6 months with 1-day interval to "btc_dataset_6m-1d.csv".</li>
+  <li>Added comments for the fetch_price_data() and preprocess_data() functions.</li>
+  <li>Removed commented sections of code for saving datasets to .csv file type.</li>
 </ul>
 
-[Last updated: 28/07/2025 14:03]
+[Last updated: 06/08/2025 12:58]

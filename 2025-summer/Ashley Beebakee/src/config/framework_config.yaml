@@ -1,5 +1,6 @@
 cryptocurrency: Bitcoin
-llm: LLaMA 3.1
+interval: 1d
+llm: LLaMA 3.1 8B (4-bit)
 prompt: Zero-shot
 sentiment: Reddit
 subreddits: CryptoCurrency
