@@ -20,7 +20,11 @@
   <li>Added multiple language optionality for NewsAPI function call.</li>
   <li>Added subreddit selection for Reddit scraping function call.</li>
   <li>Integrated "historical.py" to allow the user to download time series data for their chosen cryptocurrency with custom date ranges and time interval.</li>
-  <li>Created naming convention to save downloaded time series data based on parameters, i.e. "btc_dataest_20250101_20250701_1d".</li>
+  <li>Created naming convention to save downloaded time series data based on parameters, i.e. "btc_dataset_20250101_20250701_1d".</li>
+  <li>Implemented console_output.json to store all the output from executing code.</li>
+  <li>Live-updates cannot be shown since the console output's visibility changes only when the framework is 'rerun'.</li>
+  <li>Warning: st.experimental_rerun() is not compatible with streamlit < 1.10.0.</li>
+  <li>Investigation into python environment conflict during activation and deactivation / IDE reboots.</li>
 </ul>
 
 ## scraping.py
