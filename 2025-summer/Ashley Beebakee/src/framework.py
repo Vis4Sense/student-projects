@@ -20,6 +20,7 @@ import streamlit as st
 import pandas as pd
 import yaml
 import time
+import json
 import os
 
 # Import required modules
@@ -30,8 +31,11 @@ from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, 
 from models.llm_selection import analyse_sentiment
 from data.historical import fetch_price_data, preprocess_data
 
-# Assign model config to constant variable
+# Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
+
+# Define path for the console output
+CONSOLE_PATH = "config/console_output.json"
 
 # Define default config as backup
 DEFAULT_CONFIG = {
@@ -71,6 +75,27 @@ def save_config(config):
     with open(CONFIG_PATH, 'w') as f:
         yaml.dump(config, f)
 
+# Load console output from JSON file
+def load_console_output():
+    if os.path.exists(CONSOLE_PATH):
+        with open(CONSOLE_PATH, "r") as f:
+            return json.load(f)
+    return []
+
+# Save console output to JSON file
+def save_console_output(output_list):
+    with open(CONSOLE_PATH, "w") as f:
+        json.dump(output_list, f)
+
+# Append messages to the console output
+def add_console_message(msg):
+    st.session_state.console_output.append(msg)
+    save_console_output(st.session_state.console_output)
+
+# Initialise session state for the console output
+if "console_output" not in st.session_state:
+    st.session_state.console_output = load_console_output()
+
 # Set page layout to wide
 st.set_page_config(layout="wide")
 
@@ -95,6 +120,8 @@ st.title("Streamlit Modular DL Framework Prototype v0.8")
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
 # The default start and end dates are set to 1st January 2025 and 1st July 2025 respectively.
+
+
 
 # Create tabs for configuration and data visualisation
 tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources Data", "Time Series Data"])
@@ -223,63 +250,86 @@ with tab1:
             run_crypto = st.button("▶", key="run_crypto")
 
     with column3:
-        # Display the console output
+        # Set header for the console output section
         st.subheader("Console Output")
+
+        # Define scrollable, fixed-height container for console output
+        st.markdown("""
+            <div style="
+                height: 600px;
+                overflow-y: auto;
+                background: #222;
+                color: #fff;
+                border-radius: 8px;
+                padding: 12px;
+                font-family: monospace;
+                font-size: 14px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                margin-bottom: 1em;
+            ">
+            {}
+            </div>
+        """.format("<br>".join(st.session_state.console_output[-100:])), unsafe_allow_html=True)
+
+        # Button to clear the console output entirely
+        if st.button("Clear Console Output"):
+            st.session_state.console_output = []
+            save_console_output(st.session_state.console_output)
+            st.experimental_rerun()
 
         if run_news:
             # If Reddit is selected, scrape posts from specified subreddit(s)
             if config['sentiment'] == "Reddit":
                 # N.B: Failed with status code: 429 Too Many Requests (Reddit bot protection)
                 # Which seems to occurs with the r/Ethereum (midway through scraping) and r/Dogecoin subreddits
-                
-                #st.subheader("Reddit Posts")
                 # If "All" is selected, scrape posts from all subreddits
                 if subreddit == "All":
                     subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
                     total_new_posts = 0
                     # Loop through each subreddit and scrape its posts
                     for sub in subreddits_all:
-                        st.write(f"Scraping {num_posts} posts from r/{sub}...")
+                        add_console_message(f"Scraping {num_posts} posts from r/{sub}...")
                         try:
                             num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
-                            st.write(f"{num_new_posts} new posts added from r/{sub}.")
+                            add_console_message(f"{num_new_posts} new posts added from r/{sub}.")
                         except Exception as e:
                             st.warning(f"Error scraping r/+{sub}: {e}")
                             time.sleep(10)  # Wait longer if error 429 occurs
                         time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
                         # Update the total count of new posts
                         total_new_posts += num_new_posts
-                    st.write(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
+                    add_console_message(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
                 # If a specific subreddit is selected, scrape posts from that subreddit
                 else:
-                    st.write(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
+                    add_console_message(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
                     num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
-                    st.write(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
-                    st.write(f"You can view the dataset in the 'Reddit' tab.")
+                    add_console_message(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
+                    add_console_message(f"You can view the dataset in the 'Reddit' tab.")
             
             # If NewsAPI is selected, get news headlines
             elif config['sentiment'] == "NewsAPI":
                 # N.B: Some languages were not included due to potential LLM compatibility issues
-
-                #st.subheader("NewsAPI Headlines")
                 # If "All" is selected, get news headlines for each language
                 if isinstance(language, list):
                     total_new_headlines = 0
                     # Loop through each language and get news headlines
                     for lang in language:
-                        st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
+                        add_console_message(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
                         num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
-                        st.write(f"{num_new_headlines} new headlines added for language '{lang}'.")
+                        add_console_message(f"{num_new_headlines} new headlines added for language '{lang}'.")
                         # Update the total count of new headlines
                         total_new_headlines += num_new_headlines
-                    st.write(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
-                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+                    add_console_message(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
+                    add_console_message(f"You can view the dataset in the 'NewsAPI' tab.")
                 # If a specific language is selected, get news headlines for that language
                 else:
-                    st.write(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
+                    add_console_message(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
                     num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
-                    st.write(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
-                    st.write(f"You can view the dataset in the 'NewsAPI' tab.")
+                    add_console_message(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
+                    add_console_message(f"You can view the dataset in the 'NewsAPI' tab.")
+
+            # Rerun the app to reflect changes in the console output
+            #st.experimental_rerun()
 
         elif run_llm:
             if config['llm'] == "LLaMA 3.1 8B (4-bit)":
@@ -342,16 +392,16 @@ with tab1:
             time.sleep(1.5)
             progress.empty()
 
-            st.subheader("LLM Sentiment Analysis Result")
             # Visualise the config for debugging
-            st.write(f"**LLM Model:** {config['llm']}")
-            st.write(f"**Prompt Technique:** {config['prompt']}")
-            st.write(f"**Reddit Post:** {post_text}")
-            st.write(response)
+            add_console_message(f"**LLM Model:** {config['llm']}")
+            add_console_message(f"**Prompt Technique:** {config['prompt']}")
+            add_console_message(f"**Reddit Post:** {post_text}")
+            add_console_message(response)
+
+            # Rerun the app to reflect changes in the console output
+            #st.experimental_rerun()
 
         elif run_crypto:
-            #st.subheader("Time Series Data Analysis")
-
             # Map user-friendly names to Yahoo tickers
             ticker_map = {
                 "Bitcoin": "BTC-USD",
@@ -382,7 +432,7 @@ with tab1:
             filename = f"{prefix}_dataset_{start_fmt}_{end_fmt}_{interval}.csv"
             file_path = os.path.join("./data", filename)
 
-            st.write(f"Running time series data extraction for {config['cryptocurrency']} with {config['interval']} interval from {start_date} to {end_date}...")
+            add_console_message(f"Running time series data extraction for {config['cryptocurrency']} with {config['interval']} interval from {start_date} to {end_date}...")
             # Fetch time series data from Yahoo Finance
             df = fetch_price_data(ticker=ticker, start_date=start, end_date=end, interval=interval)
             # Preprocess (scale) data
@@ -392,10 +442,14 @@ with tab1:
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             df.to_csv(file_path, index=False)
             st.success(f"Preprocessed data saved to {file_path}")
+            add_console_message(f"Preprocessed data saved to {file_path}")
 
             # Display the dataset in the console output
-            st.subheader(f"{config['cryptocurrency']} Dataset Preview")
-            st.dataframe(df)
+            #st.subheader(f"{config['cryptocurrency']} Dataset Preview")
+            #st.dataframe(df)
+
+            # Rerun the app to reflect changes in the console output
+            #st.experimental_rerun()
 
     with column4:
         # 'Framework Configuration' section
