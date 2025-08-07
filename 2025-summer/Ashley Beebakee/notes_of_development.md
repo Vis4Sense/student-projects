@@ -25,6 +25,11 @@
   <li>Live-updates cannot be shown since the console output's visibility changes only when the framework is 'rerun'.</li>
   <li>Warning: st.experimental_rerun() is not compatible with streamlit < 1.10.0.</li>
   <li>Investigation into python environment conflict during activation and deactivation / IDE reboots.</li>
+  <li>Python environment fixed: Windows Powershell configured for conda using "conda init powershell", Terminal and Python Interpreter are separate.</li>
+  <li>The st.experimental.rerun() function was deprecated, it's now called st.rerun().</li>
+  <li>Console column divided into two: Console History & Console Output.</li>
+  <li>Column borders can be hidden if entire stColumn class name is set as an exception (Note: a small change in the configuration of a widget alters its class name).</li>
+  <li>...</li>
 </ul>
 
 ## scraping.py
