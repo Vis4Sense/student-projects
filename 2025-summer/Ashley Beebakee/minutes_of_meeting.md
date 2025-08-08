@@ -124,10 +124,15 @@ Suggestions:
   <li>Interchangeably, the sentiment of a financial news source can affect the market but so can a sudden shift in the market cause the creation of a financial news headline.</li>
 </ul>
 
-## 4th August 2025 (13:00 - 14:XX)
+## ~4th August 2025 (13:00 - 14:XX)~
+<ul>
+  <li>Absent due to more time being required to implement the current stage.</li>
+</ul>
+
+## 11th August 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
-  <li>...</li>
+  <li>GPT-5 was released on August 5th 2025 with two open-source models "gpt-oss-120b" and "gpt-oss-20b" (https://github.com/openai/gpt-oss).</li>
 </ul>
 Actions:
 <ul>
