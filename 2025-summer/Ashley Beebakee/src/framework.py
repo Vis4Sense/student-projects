@@ -108,6 +108,7 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
+    /* Apply global style to all columns */
     div[data-testid="stColumn"] {
         border: 1px solid #fff !important;
         border-radius: 10px !important;
@@ -125,8 +126,6 @@ st.title(f"Streamlit Modular DL Framework Prototype v0.8 ({st.__version__})")
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
 # The default start and end dates are set to 1st January 2025 and 1st July 2025 respectively.
-
-
 
 # Create tabs for configuration and data visualisation
 tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources Data", "Time Series Data"])
@@ -186,7 +185,7 @@ with tab1:
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
         open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "Orca 2 7B (6-bit)", "BLOOMZ 7B (4-bit)"]
-        closed_source_llms = ["GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
+        closed_source_llms = ["GPT-5, GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
 
         # Display corresponding drop-down menu based on LLM source type
         if llm_type == "Open-source":
@@ -258,6 +257,12 @@ with tab1:
         # Set header for the console output section
         st.subheader("Console History & Output")
 
+        # Button to clear console output
+        if st.button("Clear Console Output"):
+            st.session_state.console_output = []
+            save_console_output(st.session_state.console_output)
+            st.rerun()
+
         # Define scrollable, fixed-height container for console output
         st.markdown("""
             <div style="
@@ -276,16 +281,9 @@ with tab1:
             </div>
         """.format("<br>".join(st.session_state.console_output[-100:])), unsafe_allow_html=True)
 
-        # Add Clear Console Output and Refresh buttons side by side
-        clear_col, refresh_col = st.columns(2)
-        with clear_col:
-            if st.button("Clear Console Output"):
-                st.session_state.console_output = []
-                save_console_output(st.session_state.console_output)
-                st.rerun()
-        with refresh_col:
-            if st.button("Refresh"):
-                st.rerun()
+        # Button to refresh the Streamlit dashboard
+        if st.button("Refresh UI"):
+            st.rerun()
 
         if run_news:
             # If Reddit is selected, scrape posts from specified subreddit(s)
