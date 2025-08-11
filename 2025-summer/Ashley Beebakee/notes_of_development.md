@@ -29,7 +29,8 @@
   <li>The st.experimental.rerun() function was deprecated, it's now called st.rerun().</li>
   <li>Console column divided into two: Console History & Console Output.</li>
   <li>Column borders can be hidden if entire stColumn class name is set as an exception (Note: a small change in the configuration of a widget alters its class name).</li>
-  <li>...</li>
+  <li>Removed r/Altcoin subreddit due to "inactivity".</li>
+  <li>Integrated merge_datasets() into logic.</li>
 </ul>
 
 ## scraping.py
@@ -45,6 +46,8 @@
   <li>Generated API key for NewsAPI, it can only get news headlines from the past 30 days.</li>
   <li>Optimised its functionality, each news source has its own dataset (i.e. reddit_crypto_dataset.xlsx).</li>
   <li>There are multiple language options for NewsAPI to get headlines from, ensure that the selected languages are compatible with one of the available LLMs.</li>
+  <li>Created merge_datasets() function to combine the Reddit & NewsAPI datasets whenever new posts are appended via scraping/API.</li>
+  <li>Added 'Language' column into logic of both datasets, with a LANGUAGE_MAP at the top which can be expanded to include additional languages taking into consideration LLM compatibility.</li>
 </ul>
 
 ## llm_selection.py
@@ -88,6 +91,21 @@
   <li>Saved BTC-USD dataset of 6 months with 1-day interval to "btc_dataset_6m-1d.csv".</li>
   <li>Added comments for the fetch_price_data() and preprocess_data() functions.</li>
   <li>Removed commented sections of code for saving datasets to .csv file type.</li>
+</ul>
+
+## architecture.py
+<ul>
+  <li>Created three classes: LSTMModel, CNNModel and CNNLSTMModel.</li>
+</ul>
+
+## dataloader.py
+<ul>
+  <li>...</li>
+</ul>
+
+## training.py
+<ul>
+  <li>...</li>
 </ul>
 
 [Last updated: 06/08/2025 12:58]
