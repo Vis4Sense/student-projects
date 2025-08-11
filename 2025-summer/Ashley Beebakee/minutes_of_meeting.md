@@ -134,10 +134,12 @@ Discussion:
 <ul>
   <li>GPT-5 was released on August 5th 2025 with two open-source models "gpt-oss-120b" and "gpt-oss-20b" (https://github.com/openai/gpt-oss).</li>
   <li>Redesign of the Streamlit framework and conversion of prototype version from v8.0 to v0.8.</li>
+  <li>Challenges of price data fusion with sentiment -> having to filter by keyword i.e. Bitcoin, or insufficient data, i.e. r/Bitcoin (15th July to date).</li>
+  <li>Learning how to preprocess and evaluate a deep learning model as its training.</li>
 </ul>
 Actions:
 <ul>
-  <li>...</li>
+  <li>Update System Architecture diagram.</li>
 </ul>
 Suggestions:
 <ul>
