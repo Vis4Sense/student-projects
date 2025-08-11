@@ -44,13 +44,47 @@
   <li>Select time interval for historical data.</li>
 </ul>
 
+### Terminology
+<ul>
+  <li>Prompt Templates</li>
+  <ul>
+    <li><b>Zero-shot</b>: ask LLM to rate sentiment without examples.</li>
+    <li><b>Few-shot</b>: provide a few labelled examples to improve LLM accuracy.</li>
+    <li><b>Chain-of-Thought(CoT)</b>: ask the model to explain its reasoning before giving a score, improving accuracy.</li>
+  </ul>
+  <li>Sentiment Fusion</li>
+  <ul>
+    <li><b>Early Fusion</b>: combine sentiment and price data before feeding into model.</li>
+    <li><b>Late Fusion</b>: run separate branches for sentiment and price, merge at output.</li>
+    <li><b>Attention-based Fusion</b>: learn which signal (price or sentiment) matters more at each step.</li>
+  </ul>
+  <li>LLaMA Optimisation</li>
+  <ul>
+    <li><b>n_gpu_layers</b>: number of transformer layers to offload to GPU, balances speed and VRAM usage.</li>
+    <li><b>n_ctx</b>: context window size (how much the model can see at once).</li>
+    <li><b>n_batch</b>: controls how many tokens to process per forward pass, smaller values = more stable, less VRAM needed.</li>
+    <li><b>n_threads</b>: number of CPU threads to use if necessary.</li>
+    <li><b>use_nmap/use_mlock</b>: memory-related flags.</li>
+    <li><b>verbose</b>: prints detailed logs.</li>
+  </ul>
+  <li>LLM Response</li>
+  <ul>
+    <li><b>max_tokens</b>: maximum tokens to generate.</li>
+    <li><b>temperature</b>: higher = more creative, lower = more deterministic.</li>
+    <li><b>top_p</b>: controls nucleus sampling, how many probable tokens to consider.</li>
+    <li><b>repeat_penalty</b>: penalises repetition.</li>
+    <li><b>stop</b>: stop sequences to end generation cleanly, i.e. <|eot_id|>.</li>
+  </ul>
+</ul>
+
 ### Project Timeline
 <img width="1659" height="1015" alt="project_timeline_status1" src="https://github.com/user-attachments/assets/ae471c94-60ef-4740-a391-fef4f3aa925e" />
 
 ### System Architecture (est. 24th July 2025)
 <img width="1076" height="508" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
 
-[Last updated: 08/08/2025 10:46]
+[Last updated: 11/08/2025 03:57]
+
 
 
 
