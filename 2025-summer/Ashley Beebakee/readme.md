@@ -44,6 +44,12 @@
   <li>Select time interval for historical data.</li>
 </ul>
 
+### Deep Learning Architecture
+<ul>
+  <li>Select architecture: LSTM, CNN or CNN-LSTM.</li>
+  <li>Select time series dataset for sentiment fusion and model training.</li>
+</ul>
+
 ### Terminology
 <ul>
   <li>Prompt Templates</li>
@@ -75,6 +81,19 @@
     <li><b>repeat_penalty</b>: penalises repetition.</li>
     <li><b>stop</b>: stop sequences to end generation cleanly, i.e. <|eot_id|>.</li>
   </ul>
+  <li>Deep Learning Architecture</li>
+  <ul>
+    <li><b>sequence_length</b>: how many rows of past data to include in each input sequence for a model like LSTM/CNN-LSTM.</li>
+    <li><b>target_column</b>: the column that you want to predict (dependent variable) of your dataset (.csv).</li>
+    <li><b>scaler_type</b>: which normalisation/scaling method to apply to the dataset, minmax -> scales to [0, 1], standard -> scales to mean = 0 and std = 1.</li>
+    <li><b>batch_size</b>: how many samples to include in one batch for training or testing (Controls: memory usage during training and frequency of model weight updates).</li>
+  </ul>
+  <li>PyTorch Objects</li>
+  <ul>
+    <li><b>train_loader</b>: used to feed the training set to your model, it is where the model learns patterns from the data, contains majority of the samples, often shuffled so the model doesn't memorise the order.</li>
+    <li><b>val_loader</b>: uesd for validation during training, after each epoch the model is evaluated to see: generalisation performance, tuning hyperparameters and detecting overfitting (when the model memorises training data instead of learning patterns).</li>
+    <li><b>test_loader</b>: used for the final evaluation after training is complete, this is never shown to the model during training or validation, gives you an unbiased estimate of how your model will perform on new, unseen data.</li>
+  </ul>
 </ul>
 
 ### Project Timeline
@@ -84,8 +103,3 @@
 <img width="1076" height="508" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
 
 [Last updated: 11/08/2025 03:57]
-
-
-
-
-
