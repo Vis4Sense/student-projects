@@ -11,7 +11,6 @@
 #------------------------------------------------------------#
 
 # Import necessary libraries
-import torch
 import torch.nn as nn
 
 # Define LSTM, CNN, and CNN-LSTM models for time series prediction
@@ -42,7 +41,6 @@ class CNNModel(nn.Module):
         x = self.fc(x)
         return x
 
-
 class CNNLSTMModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(CNNLSTMModel, self).__init__()
@@ -70,11 +68,3 @@ def get_model(name, input_size, hidden_size, output_size):
         return CNNLSTMModel(input_size, hidden_size, output_size)
     else:
         raise ValueError(f"Unknown model architecture: {name}")
-
-"""
-model = get_model("cnn-lstm", input_size=5, hidden_size=64, output_size=1)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.to(device)
-
-print(model)
-"""
