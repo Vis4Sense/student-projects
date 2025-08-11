@@ -15,7 +15,7 @@
 <ul>
   <li>Reddit</li>
   <ul>
-    <li>Select 1 - 1000 posts to scrape for Reddit for the following subreddits: r/Cryptocurrency, r/Bitcoin, r/Ethereum, r/Dogecoin, r/CryptoMarkets, r/Altcoin (or All).</li>
+    <li>Select 1 - 1000 posts to scrape for Reddit for the following subreddits: r/Cryptocurrency, r/Bitcoin, r/Ethereum, r/Dogecoin, r/CryptoMarkets (or All).</li>
     <li>Reddit bot protection may cause "Failed with status code: 429 Too Many Requests" (Auto-fixed by waiting some time).<br></li>
   </ul>
   <li>NewsAPI</li>
@@ -84,6 +84,7 @@
 <img width="1076" height="508" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
 
 [Last updated: 11/08/2025 03:57]
+
 
 
 
