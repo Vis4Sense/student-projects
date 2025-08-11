@@ -31,6 +31,7 @@
   <li>Column borders can be hidden if entire stColumn class name is set as an exception (Note: a small change in the configuration of a widget alters its class name).</li>
   <li>Removed r/Altcoin subreddit due to "inactivity".</li>
   <li>Integrated merge_datasets() into logic.</li>
+  <li>Added selection for Time Series dataset from the 'Data' folder.</li>
 </ul>
 
 ## scraping.py
