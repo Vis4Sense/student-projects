@@ -36,3 +36,67 @@ Pain	Feature	Description
 
 Wireframe：https://www.figma.com/design/CaHpdBnP3Lxpkptr9TcGG3/Untitled?node-id=0-1&m=dev&t=BIAdWvNT9FiQrRuG-1
 
+1. Progress to date (right before “pack .xpi”)
+(1) Environment & structure
+
+Windows + PyCharm + venv (Python 3.11).
+
+Dependencies: flask, flask-cors, numpy, pandas, scikit-learn, sentence-transformers, requests, streamlit(optional).
+
+Layout:
+
+data/: export-data.json (Zotero export), papers_cleaned.tsv, vector_store.json
+
+my_project/: zotero_preprocess.py, generate_embeddings.py, server_min.py, plugin/…
+
+my_project/plugin/: manifest.json, sidebar.html, sidebar.js (Zotero sidebar prototype)
+
+(2) Data pipeline (Zotero → embeddings)
+
+Exported export-data.json from Zotero.
+
+zotero_preprocess.py: normalize metadata (id/key, title, creators, date(year), abstractNote, tags) → papers_cleaned.tsv.
+
+generate_embeddings.py: SentenceTransformers all-MiniLM-L6-v2 (CPU) on title + abstract, L2-normalized → persisted to vector_store.json.
+
+(3) Minimal backend API (Flask + CORS)
+
+File: server_min.py, port http://localhost:3000.
+
+Endpoints (working):
+
+POST /semantic_search: { "query": "...", "top_k": 5 } → { "results": [{ id, title, year }, ...] } (MiniLM embedding + cosine NN).
+
+POST /citation_relation (placeholder): { "a_id": "...", "b_id": "..." } → { "nodes":[...], "edges":[{ src, dst, type:"cites" }] }.
+
+POST /cluster_papers: { "ids": ["…","…"] } → { "layout":[{ id, title, x, y, cluster }, ...] } (KMeans + PCA 2D).
+
+(4) Sidebar prototype (pre-pack)
+
+In my_project/plugin/: manifest.json, sidebar.html, sidebar.js.
+
+Features:
+
+Search → /semantic_search → list with Pick buttons.
+
+Compare (A/B) → /citation_relation → JSON display (to be replaced by a mini graph later).
+
+Cluster (multi-select) → /cluster_papers → simple Canvas scatter (color by cluster).
+
+Since Node/npm is not installed on this machine, I’ll manually zip to .xpi with PowerShell.
+
+(5) Local tests
+
+Verified the three endpoints via Invoke-RestMethod in PowerShell; responses are correct.
+
+2. Tech choices & trade-offs
+NLP/Retrieval: MiniLM embeddings + cosine NN; normalized vectors for stability.
+
+Clustering/DR: KMeans + PCA (MVP-first approach; can switch to UMAP later).
+
+Backend: Flask + CORS, JSON APIs aligned with the wireframes.
+
+Frontend/Plugin: vanilla HTML/CSS/JS + Canvas 2D; Manifest v2 sidebar; packable without Node.
+
+Trade-off: prioritize “working MVP” now; refine UI/UMAP/visuals and Zotero API integration after your confirmation.
+
