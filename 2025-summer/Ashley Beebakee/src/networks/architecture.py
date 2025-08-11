@@ -25,7 +25,6 @@ class LSTMModel(nn.Module):
         out = self.fc(out[:, -1, :])  # Use the last output
         return out
 
-
 class CNNModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(CNNModel, self).__init__()
@@ -67,4 +66,4 @@ def get_model(name, input_size, hidden_size, output_size):
     elif name == "cnn-lstm":
         return CNNLSTMModel(input_size, hidden_size, output_size)
     else:
-        raise ValueError(f"Unknown model architecture: {name}")
+        raise ValueError(f"Unknown deep learning architecture: {name}")
