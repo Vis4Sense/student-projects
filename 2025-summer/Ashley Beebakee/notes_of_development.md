@@ -97,16 +97,20 @@
 ## architecture.py
 <ul>
   <li>Created three classes: LSTMModel, CNNModel and CNNLSTMModel.</li>
+  <li>With parameters: input_size, hidden_size, output_size, num_layers, dropout.</li>
 </ul>
 
 ## dataloader.py
 <ul>
-  <li>...</li>
+  <li>Created coerce_numeric_columns() to ensure all features are numeric float32 to prevent "TypeError: can't convert np.ndarray of type numpy.str_.".</li>
+  <li>Created load_and_prepare_data() function to return train_loader, val_loader, test_loader and input_size.</li>
 </ul>
 
 ## training.py
 <ul>
-  <li>...</li>
+  <li>Created train_model() function to train the deep learning model using corresponding architecture.</li>
+  <li>Created evaluate_model() to analyse the efficiency of the trained deep learning model.</li>
+  <li>Created predict() function to visualise prediction of mean_squared_error and r2_score.</li>
 </ul>
 
-[Last updated: 06/08/2025 12:58]
+[Last updated: 10/08/2025 18:24]
