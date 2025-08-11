@@ -11,10 +11,10 @@
 #------------------------------------------------------------#
 
 # Import necessary libraries
-import pandas as pd
-import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from torch.utils.data import TensorDataset, DataLoader
+import pandas as pd
+import numpy as np
 import torch
 
 # Function to coerce all columns to numeric, excluding specified ones
@@ -39,16 +39,6 @@ def load_and_prepare_data(csv_path, sequence_length=30, target_column='Close', s
     """
     Loads and prepares time series + sentiment dataset for training.
     Ensures all features/target are numeric float32.
-
-    Args:
-        csv_path (str): Path to the model-ready CSV file.
-        sequence_length (int): Length of historical sequence.
-        target_column (str): Column to predict.
-        scaler_type (str): 'minmax' or 'standard'
-        batch_size (int): Batch size for DataLoaders.
-    
-    Returns:
-        train_loader, val_loader, test_loader, input_size
     """
     df = pd.read_csv(csv_path)
 
