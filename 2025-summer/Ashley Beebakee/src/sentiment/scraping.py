@@ -23,8 +23,16 @@ import os
 def load_api_key(filepath):
     with open(filepath, "r") as f:
         return f.read().strip()
+    
+LANGUAGE_MAP = {
+    'en': 'English',
+    'de': 'German',
+    'fr': 'French',
+    'es': 'Spanish',
+    'it': 'Italian'
+}
 
-# Function to scrape Reddit posts from a specified subreddit
+# Function to scrape (Old) Reddit posts from specified subreddit(s)
 def scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=100, excel_path="./data/reddit_crypto_dataset.xlsx"):
     # Load existing URLs to avoid duplicates
     existing_urls = set()
@@ -73,6 +81,7 @@ def scrape_reddit_posts(subreddit='CryptoCurrency', total_limit=100, excel_path=
                         "Title": title,
                         "URL": post_url,
                         "Timestamp": timestamp,
+                        "Language": "English"
                     })
         # Emulate pagination by finding the next button
         next_button = soup.find("span", class_="next-button")
@@ -109,6 +118,8 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
     
     # N.B: Supported languages: ar, de, en, es, fr, he, it, nl, no, pt, ru, sv, ud, zh
     # Arabic, German, English, Spanish, French, Hebrew, Italian, Dutch, Norwegian, Portuguese, Russian, Swedish, Urdu, Chinese
+    language_full = LANGUAGE_MAP.get(language, "English")
+
     try:
         # Fetch cryptocurrency news articles
         crypto_news = newsapi.get_everything(
@@ -128,7 +139,8 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
                     'Title': article['title'],
                     'URL': article['url'],
                     'Timestamp': article['publishedAt'],
-                    'Description': article['description']
+                    'Description': article['description'],
+                    'Language': language_full
                 }
                 # Append the article information to the headlines list
                 headlines.append(headline_info)
@@ -169,3 +181,34 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
     except Exception as e:
         print(f"Error: {e}")
         return {'error': str(e)}
+    
+# Function to merge Reddit & NewsAPI datasets to allow sentiment extraction by specific LLM
+def merge_datasets(reddit_path="./data/reddit_crypto_dataset.xlsx", newsapi_path="./data/newsapi_crypto_dataset.xlsx", merged_path="./data/merged_crypto_dataset.xlsx"):
+    try:
+        # Check if both Reddit & NewsAPI datasets exist
+        if not os.path.exists(reddit_path) or not os.path.exists(newsapi_path):
+            print("One or both source datasets not found.")
+            return 0
+
+        # Load both datasets into DataFrames
+        df_reddit = pd.read_excel(reddit_path)
+        df_newsapi = pd.read_excel(newsapi_path)
+        
+        # Merge both datasets into single DataFrame
+        df_merged = pd.concat([df_reddit, df_newsapi], ignore_index=True)
+        
+        # Remove duplicates based on URL and sort by timestamp
+        df_merged.drop_duplicates(subset=["URL"], inplace=True)
+        df_merged = df_merged.sort_values(by="Timestamp", ascending=False)
+        
+        # Save merged dataset as .xlsx file in the 'data' folder
+        os.makedirs(os.path.dirname(merged_path), exist_ok=True)
+        df_merged.to_excel(merged_path, index=False)
+        
+        print(f"Merged dataset saved to {merged_path} with {len(df_merged)} posts.")
+        return len(df_merged)
+    
+    # In the event of an error emerging
+    except Exception as e:
+        print(f"Error merging the datasets: {e}")
+        return 0
