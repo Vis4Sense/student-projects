@@ -71,8 +71,10 @@ def get_model(name, input_size, hidden_size, output_size):
     else:
         raise ValueError(f"Unknown model architecture: {name}")
 
+"""
 model = get_model("cnn-lstm", input_size=5, hidden_size=64, output_size=1)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 print(model)
+"""
