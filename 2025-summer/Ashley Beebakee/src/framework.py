@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 07/08/2025
+# Last Updated: 11/08/2025
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #-------------------------------------------------------------------------------#
@@ -16,8 +16,10 @@
 #-------------------------------------------------------------------------------#
 
 # Import necessary libraries
+import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+import torch
 import yaml
 import time
 import json
@@ -28,8 +30,11 @@ from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines, merge
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
-from models.llm_selection import analyse_sentiment
+from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
 from data.historical import fetch_price_data, preprocess_data
+from networks.dataloader import load_and_prepare_data
+from networks.architecture import get_model
+from networks.training import train_model, predict
 
 # Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
@@ -39,7 +44,7 @@ CONSOLE_PATH = "config/console_output.json"
 
 # Define default config as backup
 DEFAULT_CONFIG = {
-    "architecture": "LSTM",
+    "architecture": "CNN-LSTM",
     "cryptocurrency": "Bitcoin",
     "interval": "1d",
     "llm": "LLaMA 3.1 8B (4-bit)",
@@ -57,6 +62,12 @@ MERGED_PATH = "./data/merged_crypto_dataset.xlsx"
 BTC_PATH = "./data/btc_dataset_20250101_20250701_1d.csv"
 ETH_PATH = "./data/eth_dataset_20250101_20250701_1d.csv"
 DOGE_PATH = "./data/doge_dataset_20250101_20250701_1d.csv"
+
+# Define paths for all folders
+DATA_FOLDER = "./data"
+MODELS_FOLDER = "./models"
+NETWORKS_FOLDER = "./networks"
+SENTIMENT_FOLDER = "./sentiment"
 
 # Load model configuration from YAML file
 def load_config():
@@ -123,7 +134,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v0.8 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v0.9 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -181,7 +192,7 @@ with tab1:
 
         #----------------------------------------------------------------------------------------------------#
         # 'Sentiment Analysis' section
-        st.subheader("Sentiment Analysis")
+        st.subheader("Sentiment Analysis (Manual)")
 
         # Open-source and Closed-source LLM Options
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
@@ -207,7 +218,8 @@ with tab1:
         with llm_col:
             # Select LLM and prompt engineering to use
             config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
-            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
+            if llm_type == "Open-source":
+                config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
 
             # Before running the LLM, load merged dataset and let the user pick a post
             merged_df = None
@@ -223,11 +235,15 @@ with tab1:
                 post_options = merged_df[text_column].dropna().unique().tolist()
                 selected_post = st.selectbox("Select Post for Sentiment Analysis:", post_options)
                 post_text = selected_post
-        
+
         # When the "Run" button is clicked, run the LLM for sentiment analysis
         with r_llm_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_llm = st.button("▶", key="run_llm")
+
+        # 'Sentiment Analysis' section
+        st.subheader("Sentiment Analysis (Automatic)")
+        st.write("To be implemented soon...")
 
         # Placeholder to display a video within the framework (optional)
         #st.video("https://www.youtube.com/watch?v=B2iAodr0fOo")
@@ -255,8 +271,33 @@ with tab1:
         #----------------------------------------------------------------------------------------------------#
         # 'Deep Learning Architecture' section
         st.subheader("Deep Learning Architecture (In Progress)")
-        config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNNLSTM"], index=["LSTM", "CNN", "CNNLSTM"].index(config['architecture']))
+        # Define the layout for the deep learning architecture section
+        architecture_col, r_architecture_col = st.columns([8.25, 1.5])
 
+        with architecture_col:
+            config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNN-LSTM"], index=["LSTM", "CNN", "CNN-LSTM"].index(config['architecture']))
+            st.caption("Architecture hyperparameters to be defined.")
+
+            # Get list of available CSV files from data folder
+            if os.path.exists(DATA_FOLDER):
+                csv_files = [f for f in os.listdir(DATA_FOLDER) if f.endswith('.csv')]
+                if csv_files:
+                    select_ts = st.selectbox(
+                        "Select Time Series Data:",
+                        csv_files,
+                        help="Choose a CSV file from the data folder"
+                    )
+                    # Store selection for availability when clicking "run_architecture"
+                    st.session_state["selected_time_series"] = select_ts
+                    st.caption("To be fused with merged_crypto_dataset.xlsx")
+                else:
+                    st.warning("No CSV files found in the data folder.")
+            else:
+                st.error("Data folder not found.")
+        
+        with r_architecture_col:
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True)
+            run_architecture = st.button("▶", key="run_architecture")
 
     with column3:
         # Set header for the console output section
@@ -346,71 +387,71 @@ with tab1:
             log_and_console(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
 
         elif run_llm:
-            if config['llm'] == "LLaMA 3.1 8B (4-bit)":
-                model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
-                # Assign prompt template for LLaMA 3.1 8B 4-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_LLAMA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_LLAMA
+            if llm_type == "Open-source":
+                if config['llm'] == "LLaMA 3.1 8B (4-bit)":
+                    model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
+                    # Assign prompt template for LLaMA 3.1 8B 4-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_LLAMA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_LLAMA
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_LLAMA
+                elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
+                    model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
+                    # Assign prompt template for LLaMA 3.1 8B 2-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_LLAMA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_LLAMA
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_LLAMA
+                elif config['llm'] == "Orca 2 7B (6-bit)":
+                    model_path = "./models/orca-2-7b.Q6_K.gguf"
+                    # Assign prompt template for Orca 2 7B 6-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_ORCA
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_ORCA
+                    elif config['prompt'] == "Chain-of-Thought (CoT)":
+                        prompt_template = CHAIN_OF_THOUGHT_ORCA
+                    else:
+                        prompt_template = CLASSIFICATION_ORCA
+                elif config['llm'] == "BLOOMZ 7B (4-bit)":
+                    model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
+                    # Assign prompt template for Bloomz 7B 4-bit model
+                    if config['prompt'] == "Zero-shot":
+                        prompt_template = ZERO_SHOT_BLOOMZ
+                    elif config['prompt'] == "Few-shot":
+                        prompt_template = FEW_SHOT_BLOOMZ
+                    else:
+                        prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
                 else:
-                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
-            elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
-                model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
-                # Assign prompt template for LLaMA 3.1 8B 2-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_LLAMA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_LLAMA
-                else:
-                    prompt_template = CHAIN_OF_THOUGHT_LLAMA
-            elif config['llm'] == "Orca 2 7B (6-bit)":
-                model_path = "./models/orca-2-7b.Q6_K.gguf"
-                # Assign prompt template for Orca 2 7B 6-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_ORCA
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_ORCA
-                elif config['prompt'] == "Chain-of-Thought (CoT)":
-                    prompt_template = CHAIN_OF_THOUGHT_ORCA
-                else:
-                    prompt_template = CLASSIFICATION_ORCA
-            elif config['llm'] == "BLOOMZ 7B (4-bit)":
-                model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
-                # Assign prompt template for Bloomz 7B 4-bit model
-                if config['prompt'] == "Zero-shot":
-                    prompt_template = ZERO_SHOT_BLOOMZ
-                elif config['prompt'] == "Few-shot":
-                    prompt_template = FEW_SHOT_BLOOMZ
-                else:
-                    prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
-            else:
-                st.error("Apologies, the selected LLM is not supported yet.")
-                model_path = None
-                prompt_template = None
-            
-            # Apply post_text into corresponding prompt template
-            prompt = prompt_template.format(post=post_text)
+                    st.error("Apologies, the selected LLM is not supported yet.")
+                    model_path = None
+                    prompt_template = None
+                
+                # Apply post_text into corresponding prompt template
+                prompt = prompt_template.format(post=post_text)
 
-            # Show progress bar while waiting for response
-            progress = st.progress(0, text="Analysing with LLM...")
-            for percent in range(1, 91, 3):
-                time.sleep(0.05)  # Simulate progress (remove if not needed)
-                progress.progress(percent, text="Analysing with LLM...")
+                with st.spinner(f"Analysing with {config['llm']}..."):
+                    # Call the sentiment analysis open-source function
+                    response = analyse_sentiment_os(prompt, model_path)
 
-            # Call the sentiment analysis function
-            response = analyse_sentiment(prompt, model_path)
+                # Visualise the config for debugging
+                log_and_console(f"**LLM Model:** {config['llm']}")
+                log_and_console(f"**Prompt Technique:** {config['prompt']}")
+                log_and_console(f"**Post:** {post_text}")
+                log_and_console(response)
 
-            # Show progress bar completion
-            progress.progress(100, text="Analysis complete!")
-            time.sleep(1.5)
-            progress.empty()
+            elif llm_type == "Closed-source":
+                with st.spinner(f"Analysing with {config['llm']}..."):
+                    # Call the sentiment analysis closed-source function
+                    response = analyse_sentiment_cs(post_text)
 
-            # Visualise the config for debugging
-            log_and_console(f"**LLM Model:** {config['llm']}")
-            log_and_console(f"**Prompt Technique:** {config['prompt']}")
-            log_and_console(f"**Reddit Post:** {post_text}")
-            log_and_console(response)
+                log_and_console(f"**LLM Model:** {config['llm']}")
+                log_and_console(f"**Post:** {post_text}")
+                log_and_console(f"Sentiment Score: {response}")
 
         elif run_crypto:
             # Map user-friendly names to Yahoo tickers
@@ -458,6 +499,58 @@ with tab1:
             # Display the dataset in the console output
             st.subheader(f"{config['cryptocurrency']} Dataset Preview")
             st.dataframe(df)
+
+        elif run_architecture:
+            # Load the selected Time Series Dataset (.csv)
+            selected_ts = st.session_state.get("selected_time_series")
+
+            # Get the CSV file path
+            csv_path = os.path.join(DATA_FOLDER, selected_ts)
+
+            
+            # Configure data loaders (train, val & test)
+            train_loader, val_loader, test_loader, input_size = load_and_prepare_data(
+                csv_path, 
+                sequence_length=30,
+                target_column="Close"
+            )
+
+            # Configure deep learning architecture
+            model = get_model(
+                config['architecture'].lower(), 
+                input_size=input_size, 
+                hidden_size=64, 
+                output_size=1
+            )
+
+            # Print model information
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            model.to(device)
+            st.success(model)
+
+            # Train the deep learning model based on selected configurations
+            trained_model, history = train_model(
+                model, 
+                train_loader, 
+                val_loader, 
+                num_epochs=200
+            )
+            
+            def plot_loss(history):
+                fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
+                ax.plot(history["train_loss"], label="Train Loss")
+                ax.plot(history["val_loss"], label="Validation Loss")
+                ax.set_title("Training vs Validation Loss")
+                ax.set_xlabel("Epoch")
+                ax.set_ylabel("Loss")
+                ax.grid(True, alpha=0.3)
+                ax.legend()
+                st.pyplot(fig, clear_figure=True)  # render in Streamlit
+                plt.close(fig)  # free resources
+
+            # Visualise training history (loss)
+            plot_loss(history)
+
 
     with column4:
         # 'Framework Configuration' section
