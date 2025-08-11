@@ -4,7 +4,7 @@
 #              sources like Reddit, Twitter, and NewsAPI for
 #              cryptocurrency news.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 27/07/2025
+# Last Updated: 11/08/2025
 # Python Version: 3.10.6
 # Packages Required: requests, beautifulsoup4, pandas, os
 #                    newsapi-python
