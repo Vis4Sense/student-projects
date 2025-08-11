@@ -24,7 +24,7 @@ import json
 import os
 
 # Import required modules
-from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines
+from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines, merge_datasets
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
@@ -39,6 +39,7 @@ CONSOLE_PATH = "config/console_output.json"
 
 # Define default config as backup
 DEFAULT_CONFIG = {
+    "architecture": "LSTM",
     "cryptocurrency": "Bitcoin",
     "interval": "1d",
     "llm": "LLaMA 3.1 8B (4-bit)",
@@ -50,6 +51,7 @@ DEFAULT_CONFIG = {
 # Define paths for News Sources Data
 REDDIT_PATH = "./data/reddit_crypto_dataset.xlsx"
 NEWS_API_PATH = "./data/newsapi_crypto_dataset.xlsx"
+MERGED_PATH = "./data/merged_crypto_dataset.xlsx"
 
 # Define paths for Time Series Data
 BTC_PATH = "./data/btc_dataset_20250101_20250701_1d.csv"
@@ -152,8 +154,8 @@ with tab1:
             if config['sentiment'] == "Reddit":
                 # Add slider for number of posts to be scraped
                 num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
-                subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"].index(config['subreddits']))
-            
+                subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"].index(config['subreddits']))
+
             # If NewsAPI is selected, add radio button for language selection
             elif config['sentiment'] == "NewsAPI":
                 lang_option = st.radio("Select Language for NewsAPI:", ["All", "English", "German", "French", "Spanish", "Italian"], horizontal=True)
@@ -185,7 +187,7 @@ with tab1:
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
         open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "Orca 2 7B (6-bit)", "BLOOMZ 7B (4-bit)"]
-        closed_source_llms = ["GPT-5, GPT-4o", "Gemini 1.5 Pro", "Claude 3 Opus"]
+        closed_source_llms = ["GPT-5", "Gemini 1.5 Pro", "Claude 3 Opus"]
 
         # Display corresponding drop-down menu based on LLM source type
         if llm_type == "Open-source":
@@ -209,16 +211,13 @@ with tab1:
 
             # Before running the LLM, load merged dataset and let the user pick a post
             merged_df = None
-            if os.path.exists(REDDIT_PATH) and os.path.exists(NEWS_API_PATH):
-                df_reddit = pd.read_excel(REDDIT_PATH)
-                df_newsapi = pd.read_excel(NEWS_API_PATH)
-                merged_df = pd.concat([df_reddit, df_newsapi], ignore_index=True)
-                merged_df = merged_df.sort_values(by="Timestamp", ascending=False)
+            if os.path.exists(MERGED_PATH):
+                merged_df = pd.read_excel(MERGED_PATH)
 
             # Default post text to analyse
             post_text = "Bitcoin just crossed $120,000, a huge milestone"
 
-            # If the merged DataFrame is not empty, allow user to select a post
+            # If the merged dataset is not empty, allow user to select a post
             if merged_df is not None and not merged_df.empty:
                 text_column = "Title" if "Title" in merged_df.columns else merged_df.columns[0]
                 post_options = merged_df[text_column].dropna().unique().tolist()
@@ -235,7 +234,7 @@ with tab1:
 
     with column2:
         # 'Time Series Data' section
-        st.subheader("Time Series Data (In Progress)")
+        st.subheader("Time Series Data")
         # Define the layout for the time series data section
         crypto_col, r_crypto_col = st.columns([8.25, 1.5])
         
@@ -252,6 +251,12 @@ with tab1:
         with r_crypto_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
             run_crypto = st.button("▶", key="run_crypto")
+
+        #----------------------------------------------------------------------------------------------------#
+        # 'Deep Learning Architecture' section
+        st.subheader("Deep Learning Architecture (In Progress)")
+        config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNNLSTM"], index=["LSTM", "CNN", "CNNLSTM"].index(config['architecture']))
+
 
     with column3:
         # Set header for the console output section
@@ -292,7 +297,7 @@ with tab1:
                 # Which seems to occurs with the r/Ethereum (midway through scraping) and r/Dogecoin subreddits
                 # If "All" is selected, scrape posts from all subreddits
                 if subreddit == "All":
-                    subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets", "Altcoin"]
+                    subreddits_all = ["CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"]
                     total_new_posts = 0
                     # Loop through each subreddit and scrape its posts
                     for sub in subreddits_all:
@@ -335,6 +340,10 @@ with tab1:
                     num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
                     log_and_console(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
                     log_and_console(f"You can view the dataset in the 'NewsAPI' tab.")
+
+            # After scraping for Reddit posts and getting NewsAPI headlines, merge the datasets
+            merged_length = merge_datasets(reddit_path=REDDIT_PATH, newsapi_path=NEWS_API_PATH, merged_path=MERGED_PATH)
+            log_and_console(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
 
         elif run_llm:
             if config['llm'] == "LLaMA 3.1 8B (4-bit)":
@@ -469,25 +478,22 @@ with tab2:
     merged_tab, reddit_tab, news_api_tab = st.tabs(["Merged", "Reddit", "NewsAPI"])
 
     with merged_tab:
-        st.subheader("Merged Dataset (Reddit + NewsAPI)")
-        # Load and display the merged dataset (Reddit + NewsAPI)
-        if os.path.exists(REDDIT_PATH) and os.path.exists(NEWS_API_PATH):
-            df_reddit = pd.read_excel(REDDIT_PATH)
-            df_newsapi = pd.read_excel(NEWS_API_PATH)
-            df_combined = pd.concat([df_reddit, df_newsapi], ignore_index=True)
-            df_combined = df_combined.sort_values(by="Timestamp", ascending=False)
-            st.dataframe(df_combined)
+        st.subheader("Merged Dataset (Reddit + NewsAPI + Sentiment)")
+        # Load and display the merged dataset (Reddit + NewsAPI + Sentiment)
+        if os.path.exists(MERGED_PATH):
+            df = pd.read_excel(MERGED_PATH)
+            st.dataframe(df)
         else:
-            st.warning("No data files found.")
+            st.warning("No merged dataset found.")
 
     with reddit_tab:
-        st.subheader("Reddit Dataset (4th July 2025 onwards)")
+        st.subheader("Reddit Dataset (17th February 2025 onwards)")
         # Load and display the Reddit dataset
         if os.path.exists(REDDIT_PATH):
             df = pd.read_excel(REDDIT_PATH)
             st.dataframe(df)
         else:
-            st.warning("No data file found.")
+            st.warning("No Reddit dataset found.")
 
     with news_api_tab:
         st.subheader("NewsAPI Dataset (1st July 2025 onwards)")
@@ -496,7 +502,7 @@ with tab2:
             df = pd.read_excel(NEWS_API_PATH)
             st.dataframe(df)
         else:
-            st.warning("No data file found.")
+            st.warning("No NewsAPI dataset found.")
 
 with tab3:
     st.write("Here you can visualise historical cryptocurrency data from Yahoo Finance.")
