@@ -32,6 +32,8 @@
   <li>Removed r/Altcoin subreddit due to "inactivity".</li>
   <li>Integrated merge_datasets() into logic.</li>
   <li>Added selection for Time Series dataset from the 'Data' folder.</li>
+  <li>Added folder paths (as constants).</li></li>
+  <li>Integrated "dataloader.py", "architecture.py" and "training.py" into Streamlit framework.</li>
 </ul>
 
 ## scraping.py
