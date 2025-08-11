@@ -1,3 +1,4 @@
+architecture: LSTM
 cryptocurrency: Bitcoin
 interval: 1d
 llm: Orca 2 7B (6-bit)
