@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 11/08/2025
+# Last Updated: 12/08/2025
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #-------------------------------------------------------------------------------#
@@ -555,8 +555,13 @@ with tab1:
 
             # Visualise training history (loss)
             plot_loss(history)
-
+    
     with column4:
+        st.info("This section is reserved for future features and improvements.")
+
+    column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
+
+    with column5:
         # 'Framework Configuration' section
         st.subheader("Configuration")
 
@@ -568,6 +573,9 @@ with tab1:
         if st.button("Save Configuration"):
             save_config(config)
             st.success("Configuration saved successfully!")
+
+    with column6:
+        st.subheader("TBC")
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
