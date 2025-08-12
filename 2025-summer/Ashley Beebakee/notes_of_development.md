@@ -20,7 +20,20 @@
   <li>Added multiple language optionality for NewsAPI function call.</li>
   <li>Added subreddit selection for Reddit scraping function call.</li>
   <li>Integrated "historical.py" to allow the user to download time series data for their chosen cryptocurrency with custom date ranges and time interval.</li>
-  <li>Created naming convention to save downloaded time series data based on parameters, i.e. "btc_dataest_20250101_20250701_1d".</li>
+  <li>Created naming convention to save downloaded time series data based on parameters, i.e. "btc_dataset_20250101_20250701_1d".</li>
+  <li>Implemented console_output.json to store all the output from executing code.</li>
+  <li>Live-updates cannot be shown since the console output's visibility changes only when the framework is 'rerun'.</li>
+  <li>Warning: st.experimental_rerun() is not compatible with streamlit < 1.10.0.</li>
+  <li>Investigation into python environment conflict during activation and deactivation / IDE reboots.</li>
+  <li>Python environment fixed: Windows Powershell configured for conda using "conda init powershell", Terminal and Python Interpreter are separate.</li>
+  <li>The st.experimental.rerun() function was deprecated, it's now called st.rerun().</li>
+  <li>Console column divided into two: Console History & Console Output.</li>
+  <li>Column borders can be hidden if entire stColumn class name is set as an exception (Note: a small change in the configuration of a widget alters its class name).</li>
+  <li>Removed r/Altcoin subreddit due to "inactivity".</li>
+  <li>Integrated merge_datasets() into logic.</li>
+  <li>Added selection for Time Series dataset from the 'Data' folder.</li>
+  <li>Added folder paths (as constants).</li></li>
+  <li>Integrated "dataloader.py", "architecture.py" and "training.py" into Streamlit framework.</li>
 </ul>
 
 ## scraping.py
@@ -36,6 +49,8 @@
   <li>Generated API key for NewsAPI, it can only get news headlines from the past 30 days.</li>
   <li>Optimised its functionality, each news source has its own dataset (i.e. reddit_crypto_dataset.xlsx).</li>
   <li>There are multiple language options for NewsAPI to get headlines from, ensure that the selected languages are compatible with one of the available LLMs.</li>
+  <li>Created merge_datasets() function to combine the Reddit & NewsAPI datasets whenever new posts are appended via scraping/API.</li>
+  <li>Added 'Language' column into logic of both datasets, with a LANGUAGE_MAP at the top which can be expanded to include additional languages taking into consideration LLM compatibility.</li>
 </ul>
 
 ## llm_selection.py
@@ -81,4 +96,23 @@
   <li>Removed commented sections of code for saving datasets to .csv file type.</li>
 </ul>
 
-[Last updated: 06/08/2025 12:58]
+## architecture.py
+<ul>
+  <li>Created three classes: LSTMModel, CNNModel and CNNLSTMModel.</li>
+  <li>With parameters: input_size, hidden_size, output_size, num_layers, dropout.</li>
+</ul>
+
+## dataloader.py
+<ul>
+  <li>Created coerce_numeric_columns() to ensure all features are numeric float32 to prevent "TypeError: can't convert np.ndarray of type numpy.str_.".</li>
+  <li>Created load_and_prepare_data() function to return train_loader, val_loader, test_loader and input_size.</li>
+</ul>
+
+## training.py
+<ul>
+  <li>Created train_model() function to train the deep learning model using corresponding architecture.</li>
+  <li>Created evaluate_model() to analyse the efficiency of the trained deep learning model.</li>
+  <li>Created predict() function to visualise prediction of mean_squared_error and r2_score.</li>
+</ul>
+
+[Last updated: 10/08/2025 18:24]

@@ -1,17 +1,16 @@
 #------------------------------------------------------------#
-# Name: Deep Learning Module
+# Name: Architecture Module
 # Description: This script defines deep learning architectures
 #              for training and evaluation of time series data
 #              fused with sentiment and technical indicators
 #              to predict future price movements.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 23/07/2025
+# Last Updated: 11/08/2025
 # Python Version: 3.10.6
 # Packages Required: N/A
 #------------------------------------------------------------#
 
 # Import necessary libraries
-import torch
 import torch.nn as nn
 
 # Define LSTM, CNN, and CNN-LSTM models for time series prediction
@@ -25,7 +24,6 @@ class LSTMModel(nn.Module):
         out, _ = self.lstm(x)
         out = self.fc(out[:, -1, :])  # Use the last output
         return out
-
 
 class CNNModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -41,7 +39,6 @@ class CNNModel(nn.Module):
         x = self.pool(x).squeeze(-1)
         x = self.fc(x)
         return x
-
 
 class CNNLSTMModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -69,10 +66,4 @@ def get_model(name, input_size, hidden_size, output_size):
     elif name == "cnn-lstm":
         return CNNLSTMModel(input_size, hidden_size, output_size)
     else:
-        raise ValueError(f"Unknown model architecture: {name}")
-
-model = get_model("cnn-lstm", input_size=5, hidden_size=64, output_size=1)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.to(device)
-
-print(model)
+        raise ValueError(f"Unknown deep learning architecture: {name}")

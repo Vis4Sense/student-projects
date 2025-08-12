@@ -124,18 +124,29 @@ Suggestions:
   <li>Interchangeably, the sentiment of a financial news source can affect the market but so can a sudden shift in the market cause the creation of a financial news headline.</li>
 </ul>
 
-## 4th August 2025 (13:00 - 14:XX)
+## ~4th August 2025 (13:00 - 14:XX)~
+<ul>
+  <li>Absent due to more time being required to implement the current stage.</li>
+</ul>
+
+## 11th August 2025 (13:00 - 14:XX)
 Discussion:
 <ul>
-  <li>...</li>
+  <li>GPT-5 was released on August 5th 2025 with two open-source models "gpt-oss-120b" and "gpt-oss-20b" (https://github.com/openai/gpt-oss).</li>
+  <li>Redesign of the Streamlit framework and conversion of prototype version from v8.0 to v0.8.</li>
+  <li>Challenges of price data fusion with sentiment -> having to filter by keyword i.e. Bitcoin, or insufficient data, i.e. r/Bitcoin (15th July to date).</li>
+  <li>Learning how to preprocess and evaluate a deep learning model as its training.</li>
 </ul>
 Actions:
 <ul>
-  <li>...</li>
+  <li>Update System Architecture diagram.</li>
 </ul>
 Suggestions:
 <ul>
-  <li>...</li>
+  <li>Create a way to visualise what data is currently available for both News Source Data and Time Series Data.</li>
+  <li>Provide a description of what is available, with news source type/period, to be updated as more data is collected.</li>
+  <li>Think about how you'll evaluate the system once its finished.</li>
+  <li>Manasi has been contacted.</li>
 </ul>
     
-[Last updated: 04/08/2025 04:25]
+[Last updated: 09/08/2025 18:54]

@@ -4,7 +4,7 @@
 #              various LLMs for use in the modular deep 
 #              learning framework created with Streamlit.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 13/07/2025
+# Last Updated: 11/08/2025
 # Python Version: 3.10.6
 # Packages Required: llama-cpp-python (CPU only)
 #                    llama-cpp-python --force-reinstall 
@@ -14,6 +14,12 @@
 
 # import necessary libraries
 from llama_cpp import Llama
+from openai import OpenAI
+
+# Function to load API keys from 'keys' folder
+def load_api_key(filepath):
+    with open(filepath, "r") as f:
+        return f.read().strip()
 
 def llm_optimisation(model_path):
     """LLM settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
@@ -43,7 +49,7 @@ def llm_optimisation(model_path):
     return llm
 
 # Script for text generation using a variety of LLMs with sentiment analysis prompts
-def analyse_sentiment(prompt, model_path):
+def analyse_sentiment_os(prompt, model_path):
     #model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf" 4-bit model
     #model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"   2-bit model
     #model_path = "./models/orca-2-7b.Q6_K.gguf"                  6-bit model
@@ -65,10 +71,23 @@ def analyse_sentiment(prompt, model_path):
     
     return response['choices'][0]['text']
 
+def analyse_sentiment_cs(post_text):
+    # OpenAI valid API key
+    api_key = load_api_key("keys/openai_key.txt")
+    client = OpenAI(api_key=api_key)
+
+    # Generate response from selected LLM model
+    response = client.responses.create(
+        model="gpt-5",
+        input=f"Extract the sentiment as a score between -1 and 1 for the following post: {post_text}"
+    )
+
+    return response.output_text
+
 # Run sentiment analysis using the selected LLM
 if __name__ == "__main__":
     print("--- Analysis Start ---")
-    result = analyse_sentiment()
+    result = analyse_sentiment_os()
     print("\n--- Analysis Results ---")
     print(result)
     print("--- Analysis End ---")
