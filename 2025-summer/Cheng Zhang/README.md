@@ -20,10 +20,26 @@ Implemented recommendation reason generation + multi-product comparison table fu
 The current plugin supports the complete closed-loop process of natural language → search → sorting → comparison → recommendation.
 
 
-# Current challenges
+# Recent Optimizations & Updates （After 8.11 meeting）
 
-Since Google Search returns unstructured web page summaries, it is currently difficult to accurately extract price and rating fields.
+Enhanced multi-turn interaction: The system now guides the user to provide additional brand, price range, and color preferences before search execution, improving result relevance.
 
-Whether the lightweight model can achieve the expected results.
+Brand-priority sorting: Search results are re-ordered so that products from the user’s preferred brand appear first, followed by others sorted by score.
 
-If you have any suggestions or comments, I look forward to hearing from you. Thank you!
+Strict price filtering: Products are now strictly limited to the specified price range instead of allowing a tolerance margin.
+
+# Display improvements:
+
+Replaced the price chart in the comparison view with a clear, multi-column table showing title, brand, price, rating, and features.
+
+Added collapsible “Features” section to keep the view clean.
+
+Increased sidebar width to display all columns without truncation.
+
+AI-generated recommendations: Integrated OpenAI API to produce natural-language recommendation reasons, with “AI Generated” label shown in the UI.
+
+# Next Steps
+
+Conduct user testing to evaluate functionality, usability, and relevance.
+
+Use questionnaires to collect user feedback and satisfaction scores for further optimization.
