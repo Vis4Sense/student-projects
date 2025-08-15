@@ -100,3 +100,28 @@ Frontend/Plugin: vanilla HTML/CSS/JS + Canvas 2D; Manifest v2 sidebar; packable 
 
 Trade-off: prioritize “working MVP” now; refine UI/UMAP/visuals and Zotero API integration after your confirmation.
 
+3. Next steps (proposed)
+This week (MVP demo):
+
+Pack & install the .xpi via PowerShell Compress-Archive → Zotero Tools → Add-ons → Install Add-on From File…; run end-to-end demo.
+
+Wire real citation data into /citation_relation:
+
+Option A: parse references from Zotero-exported metadata/attachments → citations.json.
+
+Option B: if structured citations are unavailable, implement co-citation / co-references approximation to make the graph meaningful.
+
+UI polish to match Figma: consistent components, loading/error states; hover highlight for cluster scatter.
+
+Next phase (after discussion):
+4. Zotero API integration & incremental updates: read items directly from the desktop library; detect changes; embed only new/updated items.
+5. Visualization upgrades: small citation graph (SVG/Canvas), cluster zoom/highlight/selection.
+6. Evaluation & logging: record latency, top-k perceived relevance, retry strategy; collect pilot user feedback.
+
+Questions for your guidance
+
+Is the MVP scope acceptable (chat-style semantic search + citation comparison + clustering visualization, no chart explanation)?
+
+Preferred citation data source (Zotero-local vs. external)?
+
+Is PCA acceptable for the MVP with a plan to swap to UMAP later?
