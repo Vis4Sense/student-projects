@@ -145,8 +145,8 @@ Suggestions:
 <ul>
   <li>Create a way to visualise what data is currently available for both News Source Data and Time Series Data.</li>
   <li>Provide a description of what is available, with news source type/period, to be updated as more data is collected.</li>
-  <li>Think about how you'll evaluate the system once its finished.</li>
-  <li>Manasi has been contacted.</li>
+  <li>Think about how you will evaluate the system once its finished.</li>
+  <li>Manasi has been contacted to test the system.</li>
 </ul>
     
-[Last updated: 09/08/2025 18:54]
+[Last updated: 17/08/2025 23:43]

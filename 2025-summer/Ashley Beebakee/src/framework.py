@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 11/08/2025
+# Last Updated: 12/08/2025
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #-------------------------------------------------------------------------------#
@@ -342,21 +342,21 @@ with tab1:
                     total_new_posts = 0
                     # Loop through each subreddit and scrape its posts
                     for sub in subreddits_all:
-                        log_and_console(f"Scraping {num_posts} posts from r/{sub}...")
-                        try:
-                            num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
-                            log_and_console(f"{num_new_posts} new posts added from r/{sub}.")
-                        except Exception as e:
-                            st.warning(f"Error scraping r/+{sub}: {e}")
-                            time.sleep(10)  # Wait longer if error 429 occurs
-                        time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
-                        # Update the total count of new posts
-                        total_new_posts += num_new_posts
+                        with st.spinner(f"Scraping {num_posts} posts from r/{sub}..."):
+                            try:
+                                num_new_posts = scrape_reddit_posts(subreddit=sub, total_limit=num_posts, excel_path=REDDIT_PATH)
+                                log_and_console(f"{num_new_posts} new posts added from r/{sub}.")
+                            except Exception as e:
+                                st.warning(f"Error scraping r/+{sub}: {e}")
+                                time.sleep(10)  # Wait longer if error 429 occurs
+                            time.sleep(3)  # Delay between subreddits to attempt prevention of error 429
+                            # Update the total count of new posts
+                            total_new_posts += num_new_posts
                     log_and_console(f"Scraping complete: {total_new_posts} new posts added to the dataset.")
                 # If a specific subreddit is selected, scrape posts from that subreddit
                 else:
-                    log_and_console(f"Attempting to scrape {num_posts} posts from r/{subreddit}...")
-                    num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
+                    with st.spinner(f"Attempting to scrape {num_posts} posts from r/{subreddit}..."):
+                        num_new_posts = scrape_reddit_posts(subreddit=subreddit, total_limit=num_posts, excel_path=REDDIT_PATH)
                     log_and_console(f"Scraping complete: {num_new_posts} new posts added to the dataset.")
                     log_and_console(f"You can view the dataset in the 'Reddit' tab.")
             
@@ -368,23 +368,26 @@ with tab1:
                     total_new_headlines = 0
                     # Loop through each language and get news headlines
                     for lang in language:
-                        log_and_console(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}...")
-                        num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
-                        log_and_console(f"{num_new_headlines} new headlines added for language '{lang}'.")
+                        with st.spinner(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang}..."):
+                            time.sleep(1)
+                            num_new_headlines = get_newsapi_headlines(language=lang, excel_path=NEWS_API_PATH)
+                            log_and_console(f"{num_new_headlines} new headlines added for language '{lang}'.")
                         # Update the total count of new headlines
                         total_new_headlines += num_new_headlines
                     log_and_console(f"Scraping complete: {total_new_headlines} new headlines added to the dataset.")
                     log_and_console(f"You can view the dataset in the 'NewsAPI' tab.")
                 # If a specific language is selected, get news headlines for that language
                 else:
-                    log_and_console(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}...")
-                    num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
+                    with st.spinner(f"Getting cryptocurrency news headlines from NewsAPI.org in {lang_option}..."):
+                        time.sleep(2)
+                        num_new_headlines = get_newsapi_headlines(language=language, excel_path=NEWS_API_PATH)
                     log_and_console(f"Scraping complete: {num_new_headlines} new headlines added to the dataset.")
                     log_and_console(f"You can view the dataset in the 'NewsAPI' tab.")
 
             # After scraping for Reddit posts and getting NewsAPI headlines, merge the datasets
             merged_length = merge_datasets(reddit_path=REDDIT_PATH, newsapi_path=NEWS_API_PATH, merged_path=MERGED_PATH)
-            log_and_console(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
+            st.success(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
+            add_console_message(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
 
         elif run_llm:
             if llm_type == "Open-source":
@@ -434,6 +437,7 @@ with tab1:
                 # Apply post_text into corresponding prompt template
                 prompt = prompt_template.format(post=post_text)
 
+                add_console_message(f"Analysing with {config['llm']}...")
                 with st.spinner(f"Analysing with {config['llm']}..."):
                     # Call the sentiment analysis open-source function
                     response = analyse_sentiment_os(prompt, model_path)
@@ -484,17 +488,18 @@ with tab1:
             filename = f"{prefix}_dataset_{start_fmt}_{end_fmt}_{interval}.csv"
             file_path = os.path.join("./data", filename)
 
-            log_and_console(f"Running time series data extraction for {config['cryptocurrency']} with {config['interval']} interval from {start_date} to {end_date}...")
-            # Fetch time series data from Yahoo Finance
-            df = fetch_price_data(ticker=ticker, start_date=start, end_date=end, interval=interval)
-            # Preprocess (scale) data
-            #df_scaled, scaler = preprocess_data(df, scaler_type="minmax", columns=["Close"])
+            with st.spinner(f"Running time series data extraction for {config['cryptocurrency']} with {config['interval']} interval from {start_date} to {end_date}..."):
+                time.sleep(3)
+                # Fetch time series data from Yahoo Finance
+                df = fetch_price_data(ticker=ticker, start_date=start, end_date=end, interval=interval)
+                # Preprocess (scale) data
+                #df_scaled, scaler = preprocess_data(df, scaler_type="minmax", columns=["Close"])
 
             # Save the preprocessed data to CSV
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             df.to_csv(file_path, index=False)
             st.success(f"Preprocessed data saved to {file_path}")
-            log_and_console(f"Preprocessed data saved to {file_path}")
+            add_console_message(f"Preprocessed data saved to {file_path}")
 
             # Display the dataset in the console output
             st.subheader(f"{config['cryptocurrency']} Dataset Preview")
@@ -550,9 +555,13 @@ with tab1:
 
             # Visualise training history (loss)
             plot_loss(history)
-
-
+    
     with column4:
+        st.info("This section is reserved for future features and improvements.")
+
+    column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
+
+    with column5:
         # 'Framework Configuration' section
         st.subheader("Configuration")
 
@@ -564,6 +573,9 @@ with tab1:
         if st.button("Save Configuration"):
             save_config(config)
             st.success("Configuration saved successfully!")
+
+    with column6:
+        st.subheader("TBC")
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
