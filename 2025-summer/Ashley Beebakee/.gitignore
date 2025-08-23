@@ -2,3 +2,5 @@
 *.gguf
 *src/keys/
 src/data/*.csv
+src/sentiment/google_test.py
+src/sentiment_test.py
