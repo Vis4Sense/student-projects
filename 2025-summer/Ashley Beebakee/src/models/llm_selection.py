@@ -4,7 +4,7 @@
 #              various LLMs for use in the modular deep 
 #              learning framework created with Streamlit.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 11/08/2025
+# Last Updated: 23/08/2025
 # Python Version: 3.10.6
 # Packages Required: llama-cpp-python (CPU only)
 #                    llama-cpp-python --force-reinstall 
@@ -27,7 +27,7 @@ def llm_optimisation(model_path):
     llm = Llama(
         model_path=model_path,
         # GPU settings (0 for CPU, -1 for GPU)
-        n_gpu_layers=25,  # Use partial GPU offloading (balances speed and VRAM usage)
+        n_gpu_layers=-1,  # Use partial GPU offloading (balances speed and VRAM usage)
         
         # Memory settings
         n_ctx=2048,       # Context window size (how much the model can see at once)
