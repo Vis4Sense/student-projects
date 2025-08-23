@@ -177,6 +177,7 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
 
         # Return the number of new headlines actually added
         num_new_headlines = len(new_headlines)
+        
         return num_new_headlines
     
     # Handle exceptions during API calls or data processing
@@ -233,6 +234,7 @@ def merge_datasets(reddit_path="./data/reddit_crypto_dataset.xlsx", newsapi_path
         # Print summary information for debugging and tracking
         print(f"Merged dataset saved to {merged_path} with {len(df_combined)} posts.")
         print(f"Number of duplicates removed: {num_duplicates}")
+        
         return len(df_combined)
 
     except Exception as e:
