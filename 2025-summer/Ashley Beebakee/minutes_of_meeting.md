@@ -147,6 +147,7 @@ Suggestions:
   <li>To clarify the statement above, you should provide a description of what data is available, i.e. News Source Data type & period, to be automatically updated as more data is collected.</li>
   <li>Prepare a plan on how the system will be evaluated at completion.</li>
   <li>Contact Manasi M. on whether she would be available to evaluate the system.</li>
+  <li>Implement 'mlflow' to track the changes and performances for each training run.</li>
 </ul>
     
-[Last updated: 23/08/2025 08:46]
+[Last updated: 23/08/2025 09:26]
