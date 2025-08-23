@@ -144,9 +144,9 @@ Actions:
 Suggestions:
 <ul>
   <li>Create a way to visualise what data is currently available for both News Source Data and Time Series Data.</li>
-  <li>Provide a description of what is available, with news source type/period, to be updated as more data is collected.</li>
-  <li>Think about how you will evaluate the system once its finished.</li>
-  <li>Manasi has been contacted to test the system.</li>
+  <li>To clarify the statement above, you should provide a description of what data is available, i.e. News Source Data type & period, to be automatically updated as more data is collected.</li>
+  <li>Prepare a plan on how the system will be evaluated at completion.</li>
+  <li>Contact Manasi M. on whether she would be available to evaluate the system.</li>
 </ul>
     
-[Last updated: 17/08/2025 23:43]
+[Last updated: 23/08/2025 08:46]
