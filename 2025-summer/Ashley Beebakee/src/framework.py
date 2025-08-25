@@ -245,9 +245,6 @@ with tab1:
         st.subheader("Sentiment Analysis (Automatic)")
         st.write("To be implemented soon...")
 
-        # Placeholder to display a video within the framework (optional)
-        #st.video("https://www.youtube.com/watch?v=B2iAodr0fOo")
-
     with column2:
         # 'Time Series Data' section
         st.subheader("Time Series Data")
