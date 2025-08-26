@@ -25,11 +25,11 @@ def train_model(
     num_epochs: int = 20,
     learning_rate: float = 0.001,
     weight_decay: float = 0.0,
-    # Early stopping options
     early_stopping: bool = False,
     es_patience: int = 20,
     es_min_delta: float = 0.0,
     verbose: bool = True,
+    on_epoch_end=None,  # optional callback(epoch, train_loss, val_loss)
 ):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
@@ -79,6 +79,13 @@ def train_model(
                     if verbose:
                         print(f"Early stopping at epoch {epoch+1}; best val loss {best_val:.6f}")
                     break
+
+        # Optional callback for external logging (e.g., MLflow)
+        if callable(on_epoch_end):
+            try:
+                on_epoch_end(epoch, float(avg_train_loss), float(val_loss))
+            except Exception:
+                pass
 
         if verbose:
             # N.B: ReduceLROnPlateau could be implemented in the next prototype
