@@ -6,3 +6,5 @@ src/sentiment/google_test.py
 src/sentiment_test.py
 src/training_test.py
 src/sentiment/fusion.py
+src/artifacts
+src/mlruns
