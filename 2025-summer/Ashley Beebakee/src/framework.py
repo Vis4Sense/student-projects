@@ -33,6 +33,7 @@ from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAM
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
+from sentiment.extraction import score_excel
 from data.historical import fetch_price_data, preprocess_data
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
@@ -167,7 +168,7 @@ with tab1:
             # N.B: This is only applicable for Reddit posts scraping
             if config['sentiment'] == "Reddit":
                 # Add slider for number of posts to be scraped
-                num_posts = st.slider("Number of Posts to Scrape:", min_value=1, max_value=1000, value=1, help="Select how many posts to scrape (1-1000)")
+                num_posts = st.slider("Number of Posts to Scrape:", min_value=10, max_value=1000, value=150, help="Select how many posts to scrape (10-1000)")
                 subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"].index(config['subreddits']))
 
             # If NewsAPI is selected, add radio button for language selection
@@ -194,8 +195,8 @@ with tab1:
             run_news = st.button("▶", key="run_news")
 
         #----------------------------------------------------------------------------------------------------#
-        # 'Sentiment Analysis' section
-        st.subheader("Sentiment Analysis (Manual)")
+        # 'Large Language Model (LLM)' section
+        st.subheader("Large Language Model (LLM)")
 
         # Open-source and Closed-source LLM Options
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
@@ -216,20 +217,24 @@ with tab1:
             llm_index = 0
             config['llm'] = llm_options[0]
 
-        # Define the layout for the LLM and prompt engineering section
-        llm_col, r_llm_col = st.columns([8.25, 1.5])
-        with llm_col:
-            # Select LLM and prompt engineering to use
-            config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
-            if llm_type == "Open-source":
-                config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
+        # Select LLM and prompt engineering to use
+        config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
+        if llm_type == "Open-source":
+            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
 
+        #----------------------------------------------------------------------------------------------------#
+        # 'Sentiment Analysis (Manual)' section
+        st.subheader("Sentiment Analysis (Manual)")
+
+        # Define the layout for the LLM and prompt engineering section
+        man_col, r_man_col = st.columns([8.25, 1.5])
+        with man_col:
             # Before running the LLM, load merged dataset and let the user pick a post
             merged_df = None
             if os.path.exists(MERGED_PATH):
                 merged_df = pd.read_excel(MERGED_PATH)
 
-            # Default post text to analyse
+            # Default post text to analyse (if merged_df is empty)
             post_text = "Bitcoin just crossed $120,000, a huge milestone"
 
             # If the merged dataset is not empty, allow user to select a post
@@ -239,14 +244,27 @@ with tab1:
                 selected_post = st.selectbox("Select Post for Sentiment Analysis:", post_options)
                 post_text = selected_post
 
-        # When the "Run" button is clicked, run the LLM for sentiment analysis
-        with r_llm_col:
-            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
-            run_llm = st.button("▶", key="run_llm")
+            # Explain functionality of the 'Sentiment Analysis (Manual)' section
+            st.caption("This feature tests the quality of sentiment analysis by the chosen LLM based on its prompt engineering technique.")
 
-        # 'Sentiment Analysis' section
+        # When the "Run" button is clicked, run the LLM for sentiment analysis
+        with r_man_col:
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            run_man = st.button("▶", key="run_man")
+
+        #----------------------------------------------------------------------------------------------------#
+        # 'Sentiment Analysis (Automatic)' section
         st.subheader("Sentiment Analysis (Automatic)")
-        st.write("To be implemented soon...")
+
+        # Define the layout for the LLM and prompt engineering section
+        aut_col, r_aut_col = st.columns([8.25, 1.5])
+        with aut_col:
+            num_sentiment_posts = st.slider("Number of Posts for Sentiment Extraction:", min_value=10, max_value=10000, value=20, help="Select how many posts to extract sentiment from (10-10000)")
+
+        # When the "Run" button is clicked, run the LLM for sentiment analysis
+        with r_aut_col:
+            st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
+            run_aut = st.button("▶", key="run_aut")
 
     with column2:
         # 'Time Series Data' section
@@ -256,7 +274,7 @@ with tab1:
         
         with crypto_col:
             # Select cryptocurrency for which to fetch historical data
-            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']))
+            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']), help="Choose cryptocurrency to fetch historical price data for")
             
             # Set default start and end dates based on the selected cryptocurrency
             start_date = st.date_input("Start Date:", value=pd.to_datetime("2025-01-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-07-01"))
@@ -389,7 +407,7 @@ with tab1:
             st.success(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
             add_console_message(f"Merged dataset saved to {MERGED_PATH} with {merged_length} posts.")
 
-        elif run_llm:
+        elif run_man:
             if llm_type == "Open-source":
                 if config['llm'] == "LLaMA 3.1 8B (4-bit)":
                     model_path = "./models/Llama-3.1-8B-Instruct-bf16-q4_k.gguf"
@@ -456,6 +474,10 @@ with tab1:
                 log_and_console(f"**LLM Model:** {config['llm']}")
                 log_and_console(f"**Post:** {post_text}")
                 log_and_console(f"Sentiment Score: {response}")
+
+        elif run_aut:
+            st.write("Keep going!")
+            score_excel(limit=num_sentiment_posts, model_key="llama31_iq2")
 
         elif run_crypto:
             # Map user-friendly names to Yahoo tickers
@@ -689,17 +711,15 @@ with tab1:
 
         # Statistics of data coverage for year 2025
         st.subheader("Statistics (Year 2025)")
-        counts = (
-            coverage["status"].value_counts()
-            .reindex(["Sentiment Data", "Non-Sentiment Data", "No Data"])
-            .fillna(0)
-            .astype(int)
-        )
-        # Define three columns to display each group type's total count
-        col1, col2, col3 = st.columns(3)
+        counts = (coverage["status"].value_counts().reindex(["Sentiment Data", "Non-Sentiment Data", "No Data"]).fillna(0).astype(int))
+
+        # Define four columns to display each group type's total count
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
         col1.metric("Sentiment Data", f"{counts.get('Sentiment Data', 0)} day(s)")
         col2.metric("Non-Sentiment Data", f"{counts.get('Non-Sentiment Data', 0)} day(s)")
         col3.metric("No Data", f"{counts.get('No Data', 0)} day(s)")
+        with col4:
+            st.write("Additional metrics to be included in the future.")
 
     column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
 
@@ -717,7 +737,7 @@ with tab1:
             st.success("Configuration saved successfully!")
 
     with column6:
-        st.subheader("TBC")
+        st.subheader("[Insert YouTube Demo Here]")
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
