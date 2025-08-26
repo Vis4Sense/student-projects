@@ -7,12 +7,15 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 26/08/2025
 # Python Version: 3.10.6
-# Packages Required: streamlit, pandas, pyyaml, time, os
+# Packages Required: matplotlib, streamlit, altair, pandas, numpy, torch, pyyaml,
+#                    mlflow
 #-------------------------------------------------------------------------------#
 # Run this in the Powershell terminal to save the file path as a variable
 # $sl_path = "k:/student-projects/2025-summer/Ashley Beebakee/src/framework.py"
-# Then run Streamlit with the saved path as below.
-# streamlit run $sl_path
+# To run Streamlit within localhost:
+# -> streamlit run $sl_path
+# To generate requirements.txt (external packages):
+# -> pipreqs "K:\student-projects\2025-summer\Ashley Beebakee" --force
 #-------------------------------------------------------------------------------#
 
 # Import necessary libraries
@@ -34,7 +37,7 @@ from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BL
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
 from sentiment.extraction import score_excel
-from data.historical import fetch_price_data, preprocess_data
+from data.historical import fetch_price_data
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
 from networks.training import train_model, predict
@@ -46,7 +49,7 @@ CONFIG_PATH = "config/framework_config.yaml"
 # Define path for the console output
 CONSOLE_PATH = "config/console_output.json"
 
-# Define default config as backup
+# Define default config which merges chronologically with 'framework_config.yaml'
 DEFAULT_CONFIG = {
     "architecture": "CNN-LSTM",
     "cryptocurrency": "Bitcoin",
@@ -142,7 +145,7 @@ st.title(f"Streamlit Modular DL Framework Prototype v0.9 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
-# The default start and end dates are set to 1st January 2025 and 1st July 2025 respectively.
+# The default start and end dates are set to 1st January 2025 and 1st August 2025 respectively.
 
 # Create tabs for configuration and data visualisation
 tab1, tab2, tab3 = st.tabs(["Configuration", "News Sources Data", "Time Series Data"])
@@ -168,7 +171,7 @@ with tab1:
             # N.B: This is only applicable for Reddit posts scraping
             if config['sentiment'] == "Reddit":
                 # Add slider for number of posts to be scraped
-                num_posts = st.slider("Number of Posts to Scrape:", min_value=10, max_value=1000, value=150, help="Select how many posts to scrape (10-1000)")
+                num_posts = st.slider("Number of Posts to Scrape:", min_value=10, max_value=1000, value=150, help="Select how many posts to scrape (10-1000).")
                 subreddit = st.selectbox("Choose Subreddit to Scrape:", ["All", "CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"], index=["All","CryptoCurrency", "Bitcoin", "Ethereum", "Dogecoin", "CryptoMarkets"].index(config['subreddits']))
 
             # If NewsAPI is selected, add radio button for language selection
@@ -259,7 +262,7 @@ with tab1:
         # Define the layout for the LLM and prompt engineering section
         aut_col, r_aut_col = st.columns([8.25, 1.5])
         with aut_col:
-            num_sentiment_posts = st.slider("Number of Posts for Sentiment Extraction:", min_value=10, max_value=10000, value=20, help="Select how many posts to extract sentiment from (10-10000)")
+            num_sentiment_posts = st.slider("Number of Posts for Sentiment Extraction:", min_value=10, max_value=10000, value=20, help="Select how many posts to extract sentiment from (10-10000).")
 
         # When the "Run" button is clicked, run the LLM for sentiment analysis
         with r_aut_col:
@@ -274,13 +277,14 @@ with tab1:
         
         with crypto_col:
             # Select cryptocurrency for which to fetch historical data
-            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']), help="Choose cryptocurrency to fetch historical price data for")
+            config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']), help="Choose cryptocurrency to fetch historical price data for.")
             
             # Set default start and end dates based on the selected cryptocurrency
-            start_date = st.date_input("Start Date:", value=pd.to_datetime("2025-01-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-07-01"))
-            end_date = st.date_input("End Date:", value=pd.to_datetime("2025-07-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-07-01"))
+            start_date = st.date_input("Start Date:", value=pd.to_datetime("2025-01-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-08-01"))
+            end_date = st.date_input("End Date:", value=pd.to_datetime("2025-08-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-08-01"))
             config['interval'] = st.selectbox("Select Time Interval:", ["1m", "5m", "15m", "1h", "1d"], index=["1m", "5m", "15m", "1h", "1d"].index(config['interval']))
-            
+            st.caption("Press 'Refresh UI' button after execution.")
+
         # When the "Run" button is clicked, fetch historical data for the selected cryptocurrency
         with r_crypto_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
@@ -294,7 +298,54 @@ with tab1:
 
         with architecture_col:
             config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNN-LSTM"], index=["LSTM", "CNN", "CNN-LSTM"].index(config['architecture']))
-            st.caption("Architecture hyperparameters to be defined.")
+
+            # Preprocessing options (no leakage + optional return target)
+            # N.B: The prefix 'pp_' stands for pre-processing
+            with st.expander("Pre-processing", expanded=False):
+                config['pp_sequence_length'] = st.number_input("Sequence Length", min_value=5, max_value=256, value=int(config.get('pp_sequence_len', 30)), help="Enter a value between 5 and 256.")
+                config['pp_feat_scaler'] = st.selectbox("Feature Scaler", ["MinMax", "Standard"], index=["MinMax", "Standard"].index(config.get('pp_feat_scaler', "MinMax")))
+                config['pp_target_mode'] = st.selectbox("Target Type", ["price", "log_return"], index=["price", "log_return"].index(config.get('pp_target_mode', "price")))
+                config['pp_target_scaler'] =  st.selectbox("Target Scaler", ["None", "MinMax", "Standard"], index=["None", "MinMax", "Standard"].index(config.get('pp_target_scaler', "None")))
+                config['pp_batch_size'] = st.number_input("Batch Size", min_value=8, max_value=512, value=int(config.get('pp_batch_size', 32)), step=8, help="Enter a value between 8 and 512.")
+
+            # Define set of hyperparameters for corresponding architecture (LSTM, CNN, CNN-LSTM)
+            # N.B: The prefix 'hp_' stands for hyperparameter
+            with st.expander("Hyperparameters", expanded=False):
+                if config['architecture'] == "LSTM":
+                    config['hp_lstm_hidden'] = st.number_input("LSTM Hidden size", min_value=8, max_value=1024, value=int(config.get('hp_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
+                    config['hp_lstm_layers'] = st.slider("LSTM Num layers", min_value=1, max_value=4, value=int(config.get('hp_lstm_layers', 2)), help="Enter a value between 1 and 4.")
+                    config['hp_lstm_dropout'] = st.slider("LSTM Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_lstm_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
+                elif config['architecture'] == "CNN":
+                    config['hp_cnn_filters'] = st.number_input("CNN Filters", min_value=4, max_value=512, value=int(config.get('hp_cnn_filters', 64)), step=4, help="Enter a value between 4 and 512.")
+                    config['hp_cnn_kernel'] = st.selectbox("CNN Kernel size", options=[3, 5, 7, 9, 11], index=[3, 5, 7, 9, 11].index(int(config.get('hp_cnn_kernel', 5))))
+                    config['hp_cnn_stride'] = st.selectbox("CNN Stride", options=[1, 2], index=[1,2].index(int(config.get('hp_cnn_stride', 1))), help="Enter a value between 1 and 2.")
+                    config['hp_cnn_dropout'] = st.slider("CNN Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_cnn_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
+                else:
+                    config['hp_cnnlstm_filters'] = st.number_input("CNN-LSTM Conv Filters", min_value=4, max_value=512, value=int(config.get('hp_cnnlstm_filters', 32)), step=4, help="Enter a value between 4 and 512.")
+                    config['hp_cnnlstm_kernel'] = st.selectbox("CNN-LSTM Kernel size", options=[3, 5, 7], index=[3, 5, 7].index(int(config.get('hp_cnnlstm_kernel', 5))), help="Enter a value between 3 and 7.")
+                    config['hp_cnnlstm_lstm_hidden'] = st.number_input("CNN-LSTM LSTM Hidden", min_value=8, max_value=1024, value=int(config.get('hp_cnnlstm_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
+                    config['hp_cnnlstm_lstm_layers'] = st.slider("CNN-LSTM LSTM Layers", min_value=1, max_value=4, value=int(config.get('hp_cnnlstm_lstm_layers', 2)), help="Enter a value between 1 and 4.")
+                    config['hp_cnnlstm_dropout'] = st.slider("CNN-LSTM Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_cnnlstm_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
+
+            # Training options (optim & regularisation)
+            # N.B: The prefix 'tr_' stands for training
+            with st.expander("Training", expanded=False):
+                # Display training logs (epochs) within the VS Code terminal
+                config['tr_verbose'] = st.checkbox("Show training logs", value=bool(config.get('tr_verbose', True)))
+                config['tr_epochs'] = st.number_input("Epochs", min_value=1, max_value=5000, value=int(config.get('tr_epochs', 100)), step=50, help="Enter a value between 1 and 5000.")
+                col_lr, col_wd = st.columns(2)
+                with col_lr:
+                    config['tr_lr'] = st.number_input("Learning rate", min_value=1e-6, max_value=1.0, value=float(config.get('tr_lr', 1e-3)), step=1e-4, format="%.6f", help="Enter a value between 1e-6 and 1.0.")
+                with col_wd:
+                    config['tr_weight_decay'] = st.number_input("Weight decay", min_value=0.0, max_value=1.0, value=float(config.get('tr_weight_decay', 0.0)), step=1e-4, format="%.6f", help="Enter a value between 0.0 and 1.0.")
+                # Optionality for 'Early Stopping'
+                config['tr_es_enable'] = st.checkbox("Enable Early Stopping", value=bool(config.get('tr_es_enable', False)))
+                es_cols = st.columns(2)
+                with es_cols[0]:
+                    config['tr_es_patience'] = st.number_input("ES Patience", min_value=1, max_value=500, value=int(config.get('tr_es_patience', 20)), help="Enter a value between 1 and 500.")
+                with es_cols[1]:
+                    config['tr_es_min_delta'] = st.number_input("ES Min Delta", min_value=0.0, max_value=1.0, value=float(config.get('tr_es_min_delta', 0.0)), step=0.0001, format="%.6f", help="Enter a value between 0.0 and 1.0.")
+                
 
             # Get list of available CSV files from data folder
             if os.path.exists(DATA_FOLDER):
@@ -303,11 +354,11 @@ with tab1:
                     select_ts = st.selectbox(
                         "Select Time Series Data:",
                         csv_files,
-                        help="Choose a CSV file from the data folder"
+                        help="Choose a CSV file from the data folder."
                     )
                     # Store selection for availability when clicking "run_architecture"
                     st.session_state["selected_time_series"] = select_ts
-                    st.caption("To be fused with merged_crypto_dataset.xlsx")
+                    #st.caption("To be fused with merged_crypto_dataset.xlsx")
                 else:
                     st.warning("No CSV files found in the data folder.")
             else:
@@ -476,8 +527,16 @@ with tab1:
                 log_and_console(f"Sentiment Score: {response}")
 
         elif run_aut:
-            st.write("Keep going!")
-            score_excel(limit=num_sentiment_posts, model_key="llama31_iq2")
+            # Map user-friendly LLM names to internal model keys (extraction.py)
+            llm_map = {
+                "LLaMA 3.1 8B (4-bit)": "llama31_q4",
+                "LLaMA 3.1 8B (2-bit)": "llama31_q2", 
+                "Orca 2 7B (6-bit)": "orca2",
+                "BLOOMZ 7B (4-bit)": "bloomz_7b1"
+            }
+            st.success(config['llm'])
+            # Run automatic sentiment analysis based on chosen LLM
+            score_excel(limit=num_sentiment_posts, model_key=llm_map.get(config['llm'], "orca2"))
 
         elif run_crypto:
             # Map user-friendly names to Yahoo tickers
@@ -533,24 +592,56 @@ with tab1:
 
             # Get the CSV file path
             csv_path = os.path.join(DATA_FOLDER, selected_ts)
-
             
             # Configure data loaders (train, val & test)
-            train_loader, val_loader, test_loader, input_size = load_and_prepare_data(
+            train_loader, val_loader, test_loader, input_size, meta = load_and_prepare_data(
                 csv_path, 
-                sequence_length=30,
-                target_column="Close"
+                sequence_length=int(config.get('pp_sequence_length', 30)),
+                target_column="Close",
+                scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
+                batch_size=int(config.get('pp_batch_size', 32)),
+                target_mode=config.get('pp_target_mode', "price"),
+                target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard"))
             )
 
-            # Configure deep learning architecture
-            model = get_model(
-                config['architecture'].lower(), 
-                input_size=input_size, 
-                hidden_size=64, 
-                output_size=1
-            )
+            # Configure deep learning architecture with corresponding hyperparameters
+            model = config['architecture']
+            # Long Short Term Memory (LSTM)
+            if model == "LSTM":
+                model = get_model(
+                    model.lower(),
+                    input_size=input_size,
+                    output_size=1,
+                    hidden_size=int(config.get('hp_lstm_hidden', 64)),
+                    num_layers=int(config.get('hp_lstm_layers', 2)),
+                    dropout=float(config.get('hp_lstm_dropout', 0.2)),
+                )
+            # Convolutional Neural Network (CNN)
+            elif model == "CNN":
+                model = get_model(
+                    model.lower(),
+                    input_size=input_size,
+                    output_size=1,
+                    filters=int(config.get('hp_cnn_filters', 64)),
+                    kernel_size=int(config.get('hp_cnn_kernel', 5)),
+                    stride=int(config.get('hp_cnn_stride', 1)),
+                    dropout=float(config.get('hp_cnn_dropout', 0.2)),
+                )
+            # CNN-LSTM (Hybrid of above)
+            else:
+                model = get_model(
+                    model.lower(),
+                    input_size=input_size,
+                    output_size=1,
+                    conv_filters=int(config.get('hp_cnnlstm_filters', 32)),
+                    kernel_size=int(config.get('hp_cnnlstm_kernel', 5)),
+                    stride=1,
+                    lstm_hidden=int(config.get('hp_cnnlstm_lstm_hidden', 64)),
+                    lstm_layers=int(config.get('hp_cnnlstm_lstm_layers', 2)),
+                    dropout=float(config.get('hp_cnnlstm_dropout', 0.2)),
+                )
 
-            # Print model information
+            # Print model information to UI
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             model.to(device)
             st.success(model)
@@ -560,9 +651,16 @@ with tab1:
                 model, 
                 train_loader, 
                 val_loader, 
-                num_epochs=200
+                num_epochs=int(config.get('tr_epochs', 100)),
+                learning_rate=float(config.get('tr_lr', 1e-3)),
+                weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                early_stopping=bool(config.get('tr_es_enable', False)),
+                es_patience=int(config.get('tr_es_patience', 20)),
+                es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                verbose=bool(config.get('tr_verbose', False)),
             )
             
+            # Define function for training history (loss)
             def plot_loss(history):
                 fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
                 ax.plot(history["train_loss"], label="Train Loss")
@@ -572,11 +670,73 @@ with tab1:
                 ax.set_ylabel("Loss")
                 ax.grid(True, alpha=0.3)
                 ax.legend()
-                st.pyplot(fig, clear_figure=True)  # render in Streamlit
-                plt.close(fig)  # free resources
+                st.pyplot(fig, clear_figure=True) # Render the chart in Streamlit
+                plt.close(fig) # Free resources
 
             # Visualise training history (loss)
             plot_loss(history)
+
+            # Predict on test set and plot 'Predicted vs Actual'
+            preds, trues, mse, r2 = predict(trained_model, test_loader)
+
+            # Define function for plotting predictions
+            def plot_predictions(y_true, y_pred, title_suffix: str = ""):
+                fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
+                x = np.arange(len(y_true))
+
+                # Optionality for inverse-transform if 'Target Scaler' has been selected
+                y_label = "Target"
+                displayed_true = np.asarray(y_true)
+                displayed_pred = np.asarray(y_pred)
+                inv_note = ""
+                try:
+                    tgt_scaler = meta.get('target_scaler') if isinstance(meta, dict) else None
+                    if tgt_scaler is not None:
+                        displayed_true = tgt_scaler.inverse_transform(displayed_true.reshape(-1, 1)).ravel()
+                        displayed_pred = tgt_scaler.inverse_transform(displayed_pred.reshape(-1, 1)).ravel()
+                        inv_note = " (inverse-transformed)"
+                except Exception:
+                    pass
+
+                # Plot 'Predicted vs Actual' axes
+                ax.plot(x, displayed_true, label="Actual", linewidth=1.8)
+                ax.plot(x, displayed_pred, label="Predicted", linewidth=1.2)
+
+                # Label based on mode
+                pp_mode = st.session_state.get('pp_target_mode', "price")
+                pp_tgt_scaler = st.session_state.get('pp_target_scaler', "None")
+                if pp_mode == "price":
+                    y_label = "Price" if inv_note else ("Scaled price" if pp_tgt_scaler != "None" else "Price")
+                else:
+                    y_label = "Log return" if inv_note == "" and pp_tgt_scaler == "None" else ("Scaled log return" if inv_note == "" else "Log return")
+
+                # Recompute metrics in displayed units
+                def _mse(a, b):
+                    a = np.asarray(a); b = np.asarray(b)
+                    return float(np.mean((a - b) ** 2))
+                def _r2(a, b):
+                    a = np.asarray(a); b = np.asarray(b)
+                    ss_res = float(np.sum((a - b) ** 2))
+                    ss_tot = float(np.sum((a - np.mean(a)) ** 2))
+                    return float(1.0 - ss_res / ss_tot) if ss_tot > 0 else float('nan')
+                mse_disp = _mse(displayed_true, displayed_pred)
+                r2_disp = _r2(displayed_true, displayed_pred)
+
+                # Plot 'Predicted vs Actual' chart
+                ax.set_title(f"Predicted vs Actual{inv_note} {title_suffix}".strip())
+                ax.set_xlabel("Time (test index)")
+                ax.set_ylabel(y_label)
+                ax.grid(True, alpha=0.3)
+                ax.legend()
+                # Metrics banner
+                ax.text(0.01, 0.98, f"MSE: {mse_disp:.4f}  |  R²: {r2_disp:.4f}", transform=ax.transAxes,
+                        va='top', ha='left', fontsize=9,
+                        bbox=dict(boxstyle='round', facecolor='white', alpha=0.7, edgecolor='#ddd'))
+                st.pyplot(fig, clear_figure=True)
+                plt.close(fig)
+
+            # Visualise 'Predicted vs Actual' prediction
+            plot_predictions(trues, preds, title_suffix="(test)")
     
     with column4:
         # Load "merged_crypto_dataset.xlsx"
@@ -700,7 +860,7 @@ with tab1:
         ch_green = alt.Chart(iv_green).mark_bar(color="#22c55e", height=26).encode(**base_enc_layered)
 
         # Combine all layers into a single chart (timeline) with defined height value
-        chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=48)
+        chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=72)
 
         # Add a title for the timeline
         st.subheader("Timeline (Available Data)")
