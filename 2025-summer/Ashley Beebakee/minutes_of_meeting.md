@@ -124,12 +124,12 @@ Suggestions:
   <li>Interchangeably, the sentiment of a financial news source can affect the market but so can a sudden shift in the market cause the creation of a financial news headline.</li>
 </ul>
 
-## ~4th August 2025 (13:00 - 14:XX)~
+## ~4th August 2025 (13:00 - 14:00)~
 <ul>
   <li>Absent due to more time being required to implement the current stage.</li>
 </ul>
 
-## 11th August 2025 (13:00 - 14:XX)
+## 11th August 2025 (13:00 - 14:00)
 Discussion:
 <ul>
   <li>GPT-5 was released on August 5th 2025 with two open-source models "gpt-oss-120b" and "gpt-oss-20b" (https://github.com/openai/gpt-oss).</li>
@@ -149,5 +149,40 @@ Suggestions:
   <li>Contact Manasi M. on whether she would be available to evaluate the system.</li>
   <li>Implement 'mlflow' to track the changes and performances for each training run.</li>
 </ul>
-    
-[Last updated: 23/08/2025 09:26]
+
+## ~18th August 2025 (13:00 - 14:00)~
+<ul>
+  <li>Misunderstanding: Dr. Kai Xu was out of office until 26th August 2025 -> thought meeting was canceled without being informed.</li>
+</ul>
+
+## 26th August 2025 (14:00 - 15:09)
+Discussion:
+<ul>
+  <li>Closed-source LLMs cannot extract sentiment automatically.</li>
+  <li>Timeline for 'News Source Data' is glitchy.</li>
+  <li>Framework does not need to run on a cloud, locally is fine.</li>
+  <li>MLflow functionality for comparing different training run for deep learning models.</li>
+</ul>
+Actions:
+<ul>
+  <li>Update System Architecture diagram.</li>
+  <li>Update Python script descriptions, dates and packages required.</li>
+  <li>Populate issues that have been completed with details regarding the implementation.</li>
+  <li>Update 'notes_of_development.md'.</li>
+  <li>Update project folder 'readme.md'.</li>
+</ul>
+Suggestions:
+<ul>
+  <li>Contact Manasi for her code to aid for the fusion of sentiment + time series data.</li>
+  <li>Amend "CS_REC_1 SOP1.1 User Study" for Manasi to adhere with the Ethics regulations.</li>
+  <li>Potentially create a questionnaire for Manasi to evaluate the system.</li>
+</ul>
+Fixes:
+<ul>
+  <li>Fix glitchy timeline size.</li>
+  <li>Implement functionality of all LLMs (closed-source required).</li>
+  <li>Fuse sentiment dataset with time series dataset (help of Manasi).</li>
+  <li>Learn more about mlflow and refine/refactor code for professionalism.</li>
+</ul>
+
+[Last updated: 26/08/2025 15:09]
