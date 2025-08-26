@@ -34,6 +34,8 @@
   <li>Added selection for Time Series dataset from the 'Data' folder.</li>
   <li>Added folder paths (as constants).</li></li>
   <li>Integrated "dataloader.py", "architecture.py" and "training.py" into Streamlit framework.</li>
+  <li>Implemented available data visualisation as a timeline in column 4.</li>
+  <li>Added hyperparameter options based on chosen deep learning architecture.</li>
 </ul>
 
 ## scraping.py
@@ -51,6 +53,7 @@
   <li>There are multiple language options for NewsAPI to get headlines from, ensure that the selected languages are compatible with one of the available LLMs.</li>
   <li>Created merge_datasets() function to combine the Reddit & NewsAPI datasets whenever new posts are appended via scraping/API.</li>
   <li>Added 'Language' column into logic of both datasets, with a LANGUAGE_MAP at the top which can be expanded to include additional languages taking into consideration LLM compatibility.</li>
+  <li>Updated merge_datasets() to preserve sentiment columns with appropriate formatting and to output number of duplicates in the terminal</li>
 </ul>
 
 ## llm_selection.py
@@ -83,7 +86,11 @@
 
 ## extraction.py
 <ul>
-  <li>...</li>
+  <li>Loads merged_crypto_dataset.xlsx and reads the 'Title' column.</li>
+  <li>Added skip_existing flag to avoid re-scoring rows that already contain a sentiment score.</li>
+  <li>Added limit parameter to cap the number of new rows processed.</li>
+  <li>Added saved progress with update for every 10 processed rows.</li></l>
+  <li>Added helper to safely save the Excel and write a timestamped backup if the file is in-use with error message.</li>
 </ul>
 
 ## historical.py
@@ -100,6 +107,7 @@
 <ul>
   <li>Created three classes: LSTMModel, CNNModel and CNNLSTMModel.</li>
   <li>With parameters: input_size, hidden_size, output_size, num_layers, dropout.</li>
+  <li>Used **kwargs to collect extra keyword arguments into a dict to handle any number of inputs for the get_model() function.</li>
 </ul>
 
 ## dataloader.py
@@ -115,4 +123,4 @@
   <li>Created predict() function to visualise prediction of mean_squared_error and r2_score.</li>
 </ul>
 
-[Last updated: 10/08/2025 18:24]
+[Last updated: 26/08/2025 16:24]

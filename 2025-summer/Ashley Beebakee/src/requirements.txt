@@ -1,3 +1,16 @@
-# streamlit
-# pyyaml
-
+altair==5.5.0
+beautifulsoup4==4.13.5
+feedparser==6.0.11
+matplotlib==3.10.5
+newsapi_python==0.2.7
+numpy==2.3.2
+openai==1.101.0
+pandas==2.3.2
+python_dateutil==2.9.0.post0
+PyYAML==6.0.2
+Requests==2.32.5
+scikit_learn==1.7.1
+streamlit==1.46.0
+torch==2.7.1
+yfinance==0.2.65
+mlflow==2.16.2

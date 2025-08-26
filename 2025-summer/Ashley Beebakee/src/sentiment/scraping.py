@@ -1,10 +1,12 @@
 #------------------------------------------------------------#
 # Name: Scraping Data Module
 # Description: This script scrapes sentiment data from various
-#              sources like Reddit, Twitter, and NewsAPI for
-#              cryptocurrency news.
+#              sources like Reddit and NewsAPI for
+#              cryptocurrency news, then merges the results
+#              into a single dataset in conjunction with the
+#              Sentiment Extraction Module (extraction.py).
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 11/08/2025
+# Last Updated: 23/08/2025
 # Python Version: 3.10.6
 # Packages Required: requests, beautifulsoup4, pandas, os
 #                    newsapi-python
@@ -175,6 +177,7 @@ def get_newsapi_headlines(language='en', excel_path="./data/newsapi_crypto_datas
 
         # Return the number of new headlines actually added
         num_new_headlines = len(new_headlines)
+        
         return num_new_headlines
     
     # Handle exceptions during API calls or data processing
@@ -190,25 +193,50 @@ def merge_datasets(reddit_path="./data/reddit_crypto_dataset.xlsx", newsapi_path
             print("One or both source datasets not found.")
             return 0
 
-        # Load both datasets into DataFrames
+        # Load both datasets
         df_reddit = pd.read_excel(reddit_path)
         df_newsapi = pd.read_excel(newsapi_path)
+
+        # Load existing "merged_crypto_dataset.xlsx" (if it exists)
+        # N.B: _ex implies "existing"
+        if os.path.exists(merged_path):
+            df_merged_ex = pd.read_excel(merged_path)
+        else:
+            df_merged_ex = pd.DataFrame()
+
+        # Combine Reddit and NewsAPI datasets
+        df_combined = pd.concat([df_reddit, df_newsapi], ignore_index=True)
+
+        # Align with existing merged dataset by URL
+        if not df_merged_ex.empty:
+            # Merge based on URL, prioritising the existing sentiment columns, i.e. Sentiment_Orca2
+            df_combined = pd.merge(df_combined, df_merged_ex, on="URL", how="outer", suffixes=("_new", ""))
+
+            # For non-sentiment columns, combine existing and temporary _new columns
+            for col in df_reddit.columns:
+                if col != "URL" and not col.lower().startswith("sentiment_"):
+                    df_combined[col] = df_combined[col + "_new"].combine_first(df_combined[col])
+                    # Remove temporary _new columns
+                    df_combined.drop(columns=[col + "_new"], inplace=True)
         
-        # Merge both datasets into single DataFrame
-        df_merged = pd.concat([df_reddit, df_newsapi], ignore_index=True)
-        
+        # Count the number of duplicates before removing them
+        num_duplicates = df_combined.duplicated(subset=["URL"]).sum()
+
         # Remove duplicates based on URL and sort by timestamp
-        df_merged.drop_duplicates(subset=["URL"], inplace=True)
-        df_merged = df_merged.sort_values(by="Timestamp", ascending=False)
-        
-        # Save merged dataset as .xlsx file in the 'data' folder
+        df_combined.drop_duplicates(subset=["URL"], inplace=True)
+        if "Timestamp" in df_combined.columns:
+            df_combined = df_combined.sort_values(by="Timestamp", ascending=False)
+
+        # Save the updated "merged_crypto_dataset.xlsx"
         os.makedirs(os.path.dirname(merged_path), exist_ok=True)
-        df_merged.to_excel(merged_path, index=False)
+        df_combined.to_excel(merged_path, index=False)
+
+        # Print summary information for debugging and tracking
+        print(f"Merged dataset saved to {merged_path} with {len(df_combined)} posts.")
+        print(f"Number of duplicates removed: {num_duplicates}")
         
-        print(f"Merged dataset saved to {merged_path} with {len(df_merged)} posts.")
-        return len(df_merged)
-    
-    # In the event of an error emerging
+        return len(df_combined)
+
     except Exception as e:
         print(f"Error merging the datasets: {e}")
         return 0

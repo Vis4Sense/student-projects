@@ -1,7 +1,32 @@
 architecture: CNN-LSTM
 cryptocurrency: Bitcoin
+hp_cnnlstm_dropout: 0.2
+hp_cnnlstm_filters: 32
+hp_cnnlstm_kernel: 5
+hp_cnnlstm_lstm_hidden: 64
+hp_cnnlstm_lstm_layers: 2
+hp_lstm_dropout: 0.2
+hp_lstm_hidden: 512
+hp_lstm_layers: 2
 interval: 1d
 llm: Orca 2 7B (6-bit)
-prompt: Zero-shot
+mlf_enable: true
+mlf_experiment: training_run_1
+mlf_port: 5002
+mlf_tracking_uri: file:./mlruns
+pp_batch_size: 64
+pp_feat_scaler: Standard
+pp_sequence_len: 30
+pp_sequence_length: 30
+pp_target_mode: log_return
+pp_target_scaler: None
+prompt: Chain-of-Thought (CoT)
 sentiment: Reddit
 subreddits: CryptoCurrency
+tr_epochs: 200
+tr_es_enable: false
+tr_es_min_delta: 0.0
+tr_es_patience: 20
+tr_lr: 0.001
+tr_verbose: true
+tr_weight_decay: 0.0
