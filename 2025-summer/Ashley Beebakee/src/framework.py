@@ -24,11 +24,14 @@ import streamlit as st
 import altair as alt
 import pandas as pd
 import numpy as np
+import subprocess
+import importlib
 import torch
 import yaml
 import time
 import json
 import os
+import sys
 
 # Import required modules
 from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines, merge_datasets
@@ -42,6 +45,14 @@ from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
 from networks.training import train_model, predict
 from datetime import datetime
+from pathlib import Path
+
+# Optional MLflow import (guarded via importlib to avoid static import errors)
+mlflow = None
+try:
+    mlflow = importlib.import_module('mlflow')
+except Exception:
+    mlflow = None
 
 # Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
@@ -141,7 +152,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v0.9 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.2 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -312,19 +323,19 @@ with tab1:
             # N.B: The prefix 'hp_' stands for hyperparameter
             with st.expander("Hyperparameters", expanded=False):
                 if config['architecture'] == "LSTM":
-                    config['hp_lstm_hidden'] = st.number_input("LSTM Hidden size", min_value=8, max_value=1024, value=int(config.get('hp_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
-                    config['hp_lstm_layers'] = st.slider("LSTM Num layers", min_value=1, max_value=4, value=int(config.get('hp_lstm_layers', 2)), help="Enter a value between 1 and 4.")
+                    config['hp_lstm_hidden'] = st.number_input("LSTM Hidden Size", min_value=8, max_value=1024, value=int(config.get('hp_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
+                    config['hp_lstm_layers'] = st.slider("LSTM Layers", min_value=1, max_value=4, value=int(config.get('hp_lstm_layers', 2)), help="Enter a value between 1 and 4.")
                     config['hp_lstm_dropout'] = st.slider("LSTM Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_lstm_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
                 elif config['architecture'] == "CNN":
                     config['hp_cnn_filters'] = st.number_input("CNN Filters", min_value=4, max_value=512, value=int(config.get('hp_cnn_filters', 64)), step=4, help="Enter a value between 4 and 512.")
-                    config['hp_cnn_kernel'] = st.selectbox("CNN Kernel size", options=[3, 5, 7, 9, 11], index=[3, 5, 7, 9, 11].index(int(config.get('hp_cnn_kernel', 5))))
-                    config['hp_cnn_stride'] = st.selectbox("CNN Stride", options=[1, 2], index=[1,2].index(int(config.get('hp_cnn_stride', 1))), help="Enter a value between 1 and 2.")
+                    config['hp_cnn_kernel'] = st.selectbox("CNN Kernel Size", options=[3, 5, 7, 9, 11], index=[3, 5, 7, 9, 11].index(int(config.get('hp_cnn_kernel', 5))))
+                    config['hp_cnn_stride'] = st.selectbox("CNN Stride", options=[1, 2], index=[1, 2].index(int(config.get('hp_cnn_stride', 1))), help="Enter a value between 1 and 2.")
                     config['hp_cnn_dropout'] = st.slider("CNN Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_cnn_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
                 else:
-                    config['hp_cnnlstm_filters'] = st.number_input("CNN-LSTM Conv Filters", min_value=4, max_value=512, value=int(config.get('hp_cnnlstm_filters', 32)), step=4, help="Enter a value between 4 and 512.")
-                    config['hp_cnnlstm_kernel'] = st.selectbox("CNN-LSTM Kernel size", options=[3, 5, 7], index=[3, 5, 7].index(int(config.get('hp_cnnlstm_kernel', 5))), help="Enter a value between 3 and 7.")
-                    config['hp_cnnlstm_lstm_hidden'] = st.number_input("CNN-LSTM LSTM Hidden", min_value=8, max_value=1024, value=int(config.get('hp_cnnlstm_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
-                    config['hp_cnnlstm_lstm_layers'] = st.slider("CNN-LSTM LSTM Layers", min_value=1, max_value=4, value=int(config.get('hp_cnnlstm_lstm_layers', 2)), help="Enter a value between 1 and 4.")
+                    config['hp_cnnlstm_filters'] = st.number_input("CNN-LSTM Convolution Filters", min_value=4, max_value=512, value=int(config.get('hp_cnnlstm_filters', 32)), step=4, help="Enter a value between 4 and 512.")
+                    config['hp_cnnlstm_kernel'] = st.selectbox("CNN-LSTM Kernel Size", options=[3, 5, 7], index=[3, 5, 7].index(int(config.get('hp_cnnlstm_kernel', 5))), help="Enter a value between 3 and 7.")
+                    config['hp_cnnlstm_lstm_hidden'] = st.number_input("CNN-LSTM Hidden Size", min_value=8, max_value=1024, value=int(config.get('hp_cnnlstm_lstm_hidden', 64)), step=8, help="Enter a value between 8 and 1024.")
+                    config['hp_cnnlstm_lstm_layers'] = st.slider("CNN-LSTM Layers", min_value=1, max_value=4, value=int(config.get('hp_cnnlstm_lstm_layers', 2)), help="Enter a value between 1 and 4.")
                     config['hp_cnnlstm_dropout'] = st.slider("CNN-LSTM Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_cnnlstm_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
 
             # Training options (optim & regularisation)
@@ -345,7 +356,60 @@ with tab1:
                     config['tr_es_patience'] = st.number_input("ES Patience", min_value=1, max_value=500, value=int(config.get('tr_es_patience', 20)), help="Enter a value between 1 and 500.")
                 with es_cols[1]:
                     config['tr_es_min_delta'] = st.number_input("ES Min Delta", min_value=0.0, max_value=1.0, value=float(config.get('tr_es_min_delta', 0.0)), step=0.0001, format="%.6f", help="Enter a value between 0.0 and 1.0.")
+            
+            # MLflow (Experiment Tracking)
+            # N.B: The prefix 'mlf_' stands for MLflow
+            # 'URI' stands for Uniform Resource Identifier
+            with st.expander("MLflow (Experiment Tracking)", expanded=False):
+                config['mlf_enable'] = st.checkbox("Enable MLflow Tracking", value=bool(config.get('mlf_enable', True)))
+                config['mlf_experiment'] = st.text_input("Experiment Name", value=str(config.get('mlf_experiment', 'training_run_1')))
+                config['mlf_tracking_uri'] = st.text_input("Tracking URI", value=str(config.get('mlf_tracking_uri', 'file:./mlruns')), help="For local tracking store, use defined 'Uniform Resource Identifier'.")
                 
+                # Define default port for MLflow UI (Port 5001)
+                default_port = int(config.get('mlf_port', 5001))
+                config['mlf_port'] = st.number_input("UI Port", min_value=1024, max_value=65535, value=default_port, step=1)
+                
+                # Manage simple start/stop of MLflow UI
+                if 'mlflow_ui_proc' not in st.session_state:
+                    st.session_state.mlflow_ui_proc = None
+                    st.session_state.mlflow_ui_port = None
+                start_ui = st.button("Start UI")
+                stop_ui = st.button("Stop UI")
+
+                # Start MLflow UI handler
+                if start_ui:
+                    if mlflow is None:
+                        st.error("MLflow is not installed. Please install requirements and restart.")
+                    elif st.session_state.mlflow_ui_proc is None or st.session_state.mlflow_ui_proc.poll() is not None:
+                        try:
+                            port = int(config['mlf_port'])
+                            # Launch MLflow UI process using current Python environment
+                            cmd = [sys.executable, "-m", "mlflow", "ui", "--port", str(port), "--backend-store-uri", str(config['mlf_tracking_uri'])]
+                            proc = subprocess.Popen(cmd, shell=False)
+                            st.session_state.mlflow_ui_proc = proc
+                            st.session_state.mlflow_ui_port = port
+                            st.success(f"MLflow UI started on http://127.0.0.1:{port}")
+                            add_console_message(f"MLflow UI started on http://127.0.0.1:{port}")
+                        except Exception as e:
+                            st.error(f"Failed to start MLflow UI: {e}")
+                    else:
+                        st.info("MLflow UI already running.")
+                # Stop MLflow UI handler
+                if stop_ui:
+                    proc = st.session_state.get('mlflow_ui_proc')
+                    if proc is not None and proc.poll() is None:
+                        try:
+                            proc.terminate()
+                            time.sleep(1)
+                            if proc.poll() is None:
+                                proc.kill()
+                            st.session_state.mlflow_ui_proc = None
+                            st.session_state.mlflow_ui_port = None
+                            st.success("MLflow UI stopped.")
+                        except Exception as e:
+                            st.error(f"Failed to stop MLflow UI: {e}")
+                    else:
+                        st.info("MLflow UI is not running.")
 
             # Get list of available CSV files from data folder
             if os.path.exists(DATA_FOLDER):
@@ -646,19 +710,104 @@ with tab1:
             model.to(device)
             st.success(model)
 
+            # Define helper function to log parameters to MLflow
+            def log_mlflow_params():
+                mlflow.log_param('architecture', config.get('architecture'))
+                mlflow.log_param('data_csv', selected_ts)
+
+                # Pre-processing
+                mlflow.log_param('pp_sequence_length', int(config.get('pp_sequence_length', 30)))
+                mlflow.log_param('pp_feat_scaler', config.get('pp_feat_scaler', 'MinMax'))
+                mlflow.log_param('pp_target_mode', config.get('pp_target_mode', 'price'))
+                mlflow.log_param('pp_target_scaler', config.get('pp_target_scaler', 'None'))
+                mlflow.log_param('pp_batch_size', int(config.get('pp_batch_size', 32)))
+
+                # Model hyperparameters
+                arch = config.get('architecture')
+                if arch == 'LSTM':
+                    mlflow.log_param('hp_lstm_hidden', int(config.get('hp_lstm_hidden', 64)))
+                    mlflow.log_param('hp_lstm_layers', int(config.get('hp_lstm_layers', 2)))
+                    mlflow.log_param('hp_lstm_dropout', float(config.get('hp_lstm_dropout', 0.2)))
+                elif arch == 'CNN':
+                    mlflow.log_param('hp_cnn_filters', int(config.get('hp_cnn_filters', 64)))
+                    mlflow.log_param('hp_cnn_kernel', int(config.get('hp_cnn_kernel', 5)))
+                    mlflow.log_param('hp_cnn_stride', int(config.get('hp_cnn_stride', 1)))
+                    mlflow.log_param('hp_cnn_dropout', float(config.get('hp_cnn_dropout', 0.2)))
+                else:
+                    mlflow.log_param('hp_cnnlstm_filters', int(config.get('hp_cnnlstm_filters', 32)))
+                    mlflow.log_param('hp_cnnlstm_kernel', int(config.get('hp_cnnlstm_kernel', 5)))
+                    mlflow.log_param('hp_cnnlstm_lstm_hidden', int(config.get('hp_cnnlstm_lstm_hidden', 64)))
+                    mlflow.log_param('hp_cnnlstm_lstm_layers', int(config.get('hp_cnnlstm_lstm_layers', 2)))
+                    mlflow.log_param('hp_cnnlstm_dropout', float(config.get('hp_cnnlstm_dropout', 0.2)))
+
+                # Training
+                mlflow.log_param('epochs', int(config.get('tr_epochs', 100)))
+                mlflow.log_param('learning_rate', float(config.get('tr_lr', 1e-3)))
+                mlflow.log_param('weight_decay', float(config.get('tr_weight_decay', 0.0)))
+                mlflow.log_param('early_stopping', bool(config.get('tr_es_enable', False)))
+                mlflow.log_param('es_patience', int(config.get('tr_es_patience', 20)))
+                mlflow.log_param('es_min_delta', float(config.get('tr_es_min_delta', 0.0)))
+
+            # Configure MLflow if enabled
+            use_mlflow = bool(config.get('mlf_enable', False)) and (mlflow is not None)
+            if bool(config.get('mlf_enable', False)) and mlflow is None:
+                st.warning("MLflow not available, disable tracking or install it.")
+            if use_mlflow:
+                try:
+                    mlflow.set_tracking_uri(str(config.get('mlf_tracking_uri', 'file:./mlruns')))
+                    mlflow.set_experiment(str(config.get('mlf_experiment', 'CryptoForecast')))
+                except Exception as e:
+                    st.warning(f"Could not configure MLflow: {e}")
+                    use_mlflow = False
+
+            # Define epoch callback for MLflow
+            epoch_cb = None
+            if use_mlflow:
+                def epoch_cb(epoch, train_loss, val_loss):
+                    try:
+                        mlflow.log_metric('train_loss', float(train_loss), step=int(epoch))
+                        mlflow.log_metric('val_loss', float(val_loss), step=int(epoch))
+                    except Exception:
+                        pass
+
             # Train the deep learning model based on selected configurations
-            trained_model, history = train_model(
-                model, 
-                train_loader, 
-                val_loader, 
-                num_epochs=int(config.get('tr_epochs', 100)),
-                learning_rate=float(config.get('tr_lr', 1e-3)),
-                weight_decay=float(config.get('tr_weight_decay', 0.0)),
-                early_stopping=bool(config.get('tr_es_enable', False)),
-                es_patience=int(config.get('tr_es_patience', 20)),
-                es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
-                verbose=bool(config.get('tr_verbose', False)),
-            )
+            current_run_id = None
+            if use_mlflow:
+                with mlflow.start_run(run_name=f"{config.get('architecture')}-{Path(selected_ts).stem}"):
+                    try:
+                        active = mlflow.active_run()
+                        if active is not None:
+                            current_run_id = active.info.run_id
+                    except Exception:
+                        current_run_id = None
+                    log_mlflow_params()
+                    trained_model, history = train_model(
+                        model,
+                        train_loader,
+                        val_loader,
+                        num_epochs=int(config.get('tr_epochs', 100)),
+                        learning_rate=float(config.get('tr_lr', 1e-3)),
+                        weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                        early_stopping=bool(config.get('tr_es_enable', False)),
+                        es_patience=int(config.get('tr_es_patience', 20)),
+                        es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                        verbose=bool(config.get('tr_verbose', False)),
+                        on_epoch_end=epoch_cb,
+                    )
+            # Redundant training script
+            else:
+                trained_model, history = train_model(
+                    model, 
+                    train_loader, 
+                    val_loader, 
+                    num_epochs=int(config.get('tr_epochs', 100)),
+                    learning_rate=float(config.get('tr_lr', 1e-3)),
+                    weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                    early_stopping=bool(config.get('tr_es_enable', False)),
+                    es_patience=int(config.get('tr_es_patience', 20)),
+                    es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                    verbose=bool(config.get('tr_verbose', False)),
+                )
             
             # Define function for training history (loss)
             def plot_loss(history):
@@ -671,10 +820,9 @@ with tab1:
                 ax.grid(True, alpha=0.3)
                 ax.legend()
                 st.pyplot(fig, clear_figure=True) # Render the chart in Streamlit
-                plt.close(fig) # Free resources
+                return fig
 
-            # Visualise training history (loss)
-            plot_loss(history)
+            # Visualise training history (loss) — rendered below when logging artifacts
 
             # Predict on test set and plot 'Predicted vs Actual'
             preds, trues, mse, r2 = predict(trained_model, test_loader)
@@ -733,10 +881,67 @@ with tab1:
                         va='top', ha='left', fontsize=9,
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.7, edgecolor='#ddd'))
                 st.pyplot(fig, clear_figure=True)
-                plt.close(fig)
+                return fig, float(mse_disp), float(r2_disp)
 
             # Visualise 'Predicted vs Actual' prediction
-            plot_predictions(trues, preds, title_suffix="(test)")
+            # Loss plot
+            loss_fig = plot_loss(history)
+            # Predictions plot and displayed metrics
+            pred_fig, mse_disp, r2_disp = plot_predictions(trues, preds, title_suffix="")
+
+            # Save and log artifacts if MLflow enabled
+            if use_mlflow:
+                try:
+                    def _log_all():
+                        # Log raw metrics (in training/target space)
+                        try:
+                            mlflow.log_metric('test_mse_raw', float(mse))
+                            mlflow.log_metric('test_r2_raw', float(r2))
+                        except Exception:
+                            pass
+                        artifacts_dir = Path('./artifacts')
+                        artifacts_dir.mkdir(parents=True, exist_ok=True)
+                        ts = datetime.now().strftime('%Y%m%d_%H%M%S')
+                        loss_path = artifacts_dir / f'loss_{ts}.png'
+                        pred_path = artifacts_dir / f'pred_vs_actual_{ts}.png'
+                        loss_fig.savefig(loss_path, dpi=150, bbox_inches='tight')
+                        pred_fig.savefig(pred_path, dpi=150, bbox_inches='tight')
+                        # Log artifacts
+                        mlflow.log_artifact(str(loss_path))
+                        mlflow.log_artifact(str(pred_path))
+                        # Log final metrics in displayed units
+                        mlflow.log_metric('test_mse_displayed', float(mse_disp))
+                        mlflow.log_metric('test_r2_displayed', float(r2_disp))
+                        # Optionality to log the trained model
+                        try:
+                            if hasattr(mlflow, 'pytorch'):
+                                mlflow.pytorch.log_model(trained_model, artifact_path='model')
+                        except Exception:
+                            pass
+
+                    # Reuse the same run context if needed
+                    active = None
+                    try:
+                        active = mlflow.active_run()
+                    except Exception:
+                        active = None
+                    if active is not None:
+                        _log_all()
+                    elif current_run_id is not None:
+                        with mlflow.start_run(run_id=current_run_id):
+                            _log_all()
+                    else:
+                        # As a last resort, skip logging to avoid creating a stray run
+                        pass
+                except Exception as e:
+                    st.warning(f"Failed to log artifacts to MLflow: {e}")
+
+            # Terminate 'Matplotlib' figures
+            try:
+                plt.close(loss_fig)
+                plt.close(pred_fig)
+            except Exception:
+                pass
     
     with column4:
         # Load "merged_crypto_dataset.xlsx"
@@ -863,7 +1068,7 @@ with tab1:
         chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=72)
 
         # Add a title for the timeline
-        st.subheader("Timeline (Available Data)")
+        st.subheader("Timeline (News Sources Data Availability)")
         st.altair_chart(chart, use_container_width=True)
 
         # Define legend for the timeline (Green, Orange and Red)
@@ -897,7 +1102,7 @@ with tab1:
             st.success("Configuration saved successfully!")
 
     with column6:
-        st.subheader("[Insert YouTube Demo Here]")
+        st.subheader("[To insert YouTube Demo Here]")
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
