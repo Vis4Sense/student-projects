@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 12/08/2025
+# Last Updated: 26/08/2025
 # Python Version: 3.10.6
 # Packages Required: streamlit, pandas, pyyaml, time, os
 #-------------------------------------------------------------------------------#
@@ -18,7 +18,9 @@
 # Import necessary libraries
 import matplotlib.pyplot as plt
 import streamlit as st
+import altair as alt
 import pandas as pd
+import numpy as np
 import torch
 import yaml
 import time
@@ -35,6 +37,7 @@ from data.historical import fetch_price_data, preprocess_data
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
 from networks.training import train_model, predict
+from datetime import datetime
 
 # Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
@@ -554,7 +557,149 @@ with tab1:
             plot_loss(history)
     
     with column4:
-        st.info("This section is reserved for future features and improvements.")
+        # Load "merged_crypto_dataset.xlsx"
+        timeline_path = MERGED_PATH
+        try:
+            df = pd.read_excel(timeline_path)
+        except Exception as e:
+            st.error(f"Could not load merged_crypto_dataset: {e}")
+            st.stop()
+
+        # Define which columns are for the sentiment scores by prefix "Sentiment_"
+        sentiment_cols = [col for col in df.columns if col.lower().startswith("sentiment_")]
+
+        # Convert 'Timestamp' column values to datetime
+        if not np.issubdtype(df["Timestamp"].dtype, np.datetime64):
+            try:
+                df["Timestamp"] = pd.to_datetime(df["Timestamp"], errors="coerce")
+            except Exception as e:
+                st.error(f"Could not parse the 'Timestamp' column: {e}")
+                st.stop()
+
+        # Clean rows without valid timestamps
+        df = df.dropna(subset=["Timestamp"]).copy()
+
+        # Set a date range for the visualisation of the timeline, i.e. year 2025
+        start_date = datetime(2025, 1, 1)
+        end_date = datetime(2025, 12, 31)
+
+        # Build coverage frame for each day of year 2025
+        full_range = pd.date_range(start=start_date, end=end_date, freq="D")
+        coverage = pd.DataFrame({"date": full_range})
+
+        # Ensure 'date' columns align (naive/without timezone)
+        df["date"] = df["Timestamp"].dt.floor("D")
+        df["date"] = df["date"].dt.tz_localize(None)
+        coverage["date"] = coverage["date"].dt.tz_localize(None)
+
+        # Count rows per date
+        rows_per_date = (
+            df[(df["date"] >= start_date) & (df["date"] <= end_date)]
+            .groupby("date")
+            .size()
+            .rename("row_count")
+        )
+        coverage = coverage.merge(rows_per_date, on="date", how="left").fillna({"row_count": 0})
+
+        # Sentiment data per specific day (date)
+        if sentiment_cols:
+            has_sentiment_mask = df[sentiment_cols].notna().any(axis=1)
+            df["has_sentiment"] = has_sentiment_mask
+            sent_per_date = (
+                df[(df["date"] >= start_date) & (df["date"] <= end_date)]
+                .groupby("date")["has_sentiment"]
+                .any()
+                .rename("has_sentiment")
+            )
+            coverage = coverage.merge(sent_per_date, on="date", how="left")
+        else:
+            coverage["has_sentiment"] = False
+
+        # Fill NaNs where no rows existed on a specific date
+        coverage["has_sentiment"] = coverage["has_sentiment"].fillna(False)
+        coverage["has_rows"] = coverage["row_count"] > 0
+
+        # Label status based on group type
+        def label_status(row):
+            if not row["has_rows"]:
+                return "No Data"
+            return "Sentiment Data" if row["has_sentiment"] else "Non-Sentiment Data"
+    
+        coverage["status"] = coverage.apply(label_status, axis=1)
+
+        # Build explicit 1-day intervals so each day renders as its own block
+        coverage = coverage.sort_values("date").reset_index(drop=True)
+        coverage["end"] = coverage["date"] + pd.Timedelta(days=1)
+        coverage["band"] = "Coverage"
+
+        # Consolidate contiguous days with the same status into intervals (Gantt-style)
+        prev_date = coverage["date"].shift(1)
+        prev_status = coverage["status"].shift(1)
+        new_group = (coverage["status"] != prev_status) | (coverage["date"] != prev_date + pd.Timedelta(days=1))
+        coverage["grp"] = new_group.cumsum()
+        intervals = (
+            coverage.groupby(["grp", "status"], as_index=False)
+            .agg(start=("date", "min"), end=("end", "max"), rows=("row_count", "sum"))
+        )
+        intervals["band"] = "Coverage"
+
+        # Split into separate DataFrames for robust layered rendering AND build single-encoded dataset with fixed colors
+        color_map = {
+            "Sentiment Data": "#22c55e",
+            "Non-Sentiment Data": "#f97316",
+            "No Data": "#ef4444",
+        }
+        intervals["color"] = intervals["status"].map(color_map)
+
+        # Debugging code to inspect intervals (Sentiment Data, Non-Sentiment Data, No Data)
+        #st.write("### Debug: Intervals by status")
+        #st.write(intervals["status"].value_counts())
+        #st.write(intervals.head(10))
+
+        # Build layered chart per status for robust coloring
+        iv_red = intervals[intervals["status"] == "No Data"]
+        iv_orange = intervals[intervals["status"] == "Non-Sentiment Data"]
+        iv_green = intervals[intervals["status"] == "Sentiment Data"]
+
+        base_enc_layered = dict(
+            x=alt.X("start:T", title="Date"),
+            x2="end",
+            y=alt.Y("band:N", title="", axis=alt.Axis(labels=False, ticks=False)),
+            tooltip=[
+                alt.Tooltip("status:N", title="Status"),
+                alt.Tooltip("start:T", title="Start"),
+                alt.Tooltip("end:T", title="End"),
+            ],
+        )
+
+        # Create individual charts for each group type (chart)
+        ch_red = alt.Chart(iv_red).mark_bar(color="#ef4444", height=26).encode(**base_enc_layered)
+        ch_orange = alt.Chart(iv_orange).mark_bar(color="#f97316", height=26).encode(**base_enc_layered)
+        ch_green = alt.Chart(iv_green).mark_bar(color="#22c55e", height=26).encode(**base_enc_layered)
+
+        # Combine all layers into a single chart (timeline) with defined height value
+        chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=48)
+
+        # Add a title for the timeline
+        st.subheader("Timeline (Available Data)")
+        st.altair_chart(chart, use_container_width=True)
+
+        # Define legend for the timeline (Green, Orange and Red)
+        #st.markdown()
+
+        # Statistics of data coverage for year 2025
+        st.subheader("Statistics (Year 2025)")
+        counts = (
+            coverage["status"].value_counts()
+            .reindex(["Sentiment Data", "Non-Sentiment Data", "No Data"])
+            .fillna(0)
+            .astype(int)
+        )
+        # Define three columns to display each group type's total count
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Sentiment Data", f"{counts.get('Sentiment Data', 0)} day(s)")
+        col2.metric("Non-Sentiment Data", f"{counts.get('Non-Sentiment Data', 0)} day(s)")
+        col3.metric("No Data", f"{counts.get('No Data', 0)} day(s)")
 
     column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
 
