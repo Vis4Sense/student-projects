@@ -1,0 +1,16 @@
+#-------------------------------------------------------------------------------#
+# Name: Streamlit Server (Watchdog)
+# Description: This configuration controls how Streamlit's file watcher behaves.
+# Author: Ashley Beebakee (https://github.com/OmniAshley)
+# Last Updated: 01/09/2025
+#-------------------------------------------------------------------------------#
+# Options:
+# -> "auto" = default (uses watchdog)
+# -> "poll" = safer (uses polling)
+# -> "none" = disables auto-reload
+#-------------------------------------------------------------------------------#
+
+[server]
+fileWatcherType = "poll"
+
+
