@@ -1,0 +1,49 @@
+.sidebar-container {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  width: 100%; /* increased width */
+  box-sizing: border-box;
+}
+
+.search-box {
+  margin-bottom: 10px;
+}
+
+.results .result-item {
+  margin-bottom: 6px;
+}
+
+.compare-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.compare-container th,
+.compare-container td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.compare-container th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Feature toggle arrow */
+.feature-toggle {
+  cursor: pointer;
+  color: #1976d2;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.feature-text {
+  display: none;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #555;
+}

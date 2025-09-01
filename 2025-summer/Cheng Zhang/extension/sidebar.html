@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LLM Product Comparison Sidebar</title>
+  <link rel="stylesheet" href="sidebar.css" />
+</head>
+<body>
+  <div class="sidebar-container">
+    <h2>Product Comparison</h2>
+
+    <!-- Search box -->
+    <div class="search-box">
+      <input id="query-input" type="text" placeholder="Describe the product you need..." />
+      <button id="search-btn">Search</button>
+    </div>
+
+    <!-- Q&A 历史区块 -->
+    <div id="qa-history" style="margin:10px 0; padding:8px; border:1px solid #ddd; max-height:150px; overflow-y:auto;">
+      <h4>Q&A History</h4>
+      <div id="qa-list"></div>
+    </div>
+
+    <!-- Selected Products 区块 -->
+    <div id="selected-history" style="margin:10px 0; padding:8px; border:1px solid #ddd; max-height:150px; overflow-y:auto;">
+      <h4>Selected Products</h4>
+      <div id="selected-list"><i>No products selected.</i></div>
+      <button id="compare-btn" disabled>Compare selected items</button>
+    </div>
+
+    <!-- Search result list -->
+    <div id="results" class="results"></div>
+
+    <!-- Comparison results table -->
+    <div id="compare-container" class="compare-container" style="display:none;">
+      <h3>Comparison Results</h3>
+      <!-- Table will be injected here -->
+    </div>
+
+    <!-- Final recommendation -->
+    <div id="recommendation" style="margin-top: 12px; font-weight: bold; color: #1976d2;"></div>
+  </div>
+
+  <!-- Main sidebar logic -->
+  <script src="sidebar.js"></script>
+</body>
+</html>
