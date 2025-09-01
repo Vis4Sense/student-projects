@@ -8,13 +8,13 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 23/08/2025
 # Python Version: 3.10.6
-# Packages Required: requests, beautifulsoup4, pandas, os
-#                    newsapi-python
+# Packages Required: python-dateutil, newsapi-python,
+#                    beautifulsoup4, pandas, requests
 #------------------------------------------------------------#
 
 # Import necessary libraries
-from newsapi import NewsApiClient
 from dateutil.relativedelta import relativedelta
+from newsapi import NewsApiClient
 from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -237,6 +237,7 @@ def merge_datasets(reddit_path="./data/reddit_crypto_dataset.xlsx", newsapi_path
         
         return len(df_combined)
 
+    # Return error if datasets fail to merge
     except Exception as e:
         print(f"Error merging the datasets: {e}")
         return 0
