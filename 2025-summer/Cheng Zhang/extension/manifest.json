@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "LLM Product Sidebar",
+  "version": "1.0",
+  "description": "LLM-powered product comparison sidebar",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sidebar.html",
+        "sidebar.js",
+        "sidebar.css",
+        "chart.js",
+        "icon.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
