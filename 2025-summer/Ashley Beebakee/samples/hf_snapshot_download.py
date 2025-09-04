@@ -1,3 +1,7 @@
+# This script was acquired from:
+# -> https://huggingface.co/docs/huggingface_hub/en/guides/download
+
+# Import necessary libraries
 from huggingface_hub import snapshot_download
 
 # Download Hugging Face Model

@@ -1,3 +1,21 @@
+#-------------------------------------------------------------------------------#
+# Name: Language Detector (Datasets)
+# Description: This script detects the language of text data in a dataset by
+#              analysing specific text columns and applying a majority vote
+#              mechanism to determine the most likely language, which is then
+#              mapped to a standardised set of language names onto a new column.
+# Author: Ashley Beebakee (https://github.com/OmniAshley)
+# Last Updated: 01/09/2025
+# Python Version: 3.10.6
+# Packages Required: langdetect, pandas
+# Variables (to modify): TEXT_COLS, path (parameter of main() function)
+#-------------------------------------------------------------------------------#
+# You can run this script from CMD to process your dataset in two ways:
+# -> python lang_detector.py
+# OR
+# -> python lang_detector.py /path/to/your/dataset.xlsx
+#-------------------------------------------------------------------------------#
+
 # Import necessary libraries
 from langdetect import detect, DetectorFactory, LangDetectException
 from collections import Counter
@@ -60,6 +78,7 @@ def choose_language(row):
 
     return None
 
+# N.B: change the 'path' variable to your desired dataset
 def main(path="./data/news_api_crypto_dataset.xlsx"):
     """Main function to read dataset, detect languages, and save results."""
     path = pathlib.Path(path)
@@ -76,7 +95,7 @@ def main(path="./data/news_api_crypto_dataset.xlsx"):
     if not df_missing.empty:
         df.loc[mask_missing, "Language"] = df_missing.apply(choose_language, axis=1)
 
-    # Normalize any pre-filled values to our allowed set (map common names/codes)
+    # Normalise any pre-filled values to our allowed set (map common names/codes)
     norm_map = {
         "english": "English", "en": "English",
         "german": "German", "de": "German",
@@ -107,8 +126,3 @@ if __name__ == "__main__":
     # Allow command line override but default to news_api dataset
     path = sys.argv[1] if len(sys.argv) > 1 else "./data/newsapi_crypto_dataset.xlsx" # Replace with your dataset's file path
     main(path)
-
-# You can run this script from the command line to process your dataset in two ways:
-# python lang_detector.py
-# OR
-# python lang_detector.py /path/to/your/dataset.xlsx

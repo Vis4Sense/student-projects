@@ -1,18 +1,19 @@
 #------------------------------------------------------------#
 # Name: LLM Selection Module
 # Description: This script lists and allows selection of
-#              various LLMs for use in the modular deep 
-#              learning framework created with Streamlit.
+#              various LLMs (open-source and closed-source) 
+#              for use in the modular deep learning framework 
+#              created with Streamlit.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 23/08/2025
+# Last Updated: 01/09/2025
 # Python Version: 3.10.6
-# Packages Required: llama-cpp-python (CPU only)
-#                    llama-cpp-python --force-reinstall 
-#                    --no-cache-dir (GPU acceleration)
+# Packages Required: llama-cpp-python, openai
+# Packages Installation: llama-cpp-python --force-reinstall 
+#                        --no-cache-dir (GPU acceleration)               
 # Hugging Face Token: Thesis.Token
 #------------------------------------------------------------#
 
-# import necessary libraries
+# Import necessary libraries
 from llama_cpp import Llama
 from openai import OpenAI
 
@@ -21,6 +22,7 @@ def load_api_key(filepath):
     with open(filepath, "r") as f:
         return f.read().strip()
 
+# Function to set up LLM with optimised settings for AMD GPU
 def llm_optimisation(model_path):
     """LLM settings optimised for AMD RX 6600 XT GPU with 8GB VRAM."""
     

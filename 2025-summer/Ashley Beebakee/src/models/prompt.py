@@ -8,6 +8,7 @@
 # Python Version: 3.10.6
 # Packages Required: N/A
 #------------------------------------------------------------#
+# N.B: the prompt templates for certain models are quite glitchy, they require better fine-tuning.
 
 # Define prompt templates for sentiment analysis tasks using the Llama 3.1 8B 4-bit and 2-bit models
 ZERO_SHOT_LLAMA = """

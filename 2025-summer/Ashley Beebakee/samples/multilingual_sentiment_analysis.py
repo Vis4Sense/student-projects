@@ -6,14 +6,15 @@
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
 # Last Updated: 16/06/2025
 # Python Version: 3.10.6
-# Packages Required: transformers, deep-translator, pandas
-#                    matplotlib
+# Packages Required: deep-translator, transformers, matplotlib
+#                    pandas
 #------------------------------------------------------------#
 
-from transformers import pipeline
+# Import necessary libraries
 from deep_translator import GoogleTranslator
-import pandas as pd
+from transformers import pipeline
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Sentiment label to numeric score mapping
 star_to_sentiment = {
