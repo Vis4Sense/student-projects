@@ -16,6 +16,8 @@
 # -> streamlit run $sl_path
 # To generate requirements.txt (external packages):
 # -> pipreqs "K:\student-projects\2025-summer\Ashley Beebakee" --force
+# To generate environment.yml (conda packages):
+# -> conda env export --name thesis > environment.yml
 #-------------------------------------------------------------------------------#
 
 # Import necessary libraries
@@ -987,6 +989,8 @@ with tab1:
             .rename("row_count")
         )
         coverage = coverage.merge(rows_per_date, on="date", how="left").fillna({"row_count": 0})
+        # Ensure integer dtype after merge/fill to avoid float later
+        coverage["row_count"] = coverage["row_count"].astype("int64")
 
         # Sentiment data per specific day (date)
         if sentiment_cols:
@@ -1002,9 +1006,15 @@ with tab1:
         else:
             coverage["has_sentiment"] = False
 
-        # Fill NaNs where no rows existed on a specific date
-        coverage["has_sentiment"] = coverage["has_sentiment"].fillna(False)
-        coverage["has_rows"] = coverage["row_count"] > 0
+        # Fill NaNs and normalize types to avoid FutureWarning
+        # Use pandas nullable BooleanDtype to avoid object downcasting warnings
+        coverage["has_sentiment"] = (
+            coverage["has_sentiment"]
+            .astype("boolean")
+            .fillna(False)
+            .astype(bool)
+        )
+        coverage["has_rows"] = (coverage["row_count"] > 0)
 
         # Label status based on group type
         def label_status(row):
