@@ -98,9 +98,9 @@
   <macro name="access">
     <choose>
       <if variable="DOI">
-        <group delimiter=": ">
-          <text term="available at" text-case="capitalize-first"/>
-          <text variable="DOI" prefix="https://doi.org/"/>
+        <group>
+          <text value="doi: "/>
+          <text variable="DOI"/>
         </group>
       </if>
       <else-if variable="URL">
