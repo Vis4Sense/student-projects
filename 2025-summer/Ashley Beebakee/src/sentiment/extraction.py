@@ -1,19 +1,18 @@
 #------------------------------------------------------------#
 # Name: Sentiment Extraction Module
-# Description: Bulk-extract sentiment scores for each row in an
-#              Excel dataset using local LLMs and prompt templates.
-#              Scores are written to a column named by model, e.g.,
-#              'Sentiment_Orca2'.
+# Description: Bulk-extract sentiment scores for each row in 
+#              an Excel dataset using local LLMs and prompt 
+#              templates. Scores are written to a column named 
+#              by model, e.g. 'Sentiment_Orca2'.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 26/08/2025
+# Last Updated: 06/09/2025
 # Python Version: 3.10.6
-# Packages Required: pandas, openpyxl, llama-cpp-python
+# Packages Required: pandas
 #------------------------------------------------------------#
 
 # Import necessary libraries
 from __future__ import annotations
 import pandas as pd
-import random
 import re
 
 # Import required modules
@@ -29,7 +28,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, str]] = {
 	"orca2": {
 		"model_path": str(Path("models") / "orca-2-7b.Q6_K.gguf"),
 		"column": "Sentiment_Orca2",
-		"zero_shot": "CHAIN_OF_THOUGHT_ORCA",  # default to CoT-style reasoning for better consistency
+		"zero_shot": "CHAIN_OF_THOUGHT_ORCA",
 	},
 	# Llama 3.1 8B Instruct (Q4_K)
 	"llama31_q4": {
@@ -52,7 +51,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, str]] = {
 }
 
 # Define internal function to assign corresponding prompt template based on LLM
-def _select_template(model_key: str, mode: str = "zero-shot") -> str:
+def select_template(model_key: str, mode: str = "zero-shot"):
 	"""Return the template string name for the given model and mode.
 
 	mode can be one of: "zero-shot" (default), "few-shot", "cot".
@@ -82,20 +81,13 @@ def _select_template(model_key: str, mode: str = "zero-shot") -> str:
 	raise ValueError(f"Unknown model key: {model_key}")
 
 # Define internal function to parse sentiment score from model output
-def _parse_score(text: str) -> Optional[float]:
-	"""Extract the first numeric sentiment score in [-1.0, 1.0] from model output.
-
-	Strategy:
-	1) Look for explicit labels like 'Final Score:' or 'Sentiment score:'
-	2) Fallback: first float between -1 and 1.
-	- Handles unicode minus and comma decimals, and optional space after sign.
-	Returns None if not found.
-	"""
+# N.B: -> implies that the function is expected to return that type (hint) 
+def parse_score(text: str) -> Optional[float]:
 	# Return none if empty
 	if not text:
 		return None
 
-	# Normalize unicode (minus sign) to ASCII minus
+	# Normalise Unicode (minus sign) to ASCII minus
 	text = text.replace("−", "-").replace("–", "-").replace("—", "-")
 
 	# Priority patterns with labels (support comma or dot decimals, and optional space after sign)
@@ -104,11 +96,13 @@ def _parse_score(text: str) -> Optional[float]:
 		r"(?i)sentiment\s*score\s*[:\-]\s*([+-]?\s*\d+(?:[\.,]\d+)?)",
 		r"(?i)score\s*[:\-]\s*([+-]?\s*\d+(?:[\.,]\d+)?)",
 	]
+	# Look for explicit labels i.e. Final Score, Sentiment score, Score (-1.0 to 1.0)
 	for pat in label_patterns:
 		m = re.search(pat, text)
 		if m:
 			try:
 				val = float(m.group(1).replace(" ", "").replace(",", "."))
+				# Look for first float between -1.0 and 1.0
 				if -1.0 <= val <= 1.0:
 					return val
 			except ValueError:
@@ -126,7 +120,7 @@ def _parse_score(text: str) -> Optional[float]:
 	return None
 
 # Define internal function to generate response from LLM
-def _generate_response(
+def generate_response(
 	llm,
 	prompt: str,
 	*,
@@ -134,8 +128,7 @@ def _generate_response(
 	temperature: float = 0.7,
 	top_p: float = 0.9,
 	stop_after_newline: bool = False,
-) -> str:
-	"""Call llama.cpp model and return text output."""
+):
 	try:
 		stops = ["<|eot_id|>", "<|end_of_text|>", "\n\nUser:", "\n\nHuman:"]
 		if stop_after_newline:
@@ -154,7 +147,7 @@ def _generate_response(
 		return f"ERROR: {e}"
 
 # Define internal function to save DataFrame to Excel with backup
-def _save_df(df: pd.DataFrame, path: Path | str) -> Path:
+def save_df(df: pd.DataFrame, path: Path | str):
 	path = Path(path)
 	try:
 		df.to_excel(path, index=False, engine="openpyxl")
@@ -175,124 +168,96 @@ def score_excel(
 	model_key: str = "llama31_iq2",
 	mode: str = "zero-shot",
 	title_col: str = "Title",
-	output_path: Optional[Path | str] = None,
 	limit: Optional[int] = 10,
 	skip_existing: bool = True,
-	concise: bool = True,
+	default_prompt: bool = True,
 	gen_max_tokens: int = 24,
 	gen_temperature: float = 0.2,
 	gen_top_p: float = 0.9,
-	in_place: bool = True,
 	checkpoint_every: Optional[int] = 10,
-	select_strategy: str = "sequential",
-	random_seed: Optional[int] = None,
-) -> Path:
+):
 	if model_key not in MODEL_REGISTRY:
 		raise ValueError(f"model_key must be one of {list(MODEL_REGISTRY)}")
 
+	# Clarify value of the "input_path" variable (optional)
 	input_path = Path(input_path)
-	scored_path = input_path.with_name(input_path.stem + "_scored" + input_path.suffix)
-	# Decide baseline (what we read) and write target (where we save)
-	if in_place:
-		baseline_path = input_path
-		write_path = input_path
-	else:
-		# Prefer to read from existing scored file so skipping works across runs
-		baseline_path = scored_path if scored_path.exists() else input_path
-		if output_path is None:
-			output_path = scored_path
-		write_path = Path(output_path)
 
-	# Resolve model path relative to this file's parent (project src root)
-	src_root = Path(__file__).resolve().parent.parent  # .../src
+	# Resolve model path relative to the parent of the script
+	src_path = Path(__file__).resolve().parent.parent
 	model_rel = MODEL_REGISTRY[model_key]["model_path"]
-	model_path = (src_root / model_rel).resolve()
-	out_col = MODEL_REGISTRY[model_key]["column"]
+	model_path = (src_path / model_rel).resolve()
+	output_col = MODEL_REGISTRY[model_key]["column"]
 
-	# Load data
-	df = pd.read_excel(baseline_path)
-	if title_col not in df.columns:
-		raise KeyError(f"Column '{title_col}' not found in {input_path.name}. Available: {list(df.columns)}")
+	# Load merged_crypto_dataset.xlsx
+	df = pd.read_excel(input_path)
 
-	# Ensure output column exists so we can selectively update
-	new_col_created = False
-	if out_col not in df.columns:
-		df[out_col] = pd.NA
-		new_col_created = True
+	# Ensure output column exists to selectively update it with sentiment scores
+	create_new_col = False
+	if output_col not in df.columns:
+		df[output_col] = pd.NA
+		create_new_col = True
 
 	# Build list of candidate row indices to process
-	candidates = []
+	cells = []
 	# Treat only numeric values as "already scored" to avoid false positives
-	existing_numeric = pd.to_numeric(df[out_col], errors="coerce") if out_col in df.columns else None
+	existing_numeric = pd.to_numeric(df[output_col], errors="coerce") if output_col in df.columns else None
 	for idx, text in enumerate(df[title_col].astype(str).tolist()):
-		# Skip empty titles
+		# Skip empty titles since they cannot be scored
 		if not isinstance(text, str) or not text.strip():
 			continue
-		# Skip already-scored rows if requested
+		# Skip rows that have already been scored (if skip_existing boolean is set to "True")
 		if skip_existing and existing_numeric is not None and pd.notna(existing_numeric.iloc[idx]):
 			continue
-		candidates.append(idx)
+		cells.append(idx)
 
-	# Apply selection strategy and limit if provided
-	if select_strategy.lower() == "random":
-		if random_seed is not None:
-			random.seed(random_seed)
-		random.shuffle(candidates)
-	elif select_strategy.lower() != "sequential":
-		print(f"Unknown select_strategy '{select_strategy}', defaulting to 'random'")
-		random.shuffle(candidates)
+	# Set specified limit for cells for which to extract sentiment scores from
+	cells = cells[:limit]
 
-	if limit is not None:
-		if limit <= 0:
-			print("Limit <= 0 specified; nothing to do.")
-			# Still write out unchanged file for transparency
-			saved_path = _save_df(df, write_path)
-			print(f"Wrote scores to: {saved_path}")
-			return saved_path
-		candidates = candidates[:limit]
-
-	total = len(candidates)
+	# Verify if the dataset's specified sentiment column is fully populated
+	total = len(cells) 
 	if total == 0:
 		print("No rows to process (either all scored or titles empty).")
-		saved_path = _save_df(df, write_path)
+		saved_path = save_df(df, input_path)
 		print(f"Wrote scores to: {saved_path}")
 		return saved_path
 
-	# Initiate LLM one time
+	# Initiate Large Language Model (LLM)
 	llm = llm_optimisation(str(model_path))
-	# Utilise concise prompt for quicker execution if requested
-	if concise:
+
+	# Utilise default prompt for quicker execution if requested
+	if default_prompt:
 		template = (
 			"You are a sentiment scorer. Output only a numeric sentiment score between -1 and 1 (inclusive).\n"
 			"Post: {post}\n"
 			"Score:"
 		)
 	else:
-		template = _select_template(model_key, mode)
+		template = select_template(model_key, mode)
 
+	# Initialise counters and error tracking
 	processed_count = 0
 	parse_failures = []
-	for i, idx in enumerate(candidates, start=1):
+	for i, idx in enumerate(cells, start=1):
 		text = str(df.loc[idx, title_col]).strip()
 		prompt = template.format(post=text)
-		output = _generate_response(
+		output = generate_response(
 			llm,
 			prompt,
 			max_tokens=gen_max_tokens,
 			temperature=gen_temperature,
 			top_p=gen_top_p,
-			stop_after_newline=True if concise else False,
+			stop_after_newline=True if default_prompt else False,
 		)
-		score = _parse_score(output)
+		score = parse_score(output)
 
-		# If parsing failed, try a stricter prompt once
+		# If the parsing failed, try a stricter prompt one time
 		if score is None:
 			strict_prompt = (
 				"Return ONLY a numeric sentiment score between -1 and 1. "
 				"No words, no labels, first line only.\n"
 				f"{text}\n"
 			)
-			strict_out = _generate_response(
+			strict_out = generate_response(
 				llm,
 				strict_prompt,
 				max_tokens=min(8, gen_max_tokens),
@@ -300,49 +265,50 @@ def score_excel(
 				top_p=1.0,
 				stop_after_newline=True,
 			)
-			score = _parse_score(strict_out)
+			score = parse_score(strict_out)
 			if score is None:
 				parse_failures.append({"row": idx, "out": output[:120], "fallback": strict_out[:120]})
-		df.loc[idx, out_col] = score
+		df.loc[idx, output_col] = score
 		processed_count += 1
 
 		# Progress with periodic checkpoint saves
 		if (checkpoint_every and checkpoint_every > 0 and (i % checkpoint_every == 0)) or i == total:
 			print(f"Processed {i}/{total} rows... last score={score}")
-			_save_df(df, write_path)
+			save_df(df, input_path)
 
-	# If a new sentiment column was created, move it next to other Sentiment_* columns
-	if new_col_created:
+	# If a new sentiment column was created, move it next to other "Sentiment_" columns
+	if create_new_col:
 		cols = list(df.columns)
-		sentiment_cols = [c for c in cols if c.lower().startswith("sentiment_") and c != out_col]
+		sentiment_cols = [c for c in cols if c.lower().startswith("sentiment_") and c != output_col]
 		if sentiment_cols:
 			last_idx = max(cols.index(c) for c in sentiment_cols)
 
-			# Move out_col just after the last existing sentiment column
-			cols.remove(out_col)
-			cols.insert(last_idx + 1, out_col)
+			# Move output_col just after the last existing sentiment column
+			cols.remove(output_col)
+			cols.insert(last_idx + 1, output_col)
 			df = df[cols]
 		else:
 			# Place after title_col if present
 			if title_col in df.columns:
-				cols.remove(out_col)
+				cols.remove(output_col)
 				insert_pos = cols.index(title_col) + 1
-				cols.insert(insert_pos, out_col)
+				cols.insert(insert_pos, output_col)
 				df = df[cols]
 
 	# Save with openpyxl engine to preserve Excel format compatibility
-	saved_path = _save_df(df, write_path)
+	saved_path = save_df(df, input_path)
 
 	# Print validation stats in the terminal
 	total_rows = len(df)
-	total_scored_numeric = pd.to_numeric(df[out_col], errors="coerce").notna().sum()
+	total_scored_numeric = pd.to_numeric(df[output_col], errors="coerce").notna().sum()
 	remaining = total_rows - total_scored_numeric
 	print(
-		f"Run summary for {out_col}: processed={processed_count}, total_scored={total_scored_numeric}, remaining={remaining}, total_rows={total_rows}"
+		f"Run summary for {output_col}: processed={processed_count}, total_scored={total_scored_numeric}, remaining={remaining}, total_rows={total_rows}"
 	)
 	if parse_failures:
 		print(f"Parse failures this run: {len(parse_failures)} (showing up to 5)")
 		for item in parse_failures[:5]:
 			print(f"  row={item['row']} out='{item['out']}' fallback='{item['fallback']}'")
 	print(f"Wrote scores to: {saved_path}")
-	return saved_path
+
+	return output_col, processed_count, total_scored_numeric, remaining, total_rows, saved_path
