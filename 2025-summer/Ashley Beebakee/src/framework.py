@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 26/08/2025
+# Last Updated: 06/09/2025
 # Python Version: 3.10.6
 # Packages Required: matplotlib, streamlit, altair, pandas, numpy, torch, pyyaml,
 #                    mlflow
@@ -154,7 +154,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.2 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.4 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -218,7 +218,7 @@ with tab1:
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
         open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "Orca 2 7B (6-bit)", "BLOOMZ 7B (4-bit)"]
-        closed_source_llms = ["GPT-5", "Gemini 1.5 Pro", "Claude 3 Opus"]
+        closed_source_llms = ["GPT-5", "Gemini 2.5 Pro", "Claude 3 Opus"]
 
         # Display corresponding drop-down menu based on LLM source type
         if llm_type == "Open-source":
@@ -276,6 +276,8 @@ with tab1:
         aut_col, r_aut_col = st.columns([8.25, 1.5])
         with aut_col:
             num_sentiment_posts = st.slider("Number of Posts for Sentiment Extraction:", min_value=10, max_value=10000, value=20, help="Select how many posts to extract sentiment from (10-10000).")
+
+            st.caption("This feature uses a default prompt template configured for rapid sentiment analysis of multiple posts.")
 
         # When the "Run" button is clicked, run the LLM for sentiment analysis
         with r_aut_col:
@@ -566,7 +568,7 @@ with tab1:
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
                 else:
-                    st.error("Apologies, the selected LLM is not supported yet.")
+                    st.error("Apologies, the selected open-source LLM is not supported yet.")
                     model_path = None
                     prompt_template = None
                 
@@ -578,32 +580,53 @@ with tab1:
                     # Call the sentiment analysis open-source function
                     response = analyse_sentiment_os(prompt, model_path)
 
-                # Visualise the config for debugging
+                # Display success message
+                add_console_message("Sentiment Analysis (Manual) complete.")
+                st.success("Sentiment Analysis (Manual) complete.")
+                # Display the configuration and response in the console output
                 log_and_console(f"**LLM Model:** {config['llm']}")
                 log_and_console(f"**Prompt Technique:** {config['prompt']}")
                 log_and_console(f"**Post:** {post_text}")
                 log_and_console(response)
 
             elif llm_type == "Closed-source":
-                with st.spinner(f"Analysing with {config['llm']}..."):
-                    # Call the sentiment analysis closed-source function
-                    response = analyse_sentiment_cs(post_text)
+                if config['llm'] == "GPT-5":
+                    with st.spinner(f"Analysing with {config['llm']}..."):
+                        # Call the sentiment analysis closed-source function
+                        response = analyse_sentiment_cs(post_text)
 
-                log_and_console(f"**LLM Model:** {config['llm']}")
-                log_and_console(f"**Post:** {post_text}")
-                log_and_console(f"Sentiment Score: {response}")
+                    # Display success message
+                    add_console_message("Sentiment Analysis (Manual) complete.")
+                    st.success("Sentiment Analysis (Manual) complete.")
+                    # Display the configuration and response in the console output
+                    log_and_console(f"**LLM Model:** {config['llm']}")
+                    log_and_console(f"**Post:** {post_text}")
+                    log_and_console(f"Sentiment Score: {response}")
+
+                elif config['llm'] == "Gemini 2.5 Pro":
+                    st.warning("Apologies, Gemini 2.5 Pro is not supported yet.")
+
+                elif config['llm'] == "Claude 3 Opus":
+                    st.warning("Apologies, Claude 3 Opus is not supported yet.")
 
         elif run_aut:
-            # Map user-friendly LLM names to internal model keys (extraction.py)
-            llm_map = {
-                "LLaMA 3.1 8B (4-bit)": "llama31_q4",
-                "LLaMA 3.1 8B (2-bit)": "llama31_q2", 
-                "Orca 2 7B (6-bit)": "orca2",
-                "BLOOMZ 7B (4-bit)": "bloomz_7b1"
-            }
-            st.success(config['llm'])
-            # Run automatic sentiment analysis based on chosen LLM
-            score_excel(limit=num_sentiment_posts, model_key=llm_map.get(config['llm'], "orca2"))
+            if llm_type == "Closed-source":
+                st.warning("Apologies, Sentiment Analysis (Automatic) is only supported for open-source LLMs at the moment.")
+            else: 
+                # Map user-friendly LLM names to internal model keys (extraction.py)
+                llm_map = {
+                    "LLaMA 3.1 8B (4-bit)": "llama31_q4",
+                    "LLaMA 3.1 8B (2-bit)": "llama31_iq2", 
+                    "Orca 2 7B (6-bit)": "orca2",
+                    "BLOOMZ 7B (4-bit)": "bloomz_7b1"
+                }
+                add_console_message(f"Analysing sentiment of {num_sentiment_posts} posts with {config['llm']}...")
+                with st.spinner(f"Analysing sentiment of {num_sentiment_posts} posts with {config['llm']}..."):
+                    # Run automatic sentiment analysis based on chosen LLM
+                    output_column, processed, total_scored, remaining, total_rows, saved_path = score_excel(limit=num_sentiment_posts, model_key=llm_map.get(config['llm'], "orca2"))
+                    st.success("Sentiment Analysis (Automatic) complete.")
+                    log_and_console(f"Run summary for {output_column}: \nprocessed = {processed}, \ntotal_scored = {total_scored}, \nremaining = {remaining}, \ntotal_rows = {total_rows}")
+                    log_and_console(f"Wrote scores to {saved_path}.")
 
         elif run_crypto:
             # Map user-friendly names to Yahoo tickers
@@ -1116,7 +1139,7 @@ with tab1:
         st.subheader("[To insert YouTube Demo Here]")
 
 with tab2:
-    st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
+    st.write("Here you can visualise scraped and API data from Reddit and NewsAPI along with scores from Sentiment Analysis performed by various LLMs.")
     # Create tabs for configuration and scraped/API data visualisation
     merged_tab, reddit_tab, news_api_tab = st.tabs(["Merged", "Reddit", "NewsAPI"])
 
@@ -1130,7 +1153,7 @@ with tab2:
             st.warning("No merged dataset found.")
 
     with reddit_tab:
-        st.subheader("Reddit Dataset (17th February 2025 onwards)")
+        st.subheader("Reddit Dataset")
         # Load and display the Reddit dataset
         if os.path.exists(REDDIT_PATH):
             df = pd.read_excel(REDDIT_PATH)
