@@ -39,7 +39,7 @@ import sys
 from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines, merge_datasets
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
-from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
+from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
 from sentiment.extraction import score_excel
 from data.historical import fetch_price_data
@@ -236,7 +236,7 @@ with tab1:
         # Select LLM and prompt engineering to use
         config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
         if llm_type == "Open-source":
-            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
+            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
 
         #----------------------------------------------------------------------------------------------------#
         # 'Sentiment Analysis (Manual)' section
@@ -305,7 +305,7 @@ with tab1:
 
         #----------------------------------------------------------------------------------------------------#
         # 'Deep Learning Architecture' section
-        st.subheader("Deep Learning Architecture (In Progress)")
+        st.subheader("Deep Learning Architecture")
         # Define the layout for the deep learning architecture section
         architecture_col, r_architecture_col = st.columns([8.25, 1.5])
 
@@ -535,6 +535,7 @@ with tab1:
                         prompt_template = FEW_SHOT_LLAMA
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_LLAMA
+
                 elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
                     model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
                     # Assign prompt template for LLaMA 3.1 8B 2-bit model
@@ -544,6 +545,7 @@ with tab1:
                         prompt_template = FEW_SHOT_LLAMA
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_LLAMA
+
                 elif config['llm'] == "Orca 2 7B (6-bit)":
                     model_path = "./models/orca-2-7b.Q6_K.gguf"
                     # Assign prompt template for Orca 2 7B 6-bit model
@@ -551,10 +553,9 @@ with tab1:
                         prompt_template = ZERO_SHOT_ORCA
                     elif config['prompt'] == "Few-shot":
                         prompt_template = FEW_SHOT_ORCA
-                    elif config['prompt'] == "Chain-of-Thought (CoT)":
-                        prompt_template = CHAIN_OF_THOUGHT_ORCA
                     else:
-                        prompt_template = CLASSIFICATION_ORCA
+                        prompt_template = CHAIN_OF_THOUGHT_ORCA
+
                 elif config['llm'] == "BLOOMZ 7B (4-bit)":
                     model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
                     # Assign prompt template for Bloomz 7B 4-bit model
