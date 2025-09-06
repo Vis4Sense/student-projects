@@ -978,7 +978,18 @@ with tab1:
             st.error(f"Could not load merged_crypto_dataset: {e}")
             st.stop()
 
-        # Define which columns are for the sentiment scores by prefix "Sentiment_"
+        # Asset filter for the timeline (BTC, ETH, DOGE, MULTI and OTHER)
+        asset_options = ["All"]
+        if "Asset" in df.columns:
+            try:
+                asset_options += sorted([a for a in df["Asset"].dropna().unique().tolist()])
+            except Exception:
+                pass
+        selected_asset = st.selectbox("Filter by Asset:", asset_options, index=0)
+        if selected_asset != "All" and "Asset" in df.columns:
+            df = df[df["Asset"] == selected_asset].copy()
+
+    # Define which columns are for the sentiment scores by prefix "Sentiment_"
         sentiment_cols = [col for col in df.columns if col.lower().startswith("sentiment_")]
 
         # Convert 'Timestamp' column values to datetime
@@ -1102,14 +1113,14 @@ with tab1:
         chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=72)
 
         # Add a title for the timeline
-        st.subheader("Timeline (News Sources Data Availability)")
+        st.subheader("Timeline - Year 2025 (News Sources Data Availability)")
         st.altair_chart(chart, use_container_width=True)
 
         # Define legend for the timeline (Green, Orange and Red)
         #st.markdown()
 
         # Statistics of data coverage for year 2025
-        st.subheader("Statistics (Year 2025)")
+        st.subheader("Statistics")
         counts = (coverage["status"].value_counts().reindex(["Sentiment Data", "Non-Sentiment Data", "No Data"]).fillna(0).astype(int))
 
         # Define four columns to display each group type's total count
@@ -1118,7 +1129,10 @@ with tab1:
         col2.metric("Non-Sentiment Data", f"{counts.get('Non-Sentiment Data', 0)} day(s)")
         col3.metric("No Data", f"{counts.get('No Data', 0)} day(s)")
         with col4:
-            st.write("Additional metrics to be included in the future.")
+            # Display total posts of "merged_crypto_dataset.xlsx" (with asset filter if applied)
+            total_posts = len(df)
+            label = f"Total Posts ({selected_asset})" if 'selected_asset' in locals() and selected_asset != "All" else "Total Posts (All Assets)"
+            st.metric(label, f"{total_posts}")
 
     column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
 
@@ -1136,7 +1150,7 @@ with tab1:
             st.success("Configuration saved successfully!")
 
     with column6:
-        st.subheader("[To insert YouTube Demo Here]")
+        st.subheader("[To insert YouTube Demos Here]")
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI along with scores from Sentiment Analysis performed by various LLMs.")
