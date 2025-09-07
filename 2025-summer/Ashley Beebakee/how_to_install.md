@@ -9,11 +9,7 @@
   </ul>
   <li>Navigate to this folder "student-projects\2025-summer\Ashley Beebakee" within your Anaconda terminal.</li>
   <ul>
-    <li>Then, run this command (for AMD GPUs) -> "conda env create -f environment_amd.yml".</li>
-    <li>OR run this command (for Nvidia GPUs with <= CUDA 12.7) -> "conda env create -f environment_nvidia_cuda_12_7.yml"</li>
-      <ul>
-        <li>To check CUDA version -> "nvidia-smi".</li>
-      </ul>
+    <li>Then, run this command -> "conda env create -f environment.yml".</li>
     <li>This will recreate the environment used for this project entirely (all packages & dependencies).</li>   
     <img width="549" height="209" alt="image" src="https://github.com/user-attachments/assets/02901af0-7b09-4ef3-9eb0-a68ac09895c4" />
   </ul>
