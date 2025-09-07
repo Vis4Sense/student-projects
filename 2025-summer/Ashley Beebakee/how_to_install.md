@@ -36,6 +36,12 @@
     <li>Open VS Code and go to "File > Open Folder..." then select the 'src' folder from "student-projects\2025-summer\Ashley Beebakee".</li>
     <li>Press "Ctrl+Shift+P", then type and select "Create New Terminal (With Profile)", select "Powershell".</li>
     <li>Run this command -> "conda init powershell" (you will see (base) at the beginning of your terminal).</li>
+    <li>Restart your Powershell terminal in VS Code (or restart VS Code directly).</li>
+    <li>If you get this error "FullyQualifiedErrorId : UnauthorizedAccess":
+    <ul>
+      <li>Run this command in Powershell (as an Administrator) -> "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser".</li>
+      <li>Restart your Powershell terminal in VS Code.</li>
+    </ul>
     <li>Activate your environment -> "conda activate thesis".</li>
     <li>(If you want to check your conda environments -> "conda env list" will display them).</li>
     <li> To run the modular framework -> streamlit run "C:\Users\yourUsername\student-projects\2025-summer\Ashley Beebakee\src\framework.py".</li>
@@ -49,4 +55,4 @@
 </ul><br>
 For any queries, feel free to contact me at: ashleybeebakee@hotmail.com.
 
-[Last updated: 07/09/2025 06:01]
+[Last updated: 07/09/2025 06:09]
