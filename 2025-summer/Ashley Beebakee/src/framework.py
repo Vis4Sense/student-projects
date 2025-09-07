@@ -366,7 +366,7 @@ with tab1:
             # 'URI' stands for Uniform Resource Identifier
             with st.expander("MLflow (Experiment Tracking)", expanded=False):
                 config['mlf_enable'] = st.checkbox("Enable MLflow Tracking", value=bool(config.get('mlf_enable', True)))
-                config['mlf_experiment'] = st.text_input("Experiment Name", value=str(config.get('mlf_experiment', 'training_run_1')))
+                config['mlf_experiment'] = st.text_input("Experiment Name", value=str(config.get('mlf_experiment', 'training_logs')), help="Name of the MLflow experiment to log runs under.")
                 config['mlf_tracking_uri'] = st.text_input("Tracking URI", value=str(config.get('mlf_tracking_uri', 'file:./mlruns')), help="For local tracking store, use defined 'Uniform Resource Identifier'.")
                 
                 # Define default port for MLflow UI (Port 5001)
