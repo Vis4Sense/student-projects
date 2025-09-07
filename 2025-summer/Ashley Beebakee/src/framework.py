@@ -27,7 +27,7 @@ import altair as alt
 import pandas as pd
 import numpy as np
 import subprocess
-import importlib
+import mlflow
 import torch
 import yaml
 import time
@@ -48,13 +48,6 @@ from networks.architecture import get_model
 from networks.training import train_model, predict
 from datetime import datetime
 from pathlib import Path
-
-# Optional MLflow import (guarded via importlib to avoid static import errors)
-mlflow = None
-try:
-    mlflow = importlib.import_module('mlflow')
-except Exception:
-    mlflow = None
 
 # Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
