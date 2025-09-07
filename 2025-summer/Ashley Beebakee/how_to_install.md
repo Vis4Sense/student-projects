@@ -3,6 +3,8 @@
   <li>Git clone "student-projects" repository from <b>Vis4Sense</b> into a folder of your choice, i.e. "C:\Users\yourUsername".</li>
   <li>Install <b>Anaconda</b> or <b>Miniconda</b> from "https://www.anaconda.com/download".</li>
   <ul>
+    <li>Ensure you tick the box that says "Add Anaconda/Miniconda to PATH".</li>
+  <ul>
     <li>Post-installation, open <b>Anaconda Prompt</b> (or similar in name).</li>
   </ul>
   <li>Navigate to this folder "student-projects\2025-summer\Ashley Beebakee" within your Anaconda terminal.</li>
@@ -29,8 +31,22 @@
       <li>Generate an API key (add credit $), create and paste it into a .txt file called "openai_key" and place into 'keys' folder.</li>
     </ul>
   </ul>
+  <li> Install <b>Visual Studio Code (VS Code)</b> from "https://code.visualstudio.com".</li>
+  <ul>
+    <li>Open VS Code and go to "File > Open Folder..." then select the 'src' folder from "student-projects\2025-summer\Ashley Beebakee".</li>
+    <li>Press "Ctrl+Shift+P", then type and select "Create New Terminal (With Profile)", select "Powershell".</li>
+    <li>Run this command -> "conda init powershell" (you will see (base) at the beginning of your terminal).</li>
+    <li>Activate your environment -> "conda activate thesis".</li>
+    <li>(If you want to check your conda environments -> "conda env list" will display them).</li>
+    <li> To run the modular framework -> streamlit run "C:\Users\yourUsername\student-projects\2025-summer\Ashley Beebakee\src\framework.py".</li>
+    <ul>
+      <li>To simplify, you can run -> $variable = "C:\Users\yourUsername\student-projects\2025-summer\Ashley Beebakee\src\framework.py".</li>
+      <li>And then run -> "streamlit run $variable" (for quick recompiling).</li>
+      <li>P.S. to close Streamlit, type "Ctrl+C" in your terminal.</li>
+    </ul>
+  </ul>
   <li>You should now be <b>able</b> to run this modular framework.</li>
 </ul><br>
 For any queries, feel free to contact me at: ashleybeebakee@hotmail.com.
 
-[Last updated: 07/09/2025 05:40]
+[Last updated: 07/09/2025 06:01]
