@@ -1,7 +1,20 @@
+# Exclude cache and .gguf LLMs
 **/__pycache__/
 *.gguf
-*src/keys/
+
+# Exclude API keys
+src/keys/newsapi_key.txt
+src/keys/openai_key.txt
+
+# Exclude entire 'data' folder
 src/data/*.csv
-src/training_test.py
+# Include BTC, ETH and DOGE (1d) datasets
+!src/data/btc_dataset_20250101_20250701_1d.csv
+!src/data/eth_dataset_20250101_20250701_1d.csv
+!src/data/doge_dataset_20250101_20250701_1d.csv
+
+# Exclude MLflow folders
 src/artifacts
 src/mlruns
+
+src/training_test.py
