@@ -147,7 +147,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.4 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.5 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -205,7 +205,7 @@ with tab1:
 
         #----------------------------------------------------------------------------------------------------#
         # 'Large Language Model (LLM)' section
-        st.subheader("Large Language Model (LLM)")
+        st.subheader("Large Language Models (LLMs)")
 
         # Open-source and Closed-source LLM Options
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
@@ -229,7 +229,7 @@ with tab1:
         # Select LLM and prompt engineering to use
         config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
         if llm_type == "Open-source":
-            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
+            config['prompt'] = st.selectbox("Select Prompt Engineering Template:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
 
         #----------------------------------------------------------------------------------------------------#
         # 'Sentiment Analysis (Manual)' section
@@ -982,8 +982,11 @@ with tab1:
         if selected_asset != "All" and "Asset" in df.columns:
             df = df[df["Asset"] == selected_asset].copy()
 
-    # Define which columns are for the sentiment scores by prefix "Sentiment_"
+        # Define which columns are for the sentiment scores by prefix "Sentiment_"
         sentiment_cols = [col for col in df.columns if col.lower().startswith("sentiment_")]
+        # Minimal sentiment-column filter (Any or a specific Sentiment_* column)
+        sent_options = ["Any"] + sorted(sentiment_cols)
+        selected_sent_col = st.selectbox("Filter by Sentiment Column:", sent_options, index=0)
 
         # Convert 'Timestamp' column values to datetime
         if not np.issubdtype(df["Timestamp"].dtype, np.datetime64):
@@ -1022,7 +1025,14 @@ with tab1:
 
         # Sentiment data per specific day (date)
         if sentiment_cols:
-            has_sentiment_mask = df[sentiment_cols].notna().any(axis=1)
+            if selected_sent_col == "Any":
+                has_sentiment_mask = df[sentiment_cols].notna().any(axis=1)
+            else:
+                # Guard in case the column disappears after filters
+                if selected_sent_col in df.columns:
+                    has_sentiment_mask = df[selected_sent_col].notna()
+                else:
+                    has_sentiment_mask = pd.Series(False, index=df.index)
             df["has_sentiment"] = has_sentiment_mask
             sent_per_date = (
                 df[(df["date"] >= start_date) & (df["date"] <= end_date)]
