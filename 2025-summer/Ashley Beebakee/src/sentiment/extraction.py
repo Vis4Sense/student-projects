@@ -52,10 +52,6 @@ MODEL_REGISTRY: Dict[str, Dict[str, str]] = {
 
 # Define function to assign corresponding prompt template based on LLM
 def select_template(model_key: str, mode: str = "zero-shot"):
-	"""Return the template string name for the given model and mode.
-
-	mode can be one of: "zero-shot" (default), "few-shot", "cot".
-	"""
 	mode = mode.lower()
 	if model_key == "orca2":
 		if mode == "few-shot":
