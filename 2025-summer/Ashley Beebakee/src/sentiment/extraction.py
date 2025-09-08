@@ -50,7 +50,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, str]] = {
 	},
 }
 
-# Define internal function to assign corresponding prompt template based on LLM
+# Define function to assign corresponding prompt template based on LLM
 def select_template(model_key: str, mode: str = "zero-shot"):
 	"""Return the template string name for the given model and mode.
 
@@ -80,7 +80,7 @@ def select_template(model_key: str, mode: str = "zero-shot"):
 
 	raise ValueError(f"Unknown model key: {model_key}")
 
-# Define internal function to parse sentiment score from model output
+# Define function to parse sentiment score from model output
 # N.B: -> implies that the function is expected to return that type (hint) 
 def parse_score(text: str) -> Optional[float]:
 	# Return none if empty
@@ -119,7 +119,7 @@ def parse_score(text: str) -> Optional[float]:
 
 	return None
 
-# Define internal function to generate response from LLM
+# Define function to generate response from LLM
 def generate_response(
 	llm,
 	prompt: str,
@@ -146,7 +146,7 @@ def generate_response(
 	except Exception as e:
 		return f"ERROR: {e}"
 
-# Define internal function to save DataFrame to Excel with backup
+# Define function to save DataFrame to Excel with backup
 def save_df(df: pd.DataFrame, path: Path | str):
 	path = Path(path)
 	try:
@@ -170,7 +170,7 @@ def score_excel(
 	title_col: str = "Title",
 	limit: Optional[int] = 10,
 	skip_existing: bool = True,
-	default_prompt: bool = True,
+	default_prompt: bool = False,
 	gen_max_tokens: int = 24,
 	gen_temperature: float = 0.2,
 	gen_top_p: float = 0.9,
