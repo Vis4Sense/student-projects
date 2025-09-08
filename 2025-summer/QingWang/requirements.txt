@@ -1,0 +1,9 @@
+﻿flask
+flask-cors
+numpy
+pandas
+scikit-learn
+umap-learn
+requests
+sentence-transformers
+streamlit
