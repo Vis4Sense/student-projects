@@ -5,9 +5,9 @@
 #              and technical indicators to predict future price
 #              movements.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 26/08/2025
+# Last Updated: 09/09/2025
 # Python Version: 3.10.6
-# Packages Required: scikit-learn, torch, pands, numpy
+# Packages Required: scikit-learn, torch, pandas, numpy
 #------------------------------------------------------------#
 
 # Import necessary libraries
@@ -16,7 +16,6 @@ from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
 import numpy as np
 import torch
-
 
 # Function to coerce all columns to numeric, excluding specified ones
 # N.B: 'coerce' means "obtain/set"
@@ -80,6 +79,7 @@ def load_and_prepare_data(
             sent_cols = [c for c in df_sent.columns if str(c).lower().startswith("sentiment_")]
             if fusion_sentiment_col and fusion_sentiment_col in df_sent.columns:
                 sent_cols = [fusion_sentiment_col]
+
             # Aggregate daily mean for sentiments; also count posts per day
             if sent_cols:
                 agg = df_sent.groupby("date")[sent_cols].mean().add_prefix("S_")
@@ -190,6 +190,7 @@ def load_and_prepare_data(
     test_loader  = DataLoader(TensorDataset(torch.from_numpy(X_test),  torch.from_numpy(y_test)),  batch_size=batch_size)
 
     input_size = X.shape[2]
+
     # Return scalers to inverse-transform later (optional)
     return train_loader, val_loader, test_loader, input_size, {
         "feature_scaler": feat_scaler,
