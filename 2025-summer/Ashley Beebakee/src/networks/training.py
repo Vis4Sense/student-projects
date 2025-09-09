@@ -5,7 +5,7 @@
 #              sentiment and technical indicators to predict 
 #              future price movements.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 26/08/2025
+# Last Updated: 09/09/2025
 # Python Version: 3.10.6
 # Packages Required: scikit-learnm, torch, numpy
 #------------------------------------------------------------#
@@ -39,7 +39,7 @@ def train_model(
 
     history = {"train_loss": [], "val_loss": []}
 
-    # Early stopping bookkeeping
+    # Early stopping book-keeping
     best_val = float('inf')
     best_state = None
     patience_count = 0
@@ -80,7 +80,7 @@ def train_model(
                         print(f"Early stopping at epoch {epoch+1}; best val loss {best_val:.6f}")
                     break
 
-        # Optional callback for external logging (e.g., MLflow)
+        # Optional callback for external logging (MLflow)
         if callable(on_epoch_end):
             try:
                 on_epoch_end(epoch, float(avg_train_loss), float(val_loss))
@@ -132,3 +132,14 @@ def predict(model, test_loader):
     r2 = r2_score(trues, preds)
 
     return preds, trues, mse, r2
+
+# Late-fusion blending, by choosing alpha between [0,1] to minimise val MSE
+def blend_by_validation(y_val_true, y_val_a, y_val_b, step: float = 0.05):
+    best_alpha, best_mse = 0.5, float('inf')
+    alphas = np.arange(0.0, 1.0 + 1e-9, step)
+    for a in alphas:
+        y_val_pred = a * np.asarray(y_val_a) + (1 - a) * np.asarray(y_val_b)
+        mse = mean_squared_error(y_val_true, y_val_pred)
+        if mse < best_mse:
+            best_mse, best_alpha = mse, float(a)
+    return best_alpha, best_mse
