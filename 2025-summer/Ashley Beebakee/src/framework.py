@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 06/09/2025
+# Last Updated: 09/09/2025
 # Python Version: 3.10.6
 # Packages Required: matplotlib, streamlit, altair, pandas, numpy, torch, pyyaml,
 #                    mlflow
@@ -41,11 +41,11 @@ from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAM
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
-from sentiment.extraction import score_excel
-from data.historical import fetch_price_data
+from networks.training import train_model, predict, blend_by_validation
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
-from networks.training import train_model, predict
+from sentiment.extraction import score_excel
+from data.historical import fetch_price_data
 from datetime import datetime
 from pathlib import Path
 
@@ -147,7 +147,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.5 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.6 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -306,6 +306,46 @@ with tab1:
 
         with architecture_col:
             config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNN-LSTM"], index=["LSTM", "CNN", "CNN-LSTM"].index(config['architecture']))
+
+            # Fusion options: None, Early or Late
+            config['fusion_mode'] = st.selectbox("Select Fusion Mode:", ["None", "Early", "Late"], index=["None", "Early", "Late"].index(config.get('fusion_mode', 'None')))
+            sentiment_llm_options = [
+                "Sentiment_Orca2",
+                "Sentiment_Llama31IQ2",
+                "Sentiment_Llama31Q4",
+                "Sentiment_Bloomz7b1",
+            ]
+            # Early-fusion pathway
+            if config.get('fusion_mode') == 'Early':
+                config['fusion_asset'] = st.selectbox(
+                    "Select Asset for Fusion:", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
+                    index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
+                )
+                # Fixed sentiment column (one must be chosen)
+                default_sc = config.get('fusion_sentiment_col', sentiment_llm_options[0])
+                if default_sc not in sentiment_llm_options:
+                    default_sc = sentiment_llm_options[0]
+                config['fusion_sentiment_col'] = st.selectbox(
+                    "Select Sentiment Column (LLM)", sentiment_llm_options,
+                    index=sentiment_llm_options.index(default_sc),
+                    help="Select which LLM's sentiment scores to use for early fusion."
+                )
+            # Late-fusion pathway
+            elif config.get('fusion_mode') == 'Late':
+                st.caption("Late fusion trains two models and blends predictions on validation.")
+                # For late fusion we still need asset AND chosen LLM sentiment column for the fused model
+                config['fusion_asset'] = st.selectbox(
+                    "Asset for Fusion", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
+                    index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
+                )
+                default_sentiment_col = config.get('fusion_sentiment_col', sentiment_llm_options[0])
+                if default_sentiment_col not in sentiment_llm_options:
+                    default_sentiment_col = sentiment_llm_options[0]
+                config['fusion_sentiment_col'] = st.selectbox(
+                    "Select Sentiment Column (LLM)", sentiment_llm_options,
+                    index=sentiment_llm_options.index(default_sentiment_col),
+                    help="Select which LLM's sentiment scores to use for late fusion."
+                )
 
             # Preprocessing options (no leakage + optional return target)
             # N.B: The prefix 'pp_' stands for pre-processing
@@ -684,7 +724,11 @@ with tab1:
                 scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
                 batch_size=int(config.get('pp_batch_size', 32)),
                 target_mode=config.get('pp_target_mode', "price"),
-                target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard"))
+                target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                early_fusion=(config.get('fusion_mode') == 'Early'),
+                merged_path=MERGED_PATH,
+                fusion_asset=(config.get('fusion_asset') if config.get('fusion_mode') == 'Early' else None),
+                fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
             )
 
             # Configure deep learning architecture with corresponding hyperparameters
@@ -827,11 +871,115 @@ with tab1:
                     es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
                     verbose=bool(config.get('tr_verbose', False)),
                 )
+
+            # Late-fusion ensemble learning (if selected)
+            if config.get('fusion_mode') == 'Late':
+                # Model A: price-only
+                train_loader_A, val_loader_A, test_loader_A, input_size_A, _ = load_and_prepare_data(
+                    csv_path, 
+                    sequence_length=int(config.get('pp_sequence_length', 30)),
+                    target_column="Close",
+                    scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
+                    batch_size=int(config.get('pp_batch_size', 32)),
+                    target_mode=config.get('pp_target_mode', "price"),
+                    target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                )
+                model_A = get_model(
+                    config['architecture'].lower(),
+                    input_size=input_size_A,
+                    output_size=1,
+                    hidden_size=int(config.get('hp_lstm_hidden', 64)),
+                    num_layers=int(config.get('hp_lstm_layers', 2)),
+                    dropout=float(config.get('hp_lstm_dropout', 0.2)),
+                    filters=int(config.get('hp_cnn_filters', 64)),
+                    kernel_size=int(config.get('hp_cnn_kernel', 5)),
+                    stride=int(config.get('hp_cnn_stride', 1)),
+                    conv_filters=int(config.get('hp_cnnlstm_filters', 32)),
+                    lstm_hidden=int(config.get('hp_cnnlstm_lstm_hidden', 64)),
+                    lstm_layers=int(config.get('hp_cnnlstm_lstm_layers', 2)),
+                )
+                model_A, hist_A = train_model(
+                    model_A, train_loader_A, val_loader_A,
+                    num_epochs=int(config.get('tr_epochs', 100)),
+                    learning_rate=float(config.get('tr_lr', 1e-3)),
+                    weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                    early_stopping=bool(config.get('tr_es_enable', False)),
+                    es_patience=int(config.get('tr_es_patience', 20)),
+                    es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                    verbose=bool(config.get('tr_verbose', False)),
+                )
+
+                # Model B: early-fusion (with sentiment)
+                train_loader_B, val_loader_B, test_loader_B, input_size_B, _ = load_and_prepare_data(
+                    csv_path, 
+                    sequence_length=int(config.get('pp_sequence_length', 30)),
+                    target_column="Close",
+                    scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
+                    batch_size=int(config.get('pp_batch_size', 32)),
+                    target_mode=config.get('pp_target_mode', "price"),
+                    target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                    early_fusion=True,
+                    merged_path=MERGED_PATH,
+                    fusion_asset=config.get('fusion_asset', 'BTC'),
+                    fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
+                )
+                model_B = get_model(
+                    config['architecture'].lower(),
+                    input_size=input_size_B,
+                    output_size=1,
+                    hidden_size=int(config.get('hp_lstm_hidden', 64)),
+                    num_layers=int(config.get('hp_lstm_layers', 2)),
+                    dropout=float(config.get('hp_lstm_dropout', 0.2)),
+                    filters=int(config.get('hp_cnn_filters', 64)),
+                    kernel_size=int(config.get('hp_cnn_kernel', 5)),
+                    stride=int(config.get('hp_cnn_stride', 1)),
+                    conv_filters=int(config.get('hp_cnnlstm_filters', 32)),
+                    lstm_hidden=int(config.get('hp_cnnlstm_lstm_hidden', 64)),
+                    lstm_layers=int(config.get('hp_cnnlstm_lstm_layers', 2)),
+                )
+                model_B, hist_B = train_model(
+                    model_B, train_loader_B, val_loader_B,
+                    num_epochs=int(config.get('tr_epochs', 100)),
+                    learning_rate=float(config.get('tr_lr', 1e-3)),
+                    weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                    early_stopping=bool(config.get('tr_es_enable', False)),
+                    es_patience=int(config.get('tr_es_patience', 20)),
+                    es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                    verbose=bool(config.get('tr_verbose', False)),
+                )
+
+                # Collect validation predictions for blending
+                def _collect_preds(loader, model_):
+                    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                    model_.eval()
+                    pr, tr = [], []
+                    with torch.no_grad():
+                        for xb, yb in loader:
+                            xb = xb.to(device).float(); yb = yb.to(device).float()
+                            out = model_(xb).squeeze()
+                            pr.extend(out.cpu().numpy()); tr.extend(yb.cpu().numpy())
+                    return np.asarray(pr), np.asarray(tr)
+
+                val_pred_A, val_true = _collect_preds(val_loader_A, model_A)
+                val_pred_B, _        = _collect_preds(val_loader_B, model_B)
+                alpha, best_mse = blend_by_validation(val_true, val_pred_A, val_pred_B, step=0.05)
+
+                # Blend on test set using optimal alpha
+                test_pred_A, test_true = _collect_preds(test_loader_A, model_A)
+                test_pred_B, _         = _collect_preds(test_loader_B, model_B)
+                blended = alpha * test_pred_A + (1 - alpha) * test_pred_B
+                mse = float(np.mean((test_true - blended) ** 2))
+                # Basic R² computation
+                ss_res = float(np.sum((test_true - blended) ** 2))
+                ss_tot = float(np.sum((test_true - np.mean(test_true)) ** 2))
+                r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+                st.success(f"Late Fusion: alpha={alpha:.2f} | Test MSE={mse:.4f} R²={r2:.4f}")
+                st.session_state["_skip_single_plots"] = True
             
             # Define function for training history (loss)
             def plot_loss(history):
                 fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
-                ax.plot(history["train_loss"], label="Train Loss")
+                ax.plot(history["train_loss"], label="Train Loss") 
                 ax.plot(history["val_loss"], label="Validation Loss")
                 ax.set_title("Training vs Validation Loss")
                 ax.set_xlabel("Epoch")
@@ -842,7 +990,6 @@ with tab1:
                 return fig
 
             # Visualise training history (loss) — rendered below when logging artifacts
-
             # Predict on test set and plot 'Predicted vs Actual'
             preds, trues, mse, r2 = predict(trained_model, test_loader)
 
@@ -902,11 +1049,14 @@ with tab1:
                 st.pyplot(fig, clear_figure=True)
                 return fig, float(mse_disp), float(r2_disp)
 
-            # Visualise 'Predicted vs Actual' prediction
-            # Loss plot
-            loss_fig = plot_loss(history)
-            # Predictions plot and displayed metrics
-            pred_fig, mse_disp, r2_disp = plot_predictions(trues, preds, title_suffix="")
+            # Visualise 'Predicted vs Actual' prediction (skip if late fusion already handled)
+            if not st.session_state.get("_skip_single_plots", False):
+                # Loss plot
+                loss_fig = plot_loss(history)
+                # Predictions plot and displayed metrics
+                pred_fig, mse_disp, r2_disp = plot_predictions(trues, preds, title_suffix="")
+            else:
+                st.session_state["_skip_single_plots"] = False
 
             # Save and log artifacts if MLflow enabled
             if use_mlflow:
@@ -1153,7 +1303,8 @@ with tab1:
             st.success("Configuration saved successfully!")
 
     with column6:
-        st.subheader("[To insert YouTube Demos Here]")
+        st.subheader("Tutorial Video - By Ashley Beebakee (ID 20232303)")
+        st.video("https://youtu.be/9L1VgFxrGvM", start_time=0)
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI along with scores from Sentiment Analysis performed by various LLMs.")
