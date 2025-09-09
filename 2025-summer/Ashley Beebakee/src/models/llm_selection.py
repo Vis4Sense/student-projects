@@ -32,8 +32,8 @@ def llm_optimisation(model_path):
         n_gpu_layers=-1,  # Use partial GPU offloading (balances speed and VRAM usage)
         
         # Memory settings
-        n_ctx=2048,       # Context window size (how much the model can see at once)
-        n_batch=256,      # Smaller batch for stability (controls how many tokens are processed)
+        n_ctx=4096,       # Context window size (how much the model can see at once)
+        n_batch=1024,      # Smaller batch for stability (controls how many tokens are processed)
         
         # CPU settings
         n_threads=12,     # Use multiple CPU threads

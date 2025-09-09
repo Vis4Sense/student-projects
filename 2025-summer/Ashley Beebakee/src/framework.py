@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 26/08/2025
+# Last Updated: 09/09/2025
 # Python Version: 3.10.6
 # Packages Required: matplotlib, streamlit, altair, pandas, numpy, torch, pyyaml,
 #                    mlflow
@@ -27,7 +27,7 @@ import altair as alt
 import pandas as pd
 import numpy as np
 import subprocess
-import importlib
+import mlflow
 import torch
 import yaml
 import time
@@ -39,22 +39,15 @@ import sys
 from sentiment.scraping import scrape_reddit_posts, get_newsapi_headlines, merge_datasets
 from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAMA
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
-from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA, CLASSIFICATION_ORCA
+from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
-from sentiment.extraction import score_excel
-from data.historical import fetch_price_data
+from networks.training import train_model, predict, blend_by_validation
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
-from networks.training import train_model, predict
+from sentiment.extraction import score_excel
+from data.historical import fetch_price_data
 from datetime import datetime
 from pathlib import Path
-
-# Optional MLflow import (guarded via importlib to avoid static import errors)
-mlflow = None
-try:
-    mlflow = importlib.import_module('mlflow')
-except Exception:
-    mlflow = None
 
 # Define path for configuration file
 CONFIG_PATH = "config/framework_config.yaml"
@@ -154,7 +147,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.2 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.6 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -212,13 +205,13 @@ with tab1:
 
         #----------------------------------------------------------------------------------------------------#
         # 'Large Language Model (LLM)' section
-        st.subheader("Large Language Model (LLM)")
+        st.subheader("Large Language Models (LLMs)")
 
         # Open-source and Closed-source LLM Options
         llm_type = st.radio("Toggle Preferred LLM Type:", ["Open-source", "Closed-source"], horizontal=True)
         # Options based on LLM source type
         open_source_llms = ["LLaMA 3.1 8B (4-bit)", "LLaMA 3.1 8B (2-bit)", "Orca 2 7B (6-bit)", "BLOOMZ 7B (4-bit)"]
-        closed_source_llms = ["GPT-5", "Gemini 1.5 Pro", "Claude 3 Opus"]
+        closed_source_llms = ["GPT-5", "Gemini 2.5 Pro", "Claude 3 Opus"]
 
         # Display corresponding drop-down menu based on LLM source type
         if llm_type == "Open-source":
@@ -236,7 +229,7 @@ with tab1:
         # Select LLM and prompt engineering to use
         config['llm'] = st.selectbox("Select LLM Model:", llm_options, index=llm_index)
         if llm_type == "Open-source":
-            config['prompt'] = st.selectbox("Select Prompt Engineering Technique:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)", "Text Classification"].index(config['prompt']))
+            config['prompt'] = st.selectbox("Select Prompt Engineering Template:", ["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"], index=["Zero-shot", "Few-shot", "Chain-of-Thought (CoT)"].index(config['prompt']))
 
         #----------------------------------------------------------------------------------------------------#
         # 'Sentiment Analysis (Manual)' section
@@ -277,6 +270,8 @@ with tab1:
         with aut_col:
             num_sentiment_posts = st.slider("Number of Posts for Sentiment Extraction:", min_value=10, max_value=10000, value=20, help="Select how many posts to extract sentiment from (10-10000).")
 
+            st.caption("This feature uses a default prompt template configured for rapid sentiment analysis of multiple posts.")
+
         # When the "Run" button is clicked, run the LLM for sentiment analysis
         with r_aut_col:
             st.markdown("<div style='height: 1.75em;'></div>", unsafe_allow_html=True) # Empty space for alignment
@@ -305,12 +300,52 @@ with tab1:
 
         #----------------------------------------------------------------------------------------------------#
         # 'Deep Learning Architecture' section
-        st.subheader("Deep Learning Architecture (In Progress)")
+        st.subheader("Deep Learning Architecture")
         # Define the layout for the deep learning architecture section
         architecture_col, r_architecture_col = st.columns([8.25, 1.5])
 
         with architecture_col:
             config['architecture'] = st.selectbox("Select Architecture:", ["LSTM", "CNN", "CNN-LSTM"], index=["LSTM", "CNN", "CNN-LSTM"].index(config['architecture']))
+
+            # Fusion options: None, Early or Late
+            config['fusion_mode'] = st.selectbox("Select Fusion Mode:", ["None", "Early", "Late"], index=["None", "Early", "Late"].index(config.get('fusion_mode', 'None')))
+            sentiment_llm_options = [
+                "Sentiment_Orca2",
+                "Sentiment_Llama31IQ2",
+                "Sentiment_Llama31Q4",
+                "Sentiment_Bloomz7b1",
+            ]
+            # Early-fusion pathway
+            if config.get('fusion_mode') == 'Early':
+                config['fusion_asset'] = st.selectbox(
+                    "Select Asset for Fusion:", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
+                    index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
+                )
+                # Fixed sentiment column (one must be chosen)
+                default_sc = config.get('fusion_sentiment_col', sentiment_llm_options[0])
+                if default_sc not in sentiment_llm_options:
+                    default_sc = sentiment_llm_options[0]
+                config['fusion_sentiment_col'] = st.selectbox(
+                    "Select Sentiment Column (LLM)", sentiment_llm_options,
+                    index=sentiment_llm_options.index(default_sc),
+                    help="Select which LLM's sentiment scores to use for early fusion."
+                )
+            # Late-fusion pathway
+            elif config.get('fusion_mode') == 'Late':
+                st.caption("Late fusion trains two models and blends predictions on validation.")
+                # For late fusion we still need asset AND chosen LLM sentiment column for the fused model
+                config['fusion_asset'] = st.selectbox(
+                    "Asset for Fusion", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
+                    index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
+                )
+                default_sentiment_col = config.get('fusion_sentiment_col', sentiment_llm_options[0])
+                if default_sentiment_col not in sentiment_llm_options:
+                    default_sentiment_col = sentiment_llm_options[0]
+                config['fusion_sentiment_col'] = st.selectbox(
+                    "Select Sentiment Column (LLM)", sentiment_llm_options,
+                    index=sentiment_llm_options.index(default_sentiment_col),
+                    help="Select which LLM's sentiment scores to use for late fusion."
+                )
 
             # Preprocessing options (no leakage + optional return target)
             # N.B: The prefix 'pp_' stands for pre-processing
@@ -364,7 +399,7 @@ with tab1:
             # 'URI' stands for Uniform Resource Identifier
             with st.expander("MLflow (Experiment Tracking)", expanded=False):
                 config['mlf_enable'] = st.checkbox("Enable MLflow Tracking", value=bool(config.get('mlf_enable', True)))
-                config['mlf_experiment'] = st.text_input("Experiment Name", value=str(config.get('mlf_experiment', 'training_run_1')))
+                config['mlf_experiment'] = st.text_input("Experiment Name", value=str(config.get('mlf_experiment', 'training_logs')), help="Name of the MLflow experiment to log runs under.")
                 config['mlf_tracking_uri'] = st.text_input("Tracking URI", value=str(config.get('mlf_tracking_uri', 'file:./mlruns')), help="For local tracking store, use defined 'Uniform Resource Identifier'.")
                 
                 # Define default port for MLflow UI (Port 5001)
@@ -535,6 +570,7 @@ with tab1:
                         prompt_template = FEW_SHOT_LLAMA
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_LLAMA
+
                 elif config['llm'] == "LLaMA 3.1 8B (2-bit)":
                     model_path = "./models/Llama-3.1-8B-Instruct-iq2_xxs.gguf"
                     # Assign prompt template for LLaMA 3.1 8B 2-bit model
@@ -544,6 +580,7 @@ with tab1:
                         prompt_template = FEW_SHOT_LLAMA
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_LLAMA
+
                 elif config['llm'] == "Orca 2 7B (6-bit)":
                     model_path = "./models/orca-2-7b.Q6_K.gguf"
                     # Assign prompt template for Orca 2 7B 6-bit model
@@ -551,10 +588,9 @@ with tab1:
                         prompt_template = ZERO_SHOT_ORCA
                     elif config['prompt'] == "Few-shot":
                         prompt_template = FEW_SHOT_ORCA
-                    elif config['prompt'] == "Chain-of-Thought (CoT)":
-                        prompt_template = CHAIN_OF_THOUGHT_ORCA
                     else:
-                        prompt_template = CLASSIFICATION_ORCA
+                        prompt_template = CHAIN_OF_THOUGHT_ORCA
+
                 elif config['llm'] == "BLOOMZ 7B (4-bit)":
                     model_path = "./models/bloomz-7b1-mt-Q4_K_M.gguf"
                     # Assign prompt template for Bloomz 7B 4-bit model
@@ -565,7 +601,7 @@ with tab1:
                     else:
                         prompt_template = CHAIN_OF_THOUGHT_BLOOMZ
                 else:
-                    st.error("Apologies, the selected LLM is not supported yet.")
+                    st.error("Apologies, the selected open-source LLM is not supported yet.")
                     model_path = None
                     prompt_template = None
                 
@@ -577,32 +613,53 @@ with tab1:
                     # Call the sentiment analysis open-source function
                     response = analyse_sentiment_os(prompt, model_path)
 
-                # Visualise the config for debugging
+                # Display success message
+                add_console_message("Sentiment Analysis (Manual) complete.")
+                st.success("Sentiment Analysis (Manual) complete.")
+                # Display the configuration and response in the console output
                 log_and_console(f"**LLM Model:** {config['llm']}")
                 log_and_console(f"**Prompt Technique:** {config['prompt']}")
                 log_and_console(f"**Post:** {post_text}")
                 log_and_console(response)
 
             elif llm_type == "Closed-source":
-                with st.spinner(f"Analysing with {config['llm']}..."):
-                    # Call the sentiment analysis closed-source function
-                    response = analyse_sentiment_cs(post_text)
+                if config['llm'] == "GPT-5":
+                    with st.spinner(f"Analysing with {config['llm']}..."):
+                        # Call the sentiment analysis closed-source function
+                        response = analyse_sentiment_cs(post_text)
 
-                log_and_console(f"**LLM Model:** {config['llm']}")
-                log_and_console(f"**Post:** {post_text}")
-                log_and_console(f"Sentiment Score: {response}")
+                    # Display success message
+                    add_console_message("Sentiment Analysis (Manual) complete.")
+                    st.success("Sentiment Analysis (Manual) complete.")
+                    # Display the configuration and response in the console output
+                    log_and_console(f"**LLM Model:** {config['llm']}")
+                    log_and_console(f"**Post:** {post_text}")
+                    log_and_console(f"Sentiment Score: {response}")
+
+                elif config['llm'] == "Gemini 2.5 Pro":
+                    st.warning("Apologies, Gemini 2.5 Pro is not supported yet.")
+
+                elif config['llm'] == "Claude 3 Opus":
+                    st.warning("Apologies, Claude 3 Opus is not supported yet.")
 
         elif run_aut:
-            # Map user-friendly LLM names to internal model keys (extraction.py)
-            llm_map = {
-                "LLaMA 3.1 8B (4-bit)": "llama31_q4",
-                "LLaMA 3.1 8B (2-bit)": "llama31_q2", 
-                "Orca 2 7B (6-bit)": "orca2",
-                "BLOOMZ 7B (4-bit)": "bloomz_7b1"
-            }
-            st.success(config['llm'])
-            # Run automatic sentiment analysis based on chosen LLM
-            score_excel(limit=num_sentiment_posts, model_key=llm_map.get(config['llm'], "orca2"))
+            if llm_type == "Closed-source":
+                st.warning("Apologies, Sentiment Analysis (Automatic) is only supported for open-source LLMs at the moment.")
+            else: 
+                # Map user-friendly LLM names to internal model keys (extraction.py)
+                llm_map = {
+                    "LLaMA 3.1 8B (4-bit)": "llama31_q4",
+                    "LLaMA 3.1 8B (2-bit)": "llama31_iq2", 
+                    "Orca 2 7B (6-bit)": "orca2",
+                    "BLOOMZ 7B (4-bit)": "bloomz_7b1"
+                }
+                add_console_message(f"Analysing sentiment of {num_sentiment_posts} posts with {config['llm']}...")
+                with st.spinner(f"Analysing sentiment of {num_sentiment_posts} posts with {config['llm']}..."):
+                    # Run automatic sentiment analysis based on chosen LLM
+                    output_column, processed, total_scored, remaining, total_rows, saved_path = score_excel(limit=num_sentiment_posts, model_key=llm_map.get(config['llm'], "orca2"))
+                    st.success("Sentiment Analysis (Automatic) complete.")
+                    log_and_console(f"Run summary for {output_column}: \nprocessed = {processed}, \ntotal_scored = {total_scored}, \nremaining = {remaining}, \ntotal_rows = {total_rows}")
+                    log_and_console(f"Wrote scores to {saved_path}.")
 
         elif run_crypto:
             # Map user-friendly names to Yahoo tickers
@@ -667,7 +724,11 @@ with tab1:
                 scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
                 batch_size=int(config.get('pp_batch_size', 32)),
                 target_mode=config.get('pp_target_mode', "price"),
-                target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard"))
+                target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                early_fusion=(config.get('fusion_mode') == 'Early'),
+                merged_path=MERGED_PATH,
+                fusion_asset=(config.get('fusion_asset') if config.get('fusion_mode') == 'Early' else None),
+                fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
             )
 
             # Configure deep learning architecture with corresponding hyperparameters
@@ -810,11 +871,115 @@ with tab1:
                     es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
                     verbose=bool(config.get('tr_verbose', False)),
                 )
+
+            # Late-fusion ensemble learning (if selected)
+            if config.get('fusion_mode') == 'Late':
+                # Model A: price-only
+                train_loader_A, val_loader_A, test_loader_A, input_size_A, _ = load_and_prepare_data(
+                    csv_path, 
+                    sequence_length=int(config.get('pp_sequence_length', 30)),
+                    target_column="Close",
+                    scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
+                    batch_size=int(config.get('pp_batch_size', 32)),
+                    target_mode=config.get('pp_target_mode', "price"),
+                    target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                )
+                model_A = get_model(
+                    config['architecture'].lower(),
+                    input_size=input_size_A,
+                    output_size=1,
+                    hidden_size=int(config.get('hp_lstm_hidden', 64)),
+                    num_layers=int(config.get('hp_lstm_layers', 2)),
+                    dropout=float(config.get('hp_lstm_dropout', 0.2)),
+                    filters=int(config.get('hp_cnn_filters', 64)),
+                    kernel_size=int(config.get('hp_cnn_kernel', 5)),
+                    stride=int(config.get('hp_cnn_stride', 1)),
+                    conv_filters=int(config.get('hp_cnnlstm_filters', 32)),
+                    lstm_hidden=int(config.get('hp_cnnlstm_lstm_hidden', 64)),
+                    lstm_layers=int(config.get('hp_cnnlstm_lstm_layers', 2)),
+                )
+                model_A, hist_A = train_model(
+                    model_A, train_loader_A, val_loader_A,
+                    num_epochs=int(config.get('tr_epochs', 100)),
+                    learning_rate=float(config.get('tr_lr', 1e-3)),
+                    weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                    early_stopping=bool(config.get('tr_es_enable', False)),
+                    es_patience=int(config.get('tr_es_patience', 20)),
+                    es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                    verbose=bool(config.get('tr_verbose', False)),
+                )
+
+                # Model B: early-fusion (with sentiment)
+                train_loader_B, val_loader_B, test_loader_B, input_size_B, _ = load_and_prepare_data(
+                    csv_path, 
+                    sequence_length=int(config.get('pp_sequence_length', 30)),
+                    target_column="Close",
+                    scaler_type=("minmax" if config.get('pp_feat_scaler', "MinMax") == "MinMax" else "standard"),
+                    batch_size=int(config.get('pp_batch_size', 32)),
+                    target_mode=config.get('pp_target_mode', "price"),
+                    target_scaler_type=(None if config.get('pp_target_scaler', "None") == "None" else ("minmax" if config.get('pp_target_scaler') == "MinMax" else "standard")),
+                    early_fusion=True,
+                    merged_path=MERGED_PATH,
+                    fusion_asset=config.get('fusion_asset', 'BTC'),
+                    fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
+                )
+                model_B = get_model(
+                    config['architecture'].lower(),
+                    input_size=input_size_B,
+                    output_size=1,
+                    hidden_size=int(config.get('hp_lstm_hidden', 64)),
+                    num_layers=int(config.get('hp_lstm_layers', 2)),
+                    dropout=float(config.get('hp_lstm_dropout', 0.2)),
+                    filters=int(config.get('hp_cnn_filters', 64)),
+                    kernel_size=int(config.get('hp_cnn_kernel', 5)),
+                    stride=int(config.get('hp_cnn_stride', 1)),
+                    conv_filters=int(config.get('hp_cnnlstm_filters', 32)),
+                    lstm_hidden=int(config.get('hp_cnnlstm_lstm_hidden', 64)),
+                    lstm_layers=int(config.get('hp_cnnlstm_lstm_layers', 2)),
+                )
+                model_B, hist_B = train_model(
+                    model_B, train_loader_B, val_loader_B,
+                    num_epochs=int(config.get('tr_epochs', 100)),
+                    learning_rate=float(config.get('tr_lr', 1e-3)),
+                    weight_decay=float(config.get('tr_weight_decay', 0.0)),
+                    early_stopping=bool(config.get('tr_es_enable', False)),
+                    es_patience=int(config.get('tr_es_patience', 20)),
+                    es_min_delta=float(config.get('tr_es_min_delta', 0.0)),
+                    verbose=bool(config.get('tr_verbose', False)),
+                )
+
+                # Collect validation predictions for blending
+                def _collect_preds(loader, model_):
+                    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                    model_.eval()
+                    pr, tr = [], []
+                    with torch.no_grad():
+                        for xb, yb in loader:
+                            xb = xb.to(device).float(); yb = yb.to(device).float()
+                            out = model_(xb).squeeze()
+                            pr.extend(out.cpu().numpy()); tr.extend(yb.cpu().numpy())
+                    return np.asarray(pr), np.asarray(tr)
+
+                val_pred_A, val_true = _collect_preds(val_loader_A, model_A)
+                val_pred_B, _        = _collect_preds(val_loader_B, model_B)
+                alpha, best_mse = blend_by_validation(val_true, val_pred_A, val_pred_B, step=0.05)
+
+                # Blend on test set using optimal alpha
+                test_pred_A, test_true = _collect_preds(test_loader_A, model_A)
+                test_pred_B, _         = _collect_preds(test_loader_B, model_B)
+                blended = alpha * test_pred_A + (1 - alpha) * test_pred_B
+                mse = float(np.mean((test_true - blended) ** 2))
+                # Basic R² computation
+                ss_res = float(np.sum((test_true - blended) ** 2))
+                ss_tot = float(np.sum((test_true - np.mean(test_true)) ** 2))
+                r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+                st.success(f"Late Fusion: alpha={alpha:.2f} | Test MSE={mse:.4f} R²={r2:.4f}")
+                st.session_state["_skip_single_plots"] = True
             
             # Define function for training history (loss)
             def plot_loss(history):
                 fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
-                ax.plot(history["train_loss"], label="Train Loss")
+                ax.plot(history["train_loss"], label="Train Loss") 
                 ax.plot(history["val_loss"], label="Validation Loss")
                 ax.set_title("Training vs Validation Loss")
                 ax.set_xlabel("Epoch")
@@ -825,7 +990,6 @@ with tab1:
                 return fig
 
             # Visualise training history (loss) — rendered below when logging artifacts
-
             # Predict on test set and plot 'Predicted vs Actual'
             preds, trues, mse, r2 = predict(trained_model, test_loader)
 
@@ -885,11 +1049,14 @@ with tab1:
                 st.pyplot(fig, clear_figure=True)
                 return fig, float(mse_disp), float(r2_disp)
 
-            # Visualise 'Predicted vs Actual' prediction
-            # Loss plot
-            loss_fig = plot_loss(history)
-            # Predictions plot and displayed metrics
-            pred_fig, mse_disp, r2_disp = plot_predictions(trues, preds, title_suffix="")
+            # Visualise 'Predicted vs Actual' prediction (skip if late fusion already handled)
+            if not st.session_state.get("_skip_single_plots", False):
+                # Loss plot
+                loss_fig = plot_loss(history)
+                # Predictions plot and displayed metrics
+                pred_fig, mse_disp, r2_disp = plot_predictions(trues, preds, title_suffix="")
+            else:
+                st.session_state["_skip_single_plots"] = False
 
             # Save and log artifacts if MLflow enabled
             if use_mlflow:
@@ -954,8 +1121,22 @@ with tab1:
             st.error(f"Could not load merged_crypto_dataset: {e}")
             st.stop()
 
+        # Asset filter for the timeline (BTC, ETH, DOGE, MULTI and OTHER)
+        asset_options = ["All"]
+        if "Asset" in df.columns:
+            try:
+                asset_options += sorted([a for a in df["Asset"].dropna().unique().tolist()])
+            except Exception:
+                pass
+        selected_asset = st.selectbox("Filter by Asset:", asset_options, index=0)
+        if selected_asset != "All" and "Asset" in df.columns:
+            df = df[df["Asset"] == selected_asset].copy()
+
         # Define which columns are for the sentiment scores by prefix "Sentiment_"
         sentiment_cols = [col for col in df.columns if col.lower().startswith("sentiment_")]
+        # Minimal sentiment-column filter (Any or a specific Sentiment_* column)
+        sent_options = ["Any"] + sorted(sentiment_cols)
+        selected_sent_col = st.selectbox("Filter by Sentiment Column:", sent_options, index=0)
 
         # Convert 'Timestamp' column values to datetime
         if not np.issubdtype(df["Timestamp"].dtype, np.datetime64):
@@ -994,7 +1175,14 @@ with tab1:
 
         # Sentiment data per specific day (date)
         if sentiment_cols:
-            has_sentiment_mask = df[sentiment_cols].notna().any(axis=1)
+            if selected_sent_col == "Any":
+                has_sentiment_mask = df[sentiment_cols].notna().any(axis=1)
+            else:
+                # Guard in case the column disappears after filters
+                if selected_sent_col in df.columns:
+                    has_sentiment_mask = df[selected_sent_col].notna()
+                else:
+                    has_sentiment_mask = pd.Series(False, index=df.index)
             df["has_sentiment"] = has_sentiment_mask
             sent_per_date = (
                 df[(df["date"] >= start_date) & (df["date"] <= end_date)]
@@ -1078,14 +1266,14 @@ with tab1:
         chart = alt.layer(ch_red, ch_orange, ch_green).properties(height=72)
 
         # Add a title for the timeline
-        st.subheader("Timeline (News Sources Data Availability)")
+        st.subheader("Timeline - Year 2025 (News Sources Data Availability)")
         st.altair_chart(chart, use_container_width=True)
 
         # Define legend for the timeline (Green, Orange and Red)
         #st.markdown()
 
         # Statistics of data coverage for year 2025
-        st.subheader("Statistics (Year 2025)")
+        st.subheader("Statistics")
         counts = (coverage["status"].value_counts().reindex(["Sentiment Data", "Non-Sentiment Data", "No Data"]).fillna(0).astype(int))
 
         # Define four columns to display each group type's total count
@@ -1094,7 +1282,10 @@ with tab1:
         col2.metric("Non-Sentiment Data", f"{counts.get('Non-Sentiment Data', 0)} day(s)")
         col3.metric("No Data", f"{counts.get('No Data', 0)} day(s)")
         with col4:
-            st.write("Additional metrics to be included in the future.")
+            # Display total posts of "merged_crypto_dataset.xlsx" (with asset filter if applied)
+            total_posts = len(df)
+            label = f"Total Posts ({selected_asset})" if 'selected_asset' in locals() and selected_asset != "All" else "Total Posts (All Assets)"
+            st.metric(label, f"{total_posts}")
 
     column5, column6 = st.columns([10, 10]) # Adjust values to change column width/ratio
 
@@ -1112,10 +1303,11 @@ with tab1:
             st.success("Configuration saved successfully!")
 
     with column6:
-        st.subheader("[To insert YouTube Demo Here]")
+        st.subheader("Tutorial Video - By Ashley Beebakee (ID 20232303)")
+        st.video("https://youtu.be/9L1VgFxrGvM", start_time=0)
 
 with tab2:
-    st.write("Here you can visualise scraped and API data from Reddit and NewsAPI.")
+    st.write("Here you can visualise scraped and API data from Reddit and NewsAPI along with scores from Sentiment Analysis performed by various LLMs.")
     # Create tabs for configuration and scraped/API data visualisation
     merged_tab, reddit_tab, news_api_tab = st.tabs(["Merged", "Reddit", "NewsAPI"])
 
@@ -1129,7 +1321,7 @@ with tab2:
             st.warning("No merged dataset found.")
 
     with reddit_tab:
-        st.subheader("Reddit Dataset (17th February 2025 onwards)")
+        st.subheader("Reddit Dataset")
         # Load and display the Reddit dataset
         if os.path.exists(REDDIT_PATH):
             df = pd.read_excel(REDDIT_PATH)

@@ -1,5 +1,8 @@
 architecture: CNN-LSTM
 cryptocurrency: Bitcoin
+fusion_asset: BTC
+fusion_mode: Early
+fusion_sentiment_col: Sentiment_Orca2
 hp_cnnlstm_dropout: 0.2
 hp_cnnlstm_filters: 32
 hp_cnnlstm_kernel: 5
