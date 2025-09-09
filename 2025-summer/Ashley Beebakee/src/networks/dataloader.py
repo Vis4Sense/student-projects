@@ -17,9 +17,10 @@ import pandas as pd
 import numpy as np
 import torch
 
+
 # Function to coerce all columns to numeric, excluding specified ones
 # N.B: 'coerce' means "obtain/set"
-def coerce_numeric_columns(df: pd.DataFrame, exclude: set[str] | None = None) -> pd.DataFrame:
+def coerce_numeric_columns(df: pd.DataFrame, exclude: set[str] | None = None):
     exclude = exclude or set()
     for c in df.columns:
         if c in exclude:
@@ -37,25 +38,20 @@ def coerce_numeric_columns(df: pd.DataFrame, exclude: set[str] | None = None) ->
 
 # N.B: '*,' implies that all subsequent parameters must be passed by keyword AND not position
 def load_and_prepare_data(
-        csv_path,
-        sequence_length: int = 30,
-        target_column: str = 'Close',
-        scaler_type: str = "minmax",
-        batch_size: int = 32,
-        *,
-        target_mode: str = "price",  # "price" or "log_return"
-        target_scaler_type: str | None = None  # None, "minmax", or "standard"
+    csv_path,
+    sequence_length: int = 30,
+    target_column: str = 'Close',
+    scaler_type: str = "minmax",
+    batch_size: int = 32,
+    *,
+    target_mode: str = "price",
+    target_scaler_type: str | None = None,
+    # Early-fusion (optional)
+    early_fusion: bool = False,
+    merged_path: str | None = None,
+    fusion_asset: str | None = None,
+    fusion_sentiment_col: str | None = None
 ):
-    """
-    Loads and prepares time series dataset for training.
-    Key features:
-      - Coerces non-numeric columns (except date-like) to numeric.
-      - Optional target as next-step price (price) or next-day log return (log_return).
-      - Train/val/test split happens BEFORE scaling; scalers are fit on train only to avoid leakage.
-      - Feature scaling: MinMax (0..1) or Standard (mean=0, std=1).
-      - Optional target scaling via target_scaler_type.
-    Returns train/val/test DataLoaders and input_size (num features).
-    """
     df = pd.read_csv(csv_path)
 
     # Detect date-like columns to exclude from numeric coercion/feature set
@@ -63,6 +59,55 @@ def load_and_prepare_data(
 
     # Coerce all non-date columns to numeric (invalid -> NaN)
     df = coerce_numeric_columns(df, exclude=set(date_cols))
+
+    # Early-fusion of daily sentiment features from merged_crypto_dataset.xlsx
+    if early_fusion and merged_path and isinstance(merged_path, str) and len(merged_path) > 0:
+        try:
+            df_sent = pd.read_excel(merged_path)
+            # Filter by asset if provided
+            if fusion_asset and "Asset" in df_sent.columns:
+                df_sent = df_sent[df_sent["Asset"] == fusion_asset].copy()
+            # Build date with removed time zone
+            if "Timestamp" in df_sent.columns:
+                df_sent["Timestamp"] = pd.to_datetime(df_sent["Timestamp"], errors="coerce")
+                df_sent = df_sent.dropna(subset=["Timestamp"])  # keep valid times
+                df_sent["date"] = df_sent["Timestamp"].dt.floor("D")
+            else:
+                # If there is no 'Timestamp' column, create empty df_sent to skip fusion
+                df_sent = pd.DataFrame(columns=["date"])
+
+            # Select sentiment columns
+            sent_cols = [c for c in df_sent.columns if str(c).lower().startswith("sentiment_")]
+            if fusion_sentiment_col and fusion_sentiment_col in df_sent.columns:
+                sent_cols = [fusion_sentiment_col]
+            # Aggregate daily mean for sentiments; also count posts per day
+            if sent_cols:
+                agg = df_sent.groupby("date")[sent_cols].mean().add_prefix("S_")
+                counts = df_sent.groupby("date").size().to_frame("S_count")
+                df_day = agg.join(counts, how="outer").reset_index()
+            else:
+                df_day = df_sent.groupby("date").size().to_frame("S_count").reset_index()
+
+            # Prepare price frame date for join
+            join_date = None
+            for dc in ("Date", "Datetime", "Timestamp"):
+                if dc in df.columns:
+                    try:
+                        df[dc] = pd.to_datetime(df[dc], errors="coerce")
+                        join_date = dc
+                        break
+                    except Exception:
+                        continue
+            if join_date is not None:
+                df["date"] = df[join_date].dt.floor("D")
+                # Left-join and fill NaNs
+                df = df.merge(df_day, on="date", how="left")
+                for c in [c for c in df.columns if c.startswith("S_") or c == "S_count"]:
+                    df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0.0)
+            # If we created a helper 'date' column for join, keep but exclude later from numeric feature list
+        except Exception:
+            # Fail silently to keep baseline working if Excel missing or malformed
+            pass
 
     # Ensure source target column exists and is numeric (i.e., 'Close')
     if target_column not in df.columns:
@@ -82,6 +127,7 @@ def load_and_prepare_data(
     # Keep only numeric feature columns
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     feature_cols = numeric_cols.copy()
+
     # Exclude label column from features
     feature_cols = [c for c in feature_cols if c != label_col]
     if not feature_cols:
