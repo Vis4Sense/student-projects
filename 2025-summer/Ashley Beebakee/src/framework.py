@@ -1305,6 +1305,7 @@ with tab1:
     with column6:
         st.subheader("Tutorial Video - By Ashley Beebakee (ID 20232303)")
         st.video("https://youtu.be/9L1VgFxrGvM", start_time=0)
+        st.video("https://youtu.be/zGNOz-99Cdw", start_time=0)
 
 with tab2:
     st.write("Here you can visualise scraped and API data from Reddit and NewsAPI along with scores from Sentiment Analysis performed by various LLMs.")
