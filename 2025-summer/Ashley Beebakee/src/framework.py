@@ -1066,8 +1066,9 @@ with tab1:
                     ss_tot = float(np.sum((a - np.mean(a)) ** 2))
                     return float(1.0 - ss_res / ss_tot) if ss_tot > 0 else float('nan')
                 mse_disp = _mse(displayed_true, displayed_pred)
+                rmse_disp = np.sqrt(mse_disp)
                 r2_disp = _r2(displayed_true, displayed_pred)
-
+                
                 # Plot 'Predicted vs Actual' chart
                 ax.set_title(f"Predicted vs Actual{inv_note} {title_suffix}".strip())
                 ax.set_xlabel("Time (test index)")
@@ -1075,7 +1076,7 @@ with tab1:
                 ax.grid(True, alpha=0.3)
                 ax.legend()
                 # Append 'Metrics' banner to chart
-                ax.text(0.01, 0.98, f"MSE: {mse_disp:.4f}  |  R²: {r2_disp:.4f}", transform=ax.transAxes,
+                ax.text(0.01, 0.98, f"MSE: {mse_disp:.4f}  |  RMSE: {rmse_disp:.4f}  |  R²: {r2_disp:.4f}", transform=ax.transAxes,
                         va='top', ha='left', fontsize=9,
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.7, edgecolor='#ddd'))
                 fig.tight_layout()
