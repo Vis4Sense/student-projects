@@ -54,6 +54,9 @@
   <li>Created merge_datasets() function to combine the Reddit & NewsAPI datasets whenever new posts are appended via scraping/API.</li>
   <li>Added 'Language' column into logic of both datasets, with a LANGUAGE_MAP at the top which can be expanded to include additional languages taking into consideration LLM compatibility.</li>
   <li>Updated merge_datasets() to preserve sentiment columns with appropriate formatting and to output number of duplicates in the terminal</li>
+  <li>Implemented an 'Asset' column via classification (Subreddit & Regex) into the following categories: BTC, ETH, DOGE, MULTI or OTHER.</li>
+  <li>Created column reordering functions for both Reddit & NewsAPI datasets.</li>
+  <li>Created column reordering functino for "merged_crypto_dataset.xlsx" debugged _new suffix columns.</li>
 </ul>
 
 ## llm_selection.py
@@ -82,6 +85,7 @@
   <li>Refined prompt templates to extract sentiment with numerical values from -1 (negative), 0 (neutral) to 1 (positive).</li>
   <li>BLOOMZ prompt templates need debugging since they do not output a numerical value for the sentiment score.</li>
   <li>Assigned prompt templates for Orca 2 (6-bit) model.</li>
+  <li>Added comment stating that the prompt templates may be glitchy for some of the LLMs.</li>
 </ul>
 
 ## extraction.py
@@ -123,4 +127,4 @@
   <li>Created predict() function to visualise prediction of mean_squared_error and r2_score.</li>
 </ul>
 
-[Last updated: 26/08/2025 16:24]
+[Last updated: 06/09/2025 00:02]
