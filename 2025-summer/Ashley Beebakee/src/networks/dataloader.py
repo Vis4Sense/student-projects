@@ -172,7 +172,7 @@ def load_and_prepare_data(
     feat_scaler = MinMaxScaler() if scaler_type == "minmax" else StandardScaler()
     X_train_2d = X_train.reshape(-1, X_train.shape[2]) # (n_train * L, F)
     feat_scaler.fit(X_train_2d)
-
+    
     def transform_windows(Xw: np.ndarray) -> np.ndarray:
         X2d = Xw.reshape(-1, Xw.shape[2])
         X2d = feat_scaler.transform(X2d).astype(np.float32)
