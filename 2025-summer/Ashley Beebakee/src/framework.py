@@ -148,7 +148,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.7 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.8 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -1006,14 +1006,16 @@ with tab1:
             # Define function for training history (loss)
             def plot_loss(history):
                 fig, ax = plt.subplots(figsize=(7, 4), dpi=120)
-                ax.plot(history["train_loss"], label="Train Loss") 
+                ax.plot(history["train_loss"], label="Train Loss")
                 ax.plot(history["val_loss"], label="Validation Loss")
                 ax.set_title("Training vs Validation Loss")
                 ax.set_xlabel("Epoch")
                 ax.set_ylabel("Loss")
                 ax.grid(True, alpha=0.3)
                 ax.legend()
-                st.pyplot(fig, clear_figure=True) # Render the chart in Streamlit
+                fig.tight_layout()
+                # Display without clearing so we can still save figs later
+                st.pyplot(fig)
                 return fig
 
             # Visualise training history (loss)
@@ -1076,7 +1078,8 @@ with tab1:
                 ax.text(0.01, 0.98, f"MSE: {mse_disp:.4f}  |  R²: {r2_disp:.4f}", transform=ax.transAxes,
                         va='top', ha='left', fontsize=9,
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.7, edgecolor='#ddd'))
-                st.pyplot(fig, clear_figure=True)
+                fig.tight_layout()
+                st.pyplot(fig)
                 return fig, float(mse_disp), float(r2_disp)
 
             # Visualise 'Predicted vs Actual' prediction (skip if late fusion already handled)
@@ -1135,6 +1138,30 @@ with tab1:
                             mlflow.log_artifact(str(cfg_path))
                         except Exception:
                             pass
+
+                    # Execute logging within an MLflow experiment run
+                    try:
+                        active = None
+                        try:
+                            active = mlflow.active_run()
+                        except Exception:
+                            active = None
+
+                        if active is not None:
+                            _log_all()
+                        elif 'current_run_id' in locals() and current_run_id is not None:
+                            with mlflow.start_run(run_id=current_run_id):
+                                _log_all()
+                        else:
+                            # Fallback: start a short post-run to avoid losing artifacts
+                            with mlflow.start_run(run_name=f"{config.get('architecture')}-{Path(selected_ts).stem}-post"):
+                                try:
+                                    log_mlflow_params()
+                                except Exception:
+                                    pass
+                                _log_all()
+                    except Exception:
+                        pass
                 except Exception as e:
                     st.warning(f"Failed to log artifacts to MLflow: {e}")
 
