@@ -1117,6 +1117,7 @@ with tab1:
                         mlflow.log_artifact(str(pred_path))
                         # Log final metrics in displayed units
                         mlflow.log_metric('test_mse_displayed', float(mse_disp))
+                        mlflow.log_metric('test_rmse_displayed', float(np.sqrt(mse_disp)))
                         mlflow.log_metric('test_r2_displayed', float(r2_disp))
                         # Dataset lineage and configuration snapshot
                         try:
