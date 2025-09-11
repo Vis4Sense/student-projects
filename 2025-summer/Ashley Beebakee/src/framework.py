@@ -5,7 +5,7 @@
 #              inclusion of multilingual sentiment analysis and LLM options
 #              to predict cryptocurrency prices.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 09/09/2025
+# Last Updated: 11/09/2025
 # Python Version: 3.10.6
 # Packages Required: matplotlib, streamlit, altair, pandas, numpy, torch, pyyaml,
 #                    mlflow
@@ -27,6 +27,7 @@ import altair as alt
 import pandas as pd
 import numpy as np
 import subprocess
+import hashlib
 import mlflow
 import torch
 import yaml
@@ -41,7 +42,7 @@ from models.prompt import ZERO_SHOT_LLAMA, FEW_SHOT_LLAMA, CHAIN_OF_THOUGHT_LLAM
 from models.prompt import ZERO_SHOT_BLOOMZ, FEW_SHOT_BLOOMZ, CHAIN_OF_THOUGHT_BLOOMZ
 from models.prompt import ZERO_SHOT_ORCA, FEW_SHOT_ORCA, CHAIN_OF_THOUGHT_ORCA
 from models.llm_selection import analyse_sentiment_os, analyse_sentiment_cs
-from networks.training import train_model, predict, blend_by_validation
+from networks.training import train_model, predict, blend_by_validation, compute_additional_metrics
 from networks.dataloader import load_and_prepare_data
 from networks.architecture import get_model
 from sentiment.extraction import score_excel
@@ -147,7 +148,7 @@ st.markdown(
 )
 
 # Streamlit dashboard title
-st.title(f"Streamlit Modular DL Framework Prototype v1.6 ({st.__version__})")
+st.title(f"Streamlit Modular DL Framework Prototype v1.7 ({st.__version__})")
 
 # Nota Bene (N.B.):
 # The prefix "r_" denotes the word "run", as in where the run button is placed.
@@ -288,8 +289,8 @@ with tab1:
             config['cryptocurrency'] = st.selectbox("Select Cryptocurrency:", ["Bitcoin", "Ethereum", "Dogecoin"], index=["Bitcoin", "Ethereum", "Dogecoin"].index(config['cryptocurrency']), help="Choose cryptocurrency to fetch historical price data for.")
             
             # Set default start and end dates based on the selected cryptocurrency
-            start_date = st.date_input("Start Date:", value=pd.to_datetime("2025-01-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-08-01"))
-            end_date = st.date_input("End Date:", value=pd.to_datetime("2025-08-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-08-01"))
+            start_date = st.date_input("Start Date:", value=pd.to_datetime("2025-07-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-08-01"))
+            end_date = st.date_input("End Date:", value=pd.to_datetime("2025-09-01"), min_value=pd.to_datetime("2025-01-01"), max_value=pd.to_datetime("2025-12-31"))
             config['interval'] = st.selectbox("Select Time Interval:", ["1m", "5m", "15m", "1h", "1d"], index=["1m", "5m", "15m", "1h", "1d"].index(config['interval']))
             st.caption("Press 'Refresh UI' button after execution.")
 
@@ -321,6 +322,13 @@ with tab1:
                     "Select Asset for Fusion:", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
                     index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
                 )
+                # Language type toggle for early-fusion experiment
+                config['fusion_language_mode'] = st.radio(
+                    "Select Language Type for News Sources Data:",
+                    ["Multilingual", "English only"],
+                    index=0,
+                    help="Include multilingual or only English-only news sources to train the model."
+                )
                 # Fixed sentiment column (one must be chosen)
                 default_sc = config.get('fusion_sentiment_col', sentiment_llm_options[0])
                 if default_sc not in sentiment_llm_options:
@@ -333,10 +341,16 @@ with tab1:
             # Late-fusion pathway
             elif config.get('fusion_mode') == 'Late':
                 st.caption("Late fusion trains two models and blends predictions on validation.")
-                # For late fusion we still need asset AND chosen LLM sentiment column for the fused model
                 config['fusion_asset'] = st.selectbox(
-                    "Asset for Fusion", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
+                    "Select Asset for Fusion:", ["BTC", "ETH", "DOGE", "MULTI", "OTHER"],
                     index=["BTC", "ETH", "DOGE", "MULTI", "OTHER"].index(config.get('fusion_asset', 'BTC'))
+                )
+                # Language type toggle for late-fusion experiment
+                config['fusion_language_mode'] = st.radio(
+                    "Select Language Type for News Sources Data:",
+                    ["Multilingual", "English only"],
+                    index=0,
+                    help="Include multilingual or only English-only news sources to train the model."
                 )
                 default_sentiment_col = config.get('fusion_sentiment_col', sentiment_llm_options[0])
                 if default_sentiment_col not in sentiment_llm_options:
@@ -375,7 +389,7 @@ with tab1:
                     config['hp_cnnlstm_lstm_layers'] = st.slider("CNN-LSTM Layers", min_value=1, max_value=4, value=int(config.get('hp_cnnlstm_lstm_layers', 2)), help="Enter a value between 1 and 4.")
                     config['hp_cnnlstm_dropout'] = st.slider("CNN-LSTM Dropout", min_value=0.0, max_value=0.8, value=float(config.get('hp_cnnlstm_dropout', 0.2)), step=0.05, help="Enter a value between 0.0 and 0.8.")
 
-            # Training options (optim & regularisation)
+            # Training options (optimisation & regularisation)
             # N.B: The prefix 'tr_' stands for training
             with st.expander("Training", expanded=False):
                 # Display training logs (epochs) within the VS Code terminal
@@ -728,7 +742,8 @@ with tab1:
                 early_fusion=(config.get('fusion_mode') == 'Early'),
                 merged_path=MERGED_PATH,
                 fusion_asset=(config.get('fusion_asset') if config.get('fusion_mode') == 'Early' else None),
-                fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
+                fusion_sentiment_col=(config.get('fusion_sentiment_col') or None),
+                fusion_language_mode=("english-only" if config.get('fusion_mode') == 'Early' and config.get('fusion_language_mode') == "English only" else "all")
             )
 
             # Configure deep learning architecture with corresponding hyperparameters
@@ -770,6 +785,16 @@ with tab1:
 
             # Print model information to UI
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            # Set seeds and deterministic flags (Reproducibility)
+            try:
+                import random
+                random.seed(42); np.random.seed(42); torch.manual_seed(42)
+                if torch.cuda.is_available():
+                    torch.cuda.manual_seed_all(42)
+                    torch.backends.cudnn.deterministic = True
+                    torch.backends.cudnn.benchmark = False
+            except Exception:
+                pass
             model.to(device)
             st.success(model)
 
@@ -921,7 +946,8 @@ with tab1:
                     early_fusion=True,
                     merged_path=MERGED_PATH,
                     fusion_asset=config.get('fusion_asset', 'BTC'),
-                    fusion_sentiment_col=(config.get('fusion_sentiment_col') or None)
+                    fusion_sentiment_col=(config.get('fusion_sentiment_col') or None),
+                    fusion_language_mode=("english-only" if config.get('fusion_language_mode') == "English only" else "all")
                 )
                 model_B = get_model(
                     config['architecture'].lower(),
@@ -969,6 +995,7 @@ with tab1:
                 test_pred_B, _         = _collect_preds(test_loader_B, model_B)
                 blended = alpha * test_pred_A + (1 - alpha) * test_pred_B
                 mse = float(np.mean((test_true - blended) ** 2))
+
                 # Basic R² computation
                 ss_res = float(np.sum((test_true - blended) ** 2))
                 ss_tot = float(np.sum((test_true - np.mean(test_true)) ** 2))
@@ -989,9 +1016,12 @@ with tab1:
                 st.pyplot(fig, clear_figure=True) # Render the chart in Streamlit
                 return fig
 
-            # Visualise training history (loss) — rendered below when logging artifacts
+            # Visualise training history (loss)
             # Predict on test set and plot 'Predicted vs Actual'
             preds, trues, mse, r2 = predict(trained_model, test_loader)
+            # Additional metrics in training target space
+            rmse, mape, da = compute_additional_metrics(trues, preds)
+            st.caption(f"RMSE: {rmse:.4f} | MAPE: {mape:.2f}% | Directional Accuracy: {da:.3f}")
 
             # Define function for plotting predictions
             def plot_predictions(y_true, y_pred, title_suffix: str = ""):
@@ -1042,7 +1072,7 @@ with tab1:
                 ax.set_ylabel(y_label)
                 ax.grid(True, alpha=0.3)
                 ax.legend()
-                # Metrics banner
+                # Append 'Metrics' banner to chart
                 ax.text(0.01, 0.98, f"MSE: {mse_disp:.4f}  |  R²: {r2_disp:.4f}", transform=ax.transAxes,
                         va='top', ha='left', fontsize=9,
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.7, edgecolor='#ddd'))
@@ -1062,10 +1092,13 @@ with tab1:
             if use_mlflow:
                 try:
                     def _log_all():
-                        # Log raw metrics (in training/target space)
+                        # Log raw metrics to training target space
                         try:
                             mlflow.log_metric('test_mse_raw', float(mse))
                             mlflow.log_metric('test_r2_raw', float(r2))
+                            mlflow.log_metric('test_rmse_raw', float(rmse))
+                            mlflow.log_metric('test_mape_percent_raw', float(mape))
+                            mlflow.log_metric('test_directional_accuracy', float(da))
                         except Exception:
                             pass
                         artifacts_dir = Path('./artifacts')
@@ -1081,27 +1114,27 @@ with tab1:
                         # Log final metrics in displayed units
                         mlflow.log_metric('test_mse_displayed', float(mse_disp))
                         mlflow.log_metric('test_r2_displayed', float(r2_disp))
-                        # Optionality to log the trained model
+                        # Dataset lineage and configuration snapshot
                         try:
-                            if hasattr(mlflow, 'pytorch'):
-                                mlflow.pytorch.log_model(trained_model, artifact_path='model')
+                            def _md5(path):
+                                h = hashlib.md5()
+                                with open(path, 'rb') as f:
+                                    for chunk in iter(lambda: f.read(8192), b''):
+                                        h.update(chunk)
+                                return h.hexdigest()
+                            mlflow.log_param('data_csv_md5', _md5(csv_path))
+                            if os.path.exists(MERGED_PATH):
+                                mlflow.log_param('merged_xlsx_md5', _md5(MERGED_PATH))
                         except Exception:
                             pass
-
-                    # Reuse the same run context if needed
-                    active = None
-                    try:
-                        active = mlflow.active_run()
-                    except Exception:
-                        active = None
-                    if active is not None:
-                        _log_all()
-                    elif current_run_id is not None:
-                        with mlflow.start_run(run_id=current_run_id):
-                            _log_all()
-                    else:
-                        # As a last resort, skip logging to avoid creating a stray run
-                        pass
+                        try:
+                            cfg_dir = Path('./artifacts'); cfg_dir.mkdir(parents=True, exist_ok=True)
+                            cfg_path = cfg_dir / f'config_{ts}.yaml'
+                            with open(cfg_path, 'w') as f:
+                                yaml.dump(config, f)
+                            mlflow.log_artifact(str(cfg_path))
+                        except Exception:
+                            pass
                 except Exception as e:
                     st.warning(f"Failed to log artifacts to MLflow: {e}")
 
