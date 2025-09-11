@@ -5,9 +5,9 @@
 #              sentiment and technical indicators to predict 
 #              future price movements.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 09/09/2025
+# Last Updated: 11/09/2025
 # Python Version: 3.10.6
-# Packages Required: scikit-learnm, torch, numpy
+# Packages Required: scikit-learn, torch, numpy
 #------------------------------------------------------------#
 
 # Import necessary libraries
@@ -16,6 +16,34 @@ import torch.optim as optim
 import torch.nn as nn
 import numpy as np
 import torch
+
+# Additional evaluation metrics (RMSE, MAPE, Directional Accuracy)
+# N.B: y_true: Iterable of ground truth values.
+# AND  y_pred: Iterable of predicted values (aligned with y_true).
+def compute_additional_metrics(y_true, y_pred):
+    y_true = np.asarray(y_true, dtype=np.float64)
+    y_pred = np.asarray(y_pred, dtype=np.float64)
+
+    # RMSE (Root Mean Squared Error)
+    rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
+
+    # MAPE (%), avoid division by near-zero
+    eps = 1e-8
+    mask = np.abs(y_true) > eps
+    if mask.any():
+        mape = float(np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])) * 100.0)
+    else:
+        mape = float('nan')
+
+    # Directional Accuracy (Sign of change)
+    if len(y_true) >= 2 and len(y_pred) >= 2:
+        true_dir = np.sign(y_true[1:] - y_true[:-1])
+        pred_dir = np.sign(y_pred[1:] - y_pred[:-1])
+        directional_accuracy = float(np.mean(true_dir == pred_dir))
+    else:
+        directional_accuracy = float('nan')
+
+    return rmse, mape, directional_accuracy
 
 # Define training function
 def train_model(
