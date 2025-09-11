@@ -5,7 +5,7 @@
 #              and technical indicators to predict future price
 #              movements.
 # Author: Ashley Beebakee (https://github.com/OmniAshley)
-# Last Updated: 09/09/2025
+# Last Updated: 11/09/2025
 # Python Version: 3.10.6
 # Packages Required: scikit-learn, torch, pandas, numpy
 #------------------------------------------------------------#
@@ -49,7 +49,8 @@ def load_and_prepare_data(
     early_fusion: bool = False,
     merged_path: str | None = None,
     fusion_asset: str | None = None,
-    fusion_sentiment_col: str | None = None
+    fusion_sentiment_col: str | None = None,
+    fusion_language_mode: str = "all",
 ):
     df = pd.read_csv(csv_path)
 
@@ -63,6 +64,13 @@ def load_and_prepare_data(
     if early_fusion and merged_path and isinstance(merged_path, str) and len(merged_path) > 0:
         try:
             df_sent = pd.read_excel(merged_path)
+            # Optional language filtering for experiment (Multilingual vs English-only)
+            if isinstance(fusion_language_mode, str) and fusion_language_mode.lower() == "english-only":
+                if "Language" in df_sent.columns:
+                    try:
+                        df_sent = df_sent[df_sent["Language"].astype(str).str.lower() == "en"].copy()
+                    except Exception:
+                        pass
             # Filter by asset if provided
             if fusion_asset and "Asset" in df_sent.columns:
                 df_sent = df_sent[df_sent["Asset"] == fusion_asset].copy()
