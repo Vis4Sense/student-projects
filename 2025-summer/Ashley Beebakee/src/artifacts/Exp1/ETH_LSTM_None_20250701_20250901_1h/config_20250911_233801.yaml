@@ -1,9 +1,8 @@
-architecture: CNN-LSTM
-cryptocurrency: Bitcoin
+architecture: LSTM
+cryptocurrency: Ethereum
 fusion_asset: BTC
-fusion_language_mode: Multilingual
-fusion_mode: Early
-fusion_sentiment_col: Sentiment_Llama31IQ2
+fusion_mode: None
+fusion_sentiment_col: Sentiment_Orca2
 hp_cnnlstm_dropout: 0.2
 hp_cnnlstm_filters: 32
 hp_cnnlstm_kernel: 5
@@ -12,10 +11,10 @@ hp_cnnlstm_lstm_layers: 2
 hp_lstm_dropout: 0.2
 hp_lstm_hidden: 64
 hp_lstm_layers: 2
-interval: 1d
+interval: 1h
 llm: Orca 2 7B (6-bit)
 mlf_enable: true
-mlf_experiment: Exp4
+mlf_experiment: Exp1
 mlf_port: 5002
 mlf_tracking_uri: file:./mlruns
 pp_batch_size: 64

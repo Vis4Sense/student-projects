@@ -8,13 +8,15 @@ src/keys/openai_key.txt
 
 # Exclude entire 'data' folder
 src/data/*.csv
-# Include BTC, ETH and DOGE (1d) datasets
+# Include BTC, ETH and DOGE (1d & 1h) datasets
 !src/data/btc_dataset_20250101_20250701_1d.csv
 !src/data/eth_dataset_20250101_20250701_1d.csv
 !src/data/doge_dataset_20250101_20250701_1d.csv
+!src/data/btc_dataset_20250701_20250901_1h.csv
+!src/data/eth_dataset_20250701_20250901_1h.csv
+!src/data/doge_dataset_20250701_20250901_1h.csv
 
 # Exclude MLflow folders
-src/artifacts
 src/mlruns
 
 src/training_test.py

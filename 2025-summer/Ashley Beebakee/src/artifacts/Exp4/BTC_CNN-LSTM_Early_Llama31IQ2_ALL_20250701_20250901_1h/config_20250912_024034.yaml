@@ -15,7 +15,7 @@ hp_lstm_layers: 2
 interval: 1d
 llm: Orca 2 7B (6-bit)
 mlf_enable: true
-mlf_experiment: Exp4
+mlf_experiment: Exp4_v2
 mlf_port: 5002
 mlf_tracking_uri: file:./mlruns
 pp_batch_size: 64
