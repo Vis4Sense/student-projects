@@ -1,4 +1,4 @@
-# LLM for Automated Trading (est. 15th September 2023)
+# LLM for Automated Trading
 <ul>
 <li>This project's idea revolves around the use of Large Language Models (LLMs) to achieve better return in automated trading through a blend of sentiment and technical analysis techniques.</li>
 <li>More information on this project can be found at: https://kaixu.me/2023/09/15/llm-for-automated-trading/</li>
@@ -103,3 +103,4 @@
 <img width="1076" height="508" alt="system_architecture_v1" src="https://github.com/user-attachments/assets/7917df34-004d-4ee4-8694-f2b208fd9813" />
 
 [Last updated: 11/08/2025 03:57]
+
