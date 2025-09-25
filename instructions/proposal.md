@@ -2,7 +2,7 @@
 
 Below is a general structure, and please refer to the moodle page for your project module for specific format/requirements. **If there is any difference, always follow the instructions from the module page**.
 
-It is not always a marked component, but very important to ensure a successful project. Think of it as a tool to hellp you think ahead and plan. Also, **you will reuse most of it for the interim and final report later**.
+It is not always a marked component, but very important to ensure a successful project. Think of it as a tool to help you think ahead and plan. Also, **you will reuse most of it for the interim and final report later**.
 
 - Introduction/background: the general problem area, such as using machine learning to support sensemaking
 - The problem: the specific problem that you want to improve. For example, the exsting recommendations made by machine learning models are not very good.
@@ -42,4 +42,4 @@ It is not always a marked component, but very important to ensure a successful p
    1. Fully working prototype (final prototype)
    1. User evaluation
    1. Final report
- - Create a project plan using [GitHub Project](https://github.com/kaidatavis/student-projects/projects) (more on this later).
+ - ~~Create a project plan using [GitHub Project](https://github.com/kaidatavis/student-projects/projects) (more on this later)~~.
