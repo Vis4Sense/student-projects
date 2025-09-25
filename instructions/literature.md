@@ -11,25 +11,32 @@
 - The 'Related Work' of these papers will point you to more relevant publications.
 - We will discuss and share these.
 
-For this project, you are likely to find good-quality related work from these journals and conference
+For this project, you are likely to find good-quality related work from these journals and conference:
  - **IEEE Transactions on Visualization and Computer Graphics ([IEEE TVCG](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945))**
  - **ACM conference on human factors in computing systems ([ACM CHI](https://dl.acm.org/conference/chi))**
  - [Computer Graphics Forum](https://onlinelibrary.wiley.com/journal/14678659) (if you want to cast a wider net)
+ - University has full access to these: you just need to choose to login by institute on the IEEE or ACM website and use your university username/password.
 
 ## What existing work to include and how to discuss
 - Focus on the **most relevant**: help you to narrow down your scope.
   - For example, if your project is about AI-based recommendations, there is no need to introduce what AI is (the reader would know) and go straight to the latest machine learning models for recommendation.
 - Include **academic publications** to support your argument: 
   - You can include webpages and online articles, but these are not 'peer reviewed', i.e., anyone can potentially say anything online, and as a result these are usually not regarded as reliable evidence.
+  - **Be aware of the [arXiv](https://arxiv.org/) papers**: these papers are not peer reviewed and anyone can put anything there (similar to blog and webpage). There are plenty of great work there, but **be aware of papers that are a few years old and still not published** (you can search for the paper title to see if it appears in any conference or journal): a good work usually would be accepted in a year or two.
 - Places to search for academic papers:
   - [IEEE Xplore](http://ieeexplore.ieee.org/Xplore/home.jsp) (recommended)
   - [ACM Digital Library](https://dl.acm.org/) (recommended)
-  - [Google Scholar](https://scholar.google.com/)
+  - [Google Scholar](https://scholar.google.com/) (not recommended)
+  - [consensus](https://consensus.app/): AI/LLM based (not keyword matching)
+  - [Semantic Scholar](https://www.semanticscholar.org/): also AI/LLM based (not keyword matching), but not as good as consensus
 - Things to consider when selecting which papers to cite:
   - IEEE Xplore and ACM Digital Library are usually more rigorous than Google Scholar: all papers published there are checked by one or more researchers, whereas this is not always the case for Google Scholar (such as self-publishing on arXiv).
   - **Papers that are more than 5 years old are often outdated** (no longer the state of the art), especially in an active research field such as machine learning. Make sure there is no later work that supersedes it if you want to use it.
-  - Papers in well-known journals and conferences, most of the ACM and IEEE conferences, are considered strong argument/evidence. 
-  - You can also get an idea of how good a journal or conference is from its '**impact factor'** (has different names) such as the 'h5' metrics used by [Google](https://scholar.google.co.uk/citations?view_op=top_venues&hl=en&vq=eng) or the 'impact score' by [research.com](https://research.com/conference-rankings/computer-science).
+  - Use '**Impact Factor'** as an indication of how good a journal or conference is
+    - The higer is better: here are [some examples](https://ooir.org/journals.php?field=Computer+Science&metric=jif)
+    - If a journal does not have an Impact Factor, it is probably not very good
+    - Many journals (or conferences) would put their Impact Factor on their webpage or you can just google it, for example TVCG mentioned earlier has a [Impact Factor of 6.5](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945)
+    - There are other similare metrics such as the 'h5' by [Google](https://scholar.google.co.uk/citations?view_op=top_venues&hl=en&vq=eng) or the 'impact score' by [research.com](https://research.com/conference-rankings/computer-science).
 
 ## How to do citations and references
 References are needed for both plan/proposal and dissertation/final report.
