@@ -10,7 +10,7 @@
     - For example, 'I cannot create the prompt for chatGPT to generate the text I want' instead of 'I want a prompt autocomplete feature when using the chatGPT web interface'.
   - How to get requirements
     - Recruite some users
-    - Collection information such as their gender, age group, education background, student/working, experience/familarity with the topic, etc.
+    - Collection demographic information such as their gender, age group, education background, student/working, experience/familarity with the topic, etc.
     - Observe how they complete the task you want to support, focusing on the **problems** and **challenges**.
       - Have a pre-prepared task and dataset usually works better
     - Talk to the users afterwards for clarification (e.g., why did you do this?) and comments (e.g., what was the most difficult part?)
