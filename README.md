@@ -11,7 +11,7 @@ Repository for all the student projects, including UG/PGT final projects and int
   - Someone has worked on your topic already; you don't need to start from scratch.
 - We will have weekly meetings:
   - In person or online;
-  - We will go through each project at the meeting (we may need to split into two groups);
+  - We will go through each project at the meeting (we may need to split into groups if the meeting gets too long);
   - You need to **update your progress** since last meeting and discuss any questions/difficulties;
   - **Set the tasks** before next meeting.
 
@@ -23,7 +23,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 - **You will get 80+ mark if the project results can be published in a good conference or journal**;
   - This is not a requirement and it will need more work than projects not trying to publish.  
   - If you want to do this, please **read at least one paper from beginning to end** (listed on the project idea webpage). 
-    - **This will take a long time (at least a few days)**. There will be many things you never heard of and not explained in the paper, so you need a lot of extra research to understand them. **The worst part is that this is often recursive**.
+    - **This will take a long time (at least a few days)**. There will be many things you never heard of and not explained in the paper, so you need a lot of extra research to understand them. **The worst part is that this is often recursive**, i.e., you need to read other equally difficult papers to understand the current paper.
   - Figure out what the research question is, and narrow down yours in a similar way;
   - **Find a target paper** (whihc is probably not be first you read)
     - This the **baseline for your comparison**, so you can show the improvement brought by your work;
