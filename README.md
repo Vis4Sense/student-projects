@@ -50,7 +50,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 ## Design
 Paper prototype/wireframe tool: 
 - Pencil and paper
-- Low fidelity: PowerPoint or Balsamiq https://balsamiq.com/
+- Low fidelity: PowerPoint, [Miro](https://miro.com/) (recommended), or [Balsamiq](https://balsamiq.com/)
 - High fidelity: ***Figma*** (recommended) https://www.figma.com
   - Free (until Adobe starts to charge for it)
   - Web-based: easy to share with other, and allow co-editing and comments
