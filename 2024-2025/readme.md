@@ -1,5 +1,19 @@
 This is the folder for student projects in 2024-2025.
 
+# Project list
+- Abhay Nambiar: Machine learning for automated trading
+   - focus: stock 
+- Manasi Mehta: Machine learning for automated trading
+   - focus: crypto
+   - Anomaly detection: CNN-LSTM
+   - front end UI
+- Ningbo Wei: visual analytics for sensemaking
+   - browser extension using LLM to support online senesmaking
+- Xingyu Zhu: Human-AI Collaboration – LLM for Qualitative Analysis
+   - Project 2: Medical data integration
+   - Use LLM to help the mapping from medical database (such as those from NHS) to medical ontology (such as SNOMED)
+   - Collaboration with School of Medicine (Grazziela Figueredo)
+
 # 25 March 2025
 
 Manasi, Tianxiang, Kai
