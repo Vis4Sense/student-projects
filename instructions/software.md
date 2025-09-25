@@ -47,9 +47,10 @@ Visual studio code [support this natively](https://code.visualstudio.com/docs/la
 - ~~You don't need to use GitHub Project, but **some form of project planning and progress tracking is essential**.~~
 
 ## Project planning and management
-- For 25-26, the plan is to trial replacing GitHub Issues and Projects with MS Planner in Teams
-- This is potentially easier than GitHub Issues and Projects
-- Will be used for meeting notes as well as mentioned earlier
+- For 25-26, the plan is to trial replacing [GitHub Issues and Projects](https://github.com/features/issues) with [MS Planner](https://planner.cloud.microsoft) in Teams
+- This is potentially easier than GitHub Issues and Projects.
+- Will be used for meeting notes as well as mentioned earlier.
+- You can still use Issues and Projects for example for more complex coding issues.
 
 # Code editor (IDE): 
 Recommended: Visual Studio Code https://code.visualstudio.com/. 
