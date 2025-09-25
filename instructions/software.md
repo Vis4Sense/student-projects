@@ -18,11 +18,11 @@ If you never use git before: `git` is the software that maintains different vers
 **The repository is public, so don't upload any data that can't be shared**
   - You can create a separate private repository for sensitve data. Follow the 'data management plan' of your ethics application.
 
-Each cohort has its folder: the current one is [2023-224](/2023-2024)
-- We will use the `readme.md` in the folder for the meeting notes.
+Each cohort has its folder: for example folder [2023-224](/2023-2024) is for project for the 23-24 academic year.
+- ~~We will use the `readme.md` in the folder for the meeting notes~~. For 25-26, we will try use Teams tasks (MS planner) as the meeting notes.
 
 Inside the folder, please make **a subfolder with your name** for your project:
-- Include in your folder a **`readme.md`** file to list all the things in your folder (e.g., which subfolder contains what) and other information such as how to run your code.
+- Include in your folder a **`readme.md`** file to list all the things in your folder (e.g., which subfolder contains what) and other information such as how to setup and run your code (so the students after you can easily reuse your code/data/model).
 - Use the your folder for your code and everything else such as collected data and design sketches;
 - **Don't include large files**: as everyone else will download them when they do a 'pull' of the repository.
 
@@ -33,18 +33,23 @@ It is similar to HTML, but much simpler. `readme.md` is a markdown file with `.m
 
 Visual studio code [support this natively](https://code.visualstudio.com/docs/languages/markdown), and you can use extension like [markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) to easily turn markdown into a pdf.
 
-## Issues: 
-Todo list/tasks and coding issue
-- Each 'issue' is a task to complete (action from the meeting)
-- Assign an issue to the person that is responsible 
+## ~~Issues:~~
+~~Todo list/tasks and coding issue~~
+- ~~Each 'issue' is a task to complete (action from the meeting)~~
+- ~~Assign an issue to the person that is responsible~~
 
-## Projects
-Planning and project management (we will come back to this for Project Plan/Proposal) 
-- You can create a kanban board in 'project' (similar to Trello)
-- create "milestones', e.g., one for each iteration
-- add 'issues' to 'milestones', and set deadline
-- **An overly detailed example**: [this project template](https://github.com/users/kaidatavis/projects/2)
-- You don't need to use GitHub Project, but **some form of project planning and progress tracking is essential**.
+## ~~Projects~~
+~~Planning and project management (we will come back to this for Project Plan/Proposal)~~
+- ~~You can create a kanban board in 'project' (similar to Trello)~~
+- ~~create "milestones', e.g., one for each iteration~~
+- ~~add 'issues' to 'milestones', and set deadline~~
+- ~~**An overly detailed example**: [this project template](https://github.com/users/kaidatavis/projects/2)~~
+- ~~You don't need to use GitHub Project, but **some form of project planning and progress tracking is essential**.~~
+
+## Project planning and management
+- For 25-26, the plan is to trial replacing GitHub Issues and Projects with MS Planner in Teams
+- This is potentially easier than GitHub Issues and Projects
+- Will be used for meeting notes as well as mentioned earlier
 
 # Code editor (IDE): 
 Recommended: Visual Studio Code https://code.visualstudio.com/. 
@@ -67,4 +72,3 @@ Recommended: Use Latex instead of Word for all the reports: proposal, progress r
 - The video recording of my overleaf tutorial: https://youtu.be/PqW8myobrPE
 - How to add references: https://www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf
 - It is possible to [use Markdonw in Latex](https://www.overleaf.com/learn/how-to/Writing_Markdown_in_LaTeX_Documents), which can be a bit verbose.
-- 
