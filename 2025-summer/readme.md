@@ -3,10 +3,12 @@ This is the folder for the MSc final project in the summer of 2025.
 Please create a folder with your name for your project code, document, dataset, and everything else.
 
 [Project list](https://kaixu.me/projects/):
-- Ashley Beebakee: LLM for Automated Trading 
+- Ashley Beebakee: LLM for Automated Trading
+  - Interactive model training
 - Cheng Zhang: LLM for online research 
 - Haoyuan Zhou: LLM for Qualitative Analysis - Medical data integration 
-- Qing Wang: ~~LLM for Qualitative Analysis - Evaluation of psychological counselling~~, Vitality 2 - chat with your papers 
+- Qing Wang: ~~LLM for Qualitative Analysis - Evaluation of psychological counselling~~, Vitality 2 - chat with your papers
+  - A zotero plug-in  
 - Jiajun Huang: Large Action Model 
 
 # Meeting 7 July 2025
