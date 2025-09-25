@@ -73,4 +73,6 @@ How to get feedback and evaluate
   - More participants: 5+ (10+ for statistical analysis)
   - Clearly defined task(s): maybe more complex so takes longer to complete
   - More detailed notes/recording: may record the session, including interviews
-  - More detailed analysis afterwards: qualitative (such as thematic analysis) and/or quantitative (such as t-test or anova analysis). 
+  - More detailed analysis afterwards: qualitative (such as thematic analysis) and/or quantitative (such as t-test or anova analysis).
+
+The simplest form for the interface usability evaluation is probably to use standard questionaires such as [SUS and NASA-TLX](https://www.nngroup.com/articles/measuring-perceived-usability/).
