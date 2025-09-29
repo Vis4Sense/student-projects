@@ -9,4 +9,4 @@ Project list:
 - Athikash Jeyaganthan: [Agentic Science - Qualitative Research](https://kaixu.me/2025/09/14/ai-co-scientist/)
 - Jamie Holt: [ML for Trading - Interactive Model Training](https://kaixu.me/2024/09/15/llm-for-automated-trading/)
 - Yuxiao Pu: [ML for Trading - Anomaly Detection](https://kaixu.me/2024/09/15/llm-for-automated-trading/)
-- Jintoa Wang: [ML for Trading - Infrastructure](https://kaixu.me/2024/09/15/llm-for-automated-trading/)
+- Jintao Wang: [ML for Trading - Infrastructure](https://kaixu.me/2024/09/15/llm-for-automated-trading/)
