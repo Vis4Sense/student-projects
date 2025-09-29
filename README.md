@@ -3,7 +3,7 @@ Repository for all the student projects, including UG/PGT final projects and int
 
 ## [How the project works](instructions/1-intro.md)
 
-## [Project topics](instructions/2-topic.md)
+<!-- ## [Project topics](instructions/2-topic.md) -->
 
 ## [Literature review](instructions/3-literature.md)
 
