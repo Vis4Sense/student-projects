@@ -33,25 +33,6 @@ It is similar to HTML, but much simpler. `readme.md` is a markdown file with `.m
 
 Visual studio code [support this natively](https://code.visualstudio.com/docs/languages/markdown), and you can use extension like [markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) to easily turn markdown into a pdf.
 
-## ~~Issues:~~
-~~Todo list/tasks and coding issue~~
-- ~~Each 'issue' is a task to complete (action from the meeting)~~
-- ~~Assign an issue to the person that is responsible~~
-
-## ~~Projects~~
-~~Planning and project management (we will come back to this for Project Plan/Proposal)~~
-- ~~You can create a kanban board in 'project' (similar to Trello)~~
-- ~~create "milestones', e.g., one for each iteration~~
-- ~~add 'issues' to 'milestones', and set deadline~~
-- ~~**An overly detailed example**: [this project template](https://github.com/users/kaidatavis/projects/2)~~
-- ~~You don't need to use GitHub Project, but **some form of project planning and progress tracking is essential**.~~
-
-## Project planning and management
-- For 25-26, the plan is to trial replacing [GitHub Issues and Projects](https://github.com/features/issues) with [MS Planner](https://planner.cloud.microsoft) in Teams
-- This is potentially easier than GitHub Issues and Projects.
-- Will be used for meeting notes as well as mentioned earlier.
-- You can still use Issues and Projects for example for more complex coding issues.
-
 # Code editor (IDE): 
 Recommended: Visual Studio Code https://code.visualstudio.com/. 
 - This is suitable for both front end (JavaScript) and machine learing (Python) development;
