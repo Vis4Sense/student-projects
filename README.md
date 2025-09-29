@@ -1,20 +1,20 @@
 # Student Projects
 Repository for all the student projects, including UG/PGT final projects and intern projects.
 
-## [How the project works](instructions/intro.md)
+## [How the project works](instructions/1-intro.md)
 
-## [Project topics](instructions/topic.md)
+## [Project topics](instructions/2-topic.md)
 
-## [Literature review](instructions/literature.md)
+## [Literature review](instructions/3-literature.md)
 
-## [Project plan/proposal](instructions/proposal.md)
+## [Project plan/proposal](instructions/4-proposal.md)
 
-## [Ethics](instructions/ethics.md)
+## [Ethics](instructions/5-ethics.md)
 
-## [User requirements](instructions/requirements.md)
+## [User requirements](instructions/6-requirements.md)
 
-## [Design](instructions/design.md)
+## [Design](instructions/7-design.md)
 
-## [Software and services](instructions/software.md)
+## [Software and services](instructions/8-software.md)
 
-## [Evaluation/Feedback](instructions/evaluation.md)
+## [Evaluation/Feedback](instructions/9-evaluation.md)
