@@ -1,0 +1,13 @@
+# How the project works
+- While each student will have his/her own project, I encourage all students to work togeher as much as possible to share the common work such as data collection.
+- You will **need to be proactive**, especially if you want a good grade:
+  - I will provide general directions, but not step-by-step instructions (you will need to figure these out);
+  - Such as finding relevant papers, coming up with new design idea, and exploring implementation options;
+  - I am always here to help if you have any question or difficulty: **ask as soon as you can if something is not clear or you got stuck. Don't wait for the next meeting.**
+- Have a look of the **previous student projects**:
+  - Someone has worked on your topic already; you don't need to start from scratch.
+- We will have weekly meetings:
+  - In person or online;
+  - We will go through each project at the meeting (we may need to split into groups if the meeting gets too long);
+  - You need to **update your progress** since last meeting and discuss any questions/difficulties;
+  - **Set the tasks** before next meeting.
