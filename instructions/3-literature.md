@@ -15,6 +15,7 @@ For this project, you are likely to find good-quality related work from these jo
  - **IEEE Transactions on Visualization and Computer Graphics ([IEEE TVCG](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945))**
  - **ACM conference on human factors in computing systems ([ACM CHI](https://dl.acm.org/conference/chi))**
  - [Computer Graphics Forum](https://onlinelibrary.wiley.com/journal/14678659) (if you want to cast a wider net)
+ - UIST: [2025 proceedings](https://dl.acm.org/doi/proceedings/10.1145/3746059)
  - University has full access to these: you just need to choose to login by institute on the IEEE or ACM website and use your university username/password.
 
 ## What existing work to include and how to discuss
