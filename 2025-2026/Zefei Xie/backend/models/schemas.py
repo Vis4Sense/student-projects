@@ -92,11 +92,19 @@ class SynthesisAgentOutput(BaseModel):
 class PipelineState(BaseModel):
     """管道整体状态"""
     pipeline_id: str
-    stage: str  # "search", "revising", "synthesis", "completed"
+    stage: Literal[
+        "search",
+        "search_complete",
+        "revising",
+        "revising_complete",
+        "synthesis",
+        "completed",
+        "error"
+    ]
     search_output: Optional[SearchAgentOutput] = None
     revising_output: Optional[RevisingAgentOutput] = None
     synthesis_output: Optional[SynthesisAgentOutput] = None
-    human_interventions: List[Dict[str, Any]] = []
+    human_interventions: List[Dict[str, Any]] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
 

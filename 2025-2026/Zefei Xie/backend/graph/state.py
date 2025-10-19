@@ -10,15 +10,15 @@ from models.schemas import Paper, KeywordModel, PaperReviewDecision, Citation, K
 
 
 class AgentState(TypedDict):
-    """LangGraph 状态定义（更新版）"""
+    """LangGraph 状态定义"""
     # 输入
     original_query: str
     pipeline_id: str
 
     # Search Agent
     search_keywords: List[KeywordModel]
-    keyword_search_results: List[KeywordSearchResult]  # 每个关键词的详细结果
-    raw_papers: List[Paper]  # 去重后的所有论文
+    keyword_search_results: List[KeywordSearchResult]
+    raw_papers: List[Paper]
     search_reasoning: str
 
     # Revising Agent
@@ -39,3 +39,4 @@ class AgentState(TypedDict):
     # 人工干预标志
     awaiting_human_review: bool
     human_feedback: Optional[Dict[str, Any]]
+

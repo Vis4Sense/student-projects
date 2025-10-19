@@ -1,77 +1,45 @@
-# LLM-Based Browser Extension for Natural-Language-Based Product Discovery
+# LLM for Natural-Language Product Discovery
 
-## 📌 Project Overview
-This project implements a Chrome browser extension combined with a FastAPI backend.  
-Users can describe shopping needs in natural language, and the system will:
-- Extract keywords
-- Generate clarification questions
-- Retrieve product candidates via SerpAPI
-- Rank products using semantic similarity
-- Extract attributes (brand, price, rating, features) via LLM
-- Provide comparison and recommendations
-
----
-
-## ⚙️ Architecture
-- **Frontend**: Chrome Extension (`manifest.json`, `sidebar.html`, `sidebar.js`, `content_script.js`)
-- **Backend**: FastAPI (`main.py`)
-- **Models**:
-  - KeyBERT + SentenceTransformers (keyword extraction, semantic scoring)
-  - OpenAI GPT / Gemini API (attribute extraction, reasoning, comparison)
-- **Search Engine**: Google SerpAPI
-
----
-
-## 🖥️ Environment
-- Python 3.10+
-- Node.js 16+ (optional, for frontend development)
-- Chrome Browser
-
-Dependencies are listed in `requirements.txt`.
-
-Environment variables are set in `.env`:
-
-OPENAI_API_KEY=your_openai_api_key
-SERPAPI_API_KEY=your_serpapi_api_key
-GEMINI_API_KEY=your_gemini_api_key # optional
+This project explores the use of Large Language Models (LLMs) to improve product discovery on e-commerce platforms. Instead of keyword search, users can describe their needs in natural language, and the browser extension will find, extract, and highlight relevant product data in real time.
 
 
----
+# Current progress:
 
-##  Running the Backend
-From the project root, run:
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8000
+Chrome plugin framework completed, supporting natural language input of shopping requirements;
 
-Test the backend:
-http://127.0.0.1:8000/config
+Keyword extraction implemented using KeyBERT + MiniLM, no manual word list required;
 
-## Running the Extension
+Lightweight model used;
 
-Open Chrome → chrome://extensions/
+SerpAPI integrated, search limited to e-commerce sites (Amazon / BestBuy / Walmart);
 
-Enable Developer mode
+Product semantic scoring implemented, sorted and displayed by score (MiniLM + cosine);
 
-Click Load unpacked
+Implemented recommendation reason generation + multi-product comparison table functionality (brand/feature fields, etc.);
 
-Select the folder containing manifest.json
+The current plugin supports the complete closed-loop process of natural language → search → sorting → comparison → recommendation.
 
-The extension icon will appear, click it to open the sidebar
 
-Usage
+# Recent Optimizations & Updates （After 8.11 meeting）
 
-Open any google searching page
+Enhanced multi-turn interaction: The system now guides the user to provide additional brand, price range, and color preferences before search execution, improving result relevance.
 
-Enter a shopping query in the sidebar (e.g., "I want a cheap Apple laptop")
+Brand-priority sorting: Search results are re-ordered so that products from the user’s preferred brand appear first, followed by others sorted by score.
 
-The system will:
+Strict price filtering: Products are now strictly limited to the specified price range instead of allowing a tolerance margin.
 
-Extract keywords and possibly generate follow-up questions
+# Display improvements:
 
-Retrieve and rank products from SerpAPI
+Replaced the price chart in the comparison view with a clear, multi-column table showing title, brand, price, rating, and features.
 
-Display the top 5 products in a comparison table
+Added collapsible “Features” section to keep the view clean.
 
-Allow selection of multiple products for detailed comparison
+Increased sidebar width to display all columns without truncation.
 
-Provide an AI-generated recommendation
+AI-generated recommendations: Integrated OpenAI API to produce natural-language recommendation reasons, with “AI Generated” label shown in the UI.
+
+# Next Steps
+
+Conduct user testing to evaluate functionality, usability, and relevance.
+
+Use questionnaires to collect user feedback and satisfaction scores for further optimization.

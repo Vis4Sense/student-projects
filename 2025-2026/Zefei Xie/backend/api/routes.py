@@ -62,7 +62,8 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
         human_interventions=[],
         errors=[],
         awaiting_human_review=False,
-        human_feedback=None
+        human_feedback=None,
+        keyword_search_results=[]
     )
 
     # 创建执行记录
@@ -75,7 +76,7 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
     pipeline_state = PipelineState(
         pipeline_id=pipeline_id,
         stage="search",
-        created_at=initial_state.get("created_at")
+        # created_at 和 updated_at 会自动使用 default_factory
     )
     active_pipelines[pipeline_id] = pipeline_state
 
@@ -92,11 +93,28 @@ async def run_search_stage(pipeline_id: str, state: AgentState):
         # 更新存储的状态
         pipeline = active_pipelines[pipeline_id]
         pipeline.stage = "search_complete"
+
+        # 👇 完整的 SearchAgentOutput 创建
         pipeline.search_output = SearchAgentOutput(
             keywords=updated_state["search_keywords"],
+            keyword_results=updated_state["keyword_search_results"],  # 👈 添加这个
             papers=updated_state["raw_papers"],
-            reasoning=updated_state["search_reasoning"]
+            papers_by_keyword={},  # 👈 添加这个（从 keyword_results 计算）
+            reasoning=updated_state["search_reasoning"],
+            total_papers_before_dedup=sum(
+                kr.papers_count for kr in updated_state["keyword_search_results"]
+            )
         )
+
+        # 计算 papers_by_keyword
+        papers_by_keyword = {}
+        for result in updated_state["keyword_search_results"]:
+            papers_by_keyword[result.keyword.keyword] = [
+                p.id for p in result.papers
+            ]
+        pipeline.search_output.papers_by_keyword = papers_by_keyword
+
+        logger.info(f"Search stage completed for {pipeline_id}")
 
     except Exception as e:
         logger.error(f"Search stage failed for {pipeline_id}: {e}")
@@ -211,16 +229,45 @@ async def continue_pipeline(pipeline_id: str, background_tasks: BackgroundTasks)
 
     pipeline = active_pipelines[pipeline_id]
 
+    logger.info(f"Continue request for pipeline {pipeline_id}, current stage: {pipeline.stage}")
+
     if pipeline.stage == "search_complete":
+        # 启动 Revising Agent
+        pipeline.stage = "revising"  # 立即更新状态为 "运行中"
         background_tasks.add_task(run_revising_stage, pipeline_id)
-        return {"status": "running", "next_stage": "revising"}
+        return {
+            "status": "success",
+            "message": "Starting revising stage",
+            "next_stage": "revising"
+        }
 
     elif pipeline.stage == "revising_complete":
+        # 启动 Synthesis Agent
+        pipeline.stage = "synthesis"  # 立即更新状态为 "运行中"
         background_tasks.add_task(run_synthesis_stage, pipeline_id)
-        return {"status": "running", "next_stage": "synthesis"}
+        return {
+            "status": "success",
+            "message": "Starting synthesis stage",
+            "next_stage": "synthesis"
+        }
+
+    elif pipeline.stage == "completed":
+        return {
+            "status": "completed",
+            "message": "Pipeline already completed"
+        }
+
+    elif pipeline.stage in ["search", "revising", "synthesis"]:
+        return {
+            "status": "running",
+            "message": f"Stage '{pipeline.stage}' is still running, please wait"
+        }
 
     else:
-        return {"status": "waiting", "message": "No action needed"}
+        return {
+            "status": "error",
+            "message": f"Cannot continue from stage '{pipeline.stage}'"
+        }
 
 
 async def run_revising_stage(pipeline_id: str):
@@ -229,10 +276,23 @@ async def run_revising_stage(pipeline_id: str):
         pipeline = active_pipelines[pipeline_id]
 
         state = AgentState(
-            original_query="",  # 从 pipeline 获取
+            original_query=pipeline.search_output.reasoning.split("'")[1] if pipeline.search_output else "",
             pipeline_id=pipeline_id,
+            search_keywords=pipeline.search_output.keywords,
+            keyword_search_results=pipeline.search_output.keyword_results,  # 👈 添加这个
             raw_papers=pipeline.search_output.papers,
-            # ... 填充其他必要字段
+            search_reasoning=pipeline.search_output.reasoning,
+            accepted_papers=[],
+            rejected_decisions=[],
+            rejection_summary={},
+            final_answer="",
+            citations=[],
+            answer_structure={},
+            current_stage="revising",
+            human_interventions=[],
+            errors=[],
+            awaiting_human_review=False,
+            human_feedback=None
         )
 
         updated_state = await workflow.revising_agent.process(state)
@@ -245,6 +305,8 @@ async def run_revising_stage(pipeline_id: str):
             rejection_summary=updated_state["rejection_summary"]
         )
 
+        logger.info(f"Revising stage completed for {pipeline_id}")
+
     except Exception as e:
         logger.error(f"Revising stage failed for {pipeline_id}: {e}")
         pipeline.stage = "error"
@@ -256,10 +318,23 @@ async def run_synthesis_stage(pipeline_id: str):
         pipeline = active_pipelines[pipeline_id]
 
         state = AgentState(
-            original_query="",  # 从 pipeline 获取
+            original_query=pipeline.search_output.reasoning.split("'")[1] if pipeline.search_output else "",
             pipeline_id=pipeline_id,
+            search_keywords=pipeline.search_output.keywords,
+            keyword_search_results=pipeline.search_output.keyword_results,  # 👈 添加这个
+            raw_papers=pipeline.search_output.papers,
+            search_reasoning=pipeline.search_output.reasoning,
             accepted_papers=pipeline.revising_output.accepted_papers,
-            # ... 填充其他必要字段
+            rejected_decisions=pipeline.revising_output.rejected_papers,
+            rejection_summary=pipeline.revising_output.rejection_summary,
+            final_answer="",
+            citations=[],
+            answer_structure={},
+            current_stage="synthesis",
+            human_interventions=[],
+            errors=[],
+            awaiting_human_review=False,
+            human_feedback=None
         )
 
         updated_state = await workflow.synthesis_agent.process(state)
@@ -269,12 +344,14 @@ async def run_synthesis_stage(pipeline_id: str):
         pipeline.synthesis_output = SynthesisAgentOutput(
             answer=updated_state["final_answer"],
             citations=updated_state["citations"],
-            confidence_score=0.85,  # 可以从 Agent 计算
+            confidence_score=0.85,
             structure=updated_state["answer_structure"]
         )
 
         # 标记完成
         history_service.complete_execution(pipeline_id)
+
+        logger.info(f"Synthesis stage completed for {pipeline_id}")
 
     except Exception as e:
         logger.error(f"Synthesis stage failed for {pipeline_id}: {e}")

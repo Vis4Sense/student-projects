@@ -108,7 +108,7 @@ class SearchAgent(BaseAgent):
             # 调用 ArXiv API
             papers = await self.arxiv_api.search(
                 query=kw.keyword,
-                max_results=20  # 每个关键词最多 20 篇
+                max_results=2  # 每个关键词最多 20 篇
             )
 
             # 为每篇论文标记是由哪个关键词找到的

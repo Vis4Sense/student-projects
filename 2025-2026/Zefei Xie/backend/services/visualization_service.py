@@ -5,6 +5,7 @@ File: visualization_service.py
 Description: [Add your description here]
 """
 
+from typing import Dict, Any, List
 from models.schemas import VisualizationData, PipelineState
 import logging
 
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class VisualizationService:
-    """将工作流状态转换为可视化数据（增强版）"""
+    """将工作流状态转换为可视化数据"""
 
     @staticmethod
     def generate_visualization(state: PipelineState) -> VisualizationData:
@@ -20,62 +21,91 @@ class VisualizationService:
         nodes = []
         edges = []
 
-        # ============ 节点 1: Search Agent（主节点）============
+        # ============ 1. Query 节点 ============
         nodes.append({
-            "id": "search_agent",
-            "type": "agent",
-            "label": "Search Agent",
-            "status": VisualizationService._get_node_status(state, "search"),
+            "id": "query",
+            "type": "query",
+            "label": "User Query",
+            "position": {"x": 400, "y": 50},  # 👈 确保有 position
             "data": {
-                "total_papers": len(state.search_output.papers) if state.search_output else 0,
-                "reasoning": state.search_output.reasoning if state.search_output else ""
+                "query": state.search_output.reasoning.split("'")[1] if state.search_output else "",
+                "timestamp": state.created_at.isoformat() if hasattr(state.created_at, 'isoformat') else str(
+                    state.created_at)
             }
         })
 
-        # ============ 子节点: 每个关键词 ============
-        if state.search_output and state.search_output.keyword_results:
-            for i, result in enumerate(state.search_output.keyword_results):
-                keyword_node_id = f"keyword_{i}"
+        # ============ 2. Keyword Generation 节点 ============
+        nodes.append({
+            "id": "keyword_gen",
+            "type": "keyword_gen",
+            "label": "Generate Keywords",
+            "position": {"x": 400, "y": 150},  # 👈 确保有 position
+            "data": {
+                "keywords_count": len(state.search_output.keywords) if state.search_output else 0,
+                "reasoning": state.search_output.reasoning if state.search_output else "",
+                "status": "completed" if state.search_output else "running"
+            }
+        })
 
-                # 创建关键词节点
+        edges.append({
+            "id": "query_to_keygen",
+            "source": "query",
+            "target": "keyword_gen",
+            "animated": not state.search_output
+        })
+
+        # ============ 3. 每个 Keyword 节点 ============
+        if state.search_output and state.search_output.keyword_results:
+            keyword_count = len(state.search_output.keyword_results)
+            spacing = 200
+            start_x = 400 - (keyword_count - 1) * spacing / 2
+
+            for i, result in enumerate(state.search_output.keyword_results):
+                keyword_id = f"keyword_{i}"
+
                 nodes.append({
-                    "id": keyword_node_id,
+                    "id": keyword_id,
                     "type": "keyword",
-                    "label": f"KW: {result.keyword.keyword}",
-                    "status": "completed",
+                    "label": result.keyword.keyword,
+                    "position": {"x": start_x + i * spacing, "y": 300},  # 👈 确保有 position
                     "data": {
                         "keyword": result.keyword.keyword,
                         "importance": result.keyword.importance,
-                        "papers_count": result.papers_count,
                         "is_custom": result.keyword.is_custom,
-                        "papers": [p.dict() for p in result.papers[:5]]  # 只显示前5篇
+                        "papers": [p.dict() for p in result.papers[:5]],  # 只传前5篇避免数据过大
+                        "papers_count": result.papers_count,
+                        "selected_papers": [],
+                        "status": "completed"
                     }
                 })
 
-                # 连接 Search Agent → 关键词节点
+                # 连接 Keyword Gen → Keyword
                 edges.append({
-                    "id": f"search_to_{keyword_node_id}",
-                    "source": "search_agent",
-                    "target": keyword_node_id,
+                    "id": f"keygen_to_{keyword_id}",
+                    "source": "keyword_gen",
+                    "target": keyword_id,
                     "label": f"{result.papers_count} papers",
                     "animated": False
                 })
 
-        # ============ 节点 2: Paper Pool（论文池）============
+        # ============ 4. Paper Pool 节点 ============
         nodes.append({
             "id": "paper_pool",
-            "type": "pool",
+            "type": "paper_pool",
             "label": "Paper Pool",
-            "status": "completed" if state.search_output else "pending",
+            "position": {"x": 400, "y": 500},  # 👈 确保有 position
             "data": {
-                "total_unique_papers": len(state.search_output.papers) if state.search_output else 0,
-                "duplicates_removed": state.search_output.total_papers_before_dedup - len(
-                    state.search_output.papers) if state.search_output else 0,
-                "papers_by_keyword": state.search_output.papers_by_keyword if state.search_output else {}
+                "total_papers": len(state.search_output.papers) if state.search_output else 0,
+                "papers_by_keyword": state.search_output.papers_by_keyword if state.search_output else {},
+                "duplicates_removed": (
+                    state.search_output.total_papers_before_dedup - len(state.search_output.papers)
+                    if state.search_output else 0
+                ),
+                "status": "completed" if state.search_output else "pending"
             }
         })
 
-        # 连接所有关键词 → Paper Pool
+        # 连接所有 Keyword → Paper Pool
         if state.search_output and state.search_output.keyword_results:
             for i in range(len(state.search_output.keyword_results)):
                 edges.append({
@@ -85,15 +115,19 @@ class VisualizationService:
                     "animated": False
                 })
 
-        # ============ 节点 3: Revising Agent ============
+        # ============ 5. Revising Agent 节点 ============
         nodes.append({
             "id": "revising_agent",
             "type": "agent",
             "label": "Revising Agent",
-            "status": VisualizationService._get_node_status(state, "revising"),
+            "position": {"x": 400, "y": 650},  # 👈 确保有 position
             "data": {
-                "accepted_count": len(state.revising_output.accepted_papers) if state.revising_output else 0,
-                "rejected_count": len(state.revising_output.rejected_papers) if state.revising_output else 0
+                "agent_type": "revising",
+                "status": VisualizationService._get_node_status(state, "revising"),
+                "output": {
+                    "accepted_count": len(state.revising_output.accepted_papers) if state.revising_output else 0,
+                    "rejected_count": len(state.revising_output.rejected_papers) if state.revising_output else 0
+                } if state.revising_output else None
             }
         })
 
@@ -105,14 +139,18 @@ class VisualizationService:
             "animated": state.stage == "revising"
         })
 
-        # ============ 节点 4: Synthesis Agent ============
+        # ============ 6. Synthesis Agent 节点 ============
         nodes.append({
             "id": "synthesis_agent",
             "type": "agent",
             "label": "Synthesis Agent",
-            "status": VisualizationService._get_node_status(state, "synthesis"),
+            "position": {"x": 400, "y": 800},  # 👈 确保有 position
             "data": {
-                "citation_count": len(state.synthesis_output.citations) if state.synthesis_output else 0
+                "agent_type": "synthesis",
+                "status": VisualizationService._get_node_status(state, "synthesis"),
+                "output": {
+                    "citation_count": len(state.synthesis_output.citations) if state.synthesis_output else 0
+                } if state.synthesis_output else None
             }
         })
 
@@ -153,3 +191,4 @@ class VisualizationService:
             return "running"
         else:
             return "pending"
+
