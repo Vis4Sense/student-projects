@@ -89,7 +89,7 @@ async def test_search_agent():
         logger.info("✅ Search Agent initialized")
 
         # 测试查询
-        test_query = "What are the latest techniques in large language model interpretability?"
+        test_query = "How to visualize the conversation flow of multi-step LLM agents to diagnose and optimize the root causes of task failures?"
         logger.info(f"📝 Test Query: {test_query}")
 
         # 创建初始状态
@@ -226,8 +226,11 @@ async def test_full_workflow():
     """测试完整的 Agent 工作流"""
     print_section("TEST 4: Full Agent Workflow")
 
+    # Record start time
+    start_time = datetime.now()
+
     try:
-        test_query = "What are effective methods for making large language models more transparent?"
+        test_query = "How to visualize the conversation flow of multi-step LLM agents to diagnose and optimize the root causes of task failures?"
         logger.info(f"🎯 Test Query: {test_query}")
 
         # 步骤 1: Search
@@ -247,6 +250,11 @@ async def test_full_workflow():
         save_test_results(state)
 
         print_section("✅ FULL WORKFLOW COMPLETED SUCCESSFULLY")
+
+        # Record end time
+        end_time = datetime.now()
+        print(f"\n⏱  Test duration: {end_time - start_time}")
+
         return True
 
     except Exception as e:

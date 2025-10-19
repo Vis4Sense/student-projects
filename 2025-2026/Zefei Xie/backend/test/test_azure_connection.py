@@ -30,7 +30,6 @@ async def test_azure_openai():
             api_key=settings.AZURE_OPENAI_API_KEY,
             azure_deployment=settings.AZURE_OPENAI_DEPLOYMENT,
             api_version=settings.AZURE_OPENAI_API_VERSION,
-            temperature=0.2
         )
 
         logger.info("✅ Azure OpenAI client initialized successfully")

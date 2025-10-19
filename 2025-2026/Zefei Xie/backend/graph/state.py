@@ -6,18 +6,19 @@ Description: [Add your description here]
 """
 
 from typing import TypedDict, List, Optional, Dict, Any
-from models.schemas import Paper, KeywordModel, PaperReviewDecision, Citation
+from models.schemas import Paper, KeywordModel, PaperReviewDecision, Citation, KeywordSearchResult
 
 
 class AgentState(TypedDict):
-    """LangGraph 状态定义"""
+    """LangGraph 状态定义（更新版）"""
     # 输入
     original_query: str
     pipeline_id: str
 
     # Search Agent
     search_keywords: List[KeywordModel]
-    raw_papers: List[Paper]
+    keyword_search_results: List[KeywordSearchResult]  # 每个关键词的详细结果
+    raw_papers: List[Paper]  # 去重后的所有论文
     search_reasoning: str
 
     # Revising Agent

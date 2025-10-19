@@ -9,10 +9,11 @@ from fastapi import APIRouter, HTTPException, BackgroundTasks
 from models.schemas import (
     SearchRequest, HumanInterventionRequest, PipelineState,
     VisualizationData, Paper, PaperReviewDecision, SearchAgentOutput, KeywordModel, RevisingAgentOutput,
-    SynthesisAgentOutput
+    SynthesisAgentOutput, KeywordSearchResult
 )
 from graph.workflow import ResearchWorkflow
 from graph.state import AgentState
+from services.intervention_service import InterventionService
 from services.visualization_service import VisualizationService
 from services.decision_history import DecisionHistoryService
 import uuid
@@ -23,12 +24,13 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1", tags=["research"])
 
-# 全局服务实例（生产环境应使用依赖注入）
+# 全局服务实例
 workflow = ResearchWorkflow()
 viz_service = VisualizationService()
+intervention_service = InterventionService()
 history_service = DecisionHistoryService()
 
-# 存储运行中的管道状态（生产环境应使用 Redis/数据库）
+# 存储运行中的管道状态
 active_pipelines: Dict[str, PipelineState] = {}
 
 
@@ -123,80 +125,77 @@ async def get_visualization(pipeline_id: str):
 @router.post("/pipeline/{pipeline_id}/intervention")
 async def apply_human_intervention(
         pipeline_id: str,
-        intervention: HumanInterventionRequest,
-        background_tasks: BackgroundTasks
+        intervention: HumanInterventionRequest
 ):
     """
-    应用人工干预
+    应用人工干预（增强版）
 
     支持的干预类型:
-    - edit_keyword: 修改搜索关键词
-    - override_paper: 推翻论文筛选决策
-    - edit_answer: 编辑最终答案
+    1. edit_keywords - 修改关键词
+       {
+           "action_type": "edit_keywords",
+           "details": {
+               "add_keywords": [{"keyword": "new_kw", "importance": 0.9}],
+               "remove_keywords": ["old_kw"],
+               "edit_keywords": {"old": "new"},
+               "adjust_importance": {"kw1": 0.8}
+           }
+       }
+
+    2. adjust_keyword_results - 调整单个关键词的结果
+       {
+           "action_type": "adjust_keyword_results",
+           "details": {
+               "keyword": "interpretability",
+               "action": "remove_paper",
+               "paper_id": "arxiv_123"
+           }
+       }
+
+    3. override_paper - 推翻论文筛选决策
+       {
+           "action_type": "override_paper",
+           "details": {
+               "paper_id": "arxiv_456",
+               "action": "accept",
+               "reason": "This paper is actually relevant"
+           }
+       }
+
+    4. edit_answer - 编辑最终答案
+       {
+           "action_type": "edit_answer",
+           "details": {
+               "edited_answer": "New answer text..."
+           }
+       }
     """
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
 
     pipeline = active_pipelines[pipeline_id]
 
-    # 记录干预
-    intervention_record = intervention.dict()
-    pipeline.human_interventions.append(intervention_record)
-    history_service.add_human_intervention(pipeline_id, intervention_record)
+    # 使用 InterventionService 处理干预
+    result = await intervention_service.apply_intervention(pipeline, intervention)
 
-    # 根据干预类型执行操作
-    if intervention.action_type == "edit_keyword":
-        # 修改关键词后重新搜索
-        new_keywords = intervention.details.get("keywords", [])
-        pipeline.search_output.keywords = [
-            KeywordModel(**kw) for kw in new_keywords
-        ]
-        background_tasks.add_task(rerun_search, pipeline_id)
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
 
-    elif intervention.action_type == "override_paper":
-        # 推翻论文决策
-        paper_id = intervention.details.get("paper_id")
-        action = intervention.details.get("action")  # "accept" or "reject"
-
-        if action == "accept":
-            # 从拒绝列表移到接受列表
-            rejected_paper = next(
-                (p for p in pipeline.revising_output.rejected_papers if p.paper_id == paper_id),
-                None
-            )
-            if rejected_paper:
-                # 找到原始论文
-                paper = next(
-                    (p for p in pipeline.search_output.papers if p.id == paper_id),
-                    None
-                )
-                if paper:
-                    pipeline.revising_output.accepted_papers.append(paper)
-                    pipeline.revising_output.rejected_papers.remove(rejected_paper)
-
-    elif intervention.action_type == "edit_answer":
-        # 编辑最终答案
-        new_answer = intervention.details.get("answer")
-        pipeline.synthesis_output.answer = new_answer
-
-    logger.info(f"Applied intervention to {pipeline_id}: {intervention.action_type}")
-    return {"status": "success", "message": "Intervention applied"}
+    return result
 
 
-async def rerun_search(pipeline_id: str):
-    """重新运行搜索（在关键词被修改后）"""
+@router.get("/pipeline/{pipeline_id}/interventions")
+async def get_intervention_history(pipeline_id: str):
+    """获取所有干预历史"""
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
     pipeline = active_pipelines[pipeline_id]
-
-    # 重新调用 Search Agent
-    state = AgentState(
-        original_query=pipeline.search_output.reasoning,  # 使用原始查询
-        pipeline_id=pipeline_id,
-        search_keywords=pipeline.search_output.keywords,
-        # ... 其他字段
-    )
-
-    updated_state = await workflow.search_agent._search_papers(state["search_keywords"])
-    pipeline.search_output.papers = updated_state
+    return {
+        "pipeline_id": pipeline_id,
+        "total_interventions": len(pipeline.human_interventions),
+        "interventions": pipeline.human_interventions
+    }
 
 
 @router.post("/pipeline/{pipeline_id}/continue")
@@ -299,3 +298,99 @@ async def get_rejected_papers(pipeline_id: str):
         return []
 
     return pipeline.revising_output.rejected_papers
+
+
+# 在现有的 routes.py 中添加以下端点
+
+@router.get("/pipeline/{pipeline_id}/keywords", response_model=List[KeywordSearchResult])
+async def get_keyword_results(pipeline_id: str):
+    """
+    获取每个关键词的搜索结果
+
+    返回示例:
+    [
+        {
+            "keyword": {"keyword": "interpretability", "importance": 1.0},
+            "papers": [...],
+            "papers_count": 15
+        },
+        ...
+    ]
+    """
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    pipeline = active_pipelines[pipeline_id]
+    if not pipeline.search_output:
+        return []
+
+    return pipeline.search_output.keyword_results
+
+
+@router.get("/pipeline/{pipeline_id}/papers/by-keyword/{keyword}")
+async def get_papers_by_keyword(pipeline_id: str, keyword: str):
+    """
+    获取某个关键词找到的所有论文
+
+    示例: GET /pipeline/xxx/papers/by-keyword/interpretability
+    """
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    pipeline = active_pipelines[pipeline_id]
+    if not pipeline.search_output:
+        return {"papers": []}
+
+    # 找到该关键词的搜索结果
+    keyword_result = next(
+        (kr for kr in pipeline.search_output.keyword_results if kr.keyword.keyword == keyword),
+        None
+    )
+
+    if not keyword_result:
+        raise HTTPException(status_code=404, detail=f"Keyword '{keyword}' not found")
+
+    return {
+        "keyword": keyword,
+        "papers_count": keyword_result.papers_count,
+        "papers": keyword_result.papers
+    }
+
+
+@router.get("/pipeline/{pipeline_id}/stats")
+async def get_search_statistics(pipeline_id: str):
+    """
+    获取搜索统计信息
+
+    返回示例:
+    {
+        "total_keywords": 3,
+        "total_papers_before_dedup": 45,
+        "total_unique_papers": 32,
+        "duplicates_removed": 13,
+        "keyword_breakdown": {
+            "interpretability": 15,
+            "explainability": 18,
+            "transparency": 12
+        }
+    }
+    """
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    pipeline = active_pipelines[pipeline_id]
+    if not pipeline.search_output:
+        return {"error": "Search not completed yet"}
+
+    keyword_breakdown = {
+        kr.keyword.keyword: kr.papers_count
+        for kr in pipeline.search_output.keyword_results
+    }
+
+    return {
+        "total_keywords": len(pipeline.search_output.keywords),
+        "total_papers_before_dedup": pipeline.search_output.total_papers_before_dedup,
+        "total_unique_papers": len(pipeline.search_output.papers),
+        "duplicates_removed": pipeline.search_output.total_papers_before_dedup - len(pipeline.search_output.papers),
+        "keyword_breakdown": keyword_breakdown
+    }

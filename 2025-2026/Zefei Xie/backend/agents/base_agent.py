@@ -34,10 +34,6 @@ class BaseAgent(ABC):
                 api_key=settings.AZURE_OPENAI_API_KEY,
                 azure_deployment=settings.AZURE_OPENAI_DEPLOYMENT,
                 api_version=settings.AZURE_OPENAI_API_VERSION,
-                temperature=0.2,
-                max_tokens=2000,
-                timeout=60,
-                max_retries=3
             )
             logger.info(f"Initialized {name} with Azure OpenAI deployment: {settings.AZURE_OPENAI_DEPLOYMENT}")
 
