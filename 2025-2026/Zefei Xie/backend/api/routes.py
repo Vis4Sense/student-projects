@@ -24,28 +24,24 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1", tags=["research"])
 
-# 全局服务实例
+# Global variables
 workflow = ResearchWorkflow()
 viz_service = VisualizationService()
 intervention_service = InterventionService()
 history_service = DecisionHistoryService()
 
-# 存储运行中的管道状态
+# Store active pipelines in memory
 active_pipelines: Dict[str, PipelineState] = {}
 
 
 @router.post("/pipeline/start", response_model=PipelineState)
 async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTasks):
     """
-    启动研究工作流
-
-    1. 创建新的 pipeline_id
-    2. 初始化状态
-    3. 在后台启动 Search Agent
+    Start a new research pipeline
     """
     pipeline_id = str(uuid.uuid4())
 
-    # 创建初始状态
+    # Initialize the state object
     initial_state = AgentState(
         original_query=request.query,
         pipeline_id=pipeline_id,
@@ -66,13 +62,13 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
         keyword_search_results=[]
     )
 
-    # 创建执行记录
+    # Create a new execution in the decision history
     history_service.create_execution(pipeline_id, request.query)
 
-    # 启动工作流（仅执行 Search Agent）
+    # Start the search agent in a background task
     background_tasks.add_task(run_search_stage, pipeline_id, initial_state)
 
-    # 返回初始状态
+    # return the state object
     pipeline_state = PipelineState(
         pipeline_id=pipeline_id,
         stage="search",
@@ -85,28 +81,28 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
 
 
 async def run_search_stage(pipeline_id: str, state: AgentState):
-    """后台任务：运行 Search Agent"""
+    """Searches for papers based on the original query"""
     try:
-        # 只运行搜索阶段
+        # Only run the search agent if it hasn't already been run
         updated_state = await workflow.search_agent.process(state)
 
-        # 更新存储的状态
+        # Update the active pipeline state
         pipeline = active_pipelines[pipeline_id]
         pipeline.stage = "search_complete"
 
-        # 👇 完整的 SearchAgentOutput 创建
+        # Searches for papers based on the search keywords
         pipeline.search_output = SearchAgentOutput(
             keywords=updated_state["search_keywords"],
-            keyword_results=updated_state["keyword_search_results"],  # 👈 添加这个
+            keyword_results=updated_state["keyword_search_results"],
             papers=updated_state["raw_papers"],
-            papers_by_keyword={},  # 👈 添加这个（从 keyword_results 计算）
+            papers_by_keyword={},
             reasoning=updated_state["search_reasoning"],
             total_papers_before_dedup=sum(
                 kr.papers_count for kr in updated_state["keyword_search_results"]
             )
         )
 
-        # 计算 papers_by_keyword
+        # calculate papers_by_keyword
         papers_by_keyword = {}
         for result in updated_state["keyword_search_results"]:
             papers_by_keyword[result.keyword.keyword] = [
@@ -123,7 +119,7 @@ async def run_search_stage(pipeline_id: str, state: AgentState):
 
 @router.get("/pipeline/{pipeline_id}", response_model=PipelineState)
 async def get_pipeline_status(pipeline_id: str):
-    """获取管道当前状态"""
+    """get the status of a pipeline"""
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
 
@@ -132,7 +128,7 @@ async def get_pipeline_status(pipeline_id: str):
 
 @router.get("/pipeline/{pipeline_id}/visualization", response_model=VisualizationData)
 async def get_visualization(pipeline_id: str):
-    """获取可视化数据"""
+    """get the visualization of a pipeline"""
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
 
@@ -146,10 +142,7 @@ async def apply_human_intervention(
         intervention: HumanInterventionRequest
 ):
     """
-    应用人工干预（增强版）
-
-    支持的干预类型:
-    1. edit_keywords - 修改关键词
+    1. edit_keywords
        {
            "action_type": "edit_keywords",
            "details": {
@@ -160,7 +153,7 @@ async def apply_human_intervention(
            }
        }
 
-    2. adjust_keyword_results - 调整单个关键词的结果
+    2. adjust_keyword_results
        {
            "action_type": "adjust_keyword_results",
            "details": {
@@ -170,7 +163,7 @@ async def apply_human_intervention(
            }
        }
 
-    3. override_paper - 推翻论文筛选决策
+    3. override_paper
        {
            "action_type": "override_paper",
            "details": {
@@ -180,7 +173,7 @@ async def apply_human_intervention(
            }
        }
 
-    4. edit_answer - 编辑最终答案
+    4. edit_answer
        {
            "action_type": "edit_answer",
            "details": {
@@ -193,7 +186,7 @@ async def apply_human_intervention(
 
     pipeline = active_pipelines[pipeline_id]
 
-    # 使用 InterventionService 处理干预
+    # InterventionService
     result = await intervention_service.apply_intervention(pipeline, intervention)
 
     if not result["success"]:
@@ -204,7 +197,7 @@ async def apply_human_intervention(
 
 @router.get("/pipeline/{pipeline_id}/interventions")
 async def get_intervention_history(pipeline_id: str):
-    """获取所有干预历史"""
+    """get intervention history for a pipeline"""
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
 
@@ -219,10 +212,7 @@ async def get_intervention_history(pipeline_id: str):
 @router.post("/pipeline/{pipeline_id}/continue")
 async def continue_pipeline(pipeline_id: str, background_tasks: BackgroundTasks):
     """
-    继续执行工作流到下一个阶段
-
-    - 如果当前在 search_complete，执行 Revising Agent
-    - 如果在 revising_complete，执行 Synthesis Agent
+    continue a pipeline from the current stage
     """
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
@@ -232,8 +222,8 @@ async def continue_pipeline(pipeline_id: str, background_tasks: BackgroundTasks)
     logger.info(f"Continue request for pipeline {pipeline_id}, current stage: {pipeline.stage}")
 
     if pipeline.stage == "search_complete":
-        # 启动 Revising Agent
-        pipeline.stage = "revising"  # 立即更新状态为 "运行中"
+        # Revising Agent
+        pipeline.stage = "revising"
         background_tasks.add_task(run_revising_stage, pipeline_id)
         return {
             "status": "success",
@@ -242,8 +232,8 @@ async def continue_pipeline(pipeline_id: str, background_tasks: BackgroundTasks)
         }
 
     elif pipeline.stage == "revising_complete":
-        # 启动 Synthesis Agent
-        pipeline.stage = "synthesis"  # 立即更新状态为 "运行中"
+        # Synthesis Agent
+        pipeline.stage = "synthesis"
         background_tasks.add_task(run_synthesis_stage, pipeline_id)
         return {
             "status": "success",
@@ -279,7 +269,7 @@ async def run_revising_stage(pipeline_id: str):
             original_query=pipeline.search_output.reasoning.split("'")[1] if pipeline.search_output else "",
             pipeline_id=pipeline_id,
             search_keywords=pipeline.search_output.keywords,
-            keyword_search_results=pipeline.search_output.keyword_results,  # 👈 添加这个
+            keyword_search_results=pipeline.search_output.keyword_results,
             raw_papers=pipeline.search_output.papers,
             search_reasoning=pipeline.search_output.reasoning,
             accepted_papers=[],
