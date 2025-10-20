@@ -15,23 +15,19 @@ logger = logging.getLogger(__name__)
 
 
 class SynthesisAgent(BaseAgent):
-    """综合 Agent - 生成最终答案并引用"""
+    """Synthesis agent"""
 
     def __init__(self):
         super().__init__(name="SynthesisAgent")
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        1. 从接受的论文中提取证据
-        2. 合成连贯答案
-        3. 标注引用
-        """
+        """Process the state and generate an answer"""
         papers = state["accepted_papers"]
         query = state["original_query"]
 
         logger.info(f"SynthesisAgent synthesizing from {len(papers)} papers")
 
-        # 生成答案
+        # Generate answer and citations
         answer_data = await self._synthesize_answer(query, papers)
 
         state["final_answer"] = answer_data["answer"]
@@ -44,7 +40,7 @@ class SynthesisAgent(BaseAgent):
         return state
 
     async def _synthesize_answer(self, query: str, papers: List[Paper]) -> Dict[str, Any]:
-        """合成答案并标注引用"""
+        """Synthesize an answer from the given papers and query"""
         system_prompt = """You are a research synthesis expert.
         Given a question and relevant papers, write a comprehensive answer.
 
@@ -74,7 +70,7 @@ class SynthesisAgent(BaseAgent):
 
         papers_text = "\n\n".join([
             f"[{i + 1}] {p.title}\nAbstract: {p.abstract[:300]}"
-            for i, p in enumerate(papers[:10])  # 限制 10 篇
+            for i, p in enumerate(papers[:10])  # Limit to 10 papers for demo purposes
         ])
 
         user_message = f"""
@@ -90,7 +86,7 @@ class SynthesisAgent(BaseAgent):
 
         try:
             data = json.loads(response)
-            # 转换 citations 为 Pydantic 模型
+            # Convert citation data to Citation objects
             data["citations"] = [
                 Citation(**c) for c in data.get("citations", [])
             ]

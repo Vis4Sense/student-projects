@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class ResearchWorkflow:
-    """研究工作流 - LangGraph 实现"""
+    """LangGraph workflow for research paper"""
 
     def __init__(self):
         self.search_agent = SearchAgent()
@@ -26,16 +26,16 @@ class ResearchWorkflow:
         self.graph = self._build_graph()
 
     def _build_graph(self) -> StateGraph:
-        """构建 LangGraph 工作流"""
+        """Build LangGraph workflow graph"""
         workflow = StateGraph(AgentState)
 
-        # 添加节点
+        # Add nodes
         workflow.add_node("search", self._search_node)
         workflow.add_node("revising", self._revising_node)
         workflow.add_node("synthesis", self._synthesis_node)
         workflow.add_node("human_review", self._human_review_node)
 
-        # 定义边
+        # Define edges and conditional edges
         workflow.set_entry_point("search")
         workflow.add_edge("search", "revising")
         workflow.add_conditional_edges(
@@ -52,30 +52,30 @@ class ResearchWorkflow:
         return workflow.compile()
 
     async def _search_node(self, state: AgentState) -> AgentState:
-        """搜索节点"""
+        """Search node"""
         return await self.search_agent.process(state)
 
     async def _revising_node(self, state: AgentState) -> AgentState:
-        """筛选节点"""
+        """Final revision node"""
         return await self.revising_agent.process(state)
 
     async def _synthesis_node(self, state: AgentState) -> AgentState:
-        """综合节点"""
+        """Synthesis node"""
         return await self.synthesis_agent.process(state)
 
     async def _human_review_node(self, state: AgentState) -> AgentState:
-        """人工审核节点 - 暂停等待人工干预"""
+        """Human review node"""
         logger.info("Workflow paused for human review")
         state["current_stage"] = "awaiting_human_review"
         # 这里实际上会被外部的 FastAPI 路由中断
         return state
 
     def _should_wait_for_human(self, state: AgentState) -> str:
-        """判断是否需要人工审核"""
+        """Judge whether to wait for human review"""
         if state.get("awaiting_human_review", False):
             return "human_review"
         return "synthesis"
 
     async def run(self, initial_state: AgentState) -> AgentState:
-        """运行完整工作流"""
+        """Run the workflow"""
         return await self.graph.ainvoke(initial_state)

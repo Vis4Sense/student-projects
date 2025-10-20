@@ -17,36 +17,30 @@ logger = logging.getLogger(__name__)
 
 
 class SearchAgent(BaseAgent):
-    """搜索 Agent - 负责关键词生成和论文检索"""
+    """SearchAgent """
 
     def __init__(self):
         super().__init__(name="SearchAgent")
         self.arxiv_api = ArxivAPI()
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        1. 分析用户查询
-        2. 生成搜索关键词
-        3. 为每个关键词分别检索论文
-        4. 合并并去重
-        """
         query = state["original_query"]
         logger.info(f"SearchAgent processing query: {query}")
 
-        # 步骤 1: 生成关键词
+        # Get keywords from LLM
         keywords = await self._generate_keywords(query)
         logger.info(f"Generated {len(keywords)} keywords: {[kw.keyword for kw in keywords]}")
 
-        # 步骤 2: 为每个关键词独立搜索
+        # Searches papers for each keyword
         keyword_results = await self._search_by_keywords(keywords)
 
-        # 步骤 3: 合并并去重
+        # Get merged and deduplicated papers
         merged_papers, papers_by_keyword = self._merge_and_deduplicate(keyword_results)
 
-        # 步骤 4: 生成推理说明
+        # Generate reasoning
         reasoning = self._generate_reasoning(query, keywords, keyword_results, merged_papers)
 
-        # 步骤 5: 创建输出对象
+        # Create search output
         search_output = SearchAgentOutput(
             keywords=keywords,
             keyword_results=keyword_results,
@@ -56,7 +50,7 @@ class SearchAgent(BaseAgent):
             total_papers_before_dedup=sum(len(kr.papers) for kr in keyword_results)
         )
 
-        # 更新状态
+        # Update state
         state["search_keywords"] = keywords
         state["keyword_search_results"] = keyword_results  # 新增字段
         state["raw_papers"] = merged_papers
@@ -68,7 +62,7 @@ class SearchAgent(BaseAgent):
         return state
 
     async def _generate_keywords(self, query: str) -> List[KeywordModel]:
-        """使用 LLM 生成搜索关键词"""
+        """Use LLM to generate keywords for the given query"""
         system_prompt = """You are an expert research assistant. 
         Given a research question, generate 3-5 precise academic search keywords.
         Return ONLY a JSON array of keywords with importance scores.
@@ -99,24 +93,24 @@ class SearchAgent(BaseAgent):
             return [KeywordModel(keyword=query, importance=1.0, is_custom=False)]
 
     async def _search_by_keywords(self, keywords: List[KeywordModel]) -> List[KeywordSearchResult]:
-        """为每个关键词独立搜索并记录结果"""
+        """Search papers for each keyword using ArXiv API"""
         keyword_results = []
 
         for kw in keywords:
             logger.info(f"Searching for keyword: '{kw.keyword}'")
 
-            # 调用 ArXiv API
+            # Use ArXiv API to search for papers
             papers = await self.arxiv_api.search(
                 query=kw.keyword,
-                max_results=2  # 每个关键词最多 20 篇
+                max_results=2  # Number of papers to retrieve
             )
 
-            # 为每篇论文标记是由哪个关键词找到的
+            # Tag papers with keyword
             for paper in papers:
                 if kw.keyword not in paper.found_by_keywords:
                     paper.found_by_keywords.append(kw.keyword)
 
-            # 创建关键词搜索结果
+            # Create search result object
             result = KeywordSearchResult(
                 keyword=kw,
                 papers=papers,
@@ -133,11 +127,7 @@ class SearchAgent(BaseAgent):
             keyword_results: List[KeywordSearchResult]
     ) -> tuple[List[Paper], Dict[str, List[str]]]:
         """
-        合并所有关键词的搜索结果并去重
-
-        返回:
-            - merged_papers: 去重后的论文列表
-            - papers_by_keyword: 关键词 -> 论文ID 的映射
+        Gather and merge papers from each keyword search result,
         """
         seen_titles = {}  # title -> Paper
         papers_by_keyword = {}  # keyword -> [paper_ids]
@@ -147,17 +137,15 @@ class SearchAgent(BaseAgent):
             papers_by_keyword[keyword_name] = []
 
             for paper in result.papers:
-                # 使用标题作为去重依据
+                # Use normalized title to deduplicate
                 title_normalized = paper.title.lower().strip()
 
                 if title_normalized in seen_titles:
-                    # 论文已存在，更新关键词列表
                     existing_paper = seen_titles[title_normalized]
                     if keyword_name not in existing_paper.found_by_keywords:
                         existing_paper.found_by_keywords.append(keyword_name)
                     papers_by_keyword[keyword_name].append(existing_paper.id)
                 else:
-                    # 新论文，添加到集合
                     seen_titles[title_normalized] = paper
                     papers_by_keyword[keyword_name].append(paper.id)
 
@@ -175,7 +163,7 @@ class SearchAgent(BaseAgent):
             keyword_results: List[KeywordSearchResult],
             merged_papers: List[Paper]
     ) -> str:
-        """生成详细的搜索推理说明"""
+        """Generate reasoning for the search results"""
         kw_details = []
         for result in keyword_results:
             kw_details.append(

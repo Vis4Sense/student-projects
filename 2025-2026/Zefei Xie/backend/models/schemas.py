@@ -11,19 +11,19 @@ from datetime import datetime
 
 
 class KeywordModel(BaseModel):
-    """搜索关键词模型"""
+    """searches.models.Keyword"""
     keyword: str
     importance: float = Field(default=1.0, ge=0.0, le=1.0)
     is_custom: bool = False  # 是否由用户自定义
 
 class SearchRequest(BaseModel):
-    """搜索请求"""
+    """searches.models.SearchRequest"""
     query: str
     keywords: List[KeywordModel] = []
     max_results: int = 100
 
 class Paper(BaseModel):
-    """论文模型"""
+    """Paper model"""
     id: str
     title: str
     abstract: str
@@ -35,7 +35,7 @@ class Paper(BaseModel):
     found_by_keywords: List[str] = []  # 记录是哪些关键词找到的
 
 class KeywordSearchResult(BaseModel):
-    """单个关键词的搜索结果"""
+    """single keyword search result"""
     keyword: KeywordModel
     papers: List[Paper]
     search_timestamp: datetime = Field(default_factory=datetime.now)
@@ -47,7 +47,7 @@ class KeywordSearchResult(BaseModel):
 
 
 class SearchAgentOutput(BaseModel):
-    """搜索 Agent 输出"""
+    """search agent output"""
     keywords: List[KeywordModel]
     keyword_results: List[KeywordSearchResult]  # 每个关键词的独立结果
     papers: List[Paper]  # 所有论文的去重集合
@@ -57,7 +57,7 @@ class SearchAgentOutput(BaseModel):
 
 
 class PaperReviewDecision(BaseModel):
-    """论文审核决策"""
+    """Paper review decision"""
     paper_id: str
     decision: str  # "accept", "reject"
     reason: str
@@ -65,32 +65,32 @@ class PaperReviewDecision(BaseModel):
     human_note: Optional[str] = None
 
 class RevisingAgentOutput(BaseModel):
-    """筛选 Agent 输出"""
+    """Revising agent output"""
     accepted_papers: List[Paper]
     rejected_papers: List[PaperReviewDecision]
     rejection_summary: Dict[str, int]  # 拒绝理由统计
 
 class SynthesisRequest(BaseModel):
-    """综合请求"""
+    """Synthesis request"""
     original_question: str
     papers: List[Paper]
 
 class Citation(BaseModel):
-    """引用模型"""
+    """Citation"""
     paper_id: str
     paper_title: str
     excerpt: str
     confidence: float
 
 class SynthesisAgentOutput(BaseModel):
-    """综合 Agent 输出"""
+    """Synthesis agent output"""
     answer: str
     citations: List[Citation]
     confidence_score: float
     structure: Dict[str, Any]
 
 class PipelineState(BaseModel):
-    """管道整体状态"""
+    """Pipeline state"""
     pipeline_id: str
     stage: Literal[
         "search",
@@ -109,7 +109,7 @@ class PipelineState(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.now)
 
 class KeywordInterventionDetail(BaseModel):
-    """关键词级别的干预细节"""
+    """Detail of keyword intervention"""
     action: Literal["add", "remove", "edit", "adjust_importance"]
     keyword: Optional[str] = None  # 原关键词
     new_keyword: Optional[str] = None  # 新关键词（用于编辑）
@@ -117,35 +117,35 @@ class KeywordInterventionDetail(BaseModel):
     reason: Optional[str] = None  # 干预原因
 
 class PaperInterventionDetail(BaseModel):
-    """论文级别的干预细节"""
+    """Detail of paper intervention"""
     action: Literal["accept", "reject", "restore"]
     paper_id: str
     reason: Optional[str] = None
     target_keyword: Optional[str] = None  # 如果要从特定关键词的结果中移除
 
 class AnswerInterventionDetail(BaseModel):
-    """答案编辑干预细节"""
+    """Detail of answer intervention"""
     original_answer: str
     edited_answer: str
     changes_summary: Optional[str] = None
 
 class HumanInterventionRequest(BaseModel):
-    """人工干预请求（增强版）"""
+    """Human intervention request"""
     pipeline_id: str
     stage: Literal["search", "revising", "synthesis"]
     action_type: Literal[
-        "edit_keywords",        # 修改关键词（可能触发重新搜索）
-        "adjust_keyword_results",  # 调整单个关键词的结果
-        "override_paper",       # 推翻论文筛选决策
-        "edit_answer",          # 编辑最终答案
-        "rerun_stage"          # 重新运行某个阶段
+        "edit_keywords",
+        "adjust_keyword_results",
+        "override_paper",
+        "edit_answer",
+        "rerun_stage"
     ]
-    details: Dict[str, Any]  # 根据 action_type 包含不同的数据
+    details: Dict[str, Any]
     timestamp: datetime = Field(default_factory=datetime.now)
-    user_note: Optional[str] = None  # 用户备注
+    user_note: Optional[str] = None
 
 class InterventionRecord(BaseModel):
-    """干预记录（用于审计）"""
+    """Intervention record"""
     intervention_id: str
     pipeline_id: str
     stage: str
@@ -156,7 +156,7 @@ class InterventionRecord(BaseModel):
     impact_summary: Optional[str] = None  # 干预的影响摘要
 
 class VisualizationData(BaseModel):
-    """可视化数据"""
+    """Visualization data"""
     nodes: List[Dict[str, Any]]
     edges: List[Dict[str, Any]]
     current_stage: str

@@ -271,7 +271,7 @@ async def continue_pipeline(pipeline_id: str, background_tasks: BackgroundTasks)
 
 
 async def run_revising_stage(pipeline_id: str):
-    """后台任务：运行 Revising Agent"""
+    """ Revising Agent"""
     try:
         pipeline = active_pipelines[pipeline_id]
 
@@ -297,7 +297,7 @@ async def run_revising_stage(pipeline_id: str):
 
         updated_state = await workflow.revising_agent.process(state)
 
-        # 更新状态
+        # Update state
         pipeline.stage = "revising_complete"
         pipeline.revising_output = RevisingAgentOutput(
             accepted_papers=updated_state["accepted_papers"],
@@ -313,7 +313,7 @@ async def run_revising_stage(pipeline_id: str):
 
 
 async def run_synthesis_stage(pipeline_id: str):
-    """后台任务：运行 Synthesis Agent"""
+    """Synthesis Agent"""
     try:
         pipeline = active_pipelines[pipeline_id]
 
@@ -321,7 +321,7 @@ async def run_synthesis_stage(pipeline_id: str):
             original_query=pipeline.search_output.reasoning.split("'")[1] if pipeline.search_output else "",
             pipeline_id=pipeline_id,
             search_keywords=pipeline.search_output.keywords,
-            keyword_search_results=pipeline.search_output.keyword_results,  # 👈 添加这个
+            keyword_search_results=pipeline.search_output.keyword_results,
             raw_papers=pipeline.search_output.papers,
             search_reasoning=pipeline.search_output.reasoning,
             accepted_papers=pipeline.revising_output.accepted_papers,
@@ -339,7 +339,7 @@ async def run_synthesis_stage(pipeline_id: str):
 
         updated_state = await workflow.synthesis_agent.process(state)
 
-        # 更新状态
+        # Update state
         pipeline.stage = "completed"
         pipeline.synthesis_output = SynthesisAgentOutput(
             answer=updated_state["final_answer"],
@@ -348,7 +348,7 @@ async def run_synthesis_stage(pipeline_id: str):
             structure=updated_state["answer_structure"]
         )
 
-        # 标记完成
+        # Finish execution
         history_service.complete_execution(pipeline_id)
 
         logger.info(f"Synthesis stage completed for {pipeline_id}")
@@ -360,13 +360,13 @@ async def run_synthesis_stage(pipeline_id: str):
 
 @router.get("/pipeline/{pipeline_id}/history")
 async def get_decision_history(pipeline_id: str):
-    """获取完整决策历史（用于审计）"""
+    """Get decision history for a pipeline"""
     return history_service.export_execution_report(pipeline_id)
 
 
 @router.get("/pipeline/{pipeline_id}/papers/rejected", response_model=List[PaperReviewDecision])
 async def get_rejected_papers(pipeline_id: str):
-    """获取被拒绝的论文列表（供人工审核）"""
+    """Get all rejected papers for a pipeline"""
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
 
@@ -377,14 +377,11 @@ async def get_rejected_papers(pipeline_id: str):
     return pipeline.revising_output.rejected_papers
 
 
-# 在现有的 routes.py 中添加以下端点
-
 @router.get("/pipeline/{pipeline_id}/keywords", response_model=List[KeywordSearchResult])
 async def get_keyword_results(pipeline_id: str):
     """
-    获取每个关键词的搜索结果
+    Get all keywords and their search results for a pipeline
 
-    返回示例:
     [
         {
             "keyword": {"keyword": "interpretability", "importance": 1.0},
@@ -407,9 +404,9 @@ async def get_keyword_results(pipeline_id: str):
 @router.get("/pipeline/{pipeline_id}/papers/by-keyword/{keyword}")
 async def get_papers_by_keyword(pipeline_id: str, keyword: str):
     """
-    获取某个关键词找到的所有论文
+    Get all papers for a keyword in a pipeline
 
-    示例: GET /pipeline/xxx/papers/by-keyword/interpretability
+    GET /pipeline/xxx/papers/by-keyword/interpretability
     """
     if pipeline_id not in active_pipelines:
         raise HTTPException(status_code=404, detail="Pipeline not found")
@@ -418,7 +415,7 @@ async def get_papers_by_keyword(pipeline_id: str, keyword: str):
     if not pipeline.search_output:
         return {"papers": []}
 
-    # 找到该关键词的搜索结果
+    # Find the keyword result for the given keyword
     keyword_result = next(
         (kr for kr in pipeline.search_output.keyword_results if kr.keyword.keyword == keyword),
         None
@@ -437,9 +434,8 @@ async def get_papers_by_keyword(pipeline_id: str, keyword: str):
 @router.get("/pipeline/{pipeline_id}/stats")
 async def get_search_statistics(pipeline_id: str):
     """
-    获取搜索统计信息
+    Get search statistics for a pipeline
 
-    返回示例:
     {
         "total_keywords": 3,
         "total_papers_before_dedup": 45,

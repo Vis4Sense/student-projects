@@ -16,12 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAgent(ABC):
-    """所有 Agent 的基类"""
+    """All agents should inherit from this class."""
 
     def __init__(self, name: str):
         self.name = name
 
-        # 初始化 llm
+        # llm
         if settings.PROVIDER == "openai":
             self.llm = ChatOpenAI(
                 model=settings.OPENAI_MODEL,
@@ -40,12 +40,12 @@ class BaseAgent(ABC):
     @abstractmethod
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """
-        处理状态并返回更新后的状态
+        Generate a response based on the current state.
         """
         pass
 
     async def _llm_call(self, system_prompt: str, user_message: str) -> str:
-        """通用 LLM 调用"""
+        """llm调用"""
         try:
             messages = [
                 SystemMessage(content=system_prompt),
@@ -58,6 +58,6 @@ class BaseAgent(ABC):
             raise
 
     def log_decision(self, decision_type: str, reasoning: str):
-        """记录决策"""
+        """reasoning"""
         logger.info(f"[{self.name}] Decision: {decision_type} | Reasoning: {reasoning}")
 

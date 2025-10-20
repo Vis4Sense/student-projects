@@ -10,8 +10,8 @@ from models.schemas import Paper, KeywordModel, PaperReviewDecision, Citation, K
 
 
 class AgentState(TypedDict):
-    """LangGraph 状态定义"""
-    # 输入
+    """LangGraph"""
+    # Input
     original_query: str
     pipeline_id: str
 
@@ -31,12 +31,12 @@ class AgentState(TypedDict):
     citations: List[Citation]
     answer_structure: Dict[str, Any]
 
-    # 元数据
+    # Management Agent
     current_stage: str
     human_interventions: List[Dict[str, Any]]
     errors: List[str]
 
-    # 人工干预标志
+    # Internal State
     awaiting_human_review: bool
     human_feedback: Optional[Dict[str, Any]]
 

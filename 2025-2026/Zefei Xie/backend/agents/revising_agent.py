@@ -15,17 +15,13 @@ logger = logging.getLogger(__name__)
 
 
 class RevisingAgent(BaseAgent):
-    """筛选 Agent - 根据 PRISMA 标准筛选论文"""
+    """Revising agent that evaluates papers based on PRISMA guidelines and records rejection reasons."""
 
     def __init__(self):
         super().__init__(name="RevisingAgent")
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        1. 评估每篇论文的相关性
-        2. 根据标准接受/拒绝
-        3. 记录拒绝理由
-        """
+        """Process the state and return the next state"""
         papers = state["raw_papers"]
         query = state["original_query"]
 
@@ -47,21 +43,21 @@ class RevisingAgent(BaseAgent):
                     is_overridden=False
                 ))
 
-        # 统计拒绝理由
+        # Rejection summary
         rejection_summary = self._summarize_rejections(rejected)
 
         state["accepted_papers"] = accepted
         state["rejected_decisions"] = rejected
         state["rejection_summary"] = rejection_summary
         state["current_stage"] = "revising_complete"
-        state["awaiting_human_review"] = True  # 标记需要人工审核
+        state["awaiting_human_review"] = True
 
         self.log_decision("paper_filtering", f"Accepted: {len(accepted)}, Rejected: {len(rejected)}")
 
         return state
 
     async def _evaluate_paper(self, paper: Paper, query: str) -> Dict[str, Any]:
-        """评估单篇论文"""
+        """Review a paper based on PRISMA guidelines"""
         system_prompt = """You are a systematic review expert following PRISMA guidelines.
         Evaluate if a paper is relevant to the research question.
 
@@ -92,11 +88,11 @@ class RevisingAgent(BaseAgent):
         try:
             return json.loads(response)
         except json.JSONDecodeError:
-            # 降级：保守接受
+            # Decoding error - included by default
             return {"decision": "accept", "reason": "Parse error - included by default"}
 
     def _summarize_rejections(self, rejected: List[PaperReviewDecision]) -> Dict[str, int]:
-        """统计拒绝理由"""
+        """Summarize the rejection reasons"""
         summary = {}
         for decision in rejected:
             reason = decision.reason

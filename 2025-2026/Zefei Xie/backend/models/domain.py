@@ -11,7 +11,7 @@ from datetime import datetime
 
 @dataclass
 class AgentDecision:
-    """Agent 决策记录"""
+    """Agent decision"""
     agent_name: str
     decision_type: str
     input_data: dict
@@ -22,7 +22,7 @@ class AgentDecision:
 
 @dataclass
 class WorkflowExecution:
-    """工作流执行记录"""
+    """workflow execution"""
     execution_id: str
     user_query: str
     stages_completed: List[str] = field(default_factory=list)

@@ -16,13 +16,13 @@ logger = logging.getLogger(__name__)
 
 
 class ArxivAPI:
-    """ArXiv API 封装"""
+    """ArXiv API"""
 
     def __init__(self):
         self.base_url = settings.ARXIV_API_URL
 
     async def search(self, query: str, max_results: int = 20) -> List[Paper]:
-        """搜索 ArXiv 论文"""
+        """Search ArXiv"""
         params = {
             "search_query": f"all:{query}",
             "start": 0,
@@ -41,7 +41,7 @@ class ArxivAPI:
             return []
 
     def _parse_arxiv_response(self, xml_data: str) -> List[Paper]:
-        """解析 ArXiv XML 响应"""
+        """Parse ArXiv response"""
         papers = []
         root = ET.fromstring(xml_data)
 

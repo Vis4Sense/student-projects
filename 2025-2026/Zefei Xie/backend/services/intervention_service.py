@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class InterventionService:
-    """处理人工干预的核心服务"""
+    """Defines the interface for handling human interventions"""
 
     def __init__(self):
         self.search_agent = SearchAgent()
@@ -34,9 +34,7 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        应用人工干预
-
-        返回: {"success": bool, "message": str, "changes": dict}
+        Apply a human intervention to a pipeline state
         """
         try:
             if intervention.action_type == "edit_keywords":
@@ -68,7 +66,7 @@ class InterventionService:
             }
 
     # ============================================================
-    # 1. 关键词干预
+    # 1. Keyword edit
     # ============================================================
 
     async def _handle_keyword_edit(
@@ -77,13 +75,7 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        处理关键词编辑干预
-
-        支持的操作:
-        - 添加新关键词
-        - 删除现有关键词
-        - 修改关键词文本
-        - 调整关键词重要性
+        Dead-simple keyword edit: add, remove, or edit keywords
         """
         if not pipeline.search_output:
             return {"success": False, "message": "Search not completed yet"}
@@ -91,32 +83,32 @@ class InterventionService:
         details = intervention.details
         changes = []
 
-        # 获取当前关键词列表
+        # Get current state
         current_keywords = pipeline.search_output.keywords.copy()
         current_results = pipeline.search_output.keyword_results.copy()
 
-        # 操作 1: 添加新关键词
+        # Add new keywords
         if "add_keywords" in details:
             new_keywords = details["add_keywords"]  # List[dict]
             for kw_data in new_keywords:
                 new_kw = KeywordModel(
                     keyword=kw_data["keyword"],
                     importance=kw_data.get("importance", 1.0),
-                    is_custom=True  # 标记为用户自定义
+                    is_custom=True  # Tag as custom
                 )
                 current_keywords.append(new_kw)
 
-                # 立即搜索该关键词
+                # Search for papers
                 papers = await self.search_agent.arxiv_api.search(
                     query=new_kw.keyword,
                     max_results=20
                 )
 
-                # 标记论文
+                # Tag papers with new keyword
                 for paper in papers:
                     paper.found_by_keywords.append(new_kw.keyword)
 
-                # 创建搜索结果
+                # Create new search result
                 result = KeywordSearchResult(
                     keyword=new_kw,
                     papers=papers,
@@ -126,36 +118,36 @@ class InterventionService:
 
                 changes.append(f"Added keyword '{new_kw.keyword}' → found {len(papers)} papers")
 
-        # 操作 2: 删除关键词
+        # Remove keywords
         if "remove_keywords" in details:
             remove_list = details["remove_keywords"]  # List[str]
             for kw_text in remove_list:
-                # 从关键词列表移除
+                # Remove from current_keywords
                 current_keywords = [kw for kw in current_keywords if kw.keyword != kw_text]
 
-                # 从搜索结果移除
+                # Remove from papers_by_keyword
                 removed_result = next((r for r in current_results if r.keyword.keyword == kw_text), None)
                 if removed_result:
                     current_results.remove(removed_result)
                     changes.append(f"Removed keyword '{kw_text}' and its {removed_result.papers_count} papers")
 
-        # 操作 3: 修改关键词文本
+        # Re-search for keywords
         if "edit_keywords" in details:
             edits = details["edit_keywords"]  # Dict[old_kw: new_kw]
             for old_kw, new_kw_text in edits.items():
-                # 找到并更新关键词
+                # Find keyword in current keywords
                 for kw in current_keywords:
                     if kw.keyword == old_kw:
                         kw.keyword = new_kw_text
                         kw.is_custom = True
 
-                # 重新搜索该关键词
+                # Research for new keyword
                 papers = await self.search_agent.arxiv_api.search(
                     query=new_kw_text,
-                    max_results=20
+                    max_results=20 #调整搜索结果数量
                 )
 
-                # 更新搜索结果
+                # Update search results
                 for result in current_results:
                     if result.keyword.keyword == old_kw:
                         result.keyword.keyword = new_kw_text
@@ -165,7 +157,7 @@ class InterventionService:
 
                 changes.append(f"Changed '{old_kw}' → '{new_kw_text}' (re-searched)")
 
-        # 操作 4: 调整重要性
+        # Adjust keyword importance
         if "adjust_importance" in details:
             adjustments = details["adjust_importance"]  # Dict[kw: new_importance]
             for kw_text, new_importance in adjustments.items():
@@ -175,17 +167,17 @@ class InterventionService:
                         kw.importance = new_importance
                         changes.append(f"Adjusted '{kw_text}' importance: {old_importance} → {new_importance}")
 
-        # 重新合并和去重
+        # Re-merge and deduplicate papers
         merged_papers, papers_by_keyword = self.search_agent._merge_and_deduplicate(current_results)
 
-        # 更新 pipeline
+        # Update pipeline state
         pipeline.search_output.keywords = current_keywords
         pipeline.search_output.keyword_results = current_results
         pipeline.search_output.papers = merged_papers
         pipeline.search_output.papers_by_keyword = papers_by_keyword
         pipeline.search_output.total_papers_before_dedup = sum(r.papers_count for r in current_results)
 
-        # 记录干预
+        # Record intervention
         self._record_intervention(pipeline, intervention, changes)
 
         return {
@@ -196,7 +188,7 @@ class InterventionService:
         }
 
     # ============================================================
-    # 2. 关键词结果调整
+    # 2. keyword results adjustment
     # ============================================================
 
     def _handle_keyword_results_adjustment(
@@ -205,9 +197,7 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        调整单个关键词的搜索结果
-
-        例如: 从 "interpretability" 的结果中移除某篇不相关的论文
+        Adjust the search results for a specific keyword
         """
         if not pipeline.search_output:
             return {"success": False, "message": "Search not completed yet"}
@@ -220,7 +210,7 @@ class InterventionService:
         if not all([target_keyword, action, paper_id]):
             return {"success": False, "message": "Missing required fields"}
 
-        # 找到目标关键词的搜索结果
+        # find
         keyword_result = next(
             (r for r in pipeline.search_output.keyword_results if r.keyword.keyword == target_keyword),
             None
@@ -230,12 +220,11 @@ class InterventionService:
             return {"success": False, "message": f"Keyword '{target_keyword}' not found"}
 
         if action == "remove_paper":
-            # 从该关键词的结果中移除论文
             original_count = len(keyword_result.papers)
             keyword_result.papers = [p for p in keyword_result.papers if p.id != paper_id]
             keyword_result.papers_count = len(keyword_result.papers)
 
-            # 重新合并
+            # remove from papers_by_keyword
             merged_papers, papers_by_keyword = self.search_agent._merge_and_deduplicate(
                 pipeline.search_output.keyword_results
             )
@@ -255,7 +244,7 @@ class InterventionService:
         return {"success": False, "message": f"Unknown action: {action}"}
 
     # ============================================================
-    # 3. 论文筛选干预
+    # 3. Paper override
     # ============================================================
 
     def _handle_paper_override(
@@ -264,9 +253,7 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        推翻 Revising Agent 的论文筛选决策
-
-        例如: 将被拒绝的论文重新接受
+        Override the AI decision on a paper
         """
         if not pipeline.revising_output:
             return {"success": False, "message": "Revising stage not completed yet"}
@@ -277,7 +264,7 @@ class InterventionService:
         reason = details.get("reason", "Manual override by user")
 
         if action == "accept":
-            # 从拒绝列表移到接受列表
+            # move to accepted list
             rejected_decision = next(
                 (d for d in pipeline.revising_output.rejected_papers if d.paper_id == paper_id),
                 None
@@ -286,7 +273,7 @@ class InterventionService:
             if not rejected_decision:
                 return {"success": False, "message": "Paper not found in rejected list"}
 
-            # 找到原始论文
+            # find original paper
             paper = next(
                 (p for p in pipeline.search_output.papers if p.id == paper_id),
                 None
@@ -295,11 +282,11 @@ class InterventionService:
             if not paper:
                 return {"success": False, "message": "Original paper not found"}
 
-            # 移动论文
+            # move to accepted list
             pipeline.revising_output.rejected_papers.remove(rejected_decision)
             pipeline.revising_output.accepted_papers.append(paper)
 
-            # 标记为人工推翻
+            # tag
             rejected_decision.is_overridden = True
             rejected_decision.human_note = reason
 
@@ -315,7 +302,7 @@ class InterventionService:
             }
 
         elif action == "reject":
-            # 从接受列表移到拒绝列表
+            # check if paper is already in accepted list
             paper = next(
                 (p for p in pipeline.revising_output.accepted_papers if p.id == paper_id),
                 None
@@ -326,7 +313,7 @@ class InterventionService:
 
             from models.schemas import PaperReviewDecision
 
-            # 创建拒绝决策
+            # Create a new rejection decision
             rejection = PaperReviewDecision(
                 paper_id=paper_id,
                 decision="reject",
@@ -351,7 +338,7 @@ class InterventionService:
         return {"success": False, "message": f"Unknown action: {action}"}
 
     # ============================================================
-    # 4. 答案编辑
+    # 4. Edit answer
     # ============================================================
 
     def _handle_answer_edit(
@@ -359,7 +346,7 @@ class InterventionService:
             pipeline: PipelineState,
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
-        """编辑最终答案"""
+        """Edit the answer"""
         if not pipeline.synthesis_output:
             return {"success": False, "message": "Synthesis stage not completed yet"}
 
@@ -372,7 +359,6 @@ class InterventionService:
         original_answer = pipeline.synthesis_output.answer
         pipeline.synthesis_output.answer = new_answer
 
-        # 可选：分析变化
         changes_summary = f"Answer edited (original: {len(original_answer)} chars → new: {len(new_answer)} chars)"
 
         self._record_intervention(pipeline, intervention, [changes_summary])
@@ -385,7 +371,7 @@ class InterventionService:
         }
 
     # ============================================================
-    # 5. 重新运行阶段
+    # 5. Rerun stage
     # ============================================================
 
     async def _handle_stage_rerun(
@@ -394,15 +380,13 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        重新运行某个阶段
-
-        例如: 在修改关键词后重新运行 Search Agent
+        rerun a stage of the pipeline
         """
         details = intervention.details
         stage = details.get("stage")  # "search", "revising", "synthesis"
 
         if stage == "search":
-            # 重新运行搜索（使用当前的关键词）
+            # re-run search stage
             from graph.state import AgentState
 
             state = AgentState(
@@ -444,7 +428,7 @@ class InterventionService:
         return {"success": False, "message": f"Rerun not supported for stage: {stage}"}
 
     # ============================================================
-    # 辅助方法
+    # Auxiliary functions
     # ============================================================
 
     def _record_intervention(
@@ -453,7 +437,7 @@ class InterventionService:
             intervention: HumanInterventionRequest,
             changes: List[str]
     ):
-        """记录干预到审计日志"""
+        """Record a human intervention in the pipeline state"""
         record = InterventionRecord(
             intervention_id=str(uuid.uuid4()),
             pipeline_id=intervention.pipeline_id,

@@ -13,20 +13,20 @@ logger = logging.getLogger(__name__)
 
 
 class VisualizationService:
-    """将工作流状态转换为可视化数据"""
+    """Class for generating frontend visualization data"""
 
     @staticmethod
     def generate_visualization(state: PipelineState) -> VisualizationData:
-        """生成前端可视化所需的节点和边数据"""
+        """Generate frontend visualization data from pipeline state"""
         nodes = []
         edges = []
 
-        # ============ 1. Query 节点 ============
+        # ============ 1. Query node ============
         nodes.append({
             "id": "query",
             "type": "query",
             "label": "User Query",
-            "position": {"x": 400, "y": 50},  # 👈 确保有 position
+            "position": {"x": 400, "y": 50},
             "data": {
                 "query": state.search_output.reasoning.split("'")[1] if state.search_output else "",
                 "timestamp": state.created_at.isoformat() if hasattr(state.created_at, 'isoformat') else str(
@@ -34,12 +34,12 @@ class VisualizationService:
             }
         })
 
-        # ============ 2. Keyword Generation 节点 ============
+        # ============ 2. Keyword Generation node ============
         nodes.append({
             "id": "keyword_gen",
             "type": "keyword_gen",
             "label": "Generate Keywords",
-            "position": {"x": 400, "y": 150},  # 👈 确保有 position
+            "position": {"x": 400, "y": 150},
             "data": {
                 "keywords_count": len(state.search_output.keywords) if state.search_output else 0,
                 "reasoning": state.search_output.reasoning if state.search_output else "",
@@ -54,7 +54,7 @@ class VisualizationService:
             "animated": not state.search_output
         })
 
-        # ============ 3. 每个 Keyword 节点 ============
+        # ============ 3. Keyword node ============
         if state.search_output and state.search_output.keyword_results:
             keyword_count = len(state.search_output.keyword_results)
             spacing = 200
@@ -67,19 +67,19 @@ class VisualizationService:
                     "id": keyword_id,
                     "type": "keyword",
                     "label": result.keyword.keyword,
-                    "position": {"x": start_x + i * spacing, "y": 300},  # 👈 确保有 position
+                    "position": {"x": start_x + i * spacing, "y": 300},
                     "data": {
                         "keyword": result.keyword.keyword,
                         "importance": result.keyword.importance,
                         "is_custom": result.keyword.is_custom,
-                        "papers": [p.dict() for p in result.papers[:5]],  # 只传前5篇避免数据过大
+                        "papers": [p.dict() for p in result.papers[:5]],
                         "papers_count": result.papers_count,
                         "selected_papers": [],
                         "status": "completed"
                     }
                 })
 
-                # 连接 Keyword Gen → Keyword
+                # Keyword Gen → Keyword
                 edges.append({
                     "id": f"keygen_to_{keyword_id}",
                     "source": "keyword_gen",
@@ -88,12 +88,12 @@ class VisualizationService:
                     "animated": False
                 })
 
-        # ============ 4. Paper Pool 节点 ============
+        # ============ Paper Pool node ============
         nodes.append({
             "id": "paper_pool",
             "type": "paper_pool",
             "label": "Paper Pool",
-            "position": {"x": 400, "y": 500},  # 👈 确保有 position
+            "position": {"x": 400, "y": 500},
             "data": {
                 "total_papers": len(state.search_output.papers) if state.search_output else 0,
                 "papers_by_keyword": state.search_output.papers_by_keyword if state.search_output else {},
@@ -105,7 +105,7 @@ class VisualizationService:
             }
         })
 
-        # 连接所有 Keyword → Paper Pool
+        # connect Keyword → Paper Pool
         if state.search_output and state.search_output.keyword_results:
             for i in range(len(state.search_output.keyword_results)):
                 edges.append({
@@ -115,12 +115,12 @@ class VisualizationService:
                     "animated": False
                 })
 
-        # ============ 5. Revising Agent 节点 ============
+        # ============ 5. Revising Agent node ============
         nodes.append({
             "id": "revising_agent",
             "type": "agent",
             "label": "Revising Agent",
-            "position": {"x": 400, "y": 650},  # 👈 确保有 position
+            "position": {"x": 400, "y": 650},
             "data": {
                 "agent_type": "revising",
                 "status": VisualizationService._get_node_status(state, "revising"),
@@ -139,12 +139,12 @@ class VisualizationService:
             "animated": state.stage == "revising"
         })
 
-        # ============ 6. Synthesis Agent 节点 ============
+        # ============ 6. Synthesis Agent node ============
         nodes.append({
             "id": "synthesis_agent",
             "type": "agent",
             "label": "Synthesis Agent",
-            "position": {"x": 400, "y": 800},  # 👈 确保有 position
+            "position": {"x": 400, "y": 800},
             "data": {
                 "agent_type": "synthesis",
                 "status": VisualizationService._get_node_status(state, "synthesis"),
@@ -162,7 +162,7 @@ class VisualizationService:
             "animated": state.stage == "synthesis"
         })
 
-        # 计算进度
+        # stage_progress is between 0 and 1
         stage_progress = {
             "search": 1.0 if state.search_output else 0.0,
             "revising": 1.0 if state.revising_output else 0.0,
@@ -178,7 +178,7 @@ class VisualizationService:
 
     @staticmethod
     def _get_node_status(state: PipelineState, stage: str) -> str:
-        """获取节点状态"""
+        """get the status of a node based on the stage and the output of that stage"""
         stage_map = {
             "search": state.search_output is not None,
             "revising": state.revising_output is not None,

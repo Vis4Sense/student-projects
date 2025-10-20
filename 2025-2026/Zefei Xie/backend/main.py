@@ -31,7 +31,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# 创建 FastAPI 应用
+# FastAPI
 app = FastAPI(
     title=settings.APP_NAME,
     version="1.0.0",
@@ -53,18 +53,18 @@ app.include_router(router)
 
 @app.on_event("startup")
 async def startup_event():
-    """应用启动事件"""
+    """Setup tasks on startup"""
     logger.info(f"Starting {settings.APP_NAME}")
     logger.info(f"Debug mode: {settings.DEBUG}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """应用关闭事件"""
+    """Clean up tasks on shutdown"""
     logger.info(f"Shutting down {settings.APP_NAME}")
 
 @app.get("/health")
 async def health_check():
-    """健康检查端点"""
+    """Health check endpoint"""
     return {
         "status": "healthy",
         "app": settings.APP_NAME,
@@ -73,7 +73,7 @@ async def health_check():
 
 @app.get("/")
 async def root():
-    """根路径"""
+    """Root endpoint"""
     return {
         "message": "Research Agent System API",
         "docs": "/docs",
