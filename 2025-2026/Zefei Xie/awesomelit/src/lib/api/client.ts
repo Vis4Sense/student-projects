@@ -14,7 +14,7 @@ export const apiClient = axios.create({
 });
 
 export const pipelineApi = {
-    // 启动新 pipeline
+    // start pipeline
     start: async (query: string): Promise<PipelineState> => {
         const response = await apiClient.post<PipelineState>('/pipeline/start', {
             query,
@@ -23,13 +23,13 @@ export const pipelineApi = {
         return response.data;
     },
 
-    // 获取 pipeline 状态
+    // get pipeline staus
     get: async (pipelineId: string): Promise<PipelineState> => {
         const response = await apiClient.get<PipelineState>(`/pipeline/${pipelineId}`);
         return response.data;
     },
 
-    // 获取可视化数据
+    // Get visualization data
     getVisualization: async (pipelineId: string): Promise<VisualizationData> => {
         const response = await apiClient.get<VisualizationData>(
             `/pipeline/${pipelineId}/visualization`
@@ -37,13 +37,13 @@ export const pipelineApi = {
         return response.data;
     },
 
-    // 继续执行下一阶段
+    // continue pipeline
     continue: async (pipelineId: string) => {
         const response = await apiClient.post(`/pipeline/${pipelineId}/continue`);
         return response.data;
     },
 
-    // 应用人工干预
+    // Apply human intervention
     applyIntervention: async (
         pipelineId: string,
         intervention: HumanInterventionRequest
@@ -55,19 +55,19 @@ export const pipelineApi = {
         return response.data;
     },
 
-    // 获取干预历史
+    // Get human intervention history
     getInterventionHistory: async (pipelineId: string) => {
         const response = await apiClient.get(`/pipeline/${pipelineId}/interventions`);
         return response.data;
     },
 
-    // 获取被拒绝的论文
+    // Get accepted papers
     getRejectedPapers: async (pipelineId: string) => {
         const response = await apiClient.get(`/pipeline/${pipelineId}/papers/rejected`);
         return response.data;
     },
 
-    // 获取统计信息
+    // Get accepted papers
     getStats: async (pipelineId: string) => {
         const response = await apiClient.get(`/pipeline/${pipelineId}/stats`);
         return response.data;

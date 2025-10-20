@@ -53,7 +53,7 @@ export default function SynthesisInspector({
                 )}
             </div>
 
-            {/* 编辑按钮 */}
+            {/* Edit/Cancel Button */}
             <div className="border-t border-gray-200 bg-gray-50 p-3 flex space-x-2">
                 {isEditing ? (
                     <>

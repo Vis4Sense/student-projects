@@ -9,20 +9,20 @@ export type WorkflowNodeType =
     | 'paper_pool'
     | 'agent';
 
-// 查询节点数据
+// Query node data
 export interface QueryNodeData {
     query: string;
     timestamp: string;
 }
 
-// 关键词生成节点数据
+// Keyword Gen node data
 export interface KeywordGenNodeData {
     keywords_count: number;
     reasoning: string;
     status: NodeStatus;
 }
 
-// 关键词节点数据
+// Keyword node
 export interface KeywordNodeData {
     keyword: string;
     importance: number;
@@ -33,7 +33,7 @@ export interface KeywordNodeData {
     status: NodeStatus;
 }
 
-// 论文池节点数据
+// Paper Pool node data
 export interface PaperPoolNodeData {
     total_papers: number;
     papers_by_keyword: Record<string, string[]>;
@@ -41,7 +41,7 @@ export interface PaperPoolNodeData {
     status: NodeStatus;
 }
 
-// Agent 节点数据
+// Agent node data
 export interface AgentNodeData {
     agent_type: 'revising' | 'synthesis';
     status: NodeStatus;

@@ -60,7 +60,7 @@ export default function SearchInspector({
         );
     }
 
-    // 搜索总结视图
+    // Searches
     return (
         <div className="flex flex-col h-full">
             <div className="border-b border-gray-200">
