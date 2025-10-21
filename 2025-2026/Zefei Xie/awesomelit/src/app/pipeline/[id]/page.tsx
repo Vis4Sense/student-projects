@@ -36,7 +36,6 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
         });
     };
 
-    // 👇 调试日志
     useEffect(() => {
         if (pipeline) {
             console.log('Pipeline state updated:', {
@@ -49,15 +48,15 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
     }, [pipeline]);
 
     return (
-        <div className="h-screen flex flex-col bg-gray-100">
+        <div className="h-screen flex flex-col">
             {/* Header */}
             <Header pipeline={pipeline} isLoading={isLoading} />
-
+            <br/>
             {/* Main Content */}
-            <div className="flex-1 flex overflow-hidden p-4 space-x-4">
+            <div className="flex-1 flex overflow-hidden p-4 space-x-4 bg-gray-100">
                 {/* Left: Workflow Canvas */}
                 <div className="w-1/2 flex flex-col space-y-4">
-                    <div className="flex-1 min-h-0">
+                    <div className="flex-1 min-h-0 p-1">
                         <LeftPanel
                             visualization={visualization}
                             onNodeSelect={handleNodeSelect}
@@ -66,7 +65,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                     </div>
 
                     {/* Bottom: Intervention Log */}
-                    <div className="h-64">
+                    <div className="h-64 p-1">
                         <BottomPanel
                             interventionHistory={interventionHistory}
                             isLoading={isLoading}
@@ -75,13 +74,16 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                 </div>
 
                 {/* Right: Inspector Panel */}
-                <div className="w-1/2 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                    <RightPanel
-                        pipeline={pipeline}
-                        onApplyIntervention={handleApplyIntervention}
-                        isLoading={applyInterventionLoading}
-                    />
+                <div className="p-1 w-1/2">
+                    <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                        <RightPanel
+                            pipeline={pipeline}
+                            onApplyIntervention={handleApplyIntervention}
+                            isLoading={applyInterventionLoading}
+                        />
+                    </div>
                 </div>
+
             </div>
 
             {/* Continue Button */}

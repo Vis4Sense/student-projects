@@ -16,7 +16,7 @@ export default function Header({ pipeline, isLoading }: HeaderProps) {
     };
 
     return (
-        <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+        <header className="bg-white border border-black rounded-lg px-6 py-4">
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Research Agent System</h1>

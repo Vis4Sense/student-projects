@@ -29,6 +29,7 @@ export default function PaperCard({
     };
 
     return (
+        <div className="p-1">
         <div className={`border rounded-lg p-3 ${statusColors[status]}`}>
             <div className="flex justify-between items-start gap-2">
                 <div className="flex-1">
@@ -73,6 +74,7 @@ export default function PaperCard({
                     Relevance: {(paper.relevance_score * 100).toFixed(0)}%
                 </div>
             )}
+        </div>
         </div>
     );
 }
