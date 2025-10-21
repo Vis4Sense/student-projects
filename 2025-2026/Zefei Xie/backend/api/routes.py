@@ -72,7 +72,6 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
     pipeline_state = PipelineState(
         pipeline_id=pipeline_id,
         stage="search",
-        # created_at 和 updated_at 会自动使用 default_factory
     )
     active_pipelines[pipeline_id] = pipeline_state
 

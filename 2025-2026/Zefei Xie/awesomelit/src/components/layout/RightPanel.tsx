@@ -26,8 +26,25 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
         );
     }
 
-    // Search stage
-    if (selectedNode.type === 'keyword_gen' || selectedNode.type === 'keyword') {
+    // Debug: print selected node and pipeline data
+    console.log('Selected node:', selectedNode);
+    console.log('Pipeline search output:', pipeline?.search_output);
+
+    // Search stage - Query Keyword Gen
+    if (selectedNode.type === 'query' || selectedNode.type === 'keyword_gen') {
+        return (
+            <SearchInspector
+                nodeId={selectedNode.id}
+                nodeType={selectedNode.type}
+                searchOutput={pipeline?.search_output}
+                onApplyIntervention={onApplyIntervention}
+                isLoading={isLoading}
+            />
+        );
+    }
+
+    // Keyword
+    if (selectedNode.type === 'keyword') {
         return (
             <SearchInspector
                 nodeId={selectedNode.id}
@@ -63,7 +80,7 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
 
     return (
         <div className="flex items-center justify-center h-full text-gray-400">
-            <p>No inspector available for this node type</p>
+            <p>No inspector available for this node type: {selectedNode.type}</p>
         </div>
     );
 }

@@ -22,22 +22,49 @@ export default function SearchInspector({
                                         }: SearchInspectorProps) {
     const [activeTab, setActiveTab] = useState<'keywords' | 'papers'>('keywords');
 
+    // Debug 日志
+    console.log('SearchInspector props:', {
+        nodeId,
+        nodeType,
+        searchOutputExists: !!searchOutput,
+        keywordResults: searchOutput?.keyword_results?.length,
+    });
+
     if (!searchOutput) {
         return (
             <div className="flex items-center justify-center h-full text-gray-400">
-                <p>No search data available</p>
+                <div className="text-center">
+                    <p>No search data available</p>
+                    <p className="text-xs text-gray-500 mt-2">
+                        Node ID: {nodeId} | Type: {nodeType}
+                    </p>
+                </div>
             </div>
         );
     }
 
-    // 如果是关键词节点
+    // 如果是 keyword 节点，获取该关键词的详细信息
     if (nodeType === 'keyword') {
-        const keywordResult = searchOutput.keyword_results.find(
-            (r) => r.keyword.keyword === nodeId.replace('keyword_', '')
-        );
+        // 从 nodeId 中提取关键词（格式是 "keyword_0", "keyword_1" 等）
+        const keywordIndex = parseInt(nodeId.split('_')[1]);
+        const keywordResult = searchOutput.keyword_results?.[keywordIndex];
+
+        console.log('Keyword lookup:', {
+            nodeId,
+            keywordIndex,
+            found: !!keywordResult,
+            keyword: keywordResult?.keyword.keyword,
+        });
 
         if (!keywordResult) {
-            return <div className="p-4 text-gray-500">Keyword not found</div>;
+            return (
+                <div className="p-4 text-gray-500">
+                    <p>Keyword not found</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                        Looking for index {keywordIndex} in {searchOutput.keyword_results?.length} results
+                    </p>
+                </div>
+            );
         }
 
         return (
@@ -60,7 +87,7 @@ export default function SearchInspector({
         );
     }
 
-    // Searches
+    // Search summary 视图（keyword_gen 或 query 节点）
     return (
         <div className="flex flex-col h-full">
             <div className="border-b border-gray-200">
@@ -112,3 +139,4 @@ export default function SearchInspector({
         </div>
     );
 }
+

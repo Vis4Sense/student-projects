@@ -67,7 +67,7 @@ class ResearchWorkflow:
         """Human review node"""
         logger.info("Workflow paused for human review")
         state["current_stage"] = "awaiting_human_review"
-        # 这里实际上会被外部的 FastAPI 路由中断
+        # Here will be the code for human review process
         return state
 
     def _should_wait_for_human(self, state: AgentState) -> str:
