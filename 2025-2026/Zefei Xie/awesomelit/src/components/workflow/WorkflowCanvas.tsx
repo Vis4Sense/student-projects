@@ -44,7 +44,7 @@ export default function WorkflowCanvas({
     const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
 
-    // 当可视化数据更新时，更新节点和边
+    // when visualizationData changes, update the nodes and edges
     useEffect(() => {
         if (!visualizationData) return;
 

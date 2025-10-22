@@ -70,9 +70,11 @@ export default function HomePage() {
           {/* Hero Section */}
           <div className="grid gap-2 text-center">
 
-            <h1 className="text-7xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              AwesomeLit
-            </h1>
+            <div className="flex justify-center">
+              <h1 className="text-7xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight animate-typewriter">
+                AwesomeLit
+              </h1>
+            </div>
 
             <p className="text-xl text-gray-600 mb-4">
               AI-powered research assistant with{' '}
@@ -129,6 +131,7 @@ export default function HomePage() {
                       </>
                   )}
                 </button>
+                <br/>
 
                 {createPipelineMutation.isError && (
                     <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
@@ -136,6 +139,8 @@ export default function HomePage() {
                     </div>
                 )}
               </form>
+
+              <br/>
 
               {/* Quick Examples */}
               <div className="mt-6 pt-6 border-t border-gray-100">
@@ -161,7 +166,7 @@ export default function HomePage() {
 
           {/* Features Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Use Research Agent?</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why Use AwesomeLit?</h2>
             <br/>
             <br/>
             <div className="grid md:grid-cols-3 gap-8">

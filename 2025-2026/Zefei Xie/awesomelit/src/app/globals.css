@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
-
 @tailwind utilities;
 
 :root {
@@ -34,7 +33,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-/* React Flow 自定义样式 */
+/* React Flow */
 .react-flow__node {
     cursor: pointer;
 }
@@ -47,7 +46,7 @@ body {
     box-shadow: 0 0 0 2px #3b82f6;
 }
 
-/* 滚动条样式 */
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -64,4 +63,23 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+@keyframes typing {
+    0%, 100% {
+        width: 0;
+    }
+    50%, 90% {
+        width: 10ch;
+    }
+}
+
+.animate-typewriter {
+    font-family: monospace;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    display: inline-block;
+    animation: typing 6s steps(10) infinite;
+    border-right: 2px solid #111827;
 }
