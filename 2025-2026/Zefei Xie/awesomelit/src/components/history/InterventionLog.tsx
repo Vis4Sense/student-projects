@@ -52,13 +52,13 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
         <div className="flex flex-col h-full bg-white">
             {/* Header */}
             <div className="border-b border-gray-200 px-4 py-3 flex justify-between items-center">
-                <h3 className="font-semibold text-sm flex items-center">
+                <h3 className="font-semibold text-sm flex items-center gap-2">
                     <Clock className="w-4 h-4 mr-2" />
                     Intervention History ({filteredInterventions.length})
                 </h3>
 
                 {/* Filter */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 gap-2">
                     <Filter className="w-4 h-4 text-gray-400" />
                     <select
                         value={filter}
@@ -79,7 +79,9 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
                 {filteredInterventions
                     .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
                     .map((intervention) => (
-                        <InterventionItem key={intervention.intervention_id} intervention={intervention} />
+                        <div className="p-1">
+                            <InterventionItem key={intervention.intervention_id} intervention={intervention} />
+                        </div>
                     ))}
             </div>
         </div>

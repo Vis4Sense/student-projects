@@ -38,8 +38,8 @@ export default function SynthesisInspector({
 
     return (
         <div className="flex flex-col h-full">
-            {/* 答案区域 */}
-            <div className="flex-1 overflow-y-auto p-4 border-b border-gray-200">
+            {/* Answer */}
+            <div className="flex-1 min-h-1/2 overflow-y-auto p-4 border-b border-gray-200">
                 {isEditing ? (
                     <textarea
                         value={editedAnswer}

@@ -35,7 +35,7 @@ export default function InterventionItem({ intervention }: InterventionItemProps
   return (
     <div className="border border-gray-200 rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition">
       <div className="flex items-start justify-between">
-        <div className="flex items-start space-x-2">
+        <div className="flex items-start space-x-2 gap-2">
           <div className={`p-1.5 rounded ${actionColors[actionType] || 'bg-gray-100'}`}>
             {actionIcons[actionType] || <Edit className="w-4 h-4" />}
           </div>
@@ -53,7 +53,7 @@ export default function InterventionItem({ intervention }: InterventionItemProps
               <p className="text-xs text-gray-500 mt-1 italic">"{intervention.user_note}"</p>
             )}
 
-            <div className="flex items-center space-x-2 mt-2">
+            <div className="flex items-center space-x-2 mt-2 gap-2">
               <span className="text-xs text-gray-500">
                 {formatDistanceToNow(new Date(intervention.timestamp), { addSuffix: true })}
               </span>

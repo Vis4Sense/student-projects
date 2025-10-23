@@ -84,6 +84,7 @@ export default function RevisingInspector({
                                 (p) => p.id === decision.paper_id
                             );
                             return (
+                                <div className="p-1">
                                 <div
                                     key={decision.paper_id}
                                     className="bg-red-50 border border-red-200 rounded-lg p-3"
@@ -115,22 +116,23 @@ export default function RevisingInspector({
                                         Accept Paper
                                     </button>
                                 </div>
+                                </div>
                             );
                         })}
                     </div>
                 )}
             </div>
 
-            <div className="border-t border-gray-200 bg-gray-50 p-3">
-                <div className="text-xs text-gray-600 space-y-1">
-                    <p className="font-semibold">Rejection Summary</p>
-                    {Object.entries(revisingOutput.rejection_summary).map(([reason, count]) => (
-                        <p key={reason}>
-                            {reason}: <span className="font-semibold">{count}</span>
-                        </p>
-                    ))}
-                </div>
-            </div>
+            {/*<div className="border-t border-gray-200 bg-gray-50 p-3">*/}
+            {/*    <div className="text-xs text-gray-600 space-y-1">*/}
+            {/*        <p className="font-semibold">Rejection Summary</p>*/}
+            {/*        {Object.entries(revisingOutput.rejection_summary).map(([reason, count]) => (*/}
+            {/*            <p key={reason}>*/}
+            {/*                {reason}: <span className="font-semibold">{count}</span>*/}
+            {/*            </p>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 }
