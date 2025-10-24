@@ -12,6 +12,7 @@ interface PaperListProps {
 export default function PaperList({ papers }: PaperListProps) {
     const [selectedAuthor, setSelectedAuthor] = useState<string>('all');
     const [selectedSource, setSelectedSource] = useState<string>('all');
+    const [selectedKeyword, setSelectedKeyword] = useState<string>('all');
     const [startMonth, setStartMonth] = useState<string>('');
     const [endMonth, setEndMonth] = useState<string>('');
 
@@ -33,6 +34,15 @@ export default function PaperList({ papers }: PaperListProps) {
         return Array.from(sourcesSet).sort();
     }, [papers]);
 
+    // get all unique keywords
+    const allKeywords = useMemo(() => {
+        const keywordsSet = new Set<string>();
+        papers.forEach(paper => {
+            paper.found_by_keywords.forEach(keyword => keywordsSet.add(keyword));
+        });
+        return Array.from(keywordsSet).sort();
+    }, [papers]);
+
     // Filter papers based on selected filters
     const filteredPapers = useMemo(() => {
         return papers.filter(paper => {
@@ -46,7 +56,12 @@ export default function PaperList({ papers }: PaperListProps) {
                 return false;
             }
 
-            // Datw
+            // Keyword
+            if (selectedKeyword !== 'all' && !paper.found_by_keywords.includes(selectedKeyword)) {
+                return false;
+            }
+
+            // Date
             const paperDate = new Date(paper.published_date);
             const paperYearMonth = `${paperDate.getFullYear()}-${String(paperDate.getMonth() + 1).padStart(2, '0')}`;
 
@@ -60,17 +75,18 @@ export default function PaperList({ papers }: PaperListProps) {
 
             return true;
         });
-    }, [papers, selectedAuthor, selectedSource, startMonth, endMonth]);
+    }, [papers, selectedAuthor, selectedSource, selectedKeyword, startMonth, endMonth]);
 
-    // 重置筛选
+    // Reset filters
     const resetFilters = () => {
         setSelectedAuthor('all');
         setSelectedSource('all');
+        setSelectedKeyword('all');
         setStartMonth('');
         setEndMonth('');
     };
 
-    const hasActiveFilters = selectedAuthor !== 'all' || selectedSource !== 'all' || startMonth || endMonth;
+    const hasActiveFilters = selectedAuthor !== 'all' || selectedSource !== 'all' || selectedKeyword !== 'all' || startMonth || endMonth;
 
     if (papers.length === 0) {
         return (
@@ -101,7 +117,7 @@ export default function PaperList({ papers }: PaperListProps) {
                 </div>
 
                 <br/>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
                     {/* Author Filter */}
                     <div>
                         <label className="text-xs font-medium text-gray-700 block mb-1">
@@ -135,6 +151,25 @@ export default function PaperList({ papers }: PaperListProps) {
                             {allSources.map(source => (
                                 <option key={source} value={source}>
                                     {source}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Keyword Filter */}
+                    <div>
+                        <label className="text-xs font-medium text-gray-700 block mb-1">
+                            Keyword
+                        </label>
+                        <select
+                            value={selectedKeyword}
+                            onChange={(e) => setSelectedKeyword(e.target.value)}
+                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="all">All Keywords ({allKeywords.length})</option>
+                            {allKeywords.map(keyword => (
+                                <option key={keyword} value={keyword}>
+                                    {keyword}
                                 </option>
                             ))}
                         </select>
