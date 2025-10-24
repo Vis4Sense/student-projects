@@ -22,7 +22,7 @@ export default function SearchInspector({
                                         }: SearchInspectorProps) {
     const [activeTab, setActiveTab] = useState<'keywords' | 'papers'>('keywords');
 
-    // Debug 日志
+    // Debug
     console.log('SearchInspector props:', {
         nodeId,
         nodeType,
@@ -43,9 +43,8 @@ export default function SearchInspector({
         );
     }
 
-    // 如果是 keyword 节点，获取该关键词的详细信息
+    // If keyword
     if (nodeType === 'keyword') {
-        // 从 nodeId 中提取关键词（格式是 "keyword_0", "keyword_1" 等）
         const keywordIndex = parseInt(nodeId.split('_')[1]);
         const keywordResult = searchOutput.keyword_results?.[keywordIndex];
 
@@ -87,7 +86,7 @@ export default function SearchInspector({
         );
     }
 
-    // Search summary 视图（keyword_gen 或 query 节点）
+    // Search summary
     return (
         <div className="flex flex-col h-full">
             <div className="border-b border-gray-200">

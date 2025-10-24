@@ -5,6 +5,7 @@ import RevisingInspector from '@/components/inspection/RevisingInspector';
 import SynthesisInspector from '@/components/inspection/SynthesisInspector';
 import type { PipelineState } from '@/types/pipeline';
 import { useSelectedNode } from '@/lib/hooks/useSelectedNode';
+import {usePipeline} from "@/lib/hooks/usePipeline";
 
 interface RightPanelProps {
     pipeline: PipelineState | undefined;
@@ -30,8 +31,9 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
     console.log('Selected node:', selectedNode);
     console.log('Pipeline search output:', pipeline?.search_output);
 
+
     // Search stage - Query Keyword Gen
-    if (selectedNode.type === 'query' || selectedNode.type === 'keyword_gen') {
+    if (selectedNode.type === 'keyword_gen') {
         return (
             <SearchInspector
                 nodeId={selectedNode.id}

@@ -84,10 +84,10 @@ export default function SynthesisInspector({
                 )}
             </div>
 
-            {/* 引用区域 */}
+            {/* Citations */}
             <div className="border-t border-gray-200 bg-white p-4 max-h-64 overflow-y-auto">
                 <h4 className="font-semibold text-sm mb-3">Citations ({synthesisOutput.citations.length})</h4>
-                <div className="space-y-2">
+                <div className="flex flex-col space-y-2 gap-2">
                     {synthesisOutput.citations.map((citation, idx) => (
                         <div key={idx} className="text-xs bg-gray-50 p-2 rounded border border-gray-200">
                             <div className="font-semibold text-gray-900">[{idx + 1}] {citation.paper_title}</div>

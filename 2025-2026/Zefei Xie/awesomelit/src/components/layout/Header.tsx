@@ -66,7 +66,7 @@ export default function Header({
 
                     {/* Title and Status */}
                     <div className="border-l border-gray-300 pl-4">
-                        <h1 className="text-2xl font-bold text-gray-900">Research Agent System</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">AwesomeLit</h1>
                         {pipeline && (
                             <p className="text-sm text-gray-600 mt-1">
                                 Pipeline: <span className="font-mono">{pipeline.pipeline_id.slice(0, 8)}...</span> |
@@ -94,6 +94,16 @@ export default function Header({
                             className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
                         >
                             {getButtonText()}
+                        </button>
+                    )}
+
+                    {/* Finish button */}
+                    { pipeline && pipeline.stage === 'completed' && (
+                        <button
+                            className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+                            onClick={handleBack}
+                        >
+                            Finish
                         </button>
                     )}
                 </div>

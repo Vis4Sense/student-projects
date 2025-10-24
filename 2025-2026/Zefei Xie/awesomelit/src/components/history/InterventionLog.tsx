@@ -79,8 +79,8 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
                 {filteredInterventions
                     .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
                     .map((intervention) => (
-                        <div className="p-1">
-                            <InterventionItem key={intervention.intervention_id} intervention={intervention} />
+                        <div key={intervention.intervention_id} className="p-1">
+                            <InterventionItem intervention={intervention} />
                         </div>
                     ))}
             </div>

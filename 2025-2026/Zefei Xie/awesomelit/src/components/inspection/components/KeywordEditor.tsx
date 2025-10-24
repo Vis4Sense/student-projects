@@ -83,20 +83,18 @@ export default function KeywordEditor({
                 <h4 className="font-semibold text-sm mb-3">Current Keywords</h4>
                 <div className="space-y-2">
                     {editedKeywords.map((kw, idx) => (
-                        <div key={idx} className="flex items-center space-x-2 bg-gray-50 p-2 rounded">
-                            <input
-                                type="text"
-                                value={kw.keyword}
-                                readOnly
-                                className="flex-1 bg-transparent text-sm font-medium"
-                            />
+                        <div key={idx} className="flex items-center space-x-2 bg-gray-50 p-2 rounded gap-4">
+                            <div className="flex-1 text-sm font-medium">
+                                {kw.keyword}
+                            </div>
+
                             <input
                                 type="range"
                                 min="0"
                                 max="100"
                                 value={kw.importance * 100}
                                 onChange={(e) => handleUpdateImportance(idx, parseInt(e.target.value) / 100)}
-                                className="w-24"
+                                className="w-64"
                             />
                             <span className="text-xs text-gray-600 w-8">{(kw.importance * 100).toFixed(0)}%</span>
                             <button
@@ -110,9 +108,11 @@ export default function KeywordEditor({
                 </div>
             </div>
 
+            <br/>
+
             <div>
                 <h4 className="font-semibold text-sm mb-2">Add New Keyword</h4>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 gap-4">
                     <input
                         type="text"
                         value={newKeyword}
@@ -129,6 +129,8 @@ export default function KeywordEditor({
                     </button>
                 </div>
             </div>
+
+            <br/>
 
             <button
                 onClick={handleSave}

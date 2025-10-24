@@ -7,15 +7,12 @@ interface PaperPoolNodeProps {
     data: {
         total_papers: number;
         duplicates_removed: number;
-        papers_by_keyword: Record<string, string[]>;
         status: string;
-        onNodeClick?: (id: string, type: string) => void;
     };
     selected?: boolean;
-    id: string;
 }
 
-export default function PaperPoolNode({ data, selected, id }: PaperPoolNodeProps) {
+export default function PaperPoolNode({ data, selected }: PaperPoolNodeProps) {
     const statusColors = {
         pending: 'bg-gray-100 border-gray-300',
         running: 'bg-yellow-100 border-yellow-400',
@@ -26,21 +23,24 @@ export default function PaperPoolNode({ data, selected, id }: PaperPoolNodeProps
     return (
         <div
             className={cn(
-                'px-4 py-3 rounded-lg border-2 shadow-md min-w-[220px]',
-                statusColors[data.status as keyof typeof statusColors] || statusColors.pending,
+                'px-3 py-2 rounded-lg border-2 shadow-md',
+                'w-[110px]',
+                statusColors[data.status as keyof typeof statusColors],
                 selected && 'ring-2 ring-blue-300'
             )}
         >
-            <div className="font-bold text-sm">Paper Pool</div>
-            <div className="text-xs text-gray-600 mt-2">
-                Total: {data.total_papers} papers
+            <div className="font-bold text-xs mb-1">Papers Pool</div>
+            <div className="text-xs text-gray-600">
+                {data.total_papers} total
             </div>
-            <div className="text-xs text-red-600 mt-1">
-                Duplicates removed: {data.duplicates_removed}
-            </div>
+            {data.duplicates_removed > 0 && (
+                <div className="text-[10px] text-red-600 mt-1">
+                    -{data.duplicates_removed}
+                </div>
+            )}
 
-            <Handle type="source" position={Position.Bottom} />
-            <Handle type="target" position={Position.Top} />
+            <Handle type="source" position={Position.Right} />
+            <Handle type="target" position={Position.Left} />
         </div>
     );
 }

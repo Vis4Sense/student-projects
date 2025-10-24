@@ -13,11 +13,17 @@ logger = logging.getLogger(__name__)
 
 
 class VisualizationService:
-    """Class for generating frontend visualization data"""
+    """Generate visualization data for the frontend"""
+
+    @staticmethod
+    def _truncate_text(text: str, max_length: int = 20) -> str:
+        if len(text) <= max_length:
+            return text
+        return text[:max_length] + "..."
 
     @staticmethod
     def generate_visualization(state: PipelineState) -> VisualizationData:
-        """Generate frontend visualization data from pipeline state"""
+        """Generate visualization data for the frontend"""
         nodes = []
         edges = []
 
@@ -26,20 +32,21 @@ class VisualizationService:
             "id": "query",
             "type": "query",
             "label": "User Query",
-            "position": {"x": 400, "y": 50},
+            "position": {"x": 50, "y": 300},
             "data": {
                 "query": state.search_output.reasoning.split("'")[1] if state.search_output else "",
+                "query_preview": state.search_output.reasoning.split("'")[1] if state.search_output else "",
                 "timestamp": state.created_at.isoformat() if hasattr(state.created_at, 'isoformat') else str(
                     state.created_at)
             }
         })
 
-        # ============ 2. Keyword Generation node ============
+        # ============ 2. Keyword Generation 节点 ============
         nodes.append({
             "id": "keyword_gen",
             "type": "keyword_gen",
-            "label": "Generate Keywords",
-            "position": {"x": 400, "y": 150},
+            "label": "Keywords",
+            "position": {"x": 300, "y": 300},
             "data": {
                 "keywords_count": len(state.search_output.keywords) if state.search_output else 0,
                 "reasoning": state.search_output.reasoning if state.search_output else "",
@@ -54,22 +61,31 @@ class VisualizationService:
             "animated": not state.search_output
         })
 
-        # ============ 3. Keyword node ============
+        # ============ 3. Keyword ============
         if state.search_output and state.search_output.keyword_results:
             keyword_count = len(state.search_output.keyword_results)
-            spacing = 200
-            start_x = 400 - (keyword_count - 1) * spacing / 2
+            vertical_spacing = 120
+            start_y = 150
+
+            if keyword_count > 3:
+                start_y = 300 - (keyword_count - 1) * vertical_spacing / 2
 
             for i, result in enumerate(state.search_output.keyword_results):
                 keyword_id = f"keyword_{i}"
 
+                keyword_label = VisualizationService._truncate_text(
+                    result.keyword.keyword,
+                    15
+                )
+
                 nodes.append({
                     "id": keyword_id,
                     "type": "keyword",
-                    "label": result.keyword.keyword,
-                    "position": {"x": start_x + i * spacing, "y": 300},
+                    "label": keyword_label,
+                    "position": {"x": 600, "y": start_y + i * vertical_spacing},
                     "data": {
                         "keyword": result.keyword.keyword,
+                        "keyword_full": result.keyword.keyword,
                         "importance": result.keyword.importance,
                         "is_custom": result.keyword.is_custom,
                         "papers": [p.dict() for p in result.papers[:5]],
@@ -84,16 +100,16 @@ class VisualizationService:
                     "id": f"keygen_to_{keyword_id}",
                     "source": "keyword_gen",
                     "target": keyword_id,
-                    "label": f"{result.papers_count} papers",
+                    "label": f"{result.papers_count}",
                     "animated": False
                 })
 
-        # ============ Paper Pool node ============
+        # ============ 4. Paper Pool============
         nodes.append({
             "id": "paper_pool",
             "type": "paper_pool",
-            "label": "Paper Pool",
-            "position": {"x": 400, "y": 500},
+            "label": "Papers",
+            "position": {"x": 900, "y": 300},
             "data": {
                 "total_papers": len(state.search_output.papers) if state.search_output else 0,
                 "papers_by_keyword": state.search_output.papers_by_keyword if state.search_output else {},
@@ -105,22 +121,23 @@ class VisualizationService:
             }
         })
 
-        # connect Keyword → Paper Pool
+        # Keyword → Paper Pool
         if state.search_output and state.search_output.keyword_results:
             for i in range(len(state.search_output.keyword_results)):
                 edges.append({
                     "id": f"keyword_{i}_to_pool",
                     "source": f"keyword_{i}",
                     "target": "paper_pool",
-                    "animated": False
+                    "animated": False,
+                    "label": None
                 })
 
-        # ============ 5. Revising Agent node ============
+        # ============ 5. Revising Agent  ============
         nodes.append({
             "id": "revising_agent",
             "type": "agent",
-            "label": "Revising Agent",
-            "position": {"x": 400, "y": 650},
+            "label": "Review",
+            "position": {"x": 1200, "y": 300},
             "data": {
                 "agent_type": "revising",
                 "status": VisualizationService._get_node_status(state, "revising"),
@@ -135,16 +152,16 @@ class VisualizationService:
             "id": "pool_to_revising",
             "source": "paper_pool",
             "target": "revising_agent",
-            "label": f"{len(state.search_output.papers) if state.search_output else 0} papers",
+            "label": f"{len(state.search_output.papers) if state.search_output else 0}",  # 👈 只显示数字
             "animated": state.stage == "revising"
         })
 
-        # ============ 6. Synthesis Agent node ============
+        # ============ 6. Synthesis Agent ============
         nodes.append({
             "id": "synthesis_agent",
             "type": "agent",
-            "label": "Synthesis Agent",
-            "position": {"x": 400, "y": 800},
+            "label": "Synthesis",
+            "position": {"x": 1500, "y": 300},
             "data": {
                 "agent_type": "synthesis",
                 "status": VisualizationService._get_node_status(state, "synthesis"),
@@ -158,11 +175,10 @@ class VisualizationService:
             "id": "revising_to_synthesis",
             "source": "revising_agent",
             "target": "synthesis_agent",
-            "label": f"{len(state.revising_output.accepted_papers) if state.revising_output else 0} accepted",
+            "label": f"{len(state.revising_output.accepted_papers) if state.revising_output else 0}",  # 👈 只显示数字
             "animated": state.stage == "synthesis"
         })
 
-        # stage_progress is between 0 and 1
         stage_progress = {
             "search": 1.0 if state.search_output else 0.0,
             "revising": 1.0 if state.revising_output else 0.0,
@@ -178,7 +194,7 @@ class VisualizationService:
 
     @staticmethod
     def _get_node_status(state: PipelineState, stage: str) -> str:
-        """get the status of a node based on the stage and the output of that stage"""
+        """Get the status of a node based on the stage and the output of the agent"""
         stage_map = {
             "search": state.search_output is not None,
             "revising": state.revising_output is not None,
@@ -191,4 +207,5 @@ class VisualizationService:
             return "running"
         else:
             return "pending"
+
 
