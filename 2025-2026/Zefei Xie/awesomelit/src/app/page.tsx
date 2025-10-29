@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { pipelineApi } from '@/lib/api/client';
+import AIChatPanel from "@/components/layout/AIChatPanel";
 
 export default function HomePage() {
   const router = useRouter();
@@ -222,7 +223,6 @@ export default function HomePage() {
           <br/>
           <br/>
           <br/>
-
 
           {/* Footer */}
           <footer className="text-center pt-6 border-t border-gray-200">

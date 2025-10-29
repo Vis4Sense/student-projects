@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { HumanInterventionRequest } from '@/types/intervention';
 import type { PipelineState} from '@/types/pipeline';
 import type { VisualizationData } from '@/types/workflow';
+import {ChatMessage, ChatResponse} from "@/types/chat";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 
@@ -71,5 +72,79 @@ export const pipelineApi = {
     getStats: async (pipelineId: string) => {
         const response = await apiClient.get(`/pipeline/${pipelineId}/stats`);
         return response.data;
+    },
+};
+
+
+export const chatApi = {
+    // Non-streaming chat
+    chat: async (messages: ChatMessage[]): Promise<string> => {
+        const response = await apiClient.post<ChatResponse>('/chat', {
+            messages,
+        });
+        return response.data.message;
+    },
+
+    // Streaming chat
+    chatStream: async (
+        messages: ChatMessage[],
+        onChunk: (chunk: string) => void,
+        onError?: (error: string) => void,
+        onComplete?: () => void
+    ): Promise<void> => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/chat/stream`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ messages }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+
+            if (!reader) {
+                throw new Error('No response body');
+            }
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n');
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.slice(6);
+
+                        if (data === '[DONE]') {
+                            onComplete?.();
+                            return;
+                        }
+
+                        try {
+                            const parsed = JSON.parse(data);
+                            if (parsed.content) {
+                                onChunk(parsed.content);
+                            } else if (parsed.error) {
+                                onError?.(parsed.error);
+                                return;
+                            }
+                        } catch (e) {
+                            console.error('Failed to parse SSE data:', e);
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            onError?.(errorMessage);
+        }
     },
 };

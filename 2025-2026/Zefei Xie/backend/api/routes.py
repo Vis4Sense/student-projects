@@ -6,6 +6,9 @@ Description: [Add your description here]
 """
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks
+import json
+from fastapi.responses import StreamingResponse
+from models.chat_model import ChatRequest, ChatResponse
 from models.schemas import (
     SearchRequest, HumanInterventionRequest, PipelineState,
     VisualizationData, Paper, PaperReviewDecision, SearchAgentOutput, KeywordModel, RevisingAgentOutput,
@@ -456,3 +459,77 @@ async def get_search_statistics(pipeline_id: str):
         "duplicates_removed": pipeline.search_output.total_papers_before_dedup - len(pipeline.search_output.papers),
         "keyword_breakdown": keyword_breakdown
     }
+
+
+@router.post("/chat", response_model=ChatResponse, tags=["chat"])
+async def chat(request: ChatRequest):
+    """
+    Non-streaming chat endpoint
+
+    Send messages and get a complete response
+
+    - **messages**: List of chat messages with role and content
+    - Returns the complete AI response
+    """
+    try:
+        logger.info(f"Received chat request with {len(request.messages)} messages")
+
+        # Import llm_service here to avoid circular imports
+        from services.llm_service import llm_service
+
+        # Convert ChatMessage to dict format
+        messages_dict = [{"role": msg.role, "content": msg.content} for msg in request.messages]
+
+        response = await llm_service.chat(messages_dict)
+        return ChatResponse(message=response)
+
+    except Exception as e:
+        logger.error(f"Chat error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/chat/stream", tags=["chat"])
+async def chat_stream(request: ChatRequest):
+    """
+    Streaming chat endpoint
+
+    Send messages and get a streaming response in SSE format
+
+    - **messages**: List of chat messages with role and content
+    - Returns Server-Sent Events (SSE) streaming response
+    - Each data chunk format: `data: {"content": "..."}`
+    - End marker: `data: [DONE]`
+    """
+
+    async def generate():
+        try:
+            logger.info(f"Starting stream for {len(request.messages)} messages")
+
+            # Import llm_service here to avoid circular imports
+            from services.llm_service import llm_service
+
+            # Convert ChatMessage to dict format
+            messages_dict = [{"role": msg.role, "content": msg.content} for msg in request.messages]
+
+            chunk_count = 0
+            async for chunk in llm_service.chat_stream(messages_dict):
+                chunk_count += 1
+                # SSE format
+                yield f"data: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+
+            logger.info(f"Stream completed with {chunk_count} chunks")
+            yield "data: [DONE]\n\n"
+
+        except Exception as e:
+            logger.error(f"Stream error: {str(e)}")
+            yield f"data: {json.dumps({'error': str(e)}, ensure_ascii=False)}\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",  # Disable Nginx buffering
+        }
+    )
