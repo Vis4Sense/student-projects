@@ -50,7 +50,7 @@ export default function Header({
     };
 
     return (
-        <header className="bg-white border border-black rounded-lg px-6 py-4">
+        <header className="bg-white border-b border-gray-300 px-6 py-4">
             <div className="flex justify-between items-center">
                 {/* Left Section: Back Button + Title */}
                 <div className="flex items-center gap-4">

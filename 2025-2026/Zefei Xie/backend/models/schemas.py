@@ -32,7 +32,9 @@ class Paper(BaseModel):
     published_date: str
     source: str = "arxiv"
     relevance_score: float = 0.0
-    found_by_keywords: List[str] = []  # 记录是哪些关键词找到的
+    found_by_keywords: List[str] = []
+    # human tag status must be one of "accepted" | "rejected" | "neutral"
+    human_tag: Optional[str] = None
 
 class KeywordSearchResult(BaseModel):
     """single keyword search result"""
@@ -59,6 +61,7 @@ class SearchAgentOutput(BaseModel):
 class PaperReviewDecision(BaseModel):
     """Paper review decision"""
     paper_id: str
+    paper: Paper
     decision: str  # "accept", "reject"
     reason: str
     is_overridden: bool = False
@@ -136,6 +139,7 @@ class HumanInterventionRequest(BaseModel):
     action_type: Literal[
         "edit_keywords",
         "adjust_keyword_results",
+        "select_papers",
         "override_paper",
         "edit_answer",
         "rerun_stage"

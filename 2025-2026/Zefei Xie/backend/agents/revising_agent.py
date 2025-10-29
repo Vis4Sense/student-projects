@@ -31,17 +31,29 @@ class RevisingAgent(BaseAgent):
         rejected = []
 
         for paper in papers:
-            decision = await self._evaluate_paper(paper, query)
-
-            if decision["decision"] == "accept":
+            if paper.human_tag == "accepted":
                 accepted.append(paper)
-            else:
+            elif paper.human_tag == "rejected":
                 rejected.append(PaperReviewDecision(
                     paper_id=paper.id,
+                    paper=paper,
                     decision="reject",
-                    reason=decision["reason"],
+                    reason="Manually rejected by user",
                     is_overridden=False
                 ))
+            else:
+                decision = await self._evaluate_paper(paper, query)
+
+                if decision["decision"] == "accept":
+                    accepted.append(paper)
+                else:
+                    rejected.append(PaperReviewDecision(
+                        paper_id=paper.id,
+                        paper=paper,
+                        decision="reject",
+                        reason=decision["reason"],
+                        is_overridden=False
+                    ))
 
         # Rejection summary
         rejection_summary = self._summarize_rejections(rejected)

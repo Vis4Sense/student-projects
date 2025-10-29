@@ -107,6 +107,7 @@ class SearchAgent(BaseAgent):
 
             # Tag papers with keyword
             for paper in papers:
+                paper.human_tag = "neutral"
                 if kw.keyword not in paper.found_by_keywords:
                     paper.found_by_keywords.append(kw.keyword)
 

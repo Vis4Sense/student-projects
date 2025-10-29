@@ -7,16 +7,23 @@ import { Filter, X } from 'lucide-react';
 
 interface PaperListProps {
     papers: Paper[];
+    onApplyIntervention?: (intervention: any) => void;
+    isLoading?: boolean;
 }
 
-export default function PaperList({ papers }: PaperListProps) {
+export default function PaperList({
+                                      papers,
+                                      onApplyIntervention,
+                                      isLoading = false
+                                  }: PaperListProps) {
     const [selectedAuthor, setSelectedAuthor] = useState<string>('all');
     const [selectedSource, setSelectedSource] = useState<string>('all');
     const [selectedKeyword, setSelectedKeyword] = useState<string>('all');
+    const [selectedStatus, setSelectedStatus] = useState<string>('all');
     const [startMonth, setStartMonth] = useState<string>('');
     const [endMonth, setEndMonth] = useState<string>('');
 
-    // get unique authors
+    // Get unique authors
     const allAuthors = useMemo(() => {
         const authorsSet = new Set<string>();
         papers.forEach(paper => {
@@ -25,7 +32,7 @@ export default function PaperList({ papers }: PaperListProps) {
         return Array.from(authorsSet).sort();
     }, [papers]);
 
-    // get all unique sources
+    // Get all unique sources
     const allSources = useMemo(() => {
         const sourcesSet = new Set<string>();
         papers.forEach(paper => {
@@ -34,7 +41,7 @@ export default function PaperList({ papers }: PaperListProps) {
         return Array.from(sourcesSet).sort();
     }, [papers]);
 
-    // get all unique keywords
+    // Get all unique keywords
     const allKeywords = useMemo(() => {
         const keywordsSet = new Set<string>();
         papers.forEach(paper => {
@@ -43,25 +50,43 @@ export default function PaperList({ papers }: PaperListProps) {
         return Array.from(keywordsSet).sort();
     }, [papers]);
 
+    // Get status counts
+    const statusCounts = useMemo(() => {
+        const counts = { accepted: 0, rejected: 0, neutral: 0 };
+        papers.forEach(paper => {
+            const status = paper.human_tag || 'neutral';
+            counts[status as keyof typeof counts]++;
+        });
+        return counts;
+    }, [papers]);
+
     // Filter papers based on selected filters
     const filteredPapers = useMemo(() => {
         return papers.filter(paper => {
-            // Author
+            // Author filter
             if (selectedAuthor !== 'all' && !paper.authors.includes(selectedAuthor)) {
                 return false;
             }
 
-            // Source
+            // Source filter
             if (selectedSource !== 'all' && paper.source !== selectedSource) {
                 return false;
             }
 
-            // Keyword
+            // Keyword filter
             if (selectedKeyword !== 'all' && !paper.found_by_keywords.includes(selectedKeyword)) {
                 return false;
             }
 
-            // Date
+            // Status filter
+            if (selectedStatus !== 'all') {
+                const paperStatus = paper.human_tag || 'neutral';
+                if (paperStatus !== selectedStatus) {
+                    return false;
+                }
+            }
+
+            // Date filter
             const paperDate = new Date(paper.published_date);
             const paperYearMonth = `${paperDate.getFullYear()}-${String(paperDate.getMonth() + 1).padStart(2, '0')}`;
 
@@ -75,18 +100,25 @@ export default function PaperList({ papers }: PaperListProps) {
 
             return true;
         });
-    }, [papers, selectedAuthor, selectedSource, selectedKeyword, startMonth, endMonth]);
+    }, [papers, selectedAuthor, selectedSource, selectedKeyword, selectedStatus, startMonth, endMonth]);
 
     // Reset filters
     const resetFilters = () => {
         setSelectedAuthor('all');
         setSelectedSource('all');
         setSelectedKeyword('all');
+        setSelectedStatus('all');
         setStartMonth('');
         setEndMonth('');
     };
 
-    const hasActiveFilters = selectedAuthor !== 'all' || selectedSource !== 'all' || selectedKeyword !== 'all' || startMonth || endMonth;
+    const hasActiveFilters =
+        selectedAuthor !== 'all' ||
+        selectedSource !== 'all' ||
+        selectedKeyword !== 'all' ||
+        selectedStatus !== 'all' ||
+        startMonth ||
+        endMonth;
 
     if (papers.length === 0) {
         return (
@@ -116,8 +148,7 @@ export default function PaperList({ papers }: PaperListProps) {
                     )}
                 </div>
 
-                <br/>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
                     {/* Author Filter */}
                     <div>
                         <label className="text-xs font-medium text-gray-700 block mb-1">
@@ -175,6 +206,23 @@ export default function PaperList({ papers }: PaperListProps) {
                         </select>
                     </div>
 
+                    {/* Status Filter */}
+                    <div>
+                        <label className="text-xs font-medium text-gray-700 block mb-1">
+                            Status
+                        </label>
+                        <select
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="all">All Status ({papers.length})</option>
+                            <option value="accepted">✓ Accepted ({statusCounts.accepted})</option>
+                            <option value="rejected">✗ Rejected ({statusCounts.rejected})</option>
+                            <option value="neutral">○ Neutral ({statusCounts.neutral})</option>
+                        </select>
+                    </div>
+
                     {/* Start Month Filter */}
                     <div>
                         <label className="text-xs font-medium text-gray-700 block mb-1">
@@ -203,9 +251,15 @@ export default function PaperList({ papers }: PaperListProps) {
                 </div>
 
                 <br/>
+
                 {/* Results Count */}
-                <div className="text-xs text-gray-600">
-                    Showing {filteredPapers.length} of {papers.length} papers
+                <div className="text-xs text-gray-600 flex items-center gap-4">
+                    <span>Showing {filteredPapers.length} of {papers.length} papers</span>
+                    {selectedStatus === 'all' && (
+                        <span className="text-gray-500">
+                            (✓ {statusCounts.accepted} • ✗ {statusCounts.rejected} • ○ {statusCounts.neutral})
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -229,7 +283,20 @@ export default function PaperList({ papers }: PaperListProps) {
                         <PaperCard
                             key={paper.id}
                             paper={paper}
-                            status="neutral"
+                            status={paper.human_tag || 'neutral'}
+                            onAction={onApplyIntervention ? (action) => {
+
+                                onApplyIntervention({
+                                    stage: 'search',
+                                    action_type: 'select_papers',
+                                    details: {
+                                        paper_id: paper.id,
+                                        action: action,
+                                        reason: `User tagged as ${action}`,
+                                    },
+                                });
+                            } : undefined}
+                            isLoading={isLoading}
                         />
                     ))
                 )}

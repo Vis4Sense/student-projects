@@ -7,7 +7,9 @@ import { useState } from 'react';
 interface PaperCardProps {
     paper: Paper;
     status: 'accepted' | 'rejected' | 'neutral';
-    onAction?: () => void;
+    onAction?: (action: 'accept' | 'reject' | 'neutral') => void;  // 添加 'neutral' 选项
+    onAccept?: () => void;
+    onReject?: () => void;
     isLoading?: boolean;
 }
 
@@ -15,6 +17,8 @@ export default function PaperCard({
                                       paper,
                                       status,
                                       onAction,
+                                      onAccept,
+                                      onReject,
                                       isLoading = false,
                                   }: PaperCardProps) {
     const [showModal, setShowModal] = useState(false);
@@ -39,7 +43,7 @@ export default function PaperCard({
                     onClick={() => setShowModal(true)}
                 >
                     <div className="flex justify-between items-start gap-2">
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 flex-1">
                             <h4 className="text-sm font-semibold text-gray-900 line-clamp-2">
                                 {paper.title}
                             </h4>
@@ -67,30 +71,136 @@ export default function PaperCard({
                                     ))}
                                 </div>
                             )}
+
+                            {paper.relevance_score > 0 && (
+                                <div className="mt-2 text-xs text-gray-600">
+                                    Relevance: {(paper.relevance_score * 100).toFixed(0)}%
+                                </div>
+                            )}
                         </div>
 
-                        <div className="flex flex-col space-y-1">
-                            {statusIcons[status] && statusIcons[status]}
-                            {onAction && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onAction();
-                                    }}
-                                    disabled={isLoading}
-                                    className="p-1 hover:bg-blue-200 rounded text-blue-600 disabled:opacity-50"
-                                >
-                                    <ExternalLink size={16} />
-                                </button>
-                            )}
+                        <div className="flex flex-col items-center">
+                            {statusIcons[status]}
                         </div>
                     </div>
 
-                    {paper.relevance_score > 0 && (
-                        <div className="mt-2 text-xs text-gray-600">
-                            Relevance: {(paper.relevance_score * 100).toFixed(0)}%
+                    {/* Action Buttons at Bottom */}
+                    {/* Action Buttons at Bottom */}
+                    {(onAccept || onReject || onAction) && (
+                        <div className="mt-3 pt-3 border-t border-gray-200 flex gap-2">
+                            {onAction && !onAccept && !onReject ? (
+                                <>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            console.log('🟢 Accept button clicked!', { paper_id: paper.id, current_status: status });
+                                            onAction('accept');
+                                        }}
+                                        disabled={isLoading}
+                                        className={`flex-1 px-3 py-1.5 text-xs font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            status === 'accepted'
+                                                ? 'bg-green-600 text-white hover:bg-green-700'
+                                                : 'bg-green-100 text-green-700 hover:bg-green-200'
+                                        }`}
+                                    >
+                                        {status === 'accepted' ? '✓ Accepted' : 'Accept'}
+                                    </button>
+
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            console.log('⚪ Neutral button clicked!', { paper_id: paper.id, current_status: status });
+                                            onAction('neutral');
+                                        }}
+                                        disabled={isLoading}
+                                        className={`flex-1 px-3 py-1.5 text-xs font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            status === 'neutral'
+                                                ? 'bg-gray-600 text-white hover:bg-gray-700'
+                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        {status === 'neutral' ? '○ Neutral' : 'Reset'}
+                                    </button>
+
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            console.log('🔴 Reject button clicked!', { paper_id: paper.id, current_status: status });
+                                            onAction('reject');
+                                        }}
+                                        disabled={isLoading}
+                                        className={`flex-1 px-3 py-1.5 text-xs font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            status === 'rejected'
+                                                ? 'bg-red-600 text-white hover:bg-red-700'
+                                                : 'bg-red-100 text-red-700 hover:bg-red-200'
+                                        }`}
+                                    >
+                                        {status === 'rejected' ? '✗ Rejected' : 'Reject'}
+                                    </button>
+
+                                </>
+                            ) : (
+                                /* 如果使用 onAccept/onReject (revising 阶段)，显示原来的单个按钮 */
+                                <>
+                                    {status === 'accepted' && onReject && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onReject();
+                                            }}
+                                            disabled={isLoading}
+                                            className="flex-1 px-3 py-1.5 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        >
+                                            Reject Paper
+                                        </button>
+                                    )}
+
+                                    {status === 'rejected' && onAccept && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onAccept();
+                                            }}
+                                            disabled={isLoading}
+                                            className="flex-1 px-3 py-1.5 bg-green-500 text-white text-xs font-medium rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        >
+                                            Accept Paper
+                                        </button>
+                                    )}
+
+                                    {status === 'neutral' && (
+                                        <>
+                                            {onAccept && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onAccept();
+                                                    }}
+                                                    disabled={isLoading}
+                                                    className="flex-1 px-3 py-1.5 bg-green-500 text-white text-xs font-medium rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                                >
+                                                    Accept
+                                                </button>
+                                            )}
+                                            {onReject && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onReject();
+                                                    }}
+                                                    disabled={isLoading}
+                                                    className="flex-1 px-3 py-1.5 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                                >
+                                                    Reject
+                                                </button>
+                                            )}
+                                        </>
+                                    )}
+                                </>
+                            )}
                         </div>
                     )}
+
                 </div>
 
                 {/* External Link Button */}
@@ -106,7 +216,6 @@ export default function PaperCard({
                 </a>
             </div>
 
-            {/* Modal */}
             {showModal && (
                 <div
                     className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"

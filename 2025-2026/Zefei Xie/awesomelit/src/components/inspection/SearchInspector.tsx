@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { SearchAgentOutput, KeywordSearchResult } from '@/types/pipeline';
+import type { SearchAgentOutput } from '@/types/pipeline';
 import KeywordEditor from './components/KeywordEditor';
 import PaperList from './components/PaperList';
 
@@ -43,7 +43,7 @@ export default function SearchInspector({
         );
     }
 
-    // If keyword
+    // If keyword node
     if (nodeType === 'keyword') {
         const keywordIndex = parseInt(nodeId.split('_')[1]);
         const keywordResult = searchOutput.keyword_results?.[keywordIndex];
@@ -80,13 +80,17 @@ export default function SearchInspector({
                 </div>
 
                 <div className="flex-1 overflow-y-auto">
-                    <PaperList papers={keywordResult.papers} />
+                    <PaperList
+                        papers={keywordResult.papers}
+                        onApplyIntervention={onApplyIntervention}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         );
     }
 
-    // Search summary
+    // Search summary view
     return (
         <div className="flex flex-col h-full">
             <div className="border-b border-gray-200">
@@ -123,7 +127,13 @@ export default function SearchInspector({
                     />
                 )}
 
-                {activeTab === 'papers' && <PaperList papers={searchOutput.papers} />}
+                {activeTab === 'papers' && (
+                    <PaperList
+                        papers={searchOutput.papers}
+                        onApplyIntervention={onApplyIntervention}
+                        isLoading={isLoading}
+                    />
+                )}
             </div>
 
             <div className="border-t border-gray-200 bg-gray-50 p-3">
@@ -138,4 +148,3 @@ export default function SearchInspector({
         </div>
     );
 }
-

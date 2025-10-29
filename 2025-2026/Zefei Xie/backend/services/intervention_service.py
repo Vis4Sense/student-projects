@@ -43,7 +43,7 @@ class InterventionService:
             elif intervention.action_type == "adjust_keyword_results":
                 return self._handle_keyword_results_adjustment(pipeline, intervention)
 
-            elif intervention.action_type == "override_paper":
+            elif intervention.action_type == "override_paper" or intervention.action_type == "select_papers":
                 return self._handle_paper_override(pipeline, intervention)
 
             elif intervention.action_type == "edit_answer":
@@ -253,15 +253,72 @@ class InterventionService:
             intervention: HumanInterventionRequest
     ) -> Dict[str, Any]:
         """
-        Override the AI decision on a paper
+        Override the AI decision on a paper OR update human_tag in search stage
         """
-        if not pipeline.revising_output:
-            return {"success": False, "message": "Revising stage not completed yet"}
-
         details = intervention.details
         paper_id = details.get("paper_id")
-        action = details.get("action")  # "accept" or "reject"
+        action = details.get("action")  # "accept", "reject", or "neutral" from frontend
         reason = details.get("reason", "Manual override by user")
+
+        STATUS_MAP = {
+            'accept': 'accepted',
+            'reject': 'rejected',
+            'neutral': 'neutral'
+        }
+
+        normalized_action = STATUS_MAP.get(action, action)
+
+        logger.info(f"Processing paper override: paper_id={paper_id}, action={action} → {normalized_action}")
+
+        # ============================================================
+        # Handle human_tag update during search stage
+        # ============================================================
+        if action in ["accept", "reject", "neutral"] and pipeline.search_output and not pipeline.revising_output:
+            logger.info(f"Updating human_tag in search stage")
+
+            # Find paper in search results
+            paper = next(
+                (p for p in pipeline.search_output.papers if p.id == paper_id),
+                None
+            )
+
+            if not paper:
+                logger.warning(f"Paper {paper_id} not found in search results")
+                return {"success": False, "message": "Paper not found in search results"}
+
+            # Update human_tag with normalized value
+            old_tag = getattr(paper, 'human_tag', 'neutral')
+            paper.human_tag = normalized_action
+
+            logger.info(f"Updated paper.human_tag: {old_tag} → {normalized_action}")
+
+            # IMPORTANT: Also update in keyword_results to maintain consistency
+            updated_count = 0
+            for keyword_result in pipeline.search_output.keyword_results:
+                for kw_paper in keyword_result.papers:
+                    if kw_paper.id == paper_id:
+                        kw_paper.human_tag = normalized_action
+                        updated_count += 1
+
+            self._record_intervention(pipeline, intervention, [
+                f"Updated paper '{paper.title[:50]}...' human_tag: {old_tag} → {normalized_action}"
+            ])
+
+            return {
+                "success": True,
+                "message": f"Paper tagged as '{normalized_action}'",
+                "paper_id": paper_id,
+                "paper_title": paper.title,
+                "old_tag": old_tag,
+                "new_tag": normalized_action,  # 返回标准化的值
+                "updated_instances": updated_count
+            }
+
+        # ============================================================
+        # Handle paper override in revising stage
+        # ============================================================
+        if not pipeline.revising_output:
+            return {"success": False, "message": "Revising stage not completed yet"}
 
         if action == "accept":
             # move to accepted list
@@ -271,6 +328,7 @@ class InterventionService:
             )
 
             if not rejected_decision:
+                logger.warning(f"❌ Paper {paper_id} not found in rejected list")
                 return {"success": False, "message": "Paper not found in rejected list"}
 
             # find original paper
@@ -280,6 +338,7 @@ class InterventionService:
             )
 
             if not paper:
+                logger.error(f"❌ Original paper {paper_id} not found in search results")
                 return {"success": False, "message": "Original paper not found"}
 
             # move to accepted list
@@ -297,11 +356,14 @@ class InterventionService:
             return {
                 "success": True,
                 "message": "Paper accepted",
+                "paper_id": paper_id,
                 "paper_title": paper.title,
                 "original_rejection_reason": rejected_decision.reason
             }
 
         elif action == "reject":
+            logger.info(f"📤 Moving paper {paper_id} from accepted to rejected")
+
             # check if paper is already in accepted list
             paper = next(
                 (p for p in pipeline.revising_output.accepted_papers if p.id == paper_id),
@@ -309,6 +371,7 @@ class InterventionService:
             )
 
             if not paper:
+                logger.warning(f"❌ Paper {paper_id} not found in accepted list")
                 return {"success": False, "message": "Paper not found in accepted list"}
 
             from models.schemas import PaperReviewDecision
@@ -316,6 +379,7 @@ class InterventionService:
             # Create a new rejection decision
             rejection = PaperReviewDecision(
                 paper_id=paper_id,
+                paper=paper,
                 decision="reject",
                 reason=reason,
                 is_overridden=True,
@@ -332,6 +396,7 @@ class InterventionService:
             return {
                 "success": True,
                 "message": "Paper rejected",
+                "paper_id": paper_id,
                 "paper_title": paper.title
             }
 

@@ -14,6 +14,7 @@ export interface Paper {
     source: string;
     relevance_score: number;
     found_by_keywords: string[];
+    human_tag: "accepted" | "rejected" | "neutral";
 }
 
 export interface KeywordSearchResult {
@@ -34,6 +35,7 @@ export interface SearchAgentOutput {
 
 export interface PaperReviewDecision {
     paper_id: string;
+    paper: Paper;
     decision: 'accept' | 'reject';
     reason: string;
     is_overridden: boolean;
