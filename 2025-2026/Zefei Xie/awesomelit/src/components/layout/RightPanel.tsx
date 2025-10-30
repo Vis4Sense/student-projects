@@ -5,15 +5,22 @@ import RevisingInspector from '@/components/inspection/RevisingInspector';
 import SynthesisInspector from '@/components/inspection/SynthesisInspector';
 import type { PipelineState } from '@/types/pipeline';
 import { useSelectedNode } from '@/lib/hooks/useSelectedNode';
-import {usePipeline} from "@/lib/hooks/usePipeline";
+import { AIChatPanelRef } from '@/components/layout/AIChatPanel';
+import { RefObject } from 'react'; //
 
 interface RightPanelProps {
     pipeline: PipelineState | undefined;
     onApplyIntervention: (intervention: any) => void;
     isLoading: boolean;
+    chatPanelRef: RefObject<AIChatPanelRef | null>;
 }
 
-export default function RightPanel({ pipeline, onApplyIntervention, isLoading }: RightPanelProps) {
+export default function RightPanel({
+                                       pipeline,
+                                       onApplyIntervention,
+                                       isLoading,
+                                       chatPanelRef
+                                   }: RightPanelProps) {
     const { selectedNode } = useSelectedNode();
 
     if (!selectedNode) {
@@ -27,11 +34,6 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
         );
     }
 
-    // Debug: print selected node and pipeline data
-    console.log('Selected node:', selectedNode);
-    console.log('Pipeline search output:', pipeline?.search_output);
-
-
     // Search stage - Query Keyword Gen
     if (selectedNode.type === 'keyword_gen') {
         return (
@@ -41,6 +43,7 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
                 searchOutput={pipeline?.search_output}
                 onApplyIntervention={onApplyIntervention}
                 isLoading={isLoading}
+                chatPanelRef={chatPanelRef}
             />
         );
     }
@@ -54,6 +57,7 @@ export default function RightPanel({ pipeline, onApplyIntervention, isLoading }:
                 searchOutput={pipeline?.search_output}
                 onApplyIntervention={onApplyIntervention}
                 isLoading={isLoading}
+                chatPanelRef={chatPanelRef}
             />
         );
     }

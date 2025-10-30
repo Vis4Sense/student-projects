@@ -91,7 +91,15 @@ export default function WorkflowCanvas({
             >
                 <Background />
                 <Controls />
-                <MiniMap />
+                <MiniMap
+                    style={{
+                        width: 120,
+                        height: 90
+                    }}
+                    position="bottom-right"
+                    zoomable
+                    pannable
+                />
             </ReactFlow>
             {isLoading && (
                 <div className="absolute inset-0 bg-black bg-opacity-10 flex items-center justify-center rounded-lg">

@@ -135,6 +135,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                                     pipeline={pipeline}
                                     onApplyIntervention={handleApplyIntervention}
                                     isLoading={applyInterventionLoading}
+                                    chatPanelRef={chatPanelRef}
                                 />
                             </div>
                         </>

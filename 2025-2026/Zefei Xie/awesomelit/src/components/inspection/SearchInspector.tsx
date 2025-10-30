@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, RefObject } from 'react';
 import type { SearchAgentOutput } from '@/types/pipeline';
 import KeywordEditor from './components/KeywordEditor';
 import PaperList from './components/PaperList';
+import { AIChatPanelRef } from '@/components/layout/AIChatPanel';
 
 interface SearchInspectorProps {
     nodeId: string;
@@ -11,6 +12,7 @@ interface SearchInspectorProps {
     searchOutput: SearchAgentOutput | undefined;
     onApplyIntervention: (intervention: any) => void;
     isLoading: boolean;
+    chatPanelRef: RefObject<AIChatPanelRef | null>;
 }
 
 export default function SearchInspector({
@@ -19,6 +21,7 @@ export default function SearchInspector({
                                             searchOutput,
                                             onApplyIntervention,
                                             isLoading,
+                                            chatPanelRef,
                                         }: SearchInspectorProps) {
     const [activeTab, setActiveTab] = useState<'keywords' | 'papers'>('keywords');
 
@@ -124,6 +127,7 @@ export default function SearchInspector({
                         keywords={searchOutput.keywords}
                         onApplyIntervention={onApplyIntervention}
                         isLoading={isLoading}
+                        chatPanelRef={chatPanelRef}
                     />
                 )}
 

@@ -1,22 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, RefObject } from 'react';
 import type { Keyword } from '@/types/pipeline';
-import { X, Plus } from 'lucide-react';
+import { X, Plus, Sparkles } from 'lucide-react';
+import { AIChatPanelRef } from '@/components/layout/AIChatPanel';
 
 interface KeywordEditorProps {
     keywords: Keyword[];
     onApplyIntervention: (intervention: any) => void;
     isLoading: boolean;
+    chatPanelRef: RefObject<AIChatPanelRef | null>;
 }
 
 export default function KeywordEditor({
                                           keywords,
                                           onApplyIntervention,
                                           isLoading,
+                                          chatPanelRef,
                                       }: KeywordEditorProps) {
     const [editedKeywords, setEditedKeywords] = useState<Keyword[]>(keywords);
     const [newKeyword, setNewKeyword] = useState('');
+
+    const handleExplainKeyword = (keyword: string) => {
+        if (chatPanelRef.current) {
+            const message = `Please explain the concept of "${keyword}" in the context of academic research briefly and concisely. Include its definition, key characteristics, and relevance to literature review.`;
+            chatPanelRef.current.sendMessage(message);
+        } else {
+            console.warn('AI Chat panel not available');
+        }
+    };
 
     const handleAddKeyword = () => {
         if (newKeyword.trim()) {
@@ -83,9 +95,14 @@ export default function KeywordEditor({
                 <h4 className="font-semibold text-sm mb-3">Current Keywords</h4>
                 <div className="space-y-2">
                     {editedKeywords.map((kw, idx) => (
-                        <div key={idx} className="flex items-center space-x-2 bg-gray-50 p-2 rounded gap-4">
-                            <div className="flex-1 text-sm font-medium">
+                        <div key={idx} className="flex items-center space-x-2 bg-gray-50 p-2 rounded gap-2">
+                            <div className="flex-1 text-sm font-medium min-w-0">
                                 {kw.keyword}
+                                {kw.is_custom && (
+                                    <span className="ml-2 px-1.5 py-0.5 text-xs bg-purple-100 text-purple-700 rounded">
+                                        Custom
+                                    </span>
+                                )}
                             </div>
 
                             <input
@@ -94,12 +111,24 @@ export default function KeywordEditor({
                                 max="100"
                                 value={kw.importance * 100}
                                 onChange={(e) => handleUpdateImportance(idx, parseInt(e.target.value) / 100)}
-                                className="w-64"
+                                className="w-32 flex-shrink-0"
                             />
-                            <span className="text-xs text-gray-600 w-8">{(kw.importance * 100).toFixed(0)}%</span>
+                            <span className="text-xs text-gray-600 w-10 text-right flex-shrink-0">
+                                {(kw.importance * 100).toFixed(0)}%
+                            </span>
+
+                            <button
+                                onClick={() => handleExplainKeyword(kw.keyword)}
+                                className="p-1.5 hover:bg-blue-100 rounded text-blue-600 transition-colors flex-shrink-0"
+                                title="Explain this keyword"
+                            >
+                                <Sparkles size={16} />
+                            </button>
+
                             <button
                                 onClick={() => handleRemoveKeyword(idx)}
-                                className="p-1 hover:bg-red-100 rounded text-red-500"
+                                className="p-1.5 hover:bg-red-100 rounded text-red-500 transition-colors flex-shrink-0"
+                                title="Remove keyword"
                             >
                                 <X size={16} />
                             </button>

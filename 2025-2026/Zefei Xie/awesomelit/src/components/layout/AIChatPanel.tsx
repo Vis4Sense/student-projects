@@ -289,7 +289,7 @@ function MessageBubble({
             </div>
             <div
                 className={`flex-1 max-w-[80%] ${
-                    isUser ? 'text-right' : 'text-left'
+                    isUser ? 'text-left' : 'text-left'
                 }`}
             >
                 <div
