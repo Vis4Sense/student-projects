@@ -46,6 +46,27 @@ export default function SearchInspector({
         );
     }
 
+    // If paper_pool node
+    if (nodeType === 'paper_pool') {
+        return (
+            <div className="flex flex-col h-full">
+                <div className="border-b border-gray-200 p-4">
+                    <h3 className="font-semibold text-lg">Paper pool</h3>
+                    <div className="mt-2 space-y-1 text-sm text-gray-600">
+                        <p>Total papers: {searchOutput.papers.length}</p>
+                    </div>
+                </div>
+                <div className="flex-1 overflow-y-auto">
+                    <PaperList
+                        papers={searchOutput.papers}
+                        onApplyIntervention={onApplyIntervention}
+                        isLoading={isLoading}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     // If keyword node
     if (nodeType === 'keyword') {
         const keywordIndex = parseInt(nodeId.split('_')[1]);

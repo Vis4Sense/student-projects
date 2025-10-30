@@ -62,6 +62,20 @@ export default function RightPanel({
         );
     }
 
+    // Paper_Pool
+    if (selectedNode.type === 'paper_pool') {
+        return (
+            <SearchInspector
+                nodeId={selectedNode.id}
+                nodeType={selectedNode.type}
+                searchOutput={pipeline?.search_output}
+                onApplyIntervention={onApplyIntervention}
+                isLoading={isLoading}
+                chatPanelRef={chatPanelRef}
+            />
+        );
+    }
+
     // Revising stage
     if (selectedNode.type === 'agent' && selectedNode.id.includes('revising')) {
         return (
