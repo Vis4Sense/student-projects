@@ -72,6 +72,8 @@ export default function PaperCard({
                                 </div>
                             )}
 
+                            <br/>
+
                             {paper.relevance_score > 0 && (
                                 <div className="mt-2 text-xs text-gray-600">
                                     Relevance: {(paper.relevance_score * 100).toFixed(0)}%
@@ -84,7 +86,6 @@ export default function PaperCard({
                         </div>
                     </div>
 
-                    {/* Action Buttons at Bottom */}
                     {/* Action Buttons at Bottom */}
                     {(onAccept || onReject || onAction) && (
                         <div className="mt-3 pt-3 border-t border-gray-200 flex gap-2">
@@ -140,7 +141,6 @@ export default function PaperCard({
 
                                 </>
                             ) : (
-                                /* 如果使用 onAccept/onReject (revising 阶段)，显示原来的单个按钮 */
                                 <>
                                     {status === 'accepted' && onReject && (
                                         <button

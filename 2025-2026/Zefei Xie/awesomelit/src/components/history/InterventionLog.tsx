@@ -63,7 +63,7 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
                     <select
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
-                        className="text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="text-xs border border-gray-300 rounded px-6 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="all">All</option>
                         <option value="edit_keywords">Edit Keywords</option>

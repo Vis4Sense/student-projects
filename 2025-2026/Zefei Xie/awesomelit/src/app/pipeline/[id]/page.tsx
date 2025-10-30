@@ -7,7 +7,6 @@ import Header from '@/components/layout/Header';
 import LeftPanel from '@/components/layout/LeftPanel';
 import RightPanel from '@/components/layout/RightPanel';
 import BottomPanel from '@/components/layout/BottomPanel';
-
 import { X } from 'lucide-react';
 import AIChatPanel, {AIChatPanelRef} from "@/components/layout/AIChatPanel";
 
@@ -59,7 +58,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
 
     return (
         <div className="h-screen flex flex-col bg-gray-100">
-            {/* Header with Continue button */}
+            {/* Header */}
             <Header
                 pipeline={pipeline}
                 isLoading={isLoading}
@@ -68,7 +67,8 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
             />
 
             <div className="flex-1 flex overflow-hidden p-4 gap-4">
-                <div className="w-1/5 min-w-0">
+                {/* Left: AI Chat Panel - 固定宽度 */}
+                <div className="w-1/5 min-w-0 flex-shrink-0">
                     <AIChatPanel
                         ref={chatPanelRef}
                         systemPrompt="You are a helpful research assistant specializing in academic papers and literature review."
@@ -76,7 +76,14 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                     />
                 </div>
 
-                <div className="flex-1 flex flex-col gap-4 min-w-0">
+                {/* Center: Main Content Area - 会被压缩 */}
+                <div
+                    className={`
+                        flex flex-col gap-4 min-w-0
+                        transition-all duration-300 ease-in-out
+                        ${isPanelOpen ? 'flex-[1]' : 'flex-1'}
+                    `}
+                >
                     {/* Top: Workflow Canvas */}
                     <div className="flex-[3] min-h-0">
                         <LeftPanel
@@ -94,38 +101,35 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                         />
                     </div>
                 </div>
-            </div>
 
-            {/* Right Panel Modal */}
-            {isPanelOpen && (
-                <>
-                    <div
-                        onClick={handleClosePanel}
-                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
-                    >
-                        <div
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-white rounded-2xl shadow-2xl w-[80%] h-[80%] max-w-7xl flex flex-col overflow-hidden"
-                        >
-                            {/* Modal Header */}
+                <div
+                    className={`
+                        flex flex-col bg-white rounded-xl shadow-lg overflow-hidden
+                        transition-all duration-300 ease-in-out flex-shrink-0
+                        ${isPanelOpen ? 'w-[800px] opacity-100' : 'w-0 opacity-0'}
+                    `}
+                >
+                    {isPanelOpen && (
+                        <>
+                            {/* Panel Header */}
                             <div className="h-16 border-b border-gray-200 flex items-center justify-between px-6 bg-white flex-shrink-0">
-                                <div>
-                                    <h2 className="text-lg font-semibold text-gray-900">Node Inspector</h2>
+                                <div className="min-w-0 flex-1">
+                                    <h2 className="text-lg font-semibold text-gray-900 truncate">Node Inspector</h2>
                                     {selectedNode && (
-                                        <p className="text-xs text-gray-500 mt-0.5">
+                                        <p className="text-xs text-gray-500 mt-0.5 truncate">
                                             {selectedNode.type} • {selectedNode.id}
                                         </p>
                                     )}
                                 </div>
                                 <button
                                     onClick={handleClosePanel}
-                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0 ml-2"
                                 >
                                     <X className="w-5 h-5 text-gray-500" />
                                 </button>
                             </div>
 
-                            {/* Modal Content */}
+                            {/* Panel Content */}
                             <div className="flex-1 overflow-y-auto">
                                 <RightPanel
                                     pipeline={pipeline}
@@ -133,10 +137,10 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                                     isLoading={applyInterventionLoading}
                                 />
                             </div>
-                        </div>
-                    </div>
-                </>
-            )}
+                        </>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

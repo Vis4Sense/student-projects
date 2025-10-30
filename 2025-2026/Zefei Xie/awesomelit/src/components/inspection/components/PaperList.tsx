@@ -157,7 +157,7 @@ export default function PaperList({
                         <select
                             value={selectedAuthor}
                             onChange={(e) => setSelectedAuthor(e.target.value)}
-                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full text-xs border border-gray-300 rounded px-6 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="all">All Authors ({allAuthors.length})</option>
                             {allAuthors.map(author => (
@@ -176,7 +176,7 @@ export default function PaperList({
                         <select
                             value={selectedSource}
                             onChange={(e) => setSelectedSource(e.target.value)}
-                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full text-xs border border-gray-300 rounded px-6 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="all">All Sources ({allSources.length})</option>
                             {allSources.map(source => (
@@ -195,7 +195,7 @@ export default function PaperList({
                         <select
                             value={selectedKeyword}
                             onChange={(e) => setSelectedKeyword(e.target.value)}
-                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full text-xs border border-gray-300 rounded px-6 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="all">All Keywords ({allKeywords.length})</option>
                             {allKeywords.map(keyword => (
@@ -214,7 +214,7 @@ export default function PaperList({
                         <select
                             value={selectedStatus}
                             onChange={(e) => setSelectedStatus(e.target.value)}
-                            className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full text-xs border border-gray-300 rounded px-6 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="all">All Status ({papers.length})</option>
                             <option value="accepted">✓ Accepted ({statusCounts.accepted})</option>
