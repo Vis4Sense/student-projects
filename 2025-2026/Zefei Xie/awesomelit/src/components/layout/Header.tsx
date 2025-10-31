@@ -46,7 +46,7 @@ export default function Header({
     };
 
     const handleBack = () => {
-        router.push('/');
+        router.push(`/auto/${pipeline?.pipeline_id}`);
     };
 
     return (
@@ -103,7 +103,7 @@ export default function Header({
                             className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
                             onClick={handleBack}
                         >
-                            Finish
+                            Check Report
                         </button>
                     )}
                 </div>

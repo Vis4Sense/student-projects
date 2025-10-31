@@ -257,22 +257,6 @@ export default function AutoPipelinePage() {
                                         <div className="text-sm text-gray-600">Total Reviewed</div>
                                     </div>
                                 </div>
-                                <br/>
-                                {summary.revising.rejection_reasons &&
-                                    Object.keys(summary.revising.rejection_reasons).length > 0 && (
-                                        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                                            <div className="text-sm font-medium text-gray-700 mb-2">
-                                                Rejection Reasons:
-                                            </div>
-                                            <div className="space-y-1">
-                                                {Object.entries(summary.revising.rejection_reasons).map(([reason]) => (
-                                                    <div key={reason} className="flex justify-between text-sm">
-                                                        <span className="text-gray-600">{reason}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
                             </div>
                         )}
 

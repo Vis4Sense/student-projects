@@ -67,7 +67,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
             />
 
             <div className="flex-1 flex overflow-hidden p-4 gap-4">
-                {/* Left: AI Chat Panel - 固定宽度 */}
+                {/* Left: AI Chat Panel*/}
                 <div className="w-1/5 min-w-0 flex-shrink-0">
                     <AIChatPanel
                         ref={chatPanelRef}
@@ -76,7 +76,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                     />
                 </div>
 
-                {/* Center: Main Content Area - 会被压缩 */}
+                {/* Center: Main Content Area*/}
                 <div
                     className={`
                         flex flex-col gap-4 min-w-0
