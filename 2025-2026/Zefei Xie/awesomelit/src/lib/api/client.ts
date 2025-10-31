@@ -8,7 +8,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/a
 
 export const apiClient = axios.create({
     baseURL: API_BASE_URL,
-    timeout: 60000,
+    timeout: 600000,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -71,6 +71,20 @@ export const pipelineApi = {
     // Get accepted papers
     getStats: async (pipelineId: string) => {
         const response = await apiClient.get(`/pipeline/${pipelineId}/stats`);
+        return response.data;
+    },
+
+    // Run full automated pipeline
+    runFull: async (query: string): Promise<PipelineState> => {
+        const response = await apiClient.post<PipelineState>('/pipeline/run-full', {
+            query,
+        });
+        return response.data;
+    },
+
+    // Get pipeline summary
+    getSummary: async (pipelineId: string) => {
+        const response = await apiClient.get(`/pipeline/${pipelineId}/summary`);
         return response.data;
     },
 };

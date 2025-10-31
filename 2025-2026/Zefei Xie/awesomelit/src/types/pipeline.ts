@@ -64,7 +64,7 @@ export interface SynthesisAgentOutput {
 
 export interface PipelineState {
     pipeline_id: string;
-    stage: 'search' | 'search_complete' | 'revising' | 'revising_complete' | 'synthesis' | 'completed' | 'error';  // 👈 添加所有可能的状态
+    stage: 'search' | 'search_complete' | 'revising' | 'revising_complete' | 'synthesis' | 'completed' | 'error';
     search_output?: SearchAgentOutput;
     revising_output?: RevisingAgentOutput;
     synthesis_output?: SynthesisAgentOutput;
