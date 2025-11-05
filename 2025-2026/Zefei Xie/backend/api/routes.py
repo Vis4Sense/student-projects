@@ -763,3 +763,188 @@ async def get_pipeline_summary(pipeline_id: str):
         }
 
     return summary
+
+
+@router.post("/pipeline/{pipeline_id}/restart")
+async def restart_pipeline(
+        pipeline_id: str,
+        stage: str,
+        background_tasks: BackgroundTasks
+):
+    """
+    Restart a pipeline from a specific stage
+
+    This endpoint allows you to reset the pipeline state to before a specific stage
+    and re-execute from that point.
+
+    Parameters:
+    - pipeline_id: The ID of the pipeline to restart
+    - stage: The stage to restart from. Valid values:
+        * "search": Reset to initial state and re-run search
+        * "revising": Keep search results, re-run revising and synthesis
+        * "synthesis": Keep search and revising results, re-run synthesis only
+
+    Returns:
+    - Status information about the restart operation
+    """
+    from datetime import datetime, timezone  # 添加 datetime 导入
+
+    # Validate pipeline exists
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    # Validate stage parameter
+    valid_stages = ["search", "revising", "synthesis"]
+    if stage not in valid_stages:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid stage '{stage}'. Must be one of: {', '.join(valid_stages)}"
+        )
+
+    pipeline = active_pipelines[pipeline_id]
+
+    logger.info(f"Restarting pipeline {pipeline_id} from stage: {stage}")
+
+    current_timestamp = datetime.now(timezone.utc).isoformat()
+
+    try:
+        if stage == "search":
+            # Reset to initial state - clear everything
+            original_query = (
+                pipeline.search_output.reasoning.split("'")[1]
+                if pipeline.search_output and pipeline.search_output.reasoning
+                else ""
+            )
+
+            # Clear all outputs
+            pipeline.search_output = None
+            pipeline.revising_output = None
+            pipeline.synthesis_output = None
+            pipeline.stage = "search"
+
+            # Record intervention
+            pipeline.human_interventions.append({
+                "timestamp": current_timestamp, 
+                "action_type": "restart",
+                "stage": "search",
+                "details": {"restarted_from": stage}
+            })
+
+            # Re-run search stage
+            initial_state = AgentState(
+                original_query=original_query,
+                pipeline_id=pipeline_id,
+                search_keywords=[],
+                raw_papers=[],
+                search_reasoning="",
+                accepted_papers=[],
+                rejected_decisions=[],
+                rejection_summary={},
+                final_answer="",
+                citations=[],
+                answer_structure={},
+                current_stage="search",
+                human_interventions=pipeline.human_interventions,
+                errors=[],
+                awaiting_human_review=False,
+                human_feedback=None,
+                keyword_search_results=[]
+            )
+
+            background_tasks.add_task(run_search_stage, pipeline_id, initial_state)
+
+            return {
+                "status": "success",
+                "message": "Pipeline reset to initial state, re-running search stage",
+                "pipeline_id": pipeline_id,
+                "restarted_from": stage,
+                "current_stage": "search"
+            }
+
+        elif stage == "revising":
+            # Keep search results, clear revising and synthesis
+            if not pipeline.search_output:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Cannot restart from revising stage: search results not available"
+                )
+
+            # Clear revising and synthesis outputs
+            pipeline.revising_output = None
+            pipeline.synthesis_output = None
+            pipeline.stage = "revising"
+
+            # Record intervention
+            pipeline.human_interventions.append({
+                "timestamp": current_timestamp,
+                "action_type": "restart",
+                "stage": "revising",
+                "details": {"restarted_from": stage}
+            })
+
+            # Re-run revising stage
+            background_tasks.add_task(run_revising_stage, pipeline_id)
+
+            return {
+                "status": "success",
+                "message": "Pipeline reset to after search stage, re-running revising stage",
+                "pipeline_id": pipeline_id,
+                "restarted_from": stage,
+                "current_stage": "revising",
+                "preserved_data": {
+                    "keywords": len(pipeline.search_output.keywords),
+                    "papers": len(pipeline.search_output.papers)
+                }
+            }
+
+        elif stage == "synthesis":
+            # Keep search and revising results, clear synthesis only
+            if not pipeline.search_output:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Cannot restart from synthesis stage: search results not available"
+                )
+            if not pipeline.revising_output:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Cannot restart from synthesis stage: revising results not available"
+                )
+
+            # Clear synthesis output only
+            pipeline.synthesis_output = None
+            pipeline.stage = "synthesis"
+
+            # Record intervention
+            pipeline.human_interventions.append({
+                "timestamp": current_timestamp,
+                "action_type": "restart",
+                "stage": "synthesis",
+                "details": {"restarted_from": stage}
+            })
+
+            # Re-run synthesis stage
+            background_tasks.add_task(run_synthesis_stage, pipeline_id)
+
+            return {
+                "status": "success",
+                "message": "Pipeline reset to after revising stage, re-running synthesis stage",
+                "pipeline_id": pipeline_id,
+                "restarted_from": stage,
+                "current_stage": "synthesis",
+                "preserved_data": {
+                    "keywords": len(pipeline.search_output.keywords),
+                    "papers": len(pipeline.search_output.papers),
+                    "accepted_papers": len(pipeline.revising_output.accepted_papers)
+                }
+            }
+
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
+    except Exception as e:
+        logger.error(f"Failed to restart pipeline {pipeline_id} from stage {stage}: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to restart pipeline: {str(e)}"
+        )
+

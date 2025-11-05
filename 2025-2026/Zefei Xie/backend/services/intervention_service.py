@@ -6,7 +6,7 @@ Description: [Add your description here]
 """
 
 """
-人工干预服务 - 处理各类人工干预操作
+human intervention service
 """
 from typing import Dict, Any, List, Optional
 from models.schemas import (
@@ -144,7 +144,7 @@ class InterventionService:
                 # Research for new keyword
                 papers = await self.search_agent.arxiv_api.search(
                     query=new_kw_text,
-                    max_results=20 #调整搜索结果数量
+                    max_results=20 #TODO: adjust this value?
                 )
 
                 # Update search results

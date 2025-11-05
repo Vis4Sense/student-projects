@@ -24,6 +24,8 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
         applyInterventionLoading,
         continue: continuePipeline,
         continueLoading,
+        restartAsync,
+        restartLoading,
     } = usePipeline(pipelineId);
 
     const { selectedNode, selectNode, clearSelection } = useSelectedNode();
@@ -46,6 +48,16 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
         });
     };
 
+    const handleRestart = async (stage: 'search' | 'revising' | 'synthesis', userNote?: string) => {
+        try {
+            await restartAsync({ stage, userNote });
+            handleClosePanel();
+        } catch (error) {
+            console.error('Restart failed:', error);
+            throw error;
+        }
+    };
+
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isPanelOpen) {
@@ -64,6 +76,7 @@ export default function PipelinePage({ params }: { params: Promise<{ id: string 
                 isLoading={isLoading}
                 onContinue={continuePipeline}
                 continueLoading={continueLoading}
+                onRestart={handleRestart}
             />
 
             <div className="flex-1 flex overflow-hidden p-4 gap-4">

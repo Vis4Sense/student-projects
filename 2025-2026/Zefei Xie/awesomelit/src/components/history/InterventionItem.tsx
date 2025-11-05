@@ -32,38 +32,56 @@ export default function InterventionItem({ intervention }: InterventionItemProps
 
   const actionType = intervention.action_type as keyof typeof actionIcons;
 
-  return (
-    <div className="border border-gray-200 rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition">
-      <div className="flex items-start justify-between">
-        <div className="flex items-start space-x-2 gap-2">
-          <div className={`p-1.5 rounded ${actionColors[actionType] || 'bg-gray-100'}`}>
-            {actionIcons[actionType] || <Edit className="w-4 h-4" />}
-          </div>
+  const formatTimestamp = (timestamp: string) => {
+    try {
+      const date = new Date(timestamp);
 
-          <div className="flex-1">
-            <div className="font-medium text-sm text-gray-900">
-              {actionLabels[actionType] || intervention.action_type}
+      if (isNaN(date.getTime())) {
+        console.warn('Invalid timestamp:', timestamp);
+        return 'Recently';
+      }
+
+      return formatDistanceToNow(date, { addSuffix: true });
+    } catch (error) {
+      console.error('Error formatting timestamp:', timestamp, error);
+      return 'Recently';
+    }
+  };
+
+  return (
+      <div className="p-1">
+      <div className="border border-gray-200 rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition mb-2">
+        <div className="flex items-start justify-between">
+          <div className="flex items-start space-x-2 gap-2">
+            <div className={`p-1.5 rounded ${actionColors[actionType] || 'bg-gray-100'}`}>
+              {actionIcons[actionType] || <Edit className="w-4 h-4" />}
             </div>
 
-            {intervention.impact_summary && (
-              <p className="text-xs text-gray-600 mt-1">{intervention.impact_summary}</p>
-            )}
+            <div className="flex-1">
+              <div className="font-medium text-sm text-gray-900">
+                {actionLabels[actionType] || intervention.action_type}
+              </div>
 
-            {intervention.user_note && (
-              <p className="text-xs text-gray-500 mt-1 italic">"{intervention.user_note}"</p>
-            )}
+              {intervention.impact_summary && (
+                  <p className="text-xs text-gray-600 mt-1">{intervention.impact_summary}</p>
+              )}
 
-            <div className="flex items-center space-x-2 mt-2 gap-2">
+              {intervention.user_note && (
+                  <p className="text-xs text-gray-500 mt-1 italic">"{intervention.user_note}"</p>
+              )}
+
+              <div className="flex items-center space-x-2 mt-2 gap-2">
               <span className="text-xs text-gray-500">
-                {formatDistanceToNow(new Date(intervention.timestamp), { addSuffix: true })}
+                {formatTimestamp(intervention.timestamp)}
               </span>
-              <span className="text-xs px-2 py-0.5 bg-white rounded border border-gray-200">
+                <span className="text-xs px-2 py-0.5 bg-white rounded border border-gray-200">
                 {intervention.stage}
               </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
   );
 }

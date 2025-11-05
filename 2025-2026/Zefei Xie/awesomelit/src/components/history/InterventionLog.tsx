@@ -48,13 +48,16 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
         );
     }
 
+    const sortedInterventions = filteredInterventions
+        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
     return (
         <div className="flex flex-col h-full bg-white">
             {/* Header */}
             <div className="border-b border-gray-200 px-4 py-3 flex justify-between items-center">
                 <h3 className="font-semibold text-sm flex items-center gap-2">
                     <Clock className="w-4 h-4 mr-2" />
-                    Intervention History ({filteredInterventions.length})
+                    Intervention History ({sortedInterventions.length})
                 </h3>
 
                 {/* Filter */}
@@ -70,19 +73,19 @@ export default function InterventionLog({ interventions, isLoading }: Interventi
                         <option value="select_papers">Select Papers</option>
                         <option value="override_paper">Override Paper</option>
                         <option value="edit_answer">Edit Answer</option>
+                        <option value="restart">Restart</option>
                     </select>
                 </div>
             </div>
 
             {/* Intervention List */}
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
-                {filteredInterventions
-                    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-                    .map((intervention) => (
-                        <div key={intervention.intervention_id} className="p-1">
-                            <InterventionItem intervention={intervention} />
-                        </div>
-                    ))}
+                {sortedInterventions.map((intervention, index) => (
+                    <InterventionItem
+                        key={intervention.intervention_id || `intervention-${index}`}
+                        intervention={intervention}
+                    />
+                ))}
             </div>
         </div>
     );

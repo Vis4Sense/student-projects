@@ -87,6 +87,32 @@ export const pipelineApi = {
         const response = await apiClient.get(`/pipeline/${pipelineId}/summary`);
         return response.data;
     },
+
+    restart: async (
+        pipelineId: string,
+        stage: 'search' | 'revising' | 'synthesis',
+        userNote?: string
+    ): Promise<{
+        status: string;
+        message: string;
+        pipeline_id: string;
+        restarted_from: string;
+        current_stage: string;
+        preserved_data?: {
+            keywords?: number;
+            papers?: number;
+            accepted_papers?: number;
+        };
+    }> => {
+        const response = await apiClient.post(
+            `/pipeline/${pipelineId}/restart`,
+            userNote ? { user_note: userNote } : null,
+            {
+                params: { stage }
+            }
+        );
+        return response.data;
+    },
 };
 
 

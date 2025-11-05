@@ -56,6 +56,19 @@ export function usePipeline(pipelineId: string | null) {
         },
     });
 
+    const restartMutation = useMutation({
+        mutationFn: ({ stage, userNote }: {
+            stage: 'search' | 'revising' | 'synthesis';
+            userNote?: string
+        }) => pipelineApi.restart(pipelineId!, stage, userNote),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['pipeline', pipelineId] });
+            queryClient.invalidateQueries({ queryKey: ['visualization', pipelineId] });
+            queryClient.invalidateQueries({ queryKey: ['interventions', pipelineId] });
+            queryClient.invalidateQueries({ queryKey: ['stats', pipelineId] });
+        },
+    });
+
     return {
         pipeline,
         visualization,
@@ -68,5 +81,8 @@ export function usePipeline(pipelineId: string | null) {
         applyInterventionLoading: applyInterventionMutation.isPending,
         continue: continueMutation.mutate,
         continueLoading: continueMutation.isPending,
+        restart: restartMutation.mutate,
+        restartAsync: restartMutation.mutateAsync,
+        restartLoading: restartMutation.isPending,
     };
 }
