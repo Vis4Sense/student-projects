@@ -17,6 +17,7 @@ from models.schemas import (
 from graph.workflow import ResearchWorkflow
 from graph.state import AgentState
 from services.intervention_service import InterventionService
+from services.llm_service import LLMService
 from services.visualization_service import VisualizationService
 from services.decision_history import DecisionHistoryService
 import uuid
@@ -32,6 +33,7 @@ workflow = ResearchWorkflow()
 viz_service = VisualizationService()
 intervention_service = InterventionService()
 history_service = DecisionHistoryService()
+llm_service = LLMService()
 
 # Store active pipelines in memory
 active_pipelines: Dict[str, PipelineState] = {}
@@ -947,4 +949,361 @@ async def restart_pipeline(
             status_code=500,
             detail=f"Failed to restart pipeline: {str(e)}"
         )
+
+
+@router.post("/pipeline/{pipeline_id}/restart-with-query")
+async def restart_pipeline_with_new_query(
+        pipeline_id: str,
+        new_query: str,
+        background_tasks: BackgroundTasks
+):
+    """
+    Restart a pipeline from search stage with a new query
+
+    This endpoint allows you to restart the pipeline from the search stage
+    while preserving the pipeline ID and using a new refined query.
+
+    Parameters:
+    - pipeline_id: The ID of the pipeline to restart
+    - new_query: The new query string to use for the search stage
+
+    Returns:
+    - Status information about the restart operation
+    """
+    from datetime import datetime, timezone
+
+    # Validate pipeline exists
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    # Validate new_query is not empty
+    if not new_query or not new_query.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="new_query cannot be empty"
+        )
+
+    pipeline = active_pipelines[pipeline_id]
+
+    logger.info(f"Restarting pipeline {pipeline_id} from search stage with new query: {new_query}")
+
+    current_timestamp = datetime.now(timezone.utc).isoformat()
+
+    try:
+        # Store the old query for record keeping
+        old_query = (
+            pipeline.search_output.reasoning.split("'")[1]
+            if pipeline.search_output and pipeline.search_output.reasoning
+            else ""
+        )
+
+        # Clear all outputs (similar to search restart)
+        pipeline.search_output = None
+        pipeline.revising_output = None
+        pipeline.synthesis_output = None
+        pipeline.stage = "search"
+
+        # Record intervention with detailed information
+        pipeline.human_interventions.append({
+            "timestamp": current_timestamp,
+            "action_type": "restart_with_new_query",
+            "stage": "search",
+            "details": {
+                "old_query": old_query,
+                "new_query": new_query,
+                "reason": "User refined the research question for next iteration"
+            }
+        })
+
+        # Create new initial state with the new query
+        initial_state = AgentState(
+            original_query=new_query,
+            pipeline_id=pipeline_id,
+            search_keywords=[],
+            raw_papers=[],
+            search_reasoning="",
+            accepted_papers=[],
+            rejected_decisions=[],
+            rejection_summary={},
+            final_answer="",
+            citations=[],
+            answer_structure={},
+            current_stage="search",
+            human_interventions=pipeline.human_interventions,
+            errors=[],
+            awaiting_human_review=False,
+            human_feedback=None,
+            keyword_search_results=[]
+        )
+
+        # Re-run search stage with new query
+        background_tasks.add_task(run_search_stage, pipeline_id, initial_state)
+
+        return {
+            "status": "success",
+            "message": "Pipeline restarted from search stage with new query",
+            "pipeline_id": pipeline_id,
+            "old_query": old_query,
+            "new_query": new_query,
+            "current_stage": "search",
+            "note": "This allows iterative refinement of the research question based on previous exploration"
+        }
+
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
+    except Exception as e:
+        logger.error(f"Failed to restart pipeline {pipeline_id} with new query: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to restart pipeline with new query: {str(e)}"
+        )
+
+
+@router.post("/pipeline/{pipeline_id}/extract-and-refine-queries")
+async def extract_future_work_and_generate_queries(
+        pipeline_id: str
+):
+    """
+    Extract Future Work section and generate multiple refined queries for next iteration
+
+    This endpoint:
+    1. Extracts the Future Work section from the synthesis output
+    2. Generates multiple specific research queries based on different future work directions
+    3. Each query focuses on a different aspect of the future work
+
+    Parameters:
+    - pipeline_id: The ID of the pipeline (required path parameter)
+    - num_queries: Number of refined queries to generate (default: 3, max: 5)
+    - selected_future_work_items: Optional list of indices to focus on (if None, uses all)
+
+    Returns:
+    - Extracted future work content
+    - Multiple refined queries with their focus areas
+    - Suggestions for next iteration
+    """
+    from datetime import datetime, timezone
+    import re
+    import json
+
+
+    # Validate pipeline exists
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    pipeline = active_pipelines[pipeline_id]
+
+    # Check if synthesis is completed
+    if not pipeline.synthesis_output:
+        raise HTTPException(
+            status_code=400,
+            detail="Synthesis not completed yet. Cannot extract future work."
+        )
+
+    # PipelineState 的 synthesis_output.answer
+    answer = pipeline.synthesis_output.answer
+
+    try:
+        # === Step 1: Extract Future Work from final answer ===
+        logger.info(f"Extracting future work from pipeline {pipeline_id} synthesis output")
+
+        patterns = [
+            r'##?\s*Future\s+[Ww]ork[^\n]*\n+(.*?)\n+##?\s*Conclusion',
+
+            r'(?i)Future\s+Work[^\n]*\n+(.*?)\n+Conclusion',
+
+            # markdown heading（### Future work (something)）
+            r'###?\s*Future\s+[Ww]ork[^\n]*\n+(.*?)\n+###?\s*Conclusion',
+
+            # bold markdown（**Future Work (notes)**）
+            r'\*\*Future\s+[Ww]ork[^\n]*\*\*\s*\n+(.*?)\n+\*\*Conclusion',
+
+            r'Future\s+[Ww]ork[^\n]*\s*\n+(.*?)\n+Conclusion',
+        ]
+
+        future_work_content = None
+        used_pattern = None
+
+        for i, pattern in enumerate(patterns):
+            match = re.search(pattern, answer, re.DOTALL | re.IGNORECASE)
+            if match:
+                future_work_content = match.group(1).strip()
+                used_pattern = i
+                break
+
+        if not future_work_content:
+            raise HTTPException(
+                status_code=404,
+                detail="Could not find 'Future Work' section in the synthesis answer. "
+                       "Please ensure the answer contains both 'Future work' and 'Conclusion' sections."
+            )
+
+        logger.info(f"Successfully extracted future work content ({len(future_work_content)} chars)")
+
+        # Parse future work items (bullet points)
+        future_work_items = []
+        lines = future_work_content.split('\n')
+        current_item = ""
+
+        for line in lines:
+            line = line.strip()
+            # Check if line starts with bullet point
+            if re.match(r'^[-*•]\s+|^\d+\.\s+', line):
+                if current_item:
+                    future_work_items.append(current_item.strip())
+                # Start new item (remove bullet point)
+                current_item = re.sub(r'^[-*•]\s+|^\d+\.\s+', '', line)
+            else:
+                # Continue current item
+                if line:
+                    current_item += " " + line
+
+        # Add last item
+        if current_item:
+            future_work_items.append(current_item.strip())
+
+        logger.info(f"Parsed {len(future_work_items)} future work items")
+
+
+        selected_items = future_work_items
+        selected_indices = list(range(len(future_work_items)))
+
+        # Extract original query from synthesis output
+        original_query = "Unknown query"
+        if "Original query:" in answer:
+            original_query = answer.split("Original query:")[1].split("\n")[0].strip()
+        elif pipeline.search_output and pipeline.search_output.reasoning:
+            if "'" in pipeline.search_output.reasoning:
+                original_query = pipeline.search_output.reasoning.split("'")[1]
+
+        logger.info(f"Original query: {original_query}")
+
+        # === Step 2: Generate Multiple Refined Queries using LLMService ===
+        logger.info(f"Generating refined queries using LLMService")
+
+        prompt = f"""Based on the following original research question and future work directions, 
+generate DIFFERENT refined research questions for the next iteration of literature review.
+
+Original Query: {original_query}
+
+Future Work Directions:
+{chr(10).join(f"{i + 1}. {item}" for i, item in enumerate(selected_items))}
+
+Requirements:
+2. Each question should focus on a DIFFERENT aspect or direction from the future work
+3. Questions should be specific, focused, and actionable for literature search
+4. Questions should build upon the original research interest
+5. Avoid overlap between questions - each should explore a unique angle
+
+Format your response as a JSON array (ONLY output valid JSON, no markdown):
+[
+  {{
+    "query": "The refined research question",
+    "focus_area": "Brief description of which future work direction(s) this addresses",
+    "rationale": "Why this direction is valuable for next iteration"
+  }}
+]
+
+Generate queries now:"""
+
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a research assistant helping to refine research questions based on literature review findings. Always respond with valid JSON format."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+
+        # Use LLMService for non-streaming chat
+        response_content = await llm_service.chat(messages)
+
+        logger.info(f"LLM response received: {response_content[:200]}...")
+
+        # Parse JSON response
+        try:
+            # Extract JSON (handle markdown code blocks if any)
+            content = response_content.strip()
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+
+            refined_queries = json.loads(content)
+
+            if not isinstance(refined_queries, list):
+                raise ValueError("Response is not a JSON array")
+
+            # Validate structure
+            for idx, q in enumerate(refined_queries):
+                if not all(key in q for key in ["query", "focus_area", "rationale"]):
+                    raise ValueError(f"Query {idx} missing required fields")
+
+            logger.info(f"Successfully parsed {len(refined_queries)} refined queries")
+
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse JSON response: {e}")
+            logger.error(f"Response content: {response_content}")
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to parse refined queries from LLM response. Invalid JSON format."
+            )
+        except Exception as e:
+            logger.error(f"Failed to process LLM response: {e}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to process refined queries: {str(e)}"
+            )
+
+        # === Step 3: Record intervention in PipelineState ===
+        current_timestamp = datetime.now(timezone.utc).isoformat()
+        pipeline.human_interventions.append({
+            "timestamp": current_timestamp,
+            "action_type": "extract_and_refine_queries",
+            "stage": "synthesis",
+            "details": {
+                "future_work_items_count": len(selected_items),
+                "selected_indices": selected_indices,
+                "generated_queries_count": len(refined_queries),
+                "pattern_used": used_pattern
+            }
+        })
+
+        logger.info(f"Recorded intervention for pipeline {pipeline_id}")
+
+        # === Step 4: Return comprehensive response ===
+        return {
+            "status": "success",
+            "pipeline_id": pipeline_id,
+            "original_query": original_query,
+
+            "future_work": {
+                "raw_content": future_work_content,
+                "all_items": future_work_items,
+                "selected_items": selected_items,
+                "selected_indices": selected_indices,
+                "total_count": len(future_work_items),
+                "used_count": len(selected_items)
+            },
+
+            "refined_queries": refined_queries,
+
+            "metadata": {
+                "timestamp": current_timestamp,
+                "pattern_used": used_pattern,
+                "num_queries_generated": len(refined_queries)
+            }
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to extract and refine queries for pipeline {pipeline_id}: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to extract and refine queries: {str(e)}"
+        )
+
 

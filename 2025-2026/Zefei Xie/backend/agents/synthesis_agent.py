@@ -63,6 +63,8 @@ class SynthesisAgent(BaseAgent):
             "structure": {
                 "introduction": "...",
                 "main_findings": "...",
+                "discussion": "...",
+                "future_work": "...",
                 "conclusion": "..."
             }
         }

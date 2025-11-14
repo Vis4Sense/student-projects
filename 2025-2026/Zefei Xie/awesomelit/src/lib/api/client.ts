@@ -113,6 +113,60 @@ export const pipelineApi = {
         );
         return response.data;
     },
+    // Restart pipeline with new query (for iteration)
+    restartWithQuery: async (
+        pipelineId: string,
+        newQuery: string
+    ): Promise<{
+        status: string;
+        message: string;
+        pipeline_id: string;
+        old_query: string;
+        new_query: string;
+        current_stage: string;
+        note: string;
+    }> => {
+        const response = await apiClient.post(
+            `/pipeline/${pipelineId}/restart-with-query`,
+            null,
+            {
+                params: { new_query: newQuery }
+            }
+        );
+        return response.data;
+    },
+
+    // Extract future work and generate refined queries
+    extractAndRefineQueries: async (
+        pipelineId: string
+    ): Promise<{
+        status: string;
+        pipeline_id: string;
+        original_query: string;
+        future_work: {
+            raw_content: string;
+            all_items: string[];
+            selected_items: string[];
+            selected_indices: number[];
+            total_count: number;
+            used_count: number;
+        };
+        refined_queries: Array<{
+            query: string;
+            focus_area: string;
+            rationale: string;
+        }>;
+        metadata: {
+            timestamp: string;
+            pattern_used: number;
+            num_queries_generated: number;
+        };
+    }> => {
+        const response = await apiClient.post(
+            `/pipeline/${pipelineId}/extract-and-refine-queries`
+        );
+        return response.data;
+    },
 };
 
 

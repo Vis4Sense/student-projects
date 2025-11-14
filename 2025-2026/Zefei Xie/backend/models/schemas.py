@@ -14,7 +14,7 @@ class KeywordModel(BaseModel):
     """searches.models.Keyword"""
     keyword: str
     importance: float = Field(default=1.0, ge=0.0, le=1.0)
-    is_custom: bool = False  # 是否由用户自定义
+    is_custom: bool = False
 
 class SearchRequest(BaseModel):
     """searches.models.SearchRequest"""
@@ -51,11 +51,11 @@ class KeywordSearchResult(BaseModel):
 class SearchAgentOutput(BaseModel):
     """search agent output"""
     keywords: List[KeywordModel]
-    keyword_results: List[KeywordSearchResult]  # 每个关键词的独立结果
-    papers: List[Paper]  # 所有论文的去重集合
-    papers_by_keyword: Dict[str, List[str]]  # 关键词 -> 论文ID 的映射
+    keyword_results: List[KeywordSearchResult]
+    papers: List[Paper]
+    papers_by_keyword: Dict[str, List[str]]
     reasoning: str
-    total_papers_before_dedup: int = 0  # 去重前的总数
+    total_papers_before_dedup: int = 0
 
 
 class PaperReviewDecision(BaseModel):
@@ -71,10 +71,10 @@ class RevisingAgentOutput(BaseModel):
     """Revising agent output"""
     accepted_papers: List[Paper]
     rejected_papers: List[PaperReviewDecision]
-    rejection_summary: Dict[str, int]  # 拒绝理由统计
+    rejection_summary: Dict[str, int]
 
 class SynthesisRequest(BaseModel):
-    """Synthesis request"""
+    """Synthesis request""" 
     original_question: str
     papers: List[Paper]
 
@@ -114,17 +114,17 @@ class PipelineState(BaseModel):
 class KeywordInterventionDetail(BaseModel):
     """Detail of keyword intervention"""
     action: Literal["add", "remove", "edit", "adjust_importance"]
-    keyword: Optional[str] = None  # 原关键词
-    new_keyword: Optional[str] = None  # 新关键词（用于编辑）
-    importance: Optional[float] = None  # 新重要性
-    reason: Optional[str] = None  # 干预原因
+    keyword: Optional[str] = None
+    new_keyword: Optional[str] = None
+    importance: Optional[float] = None
+    reason: Optional[str] = None
 
 class PaperInterventionDetail(BaseModel):
     """Detail of paper intervention"""
     action: Literal["accept", "reject", "restore"]
     paper_id: str
     reason: Optional[str] = None
-    target_keyword: Optional[str] = None  # 如果要从特定关键词的结果中移除
+    target_keyword: Optional[str] = None
 
 class AnswerInterventionDetail(BaseModel):
     """Detail of answer intervention"""
@@ -157,7 +157,7 @@ class InterventionRecord(BaseModel):
     details: Dict[str, Any]
     user_note: Optional[str]
     timestamp: datetime
-    impact_summary: Optional[str] = None  # 干预的影响摘要
+    impact_summary: Optional[str] = None
 
 class VisualizationData(BaseModel):
     """Visualization data"""
