@@ -16,8 +16,10 @@ from models.schemas import (
 )
 from graph.workflow import ResearchWorkflow
 from graph.state import AgentState
+from services.embed_service import embed_service
 from services.intervention_service import InterventionService
 from services.llm_service import LLMService
+from services.paperVisualizationService import paper_visualization_service
 from services.visualization_service import VisualizationService
 from services.decision_history import DecisionHistoryService
 import uuid
@@ -34,6 +36,8 @@ viz_service = VisualizationService()
 intervention_service = InterventionService()
 history_service = DecisionHistoryService()
 llm_service = LLMService()
+embed_service = embed_service
+paper_visualization_service = paper_visualization_service
 
 # Store active pipelines in memory
 active_pipelines: Dict[str, PipelineState] = {}
@@ -105,6 +109,9 @@ async def run_search_stage(pipeline_id: str, state: AgentState):
                 kr.papers_count for kr in updated_state["keyword_search_results"]
             )
         )
+
+        # Add papers to history papers list
+        pipeline.historyPapers.extend(pipeline.search_output.papers)
 
         # calculate papers_by_keyword
         papers_by_keyword = {}
@@ -298,6 +305,15 @@ async def run_revising_stage(pipeline_id: str):
             rejected_papers=updated_state["rejected_decisions"],
             rejection_summary=updated_state["rejection_summary"]
         )
+
+        accepted_ids = {paper.id for paper in updated_state["accepted_papers"]}
+        rejected_ids = {decision.paper_id for decision in updated_state["rejected_decisions"]}
+
+        for paper in pipeline.historyPapers:
+            if paper.id in accepted_ids:
+                paper.human_tag = "accepted"
+            elif paper.id in rejected_ids:
+                paper.human_tag = "rejected"
 
         logger.info(f"Revising stage completed for {pipeline_id}")
 
@@ -1108,17 +1124,17 @@ async def extract_future_work_and_generate_queries(
         logger.info(f"Extracting future work from pipeline {pipeline_id} synthesis output")
 
         patterns = [
-            r'##?\s*Future\s+[Ww]ork[^\n]*\n+(.*?)\n+##?\s*Conclusion',
+            r'##?\s*Future\s+[^\n]*\n+(.*?)\n+##?\s*Conclusion',
 
-            r'(?i)Future\s+Work[^\n]*\n+(.*?)\n+Conclusion',
+            r'(?i)Future\s+[^\n]*\n+(.*?)\n+Conclusion',
 
             # markdown heading（### Future work (something)）
-            r'###?\s*Future\s+[Ww]ork[^\n]*\n+(.*?)\n+###?\s*Conclusion',
+            r'###?\s*Future\s+[^\n]*\n+(.*?)\n+###?\s*Conclusion',
 
             # bold markdown（**Future Work (notes)**）
-            r'\*\*Future\s+[Ww]ork[^\n]*\*\*\s*\n+(.*?)\n+\*\*Conclusion',
+            r'\*\*Future\s+[^\n]*\*\*\s*\n+(.*?)\n+\*\*Conclusion',
 
-            r'Future\s+[Ww]ork[^\n]*\s*\n+(.*?)\n+Conclusion',
+            r'Future\s+[^\n]*\s*\n+(.*?)\n+Conclusion',
         ]
 
         future_work_content = None
@@ -1305,5 +1321,53 @@ Generate queries now:"""
             status_code=500,
             detail=f"Failed to extract and refine queries: {str(e)}"
         )
+
+
+@router.get("/pipeline/{pipeline_id}/needs-viz-refresh")
+async def check_viz_refresh(pipeline_id: str):
+    """
+    Returns:
+        {
+            "needs_refresh": true/false,
+            "papers_count": 50,
+            "last_updated": "2025-11-17T..."
+        }
+    """
+    if pipeline_id not in active_pipelines:
+        raise HTTPException(status_code=404, detail="Pipeline not found")
+
+    pipeline = active_pipelines[pipeline_id]
+
+    return {
+        "needs_refresh": getattr(pipeline, 'needs_viz_refresh', False),
+        "papers_count": len(pipeline.historyPapers) if hasattr(pipeline, 'historyPapers') else 0,
+        "last_updated": pipeline.viz_last_updated.isoformat() if hasattr(pipeline,
+                                                                         'viz_last_updated') and pipeline.viz_last_updated else None,
+        "current_stage": pipeline.stage
+    }
+
+
+@router.get("/pipeline/{pipeline_id}/paper-visualization")
+async def get_paper_visualization(
+        pipeline_id: str,
+):
+
+    pipeline = active_pipelines[pipeline_id]
+
+    try:
+        visualization_data = paper_visualization_service.prepare_visualization_data(
+            history_papers=pipeline.historyPapers,
+        )
+
+        pipeline.needs_viz_refresh = False
+
+        visualization_data["can_visualize"] = True
+        visualization_data["current_stage"] = pipeline.stage
+
+        return visualization_data
+
+    except Exception as e:
+        logger.error(f"Visualization failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
 
 

@@ -167,6 +167,20 @@ export const pipelineApi = {
         );
         return response.data;
     },
+
+     checkVizRefresh: async (pipelineId: string) => {
+        const response = await apiClient.get(
+            `/pipeline/${pipelineId}/needs-viz-refresh`
+        );
+        return response.data;
+    },
+
+     getPaperVisualization: async (pipelineId: string) => {
+        const response = await apiClient.get(
+            `/pipeline/${pipelineId}/paper-visualization`
+        );
+        return response.data;
+    },
 };
 
 

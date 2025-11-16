@@ -103,7 +103,7 @@ class EmbedService:
                 batch_size=32
             )
 
-            logger.info(f"✅ Generated embeddings with shape: {embeddings.shape}")
+            logger.info(f"Generated embeddings with shape: {embeddings.shape}")
             return embeddings
 
         except Exception as e:
@@ -147,7 +147,7 @@ class EmbedService:
 
             coords_2d = tsne.fit_transform(embeddings)
 
-            logger.info(f"✅ t-SNE reduction complete: {coords_2d.shape}")
+            logger.info(f"t-SNE reduction complete: {coords_2d.shape}")
             return coords_2d
 
         except Exception as e:

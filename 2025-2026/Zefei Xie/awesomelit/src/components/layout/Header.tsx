@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, RotateCcw, X, AlertTriangle, Sparkles, ChevronRight, Edit3 } from 'lucide-react';
+import {ArrowLeft, RotateCcw, X, AlertTriangle, Sparkles, ChevronRight, Edit3, Search} from 'lucide-react';
 import type { PipelineState } from '@/types/pipeline';
 import {pipelineApi} from "@/lib/api/client";
+import PaperVisualizationModal from '../visualization/PaperVisualizationModal';
 
 
 interface HeaderProps {
@@ -67,6 +68,7 @@ export default function Header({
     const [isRestartDialogOpen, setIsRestartDialogOpen] = useState(false);
     const [isRestarting, setIsRestarting] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isVisualizationOpen, setIsVisualizationOpen] = useState(false);
 
     // Next Iteration states
     const [isNextIterationOpen, setIsNextIterationOpen] = useState(false);
@@ -276,6 +278,10 @@ export default function Header({
         await handleSelectQuery(customQuery.trim());
     };
 
+   const handleToggleVisualization = () => {
+        setIsVisualizationOpen(!isVisualizationOpen);
+    };
+
     const canContinue = pipeline &&
         pipeline.stage !== 'completed' &&
         pipeline.stage !== 'error' &&
@@ -293,7 +299,7 @@ export default function Header({
     };
 
     const handleBack = () => {
-        router.push(`/auto/${pipeline?.pipeline_id}`);
+        router.push(`/`);
     };
 
     const stageInfo = STAGE_INFO[selectedStage];
@@ -331,6 +337,17 @@ export default function Header({
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
                                 <span className="text-sm text-gray-600">Processing...</span>
                             </div>
+                        )}
+
+                        {pipeline && (
+                            <button
+                                onClick={handleToggleVisualization}
+                                className="flex items-center gap-2 px-4 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-colors shadow-md"
+                                title="Open Paper Visualization"
+                            >
+                                <Search className="w-4 h-4" />
+                                <span>Visualization</span>
+                            </button>
                         )}
 
                         {/* Next Iteration Button */}
@@ -694,6 +711,13 @@ export default function Header({
                         )}
                     </div>
                 </div>
+            )}
+
+            {isVisualizationOpen && pipeline && (
+                            <PaperVisualizationModal
+                                pipeline={pipeline}
+                                onClose={() => setIsVisualizationOpen(false)}
+                            />
             )}
         </>
     );

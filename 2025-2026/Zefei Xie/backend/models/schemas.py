@@ -35,6 +35,7 @@ class Paper(BaseModel):
     found_by_keywords: List[str] = []
     # human tag status must be one of "accepted" | "rejected" | "neutral"
     human_tag: Optional[str] = None
+    found_by_query: Optional[str] = None
 
 class KeywordSearchResult(BaseModel):
     """single keyword search result"""
@@ -104,6 +105,8 @@ class PipelineState(BaseModel):
         "completed",
         "error"
     ]
+    historyPapers: List[Paper] = []
+    needs_viz_refresh: bool = False
     search_output: Optional[SearchAgentOutput] = None
     revising_output: Optional[RevisingAgentOutput] = None
     synthesis_output: Optional[SynthesisAgentOutput] = None

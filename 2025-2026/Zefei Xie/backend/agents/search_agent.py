@@ -12,9 +12,10 @@ from services.external_api import ArxivAPI
 import json
 import logging
 from datetime import datetime
+from sentence_transformers import SentenceTransformer, util
 
 logger = logging.getLogger(__name__)
-
+model = SentenceTransformer('all-MiniLM-L6-v2', cache_folder="./model/models")
 
 class SearchAgent(BaseAgent):
     """SearchAgent """
@@ -25,6 +26,7 @@ class SearchAgent(BaseAgent):
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
         query = state["original_query"]
+
         logger.info(f"SearchAgent processing query: {query}")
 
         # Get keywords from LLM
@@ -32,7 +34,7 @@ class SearchAgent(BaseAgent):
         logger.info(f"Generated {len(keywords)} keywords: {[kw.keyword for kw in keywords]}")
 
         # Searches papers for each keyword
-        keyword_results = await self._search_by_keywords(keywords)
+        keyword_results = await self._search_by_keywords(keywords, query)
 
         # Get merged and deduplicated papers
         merged_papers, papers_by_keyword = self._merge_and_deduplicate(keyword_results)
@@ -52,7 +54,7 @@ class SearchAgent(BaseAgent):
 
         # Update state
         state["search_keywords"] = keywords
-        state["keyword_search_results"] = keyword_results  # 新增字段
+        state["keyword_search_results"] = keyword_results
         state["raw_papers"] = merged_papers
         state["search_reasoning"] = reasoning
         state["current_stage"] = "search_complete"
@@ -92,7 +94,7 @@ class SearchAgent(BaseAgent):
             logger.error("Failed to parse keywords JSON")
             return [KeywordModel(keyword=query, importance=1.0, is_custom=False)]
 
-    async def _search_by_keywords(self, keywords: List[KeywordModel]) -> List[KeywordSearchResult]:
+    async def _search_by_keywords(self, keywords: List[KeywordModel], query: str) -> List[KeywordSearchResult]:
         """Search papers for each keyword using ArXiv API"""
         keyword_results = []
 
@@ -105,9 +107,11 @@ class SearchAgent(BaseAgent):
                 max_results=2  # Number of papers to retrieve
             )
 
-            # Tag papers with keyword
             for paper in papers:
                 paper.human_tag = "neutral"
+                paper.found_by_query = query
+                paper.relevance_score = calculate_relevance_score(paper, query)
+
                 if kw.keyword not in paper.found_by_keywords:
                     paper.found_by_keywords.append(kw.keyword)
 
@@ -182,3 +186,13 @@ After deduplication: {len(merged_papers)} unique papers
 Duplicates removed: {duplicates}"""
 
         return reasoning
+
+def calculate_relevance_score(paper: Paper, query: str) -> float:
+        paper_text = f"{paper.title}. {paper.abstract}"
+
+        query_embedding = model.encode(query, convert_to_tensor=True)
+        paper_embedding = model.encode(paper_text, convert_to_tensor=True)
+
+        similarity = util.cos_sim(query_embedding, paper_embedding)
+
+        return float(similarity[0][0])

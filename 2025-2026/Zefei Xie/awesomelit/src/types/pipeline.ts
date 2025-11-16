@@ -15,6 +15,7 @@ export interface Paper {
     relevance_score: number;
     found_by_keywords: string[];
     human_tag: "accepted" | "rejected" | "neutral";
+    found_by_query: string;
 }
 
 export interface KeywordSearchResult {
@@ -65,6 +66,8 @@ export interface SynthesisAgentOutput {
 export interface PipelineState {
     pipeline_id: string;
     stage: 'search' | 'search_complete' | 'revising' | 'revising_complete' | 'synthesis' | 'completed' | 'error';
+    historyPapers: Paper[];
+    needs_viz_refresh: boolean;
     search_output?: SearchAgentOutput;
     revising_output?: RevisingAgentOutput;
     synthesis_output?: SynthesisAgentOutput;
