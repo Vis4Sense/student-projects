@@ -9,13 +9,14 @@ from typing import Dict, Any, List
 from agents.base_agent import BaseAgent
 from models.schemas import KeywordModel, Paper, KeywordSearchResult, SearchAgentOutput
 from services.external_api import ArxivAPI
+from services.embed_service import embed_service
 import json
 import logging
 from datetime import datetime
-from sentence_transformers import SentenceTransformer, util
+import numpy as np
 
 logger = logging.getLogger(__name__)
-model = SentenceTransformer('all-MiniLM-L6-v2', cache_folder="./model/models")
+
 
 class SearchAgent(BaseAgent):
     """SearchAgent """
@@ -23,6 +24,7 @@ class SearchAgent(BaseAgent):
     def __init__(self):
         super().__init__(name="SearchAgent")
         self.arxiv_api = ArxivAPI()
+        self.embed_service = embed_service
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
         query = state["original_query"]
@@ -107,13 +109,16 @@ class SearchAgent(BaseAgent):
                 max_results=2  # Number of papers to retrieve
             )
 
-            for paper in papers:
-                paper.human_tag = "neutral"
-                paper.found_by_query = query
-                paper.relevance_score = calculate_relevance_score(paper, query)
+            if papers:
+                relevance_scores = self._calculate_relevance_scores_batch(papers, query)
 
-                if kw.keyword not in paper.found_by_keywords:
-                    paper.found_by_keywords.append(kw.keyword)
+                for paper, score in zip(papers, relevance_scores):
+                    paper.human_tag = "neutral"
+                    paper.found_by_query = query
+                    paper.relevance_score = score
+
+                    if kw.keyword not in paper.found_by_keywords:
+                        paper.found_by_keywords.append(kw.keyword)
 
             # Create search result object
             result = KeywordSearchResult(
@@ -126,6 +131,38 @@ class SearchAgent(BaseAgent):
             logger.info(f"  → Found {len(papers)} papers for '{kw.keyword}'")
 
         return keyword_results
+
+    def _calculate_relevance_scores_batch(self, papers: List[Paper], query: str) -> List[float]:
+        try:
+            paper_texts = [f"{paper.title}. {paper.abstract}" for paper in papers]
+
+            query_embedding = self.embed_service.get_embeddings([query])[0]
+            paper_embeddings = self.embed_service.get_embeddings(paper_texts)
+
+            scores = []
+            for paper_emb in paper_embeddings:
+                similarity = self._cosine_similarity(query_embedding, paper_emb)
+                scores.append(float(similarity))
+
+            logger.info(
+                f"Calculated relevance scores: min={min(scores):.3f}, max={max(scores):.3f}, avg={np.mean(scores):.3f}")
+
+            return scores
+
+        except Exception as e:
+            logger.error(f"Failed to calculate relevance scores: {e}")
+            return [0.5] * len(papers)
+
+    @staticmethod
+    def _cosine_similarity(vec1: np.ndarray, vec2: np.ndarray) -> float:
+        dot_product = np.dot(vec1, vec2)
+        norm1 = np.linalg.norm(vec1)
+        norm2 = np.linalg.norm(vec2)
+
+        if norm1 == 0 or norm2 == 0:
+            return 0.0
+
+        return dot_product / (norm1 * norm2)
 
     def _merge_and_deduplicate(
             self,
@@ -186,13 +223,3 @@ After deduplication: {len(merged_papers)} unique papers
 Duplicates removed: {duplicates}"""
 
         return reasoning
-
-def calculate_relevance_score(paper: Paper, query: str) -> float:
-        paper_text = f"{paper.title}. {paper.abstract}"
-
-        query_embedding = model.encode(query, convert_to_tensor=True)
-        paper_embedding = model.encode(paper_text, convert_to_tensor=True)
-
-        similarity = util.cos_sim(query_embedding, paper_embedding)
-
-        return float(similarity[0][0])

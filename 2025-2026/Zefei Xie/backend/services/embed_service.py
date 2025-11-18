@@ -10,12 +10,14 @@ import numpy as np
 from typing import List, Tuple, Optional
 from pathlib import Path
 import pickle
+import os
 from sentence_transformers import SentenceTransformer
 from sklearn.manifold import TSNE
 import umap
+import config
 
 logger = logging.getLogger(__name__)
-
+settings = config.settings
 
 class EmbedService:
     """
@@ -25,24 +27,32 @@ class EmbedService:
     - Automatic model download
     - Caching of embeddings
     - Support for TSNE and UMAP dimensionality reduction
+    - Support for Azure OpenAI embeddings
     """
 
     def __init__(
             self,
             model_name: str = "all-MiniLM-L6-v2",
             cache_dir: Optional[str] = None,
-            reduction_method: str = "umap"
+            reduction_method: str = "umap",
+            use_azure: Optional[bool] = None
     ):
         """
         Initialize Embedding Service
 
         Args:
-            model_name: HuggingFace model name (default: all-MiniLM-L6-v2, 80MB, fast)
+            model_name: HuggingFace model name or Azure deployment name
             cache_dir: Directory to cache models and embeddings
             reduction_method: "tsne" or "umap" for dimensionality reduction
+            use_azure: Whether to use Azure OpenAI (defaults to env var EMBEDDING_USE_AZURE)
         """
         self.model_name = model_name
         self.reduction_method = reduction_method.lower()
+
+        # Determine whether to use Azure
+        if use_azure is None:
+            use_azure = settings.EMBEDDING_USE_AZURE
+        self.use_azure = use_azure
 
         # Set cache directory
         if cache_dir:
@@ -52,32 +62,76 @@ class EmbedService:
 
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-        # Initialize model (will auto-download if not exists)
+        # Initialize model
         self.model = None
+        self.azure_client = None
         self._load_model()
 
         # Cache for embeddings
         self.embedding_cache = {}
 
-        logger.info(f"EmbedService initialized with model: {model_name}")
+        logger.info(f"EmbedService initialized")
+        logger.info(f"Using Azure: {self.use_azure}")
+        logger.info(f"Model: {model_name}")
         logger.info(f"Reduction method: {self.reduction_method}")
 
     def _load_model(self):
-        """Load or download the embedding model"""
+        """Load embedding model (local or Azure)"""
         try:
-            logger.info(f"Loading embedding model: {self.model_name}")
-
-            # SentenceTransformer will auto-download if model doesn't exist
-            self.model = SentenceTransformer(
-                self.model_name,
-                cache_folder=str(self.cache_dir / "models")
-            )
-
-            logger.info(f"Model loaded successfully")
+            if self.use_azure:
+                self._load_azure_client()
+            else:
+                self._load_local_model()
 
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
             raise RuntimeError(f"Failed to load embedding model: {e}")
+
+    def _load_local_model(self):
+        """Load local SentenceTransformer model"""
+        logger.info(f"Loading local embedding model: {self.model_name}")
+
+        self.model = SentenceTransformer(
+            self.model_name,
+            cache_folder=str(self.cache_dir / "models")
+        )
+
+        logger.info(f"Local model loaded successfully")
+
+    def _load_azure_client(self):
+        """Initialize Azure OpenAI client"""
+        try:
+            from openai import AzureOpenAI
+        except ImportError:
+            raise ImportError(
+                "openai package is required for Azure embeddings. "
+                "Install it with: pip install openai"
+            )
+
+        logger.info(f"Initializing Azure OpenAI client")
+
+        # Get Azure configuration from environment variables
+        api_key = settings.AZURE_OPENAI_API_KEY
+        endpoint = settings.AZURE_OPENAI_ENDPOINT
+        api_version = settings.AZURE_OPENAI_API_VERSION
+        deployment_name = settings.AZURE_EMBEDDING_DEPLOYMENT
+
+        if not api_key or not endpoint:
+            raise ValueError(
+                "Azure OpenAI requires AZURE_OPENAI_API_KEY and AZURE_OPENAI_ENDPOINT "
+                "environment variables to be set"
+            )
+
+        self.azure_client = AzureOpenAI(
+            api_key=api_key,
+            api_version=api_version,
+            azure_endpoint=endpoint
+        )
+
+        # Update model name to deployment name
+        self.model_name = deployment_name
+
+        logger.info(f"Azure OpenAI client initialized with deployment: {deployment_name}")
 
     def get_embeddings(self, texts: List[str]) -> np.ndarray:
         """
@@ -95,13 +149,10 @@ class EmbedService:
         try:
             logger.info(f"Generating embeddings for {len(texts)} texts")
 
-            # Generate embeddings
-            embeddings = self.model.encode(
-                texts,
-                show_progress_bar=len(texts) > 10,
-                convert_to_numpy=True,
-                batch_size=32
-            )
+            if self.use_azure:
+                embeddings = self._get_azure_embeddings(texts)
+            else:
+                embeddings = self._get_local_embeddings(texts)
 
             logger.info(f"Generated embeddings with shape: {embeddings.shape}")
             return embeddings
@@ -109,6 +160,39 @@ class EmbedService:
         except Exception as e:
             logger.error(f"Failed to generate embeddings: {e}")
             raise
+
+    def _get_local_embeddings(self, texts: List[str]) -> np.ndarray:
+        """Get embeddings using local SentenceTransformer model"""
+        embeddings = self.model.encode(
+            texts,
+            show_progress_bar=len(texts) > 10,
+            convert_to_numpy=True,
+            batch_size=32
+        )
+        return embeddings
+
+    def _get_azure_embeddings(self, texts: List[str]) -> np.ndarray:
+        """Get embeddings using Azure OpenAI"""
+        embeddings = []
+
+        batch_size = 16
+
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+
+            response = self.azure_client.embeddings.create(
+                input=batch,
+                model=self.model_name
+            )
+
+            # Extract embeddings from response
+            batch_embeddings = [item.embedding for item in response.data]
+            embeddings.extend(batch_embeddings)
+
+            if len(texts) > 10:
+                logger.info(f"Processed {min(i + batch_size, len(texts))}/{len(texts)} texts")
+
+        return np.array(embeddings)
 
     def reduce_dimensions_tsne(
             self,

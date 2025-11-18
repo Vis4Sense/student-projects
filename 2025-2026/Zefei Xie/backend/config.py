@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     AZURE_OPENAI_DEPLOYMENT: str
     AZURE_OPENAI_API_VERSION: str = "2025-01-01-preview"
 
+    # Embedding API
+    EMBEDDING_USE_AZURE : bool
+    AZURE_EMBEDDING_DEPLOYMENT : str = "text-embedding-3-small-zefei-litreview"
+
     # search API
     SEMANTIC_SCHOLAR_API_KEY: Optional[str] = None
     ARXIV_API_URL: str = "http://export.arxiv.org/api/query"
@@ -56,5 +60,6 @@ if __name__ == "__main__":
     print(f"ENV_FILE exists: {ENV_FILE.exists()}")
     print(f"AZURE_OPENAI_ENDPOINT: {settings.AZURE_OPENAI_ENDPOINT}")
     print(f"AZURE_OPENAI_DEPLOYMENT: {settings.AZURE_OPENAI_DEPLOYMENT}")
-    print(f"AZURE_OPENAI_API_KEY: {settings.AZURE_OPENAI_API_KEY[:10]}...")  # 只显示前10个字符
+    print(f"AZURE_OPENAI_API_KEY: {settings.AZURE_OPENAI_API_KEY[:10]}...")
+    print(f"AZURE_EMBEDDING_DEPLOYMENT: {settings.AZURE_EMBEDDING_DEPLOYMENT}")
 

@@ -39,6 +39,64 @@ interface ScatterPlotProps {
     data: PaperData[];
 }
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (!active || !payload || !payload.length) return null;
+
+  const paper = payload[0].payload as PaperData;
+
+  return (
+    <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200 max-w-sm">
+      <h4 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2">
+        {paper.title}
+      </h4>
+
+      <div className="flex items-center gap-2 mb-2">
+        <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+          paper.status === 'accepted' ? 'bg-green-100 text-green-800' :
+          paper.status === 'rejected' ? 'bg-red-100 text-red-800' :
+          'bg-blue-100 text-blue-800'
+        }`}>
+          {paper.status.toUpperCase()}
+        </span>
+        <span className="text-xs text-gray-600">
+          Score: {paper.relevance_score.toFixed(2)}
+        </span>
+      </div>
+
+      <div className="text-xs text-gray-600 mb-2">
+        <span className="font-medium">Position:</span> ({paper.x.toFixed(2)}, {paper.y.toFixed(2)})
+      </div>
+
+      <p className="text-xs text-gray-700 mb-1">
+        <span className="font-medium">Authors:</span> {paper.authors.slice(0, 3).join(', ')}
+        {paper.authors.length > 3 && ` +${paper.authors.length - 3} more`}
+      </p>
+
+      <p className="text-xs text-gray-700 mb-1">
+        <span className="font-medium">Published:</span> {new Date(paper.published_date).toLocaleDateString()}
+      </p>
+
+      {paper.found_by_keywords && paper.found_by_keywords.length > 0 && (
+        <div className="mt-2 pt-2 border-t border-gray-100">
+          <p className="text-xs text-gray-600 mb-1 font-medium">Keywords:</p>
+          <div className="flex flex-wrap gap-1">
+            {paper.found_by_keywords.slice(0, 3).map((keyword, idx) => (
+              <span key={idx} className="px-1.5 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">
+                {keyword}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <p className="text-xs text-gray-400 mt-2 italic">
+        Click to view details
+      </p>
+    </div>
+  );
+};
+
+
 export default function ScatterPlot({ data }: ScatterPlotProps) {
     const [selectedPaper, setSelectedPaper] = useState<PaperData | null>(null);
     const [hoveredPaperId, setHoveredPaperId] = useState<string | null>(null);
@@ -60,32 +118,40 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
         neutral: data.filter(p => p.status === 'neutral')
     };
 
-    // 使用 useMemo 缓存数据范围计算
     const dataStats = useMemo(() => {
         const xValues = data.map(p => p.x);
         const yValues = data.map(p => p.y);
-        const minX = Math.min(...xValues)*0.98;
-        const maxX = Math.max(...xValues)*1.02;
-        const minY = Math.min(...yValues)*0.98;
-        const maxY = Math.max(...yValues)*1.02;
+        const minX = Math.min(...xValues);
+        const maxX = Math.max(...xValues);
+        const minY = Math.min(...yValues);
+        const maxY = Math.max(...yValues);
+
+        const xRange = maxX - minX;
+        const yRange = maxY - minY;
+        const xPadding = xRange * 0.1;
+        const yPadding = yRange * 0.1;
+
+        const paddedMinX = minX - xPadding;
+        const paddedMaxX = maxX + xPadding;
+        const paddedMinY = minY - yPadding;
+        const paddedMaxY = maxY + yPadding;
+
 
         return {
-            minX,
-            maxX,
-            minY,
-            maxY,
+            paddedMinX,
+            paddedMaxX,
+            paddedMinY,
+            paddedMaxY,
             centerX: (minX + maxX) / 2,
             centerY: (minY + maxY) / 2,
-            rangeX: maxX - minX,
-            rangeY: maxY - minY
+            rangeX: paddedMaxX - paddedMinX,
+            rangeY: paddedMaxY - paddedMinY
         };
     }, [data]);
 
-    // 当前视图中心
     const currentCenterX = centerX ?? dataStats.centerX;
     const currentCenterY = centerY ?? dataStats.centerY;
 
-    // 当前显示范围（关键修复：确保范围计算正确）
     const currentDomain = useMemo(() => {
         const displayRangeX = dataStats.rangeX / zoomLevel;
         const displayRangeY = dataStats.rangeY / zoomLevel;
@@ -102,7 +168,6 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
         };
     }, [currentCenterX, currentCenterY, zoomLevel, dataStats.rangeX, dataStats.rangeY]);
 
-    // 按钮操作
     const handleZoomIn = () => setZoomLevel(prev => Math.min(prev * 1.5, 10));
     const handleZoomOut = () => setZoomLevel(prev => Math.max(prev / 1.5, 0.5));
     const handleReset = () => {
@@ -112,11 +177,9 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
         setSelectedPaper(null);
     };
 
-    // 点击论文：聚焦到该点
     const handlePaperClick = (clickData: any) => {
         const clickedPaperId = clickData.paper_id || clickData.payload?.paper_id;
 
-        // 从原始数据中找到这篇论文
         const paper = data.find(p => p.paper_id === clickedPaperId);
 
         if (!paper) {
@@ -134,7 +197,6 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
     };
 
 
-    // 自定义点渲染
     const renderCustomDot = (props: any) => {
         const { cx, cy, payload } = props;
         const isHovered = hoveredPaperId === payload.paper_id;
@@ -154,10 +216,9 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
         );
     };
 
-    // 调试信息
     console.log('📊 Data range:', {
-        x: [dataStats.minX, dataStats.maxX],
-        y: [dataStats.minY, dataStats.maxY],
+        x: [dataStats.paddedMinX, dataStats.paddedMaxX],
+        y: [dataStats.paddedMinY, dataStats.paddedMaxY],
         centerX: currentCenterX,
         centerY: currentCenterY,
         zoom: zoomLevel,
@@ -166,7 +227,6 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
 
     return (
         <div className="w-full h-full flex flex-col">
-            {/* 控制栏 */}
             <div className="flex items-center gap-3 mb-3 px-2">
                 <div className="flex gap-2">
                     <button
@@ -195,7 +255,6 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
                 </span>
             </div>
 
-            {/* 图表 */}
             <div
     className="flex-1 min-h-0"
     style={{ userSelect: 'none' }}
@@ -227,7 +286,7 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
                             tick={{ fontSize: 12 }}
                             label={{ value: 'Y Axis', angle: -90, position: 'insideLeft' }}
                         />
-                        <Tooltip cursor={{ stroke: '#999', strokeWidth: 1 }} content={() => null} />
+                        <Tooltip content={<CustomTooltip />}/>
                         <Legend wrapperStyle={{ paddingTop: '20px' }} height={36} />
 
                         <Scatter
@@ -258,7 +317,6 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
                 </ResponsiveContainer>
             </div>
 
-            {/* 详情面板 */}
             {selectedPaper && (
                 <div className="border-t border-gray-200 p-4 bg-gray-50 max-h-60 overflow-y-auto">
                     <div className="flex justify-between items-start mb-2">
