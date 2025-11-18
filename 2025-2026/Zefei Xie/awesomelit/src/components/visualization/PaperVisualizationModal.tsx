@@ -254,8 +254,8 @@ export default function PaperVisualizationModal({
 
                                     <div className="border rounded-lg bg-white p-6">
                                         <div className="w-full h-[700px]">
-                                            {vizData?.papers && vizData.papers.length > 0 ? (
-                                                <ScatterPlot data={vizData.papers} />
+                                            {vizData?.queries_data &&vizData?.papers && vizData.papers.length > 0 ? (
+                                                <ScatterPlot data={vizData.papers} queries={vizData.queries_data} />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center text-gray-400">
                                                     <p>No papers to visualize</p>

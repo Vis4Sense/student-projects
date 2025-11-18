@@ -35,8 +35,15 @@ interface PaperData {
     };
 }
 
+interface QueryData {
+    query: string;
+    x: number;
+    y: number;
+}
+
 interface ScatterPlotProps {
     data: PaperData[];
+    queries: QueryData[];
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -97,7 +104,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 
-export default function ScatterPlot({ data }: ScatterPlotProps) {
+export default function ScatterPlot({ data, queries }: ScatterPlotProps) {
     const [selectedPaper, setSelectedPaper] = useState<PaperData | null>(null);
     const [hoveredPaperId, setHoveredPaperId] = useState<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);

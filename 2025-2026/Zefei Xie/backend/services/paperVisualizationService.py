@@ -169,12 +169,23 @@ class PaperVisualizationService:
             }
         }
 
+        queries_data = []
+        queries = list(query_groups.keys())
+        for query in queries:
+            query_cords = self.embed_service.get_single_2d_coordinate(query)
+            queries_data.append({
+                "query": query,
+                "x": query_cords[0],
+                "y": query_cords[1],
+            })
+
         return {
             "status": "success",
             "papers": papers_data,
             "query_groups": query_groups,
             "query_colors": query_colors,
             "queries": list(query_groups.keys()),
+            "queries_data": queries_data,
             "metadata": {
                 "embedding_method": "umap",
                 "embedding_model": self.embed_service.model_name,
