@@ -113,7 +113,7 @@ class SearchAgent(BaseAgent):
                 relevance_scores = self._calculate_relevance_scores_batch(papers, query)
 
                 for paper, score in zip(papers, relevance_scores):
-                    paper.human_tag = "neutral"
+                    paper.human_tag = "rejected"
                     paper.found_by_query = query
                     paper.relevance_score = score
 

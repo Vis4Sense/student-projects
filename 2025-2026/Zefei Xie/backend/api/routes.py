@@ -1188,12 +1188,16 @@ async def extract_future_work_and_generate_queries(
         selected_indices = list(range(len(future_work_items)))
 
         # Extract original query from synthesis output
-        original_query = "Unknown query"
-        if "Original query:" in answer:
-            original_query = answer.split("Original query:")[1].split("\n")[0].strip()
-        elif pipeline.search_output and pipeline.search_output.reasoning:
-            if "'" in pipeline.search_output.reasoning:
-                original_query = pipeline.search_output.reasoning.split("'")[1]
+        original_query = ""
+        if pipeline.search_output and pipeline.search_output.reasoning:
+            try:
+                reasoning_text = pipeline.search_output.reasoning
+                if "Based on query '" in reasoning_text and "', generated" in reasoning_text:
+                    start = reasoning_text.find("Based on query '") + len("Based on query '")
+                    end = reasoning_text.find("', generated", start)
+                    original_query = reasoning_text[start:end]
+            except (IndexError, AttributeError):
+                pass
 
         logger.info(f"Original query: {original_query}")
 
@@ -1254,6 +1258,11 @@ Generate queries now:"""
 
             if not isinstance(refined_queries, list):
                 raise ValueError("Response is not a JSON array")
+
+            for query in refined_queries:
+                q = query["query"]
+                record = QueryRecord(query_text=q, parent_query=original_query)
+                pipeline.query_history.append(record)
 
             # Validate structure
             for idx, q in enumerate(refined_queries):
@@ -1373,4 +1382,10 @@ async def get_paper_visualization(
         logger.error(f"Visualization failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/pipeline/{pipeline_id}/query-history")
+async def get_query_history(
+        pipeline_id: str,
+):
+    pipeline = active_pipelines[pipeline_id]
+    return pipeline.query_history
 
