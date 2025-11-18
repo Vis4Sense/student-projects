@@ -141,7 +141,7 @@ export default function PaperVisualizationModal({
                             disabled={loading}
                             className="px-4 py-2 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg disabled:opacity-50 transition-colors"
                         >
-                            {loading ? '⏳ Refreshing...' : '🔄 Refresh'}
+                            {loading ? 'Refreshing...' : 'Refresh'}
                         </button>
 
                         {/* Regenerate Button */}
@@ -150,7 +150,7 @@ export default function PaperVisualizationModal({
                             disabled={loading}
                             className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg disabled:opacity-50 transition-colors"
                         >
-                            ♻️ Regenerate
+                            Regenerate
                         </button>
 
                         {/* Close Button */}

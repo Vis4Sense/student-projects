@@ -8,7 +8,7 @@ Description: [Add your description here]
 """
 human intervention service
 """
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from models.schemas import (
     HumanInterventionRequest, InterventionRecord, PipelineState,
     KeywordModel, Paper, KeywordSearchResult
@@ -17,6 +17,8 @@ from agents.search_agent import SearchAgent
 import uuid
 import logging
 from datetime import datetime
+import numpy as np
+from services.embed_service import embed_service
 
 logger = logging.getLogger(__name__)
 
@@ -87,6 +89,17 @@ class InterventionService:
         current_keywords = pipeline.search_output.keywords.copy()
         current_results = pipeline.search_output.keyword_results.copy()
 
+        original_query = ""
+        if pipeline.search_output and pipeline.search_output.reasoning:
+            try:
+                reasoning_text = pipeline.search_output.reasoning
+                if "Based on query '" in reasoning_text and "', generated" in reasoning_text:
+                    start = reasoning_text.find("Based on query '") + len("Based on query '")
+                    end = reasoning_text.find("', generated", start)
+                    original_query = reasoning_text[start:end]
+            except (IndexError, AttributeError):
+                pass
+
         # Add new keywords
         if "add_keywords" in details:
             new_keywords = details["add_keywords"]  # List[dict]
@@ -101,12 +114,22 @@ class InterventionService:
                 # Search for papers
                 papers = await self.search_agent.arxiv_api.search(
                     query=new_kw.keyword,
-                    max_results=20
+                    max_results=2
                 )
 
                 # Tag papers with new keyword
-                for paper in papers:
-                    paper.found_by_keywords.append(new_kw.keyword)
+                if papers:
+                    relevance_scores = self._calculate_relevance_scores_batch(papers, original_query)
+
+                    for paper, score in zip(papers, relevance_scores):
+                        paper.human_tag = "rejected"
+                        paper.found_by_query = original_query
+                        paper.relevance_score = score
+
+                        if new_kw.keyword not in paper.found_by_keywords:
+                            paper.found_by_keywords.append(new_kw.keyword)
+
+                        pipeline.historyPapers.append(paper)
 
                 # Create new search result
                 result = KeywordSearchResult(
@@ -127,6 +150,9 @@ class InterventionService:
 
                 # Remove from papers_by_keyword
                 removed_result = next((r for r in current_results if r.keyword.keyword == kw_text), None)
+                for paper in removed_result.papers:
+                    pipeline.historyPapers.remove(paper)
+
                 if removed_result:
                     current_results.remove(removed_result)
                     changes.append(f"Removed keyword '{kw_text}' and its {removed_result.papers_count} papers")
@@ -144,8 +170,20 @@ class InterventionService:
                 # Research for new keyword
                 papers = await self.search_agent.arxiv_api.search(
                     query=new_kw_text,
-                    max_results=20 #TODO: adjust this value?
+                    max_results=2
                 )
+                if papers:
+                    relevance_scores = self._calculate_relevance_scores_batch(papers, original_query)
+
+                    for paper, score in zip(papers, relevance_scores):
+                        paper.human_tag = "rejected"
+                        paper.found_by_query = original_query
+                        paper.relevance_score = score
+
+                        if new_kw_text not in paper.found_by_keywords:
+                            paper.found_by_keywords.append(new_kw_text)
+
+                        pipeline.historyPapers.append(paper)
 
                 # Update search results
                 for result in current_results:
@@ -476,7 +514,6 @@ class InterventionService:
 
             updated_state = await self.search_agent.process(state)
 
-            # 更新 pipeline
             pipeline.search_output.keyword_results = updated_state["keyword_search_results"]
             pipeline.search_output.papers = updated_state["raw_papers"]
 
@@ -518,3 +555,35 @@ class InterventionService:
         pipeline.human_interventions.append(record.dict())
 
         logger.info(f"Recorded intervention: {intervention.action_type} in {intervention.stage}")
+
+    def _calculate_relevance_scores_batch(self, papers: List[Paper], query: str) -> List[float]:
+        try:
+            paper_texts = [f"{paper.title}. {paper.abstract}" for paper in papers]
+
+            query_embedding = embed_service.get_embeddings([query])[0]
+            paper_embeddings = embed_service.get_embeddings(paper_texts)
+
+            scores = []
+            for paper_emb in paper_embeddings:
+                similarity = self._cosine_similarity(query_embedding, paper_emb)
+                scores.append(float(similarity))
+
+            logger.info(
+                f"Calculated relevance scores: min={min(scores):.3f}, max={max(scores):.3f}, avg={np.mean(scores):.3f}")
+
+            return scores
+
+        except Exception as e:
+            logger.error(f"Failed to calculate relevance scores: {e}")
+            return [0.5] * len(papers)
+
+    @staticmethod
+    def _cosine_similarity(vec1: np.ndarray, vec2: np.ndarray) -> float:
+        dot_product = np.dot(vec1, vec2)
+        norm1 = np.linalg.norm(vec1)
+        norm2 = np.linalg.norm(vec2)
+
+        if norm1 == 0 or norm2 == 0:
+            return 0.0
+
+        return dot_product / (norm1 * norm2)

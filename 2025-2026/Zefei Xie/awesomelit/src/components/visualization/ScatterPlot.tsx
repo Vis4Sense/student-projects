@@ -234,20 +234,20 @@ export default function ScatterPlot({ data }: ScatterPlotProps) {
                         disabled={zoomLevel >= 10}
                         className="px-3 py-2 text-sm bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                     >
-                        ➕ Zoom In
+                        Zoom In
                     </button>
                     <button
                         onClick={handleZoomOut}
                         disabled={zoomLevel <= 0.5}
                         className="px-3 py-2 text-sm bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                     >
-                        ➖ Zoom Out
+                        Zoom Out
                     </button>
                     <button
                         onClick={handleReset}
                         className="px-3 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                     >
-                        🔄 Reset
+                        Reset
                     </button>
                 </div>
                 <span className="text-sm text-gray-600">
