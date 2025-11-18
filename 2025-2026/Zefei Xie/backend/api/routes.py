@@ -12,7 +12,7 @@ from models.chat_model import ChatRequest, ChatResponse
 from models.schemas import (
     SearchRequest, HumanInterventionRequest, PipelineState,
     VisualizationData, Paper, PaperReviewDecision, SearchAgentOutput, KeywordModel, RevisingAgentOutput,
-    SynthesisAgentOutput, KeywordSearchResult
+    SynthesisAgentOutput, KeywordSearchResult, QueryRecord
 )
 from graph.workflow import ResearchWorkflow
 from graph.state import AgentState
@@ -83,6 +83,9 @@ async def start_pipeline(request: SearchRequest, background_tasks: BackgroundTas
         stage="search",
     )
     active_pipelines[pipeline_id] = pipeline_state
+
+    query_record = QueryRecord(query_text=request.query, parent_query=None)
+    pipeline_state.query_history.append(query_record)
 
     logger.info(f"Started pipeline: {pipeline_id}")
     return pipeline_state

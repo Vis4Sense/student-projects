@@ -63,6 +63,11 @@ export interface SynthesisAgentOutput {
     structure: Record<string, any>;
 }
 
+export interface QueryRecord {
+    query_text: string;
+    parent_query: string | null;
+}
+
 export interface PipelineState {
     pipeline_id: string;
     stage: 'search' | 'search_complete' | 'revising' | 'revising_complete' | 'synthesis' | 'completed' | 'error';
@@ -72,6 +77,7 @@ export interface PipelineState {
     revising_output?: RevisingAgentOutput;
     synthesis_output?: SynthesisAgentOutput;
     human_interventions: any[];
+    query_history: QueryRecord[];
     created_at: string;
     updated_at: string;
 }

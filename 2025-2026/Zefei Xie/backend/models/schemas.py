@@ -93,6 +93,11 @@ class SynthesisAgentOutput(BaseModel):
     confidence_score: float
     structure: Dict[str, Any]
 
+class QueryRecord(BaseModel):
+    """Query record"""
+    query_text: str
+    parent_query: Optional[str] = None
+
 class PipelineState(BaseModel):
     """Pipeline state"""
     pipeline_id: str
@@ -111,6 +116,7 @@ class PipelineState(BaseModel):
     revising_output: Optional[RevisingAgentOutput] = None
     synthesis_output: Optional[SynthesisAgentOutput] = None
     human_interventions: List[Dict[str, Any]] = Field(default_factory=list)
+    query_history: List[QueryRecord] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
 
