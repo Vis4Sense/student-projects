@@ -7,6 +7,7 @@ interface QueryTreeModalProps {
  visible: boolean;
  onClose: () => void;
  pipelineState: PipelineState | null;
+ onSelectQuery: (queryText: string) => Promise<void>;
 }
 
 interface TreeNodeData extends RawNodeDatum {
@@ -22,6 +23,7 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
  visible,
  onClose,
  pipelineState,
+ onSelectQuery,
 }) => {
  const [selectedQuery, setSelectedQuery] = useState<QueryRecord | null>(null);
  const [treeData, setTreeData] = useState<TreeNodeData | null>(null);
@@ -148,7 +150,7 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
     );
   }
 
-  if (selectedQuery.status !== 'completed' || !selectedQuery.output) {
+  if (selectedQuery.status == 'pending' && !selectedQuery.output) {
     return (
       <div className="flex w-full justify-center h-full">
         <div className="text-center">
@@ -166,6 +168,62 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
         </div>
       </div>
     );
+  }
+
+   const handleExploreQuery = async () => {
+    if (!onSelectQuery) return;
+
+    if (selectedQuery.status === 'unexplored') {
+      try {
+        await onSelectQuery(selectedQuery.query_text);
+      } catch (error) {
+        console.error('Failed to explore query:', error);
+      }
+    }
+  };
+
+  if (selectedQuery.status == 'unexplored' && !selectedQuery.output) {
+    return (
+      <div className="flex flex-col gap-2 w-full justify-center h-full">
+        <div className="text-center">
+          <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+             <h3 className="text-base font-semibold text-gray-900 mb-2">Query</h3>
+             <p className="text-gray-700 text-sm break-words">{selectedQuery.query_text}</p>
+          </div>
+
+          <br/>
+
+          <div className="text-gray-400 text-lg mb-2">No Output Available</div>
+          <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadgeClass(selectedQuery.status)}`}>
+            {selectedQuery.status.toUpperCase()}
+          </span>
+        </div>
+
+        {pipelineState?.stage === 'completed' &&(
+        <div className="border-t border-gray-200 p-4 bg-gray-50 flex-shrink-0">
+          <button
+            onClick={handleExploreQuery}
+            className={`w-full py-2 px-4 rounded-lg font-medium transition-colors 
+                bg-blue-600 text-white hover:bg-blue-700`}
+          >
+            Explore This Query Further
+          </button>
+        </div>
+        )}
+
+        {pipelineState?.stage !== 'completed' &&(
+            <div className="flex justify-content-center border-t border-gray-200 p-4 bg-gray-50 flex-shrink-0">
+                <span> You have to finish the pipeline first to explore queries further</span>
+            </div>
+        )}
+      </div>
+    );
+  }
+
+  if (!selectedQuery.output){
+      return (
+          <div>empty output</div>
+      );
   }
 
   const output = selectedQuery.output;

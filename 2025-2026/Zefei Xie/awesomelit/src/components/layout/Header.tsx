@@ -259,6 +259,7 @@ export default function Header({
             await pipelineApi.restartWithQuery(pipeline.pipeline_id, selectedQuery);
 
             setIsNextIterationOpen(false);
+            setTreeVisible(false);
             setRefinedQueries([]);
             setOriginalQuery('');
 
@@ -362,7 +363,8 @@ export default function Header({
                                 className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-md"
                                 title="Open Query Tree"
                             >
-                                Query Tree
+                                <Search className="w-4 h-4" />
+                                <span>Query Tree</span>
                             </button>
                         )}
 
@@ -736,11 +738,12 @@ export default function Header({
                             />
             )}
 
-            {pipeline &&(
+            {pipeline && handleSelectQuery && (
                 <QueryTreeModal
                     visible={treeVisible}
                     onClose={() => setTreeVisible(false)}
                     pipelineState={pipeline}
+                    onSelectQuery={handleSelectQuery}
                 />
             )}
         </>
