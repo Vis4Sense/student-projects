@@ -66,6 +66,8 @@ export interface SynthesisAgentOutput {
 export interface QueryRecord {
     query_text: string;
     parent_query: string | null;
+    status: 'pending' | 'completed' | 'unexplored';
+    output?: SynthesisAgentOutput;
 }
 
 export interface PipelineState {

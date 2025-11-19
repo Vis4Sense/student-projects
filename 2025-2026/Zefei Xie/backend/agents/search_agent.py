@@ -26,7 +26,7 @@ class SearchAgent(BaseAgent):
         self.arxiv_api = ArxivAPI()
         self.embed_service = embed_service
 
-    async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
+    async def process(self, state: Dict[str, Any], mode="manual") -> Dict[str, Any]:
         query = state["original_query"]
 
         logger.info(f"SearchAgent processing query: {query}")
@@ -36,7 +36,7 @@ class SearchAgent(BaseAgent):
         logger.info(f"Generated {len(keywords)} keywords: {[kw.keyword for kw in keywords]}")
 
         # Searches papers for each keyword
-        keyword_results = await self._search_by_keywords(keywords, query)
+        keyword_results = await self._search_by_keywords(keywords, query, mode)
 
         # Get merged and deduplicated papers
         merged_papers, papers_by_keyword = self._merge_and_deduplicate(keyword_results)
@@ -96,9 +96,14 @@ class SearchAgent(BaseAgent):
             logger.error("Failed to parse keywords JSON")
             return [KeywordModel(keyword=query, importance=1.0, is_custom=False)]
 
-    async def _search_by_keywords(self, keywords: List[KeywordModel], query: str) -> List[KeywordSearchResult]:
+    async def _search_by_keywords(self, keywords: List[KeywordModel], query: str, mode: str) -> List[KeywordSearchResult]:
         """Search papers for each keyword using ArXiv API"""
         keyword_results = []
+
+        if mode == "manual":
+            tag = "rejected"
+        else:
+            tag = "neutral"
 
         for kw in keywords:
             logger.info(f"Searching for keyword: '{kw.keyword}'")
@@ -113,7 +118,7 @@ class SearchAgent(BaseAgent):
                 relevance_scores = self._calculate_relevance_scores_batch(papers, query)
 
                 for paper, score in zip(papers, relevance_scores):
-                    paper.human_tag = "rejected"
+                    paper.human_tag = tag
                     paper.found_by_query = query
                     paper.relevance_score = score
 

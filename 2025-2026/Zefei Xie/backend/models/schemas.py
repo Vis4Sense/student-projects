@@ -97,6 +97,8 @@ class QueryRecord(BaseModel):
     """Query record"""
     query_text: str
     parent_query: Optional[str] = None
+    status: Literal["pending", "completed", "unexplored"]
+    output: Optional[SynthesisAgentOutput] = None
 
 class PipelineState(BaseModel):
     """Pipeline state"""
