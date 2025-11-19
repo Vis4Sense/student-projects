@@ -413,25 +413,6 @@ export default function PaperVisualizationModal({
                                 </p>
                             </div>
 
-                            {/* Status Legend */}
-                            <div className="mb-6 bg-white p-4 rounded-lg border border-gray-200">
-                                <h3 className="text-lg font-semibold mb-3">Status Legend (Fill Colors)</h3>
-                                <div className="flex flex-wrap gap-4">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-green-500"></div>
-                                        <span className="text-sm">Accepted</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-red-500"></div>
-                                        <span className="text-sm">Rejected</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-blue-500"></div>
-                                        <span className="text-sm">Neutral</span>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Scatter Plot */}
                             <div className="border border-gray-200 rounded-lg bg-white p-6">
                                 <div className="w-full h-[700px]">
