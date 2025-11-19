@@ -152,7 +152,7 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
 
   if (selectedQuery.status == 'pending' && !selectedQuery.output) {
     return (
-      <div className="flex w-full justify-center h-full">
+      <div className="flex flex-col gap-2 w-full justify-center h-full">
         <div className="text-center">
           <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
              <h3 className="text-base font-semibold text-gray-900 mb-2">Query</h3>
@@ -212,7 +212,7 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
         )}
 
         {pipelineState?.stage !== 'completed' &&(
-            <div className="flex justify-content-center border-t border-gray-200 p-4 bg-gray-50 flex-shrink-0">
+            <div className="flex items-center border-t border-gray-200 p-4 bg-gray-50 flex-shrink-0">
                 <span> You have to finish the pipeline first to explore queries further</span>
             </div>
         )}
