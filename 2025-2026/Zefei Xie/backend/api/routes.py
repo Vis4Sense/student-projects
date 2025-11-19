@@ -757,7 +757,7 @@ async def restart_pipeline(
     Returns:
     - Status information about the restart operation
     """
-    from datetime import datetime, timezone  # 添加 datetime 导入
+    from datetime import datetime, timezone
 
     # Validate pipeline exists
     if pipeline_id not in active_pipelines:
@@ -777,14 +777,30 @@ async def restart_pipeline(
 
     current_timestamp = datetime.now(timezone.utc).isoformat()
 
+    original_query = ""
+    if pipeline.search_output and pipeline.search_output.reasoning:
+        try:
+            reasoning_text = pipeline.search_output.reasoning
+            if "Based on query '" in reasoning_text and "', generated" in reasoning_text:
+                start = reasoning_text.find("Based on query '") + len("Based on query '")
+                end = reasoning_text.find("', generated", start)
+                original_query = reasoning_text[start:end]
+        except (IndexError, AttributeError):
+            pass
+
+    for record in pipeline.query_history:
+        if record.query_text == original_query:
+            record.status = "pending"
+            record.output = None
+            break
+
+
     try:
         if stage == "search":
-            # Reset to initial state - clear everything
-            original_query = (
-                pipeline.search_output.reasoning.split("'")[1]
-                if pipeline.search_output and pipeline.search_output.reasoning
-                else ""
-            )
+            # Clear the historyPapers
+            for paper in pipeline.historyPapers:
+                if paper.found_by_query == original_query:
+                    pipeline.historyPapers.remove(paper)
 
             # Clear all outputs
             pipeline.search_output = None
