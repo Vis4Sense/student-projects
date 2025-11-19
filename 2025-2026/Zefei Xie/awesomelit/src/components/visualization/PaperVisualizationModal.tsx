@@ -1,14 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
+import { X, ChevronRight, ChevronDown } from 'lucide-react';
 import { pipelineApi } from '@/lib/api/client';
-import type { PipelineState } from '@/types/pipeline';
+import type { PipelineState, QueryRecord } from '@/types/pipeline';
 import ScatterPlot from "@/components/visualization/ScatterPlot";
 
 interface PaperVisualizationModalProps {
     pipeline: PipelineState;
     onClose: () => void;
+}
+
+interface QueryTreeNode {
+    query: QueryRecord;
+    children: QueryTreeNode[];
+    isExpanded: boolean;
+    isSelected: boolean;
 }
 
 export default function PaperVisualizationModal({
@@ -18,6 +25,167 @@ export default function PaperVisualizationModal({
     const [vizData, setVizData] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [lastChecked, setLastChecked] = useState<Date>(new Date());
+
+    const [queryTree, setQueryTree] = useState<QueryTreeNode[]>([]);
+    const [selectedQueries, setSelectedQueries] = useState<Set<string>>(new Set());
+
+    const buildQueryTree = (queryHistory: QueryRecord[]): QueryTreeNode[] => {
+        const queryMap = new Map<string, QueryTreeNode>();
+
+        queryHistory.forEach(query => {
+            queryMap.set(query.query_text, {
+                query,
+                children: [],
+                isExpanded: true,
+                isSelected: true
+            });
+        });
+
+        const rootNodes: QueryTreeNode[] = [];
+        queryHistory.forEach(query => {
+            const node = queryMap.get(query.query_text)!;
+            if (query.parent_query && queryMap.has(query.parent_query)) {
+                queryMap.get(query.parent_query)!.children.push(node);
+            } else {
+                rootNodes.push(node);
+            }
+        });
+
+        return rootNodes;
+    };
+
+    useEffect(() => {
+        if (pipeline.query_history && pipeline.query_history.length > 0) {
+            const tree = buildQueryTree(pipeline.query_history);
+            setQueryTree(tree);
+
+            const allQueries = new Set(
+                pipeline.query_history.map(q => q.query_text)
+            );
+            setSelectedQueries(allQueries);
+        }
+    }, [pipeline.query_history]);
+
+    const toggleExpand = (queryText: string) => {
+        const updateNode = (nodes: QueryTreeNode[]): QueryTreeNode[] => {
+            return nodes.map(node => {
+                if (node.query.query_text === queryText) {
+                    return { ...node, isExpanded: !node.isExpanded };
+                }
+                if (node.children.length > 0) {
+                    return { ...node, children: updateNode(node.children) };
+                }
+                return node;
+            });
+        };
+        setQueryTree(updateNode(queryTree));
+    };
+
+    const toggleQuerySelection = (queryText: string, node: QueryTreeNode) => {
+        const newSelected = new Set(selectedQueries);
+
+        const toggleNodeAndChildren = (n: QueryTreeNode, select: boolean) => {
+            if (select) {
+                newSelected.add(n.query.query_text);
+            } else {
+                newSelected.delete(n.query.query_text);
+            }
+            n.children.forEach(child => toggleNodeAndChildren(child, select));
+        };
+
+        const shouldSelect = !selectedQueries.has(queryText);
+        toggleNodeAndChildren(node, shouldSelect);
+
+        setSelectedQueries(newSelected);
+    };
+
+    const getFilteredVizData = () => {
+        if (!vizData || selectedQueries.size === 0) return null;
+
+        const filteredPapers = vizData.papers.filter((paper: any) =>
+            selectedQueries.has(paper.found_by_query)
+        );
+
+        const filteredQueriesData = vizData.queries_data.filter((q: any) =>
+            selectedQueries.has(q.query)
+        );
+
+        return {
+            ...vizData,
+            papers: filteredPapers,
+            queries_data: filteredQueriesData
+        };
+    };
+
+    const renderQueryNode = (node: QueryTreeNode, level: number = 0) => {
+        const isSelected = selectedQueries.has(node.query.query_text);
+        const hasChildren = node.children.length > 0;
+        const queryColor = vizData?.query_colors?.[node.query.query_text] || '#999';
+
+        return (
+            <div key={node.query.query_text} className="select-none">
+                <div
+                    className={`flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors ${
+                        isSelected ? 'bg-blue-50' : ''
+                    }`}
+                    style={{ marginLeft: `${level * 24}px` }}
+                >
+                    {hasChildren && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                toggleExpand(node.query.query_text);
+                            }}
+                            className="p-0.5 hover:bg-gray-200 rounded"
+                        >
+                            {node.isExpanded ? (
+                                <ChevronDown className="w-4 h-4" />
+                            ) : (
+                                <ChevronRight className="w-4 h-4" />
+                            )}
+                        </button>
+                    )}
+                    {!hasChildren && <div className="w-5" />}
+
+                    <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleQuerySelection(node.query.query_text, node)}
+                        className="w-4 h-4 rounded"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+
+                    <div
+                        className="w-5 h-5 rounded-full border-4 bg-white flex-shrink-0"
+                        style={{ borderColor: queryColor }}
+                    />
+
+                    <div className="flex-1 flex items-center justify-between gap-2 min-w-0">
+                        <span className={`text-sm truncate ${
+                            isSelected ? 'font-medium text-gray-900' : 'text-gray-600'
+                        }`}>
+                            {node.query.query_text}
+                        </span>
+                        <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${
+                            node.query.status === 'completed' 
+                                ? 'bg-green-100 text-green-700' 
+                                : node.query.status === 'pending'
+                                ? 'bg-yellow-100 text-yellow-700'
+                                : 'bg-gray-100 text-gray-600'
+                        }`}>
+                            {node.query.status}
+                        </span>
+                    </div>
+                </div>
+
+                {hasChildren && node.isExpanded && (
+                    <div>
+                        {node.children.map(child => renderQueryNode(child, level + 1))}
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     useEffect(() => {
         const canVisualize = [
@@ -103,6 +271,8 @@ export default function PaperVisualizationModal({
         return () => window.removeEventListener('keydown', handleEsc);
     }, [onClose]);
 
+    const filteredVizData = getFilteredVizData();
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Backdrop */}
@@ -186,7 +356,7 @@ export default function PaperVisualizationModal({
                             {/* Statistics Cards */}
                             {vizData.statistics && (
                                 <div className="mb-6 grid grid-cols-4 gap-4">
-                                    <div className="bg-white p-4 rounded-lg border">
+                                    <div className="bg-white p-4 rounded-lg border border-gray-200">
                                         <p className="text-sm text-gray-600">Total Papers</p>
                                         <p className="text-2xl font-bold">{vizData.statistics.total_papers}</p>
                                     </div>
@@ -205,26 +375,46 @@ export default function PaperVisualizationModal({
                                 </div>
                             )}
 
-                            {/* Query Legend */}
-                            {vizData.queries && vizData.query_colors && (
-                                <div className="flex-1 mb-6 bg-white p-4 rounded-lg border">
-                                    <h3 className="text-lg font-semibold mb-3">Query Legend (Border Colors)</h3>
-                                    <div className="flex flex-wrap gap-4">
-                                        {vizData.queries.map((query: string) => (
-                                            <div key={query} className="flex items-center gap-2">
-                                                <div
-                                                    className="w-6 h-6 rounded-full border-4 bg-white"
-                                                    style={{ borderColor: vizData.query_colors[query] }}
-                                                ></div>
-                                                <span className="text-sm">{query}</span>
-                                            </div>
-                                        ))}
+                            {/* Query Tree Selector Query Legend */}
+                            <div className="mb-6 bg-white p-4 rounded-lg border border-gray-200">
+                                <div className="flex items-center justify-between mb-3">
+                                    <h3 className="text-lg font-semibold">Query Hierarchy</h3>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => {
+                                                const allQueries = new Set(
+                                                    pipeline.query_history.map(q => q.query_text)
+                                                );
+                                                setSelectedQueries(allQueries);
+                                            }}
+                                            className="text-sm px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded"
+                                        >
+                                            Select All
+                                        </button>
+                                        <button
+                                            onClick={() => setSelectedQueries(new Set())}
+                                            className="text-sm px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded"
+                                        >
+                                            Clear All
+                                        </button>
                                     </div>
                                 </div>
-                            )}
+                                <div className="max-h-64 overflow-y-auto p-2">
+                                    {queryTree.length > 0 ? (
+                                        queryTree.map(node => renderQueryNode(node))
+                                    ) : (
+                                        <p className="text-sm text-gray-500 text-center py-4">
+                                            No queries available
+                                        </p>
+                                    )}
+                                </div>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    {selectedQueries.size} of {pipeline.query_history.length} queries selected
+                                </p>
+                            </div>
 
                             {/* Status Legend */}
-                            <div className="flex-1 mb-6 bg-white p-4 rounded-lg border">
+                            <div className="mb-6 bg-white p-4 rounded-lg border border-gray-200">
                                 <h3 className="text-lg font-semibold mb-3">Status Legend (Fill Colors)</h3>
                                 <div className="flex flex-wrap gap-4">
                                     <div className="flex items-center gap-2">
@@ -242,28 +432,20 @@ export default function PaperVisualizationModal({
                                 </div>
                             </div>
 
-                            {/* Scatter Plot Placeholder */}
-                            <div className="border rounded-lg bg-white p-6">
-                                <div className="text-center text-gray-600">
-                                    <p className="mb-2 text-lg font-semibold">📊 Scatter Plot Visualization</p>
-                                    <p className="text-sm text-gray-500 mb-4">
-                                        {vizData.papers?.length || 0} papers loaded
-                                    </p>
-
-
-
-                                    <div className="border rounded-lg bg-white p-6">
-                                        <div className="w-full h-[700px]">
-                                            {vizData?.queries_data &&vizData?.papers && vizData.papers.length > 0 ? (
-                                                <ScatterPlot data={vizData.papers} queries={vizData.queries_data} />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                                    <p>No papers to visualize</p>
-                                                </div>
-                                            )}
+                            {/* Scatter Plot */}
+                            <div className="border border-gray-200 rounded-lg bg-white p-6">
+                                <div className="w-full h-[700px]">
+                                    {filteredVizData?.queries_data && filteredVizData?.papers && filteredVizData.papers.length > 0 ? (
+                                        <ScatterPlot data={filteredVizData.papers} queries={filteredVizData.queries_data} />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                            <p>
+                                                {selectedQueries.size === 0
+                                                    ? 'Please select at least one query to visualize'
+                                                    : 'No papers to visualize'}
+                                            </p>
                                         </div>
-                                    </div>
-
+                                    )}
                                 </div>
                             </div>
                         </div>

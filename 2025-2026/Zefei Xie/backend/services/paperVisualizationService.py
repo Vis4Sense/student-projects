@@ -57,15 +57,21 @@ class PaperVisualizationService:
         try:
             logger.info(f"Preparing visualization for {len(history_papers)} papers")
 
-            coordinates = self._generate_coordinates(history_papers)
-
+            # Group papers by query first
             query_groups = self._group_by_query(history_papers)
+
+            # Generate coordinates for both papers and queries together
+            paper_coordinates, query_coordinates = self._generate_coordinates_together(
+                history_papers,
+                list(query_groups.keys())
+            )
 
             query_colors = self._assign_query_colors(list(query_groups.keys()))
 
             visualization_data = self._assemble_data(
                 history_papers,
-                coordinates,
+                paper_coordinates,
+                query_coordinates,
                 query_groups,
                 query_colors
             )
@@ -77,11 +83,43 @@ class PaperVisualizationService:
             logger.error(f"Failed to prepare visualization data: {e}")
             raise
 
-    def _generate_coordinates(self, papers: List[Paper]) -> List[Tuple[float, float]]:
-        logger.info("Generating 2D coordinates...")
-        abstracts = [paper.abstract for paper in papers]
-        coordinates = self.embed_service.get_2d_coordinates(abstracts, method="umap")
-        return coordinates
+    def _generate_coordinates_together(
+            self,
+            papers: List[Paper],
+            queries: List[str]
+    ) -> Tuple[List[Tuple[float, float]], Dict[str, Tuple[float, float]]]:
+        """
+        Generate 2D coordinates for papers and queries together in the same space
+
+        Args:
+            papers: List of Paper objects
+            queries: List of query strings
+
+        Returns:
+            Tuple of (paper_coordinates, query_coordinates_dict)
+        """
+        logger.info(f"Generating 2D coordinates for {len(papers)} papers and {len(queries)} queries together...")
+
+        # Prepare texts: papers first, then queries
+        paper_abstracts = [paper.abstract for paper in papers]
+        all_texts = paper_abstracts + queries
+
+        # Generate coordinates for all texts together
+        all_coordinates = self.embed_service.get_2d_coordinates(all_texts, method="umap")
+
+        # Split coordinates back
+        paper_coordinates = all_coordinates[:len(papers)]
+        query_coordinate_list = all_coordinates[len(papers):]
+
+        # Create query coordinates dictionary
+        query_coordinates = {
+            query: coord
+            for query, coord in zip(queries, query_coordinate_list)
+        }
+
+        logger.info(f"✅ Generated {len(paper_coordinates)} paper coordinates and {len(query_coordinates)} query coordinates")
+
+        return paper_coordinates, query_coordinates
 
     def _group_by_query(self, papers: List[Paper]) -> Dict[str, List[str]]:
         query_groups = defaultdict(list)
@@ -122,13 +160,14 @@ class PaperVisualizationService:
     def _assemble_data(
             self,
             papers: List[Paper],
-            coordinates: List[Tuple[float, float]],
+            paper_coordinates: List[Tuple[float, float]],
+            query_coordinates: Dict[str, Tuple[float, float]],
             query_groups: Dict[str, List[str]],
             query_colors: Dict[str, str]
     ) -> Dict[str, Any]:
 
         papers_data = []
-        for paper, (x, y) in zip(papers, coordinates):
+        for paper, (x, y) in zip(papers, paper_coordinates):
             query = paper.found_by_query or "Unknown Query"
             status = paper.human_tag or "neutral"
 
@@ -169,15 +208,15 @@ class PaperVisualizationService:
             }
         }
 
+        # Build queries_data from the coordinates dictionary
         queries_data = []
-        queries = list(query_groups.keys())
-        for query in queries:
-            query_cords = self.embed_service.get_single_2d_coordinate(query)
+        for query, (x, y) in query_coordinates.items():
             queries_data.append({
                 "query": query,
-                "x": query_cords[0],
-                "y": query_cords[1],
+                "x": float(x),
+                "y": float(y),
             })
+            logger.info(f"✅ Query '{query}': ({x:.2f}, {y:.2f})")
 
         return {
             "status": "success",
