@@ -6,6 +6,7 @@ import {ArrowLeft, RotateCcw, X, AlertTriangle, Sparkles, ChevronRight, Edit3, S
 import type { PipelineState } from '@/types/pipeline';
 import {pipelineApi} from "@/lib/api/client";
 import PaperVisualizationModal from '../visualization/PaperVisualizationModal';
+import QueryTreeModal from "@/components/visualization/QueryTreeModal";
 
 
 interface HeaderProps {
@@ -69,6 +70,7 @@ export default function Header({
     const [isRestarting, setIsRestarting] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isVisualizationOpen, setIsVisualizationOpen] = useState(false);
+    const [treeVisible, setTreeVisible] = useState(false);
 
     // Next Iteration states
     const [isNextIterationOpen, setIsNextIterationOpen] = useState(false);
@@ -278,8 +280,12 @@ export default function Header({
         await handleSelectQuery(customQuery.trim());
     };
 
-   const handleToggleVisualization = () => {
+    const handleToggleVisualization = () => {
         setIsVisualizationOpen(!isVisualizationOpen);
+    };
+
+    const handleShowQueryTree = () => {
+        setTreeVisible(true);
     };
 
     const canContinue = pipeline &&
@@ -347,6 +353,16 @@ export default function Header({
                             >
                                 <Search className="w-4 h-4" />
                                 <span>Visualization</span>
+                            </button>
+                        )}
+
+                        {pipeline && (
+                            <button
+                                onClick={handleShowQueryTree}
+                                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-md"
+                                title="Open Query Tree"
+                            >
+                                Query Tree
                             </button>
                         )}
 
@@ -718,6 +734,14 @@ export default function Header({
                                 pipeline={pipeline}
                                 onClose={() => setIsVisualizationOpen(false)}
                             />
+            )}
+
+            {pipeline &&(
+                <QueryTreeModal
+                    visible={treeVisible}
+                    onClose={() => setTreeVisible(false)}
+                    pipelineState={pipeline}
+                />
             )}
         </>
     );
