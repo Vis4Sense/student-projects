@@ -71,24 +71,37 @@ export default function ScatterPlot({ data, queries }: ScatterPlotProps) {
             ? new Date(paper.published_date).toLocaleDateString()
             : 'Unknown';
 
-        return `<b style="font-size: 14px;">${paper.title}</b><br>` +
+        const truncatedQuery = paper.found_by_query.length > 80
+        ? paper.found_by_query.substring(0, 80) + '...'
+        : paper.found_by_query;
+
+        const truncatedTitle = paper.title.length > 80
+        ? paper.title.substring(0, 80) + '...'
+        : paper.title;
+
+        return `<b style="font-size: 14px;">${truncatedTitle}</b><br>` +
                `<br><b>Status:</b> ${paper.status.toUpperCase()}` +
                `<br><b>Relevance:</b> ${paper.relevance_score.toFixed(3)}` +
                `<br><b>Authors:</b> ${authorList}` +
                `<br><b>Published:</b> ${publishDate}` +
-               `<br><b>Query:</b> ${paper.found_by_query}` +
+               `<br><b>Query:</b> ${truncatedQuery}` +
                `<br><b>Keywords:</b> ${keywords}` +
                `<br><b>Position:</b> (${paper.x.toFixed(2)}, ${paper.y.toFixed(2)})` +
-               `<br><br><i>Click to view details</i>`;  // ✅ 提示可以点击
+               `<br><br><i>Click to view details</i>`;
     };
 
     const createQueryHoverText = (query: QueryData) => {
+
+        const truncatedQuery = query.query.length > 80
+        ? query.query.substring(0, 80) + '...'
+        : query.query;
+
         return `<b style="font-size: 15px;">⭐ QUERY POINT</b><br>` +
-               `<br><b>Query:</b> ${query.query}` +
+               `<br><b>Query:</b> ${truncatedQuery}` +
                `<br><b>Position:</b> (${query.x.toFixed(2)}, ${query.y.toFixed(2)})` +
                `<br><br><i>Semantic center of the query.<br>` +
                `Papers cluster nearby.</i>` +
-               `<br><br><i>Click to view details</i>`;  // ✅ 提示可以点击
+               `<br><br><i>Click to view details</i>`;
     };
 
     const traces: any[] = [

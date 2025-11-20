@@ -106,8 +106,8 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
        <text
          fill="#000"
          strokeWidth="0"
-         x="30"
-         y="5"
+         x="-100"
+         y="40"
          style={{
            fontSize: '14px',
            fontWeight: isSelected ? 'bold' : 'normal',
@@ -347,7 +347,7 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
         <Tree
           data={treeData}
           renderCustomNodeElement={renderCustomNode}
-          orientation="vertical"
+          orientation="horizontal"
           translate={{ x: 300, y: 50 }}
           pathFunc="step"
           separation={{ siblings: 1.5, nonSiblings: 2 }}
