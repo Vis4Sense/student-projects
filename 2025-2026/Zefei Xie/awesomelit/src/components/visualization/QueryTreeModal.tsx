@@ -115,8 +115,8 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
          }}
          onClick={handleNodeClick}
        >
-         {nodeDatum.name.length > 30
-           ? `${nodeDatum.name.substring(0, 30)}...`
+         {nodeDatum.name.length > 25
+           ? `${nodeDatum.name.substring(0, 23)}...`
            : nodeDatum.name}
        </text>
      </g>
@@ -345,15 +345,16 @@ const QueryTreeModal: React.FC<QueryTreeModalProps> = ({
       </div>
       <div className="flex-1 overflow-hidden">
         <Tree
-          data={treeData}
-          renderCustomNodeElement={renderCustomNode}
-          orientation="horizontal"
-          translate={{ x: 300, y: 50 }}
-          pathFunc="step"
-          separation={{ siblings: 1.5, nonSiblings: 2 }}
-          nodeSize={{ x: 200, y: 100 }}
-          zoom={0.8}
-          enableLegacyTransitions
+            data={treeData}
+            renderCustomNodeElement={renderCustomNode}
+            orientation="horizontal"
+            translate={{ x: 100, y: 300 }}
+            pathFunc="step"
+            separation={{ siblings: 1.5, nonSiblings: 2 }}
+            nodeSize={{ x: 200, y: 100 }}
+            zoom={0.8}
+            centeringTransitionDuration={500}
+            enableLegacyTransitions
         />
       </div>
     </div>

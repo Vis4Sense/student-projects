@@ -339,13 +339,13 @@ export default function PaperVisualizationModal({
                     {!vizData ? (
                         <div className="flex items-center justify-center h-full p-12">
                             {loading ? (
-                                <div className="text-center">
+                                <div className="flex flex-col items-center justify-center py-12">
                                     <div className="animate-spin w-16 h-16 border-4 border-purple-200 border-t-purple-500 rounded-full mx-auto mb-4"></div>
                                     <p className="text-gray-600 font-medium">Generating visualization...</p>
                                     <p className="text-sm text-gray-500 mt-2">This may take a moment for the first time</p>
                                 </div>
                             ) : (
-                                <div className="text-center">
+                                <div className="flex flex-col items-center justify-center py-12">
                                     <p className="text-gray-600 mb-2">Visualization will appear after search completes.</p>
                                     <p className="text-sm text-gray-500">Current stage: {pipeline.stage}</p>
                                 </div>

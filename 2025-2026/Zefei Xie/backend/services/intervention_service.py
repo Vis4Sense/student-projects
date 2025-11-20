@@ -387,6 +387,11 @@ class InterventionService:
             rejected_decision.is_overridden = True
             rejected_decision.human_note = reason
 
+            for paper in pipeline.historyPapers:
+                if paper.id == paper_id:
+                    paper.human_note = "accepted"
+                    break
+
             self._record_intervention(pipeline, intervention, [
                 f"Accepted paper '{paper.title[:50]}...' (overriding AI decision)"
             ])
@@ -426,6 +431,11 @@ class InterventionService:
 
             pipeline.revising_output.accepted_papers.remove(paper)
             pipeline.revising_output.rejected_papers.append(rejection)
+
+            for paper in pipeline.historyPapers:
+                if paper.id == paper_id:
+                    paper.human_note = "rejected"
+                    break
 
             self._record_intervention(pipeline, intervention, [
                 f"Rejected paper '{paper.title[:50]}...' (manual decision)"
@@ -492,8 +502,19 @@ class InterventionService:
             # re-run search stage
             from graph.state import AgentState
 
+            original_query = ""
+            if pipeline.search_output and pipeline.search_output.reasoning:
+                try:
+                    reasoning_text = pipeline.search_output.reasoning
+                    if "Based on query '" in reasoning_text and "', generated" in reasoning_text:
+                        start = reasoning_text.find("Based on query '") + len("Based on query '")
+                        end = reasoning_text.find("', generated", start)
+                        original_query = reasoning_text[start:end]
+                except (IndexError, AttributeError):
+                    pass
+
             state = AgentState(
-                original_query=pipeline.search_output.reasoning.split("'")[1],  # 提取原始查询
+                original_query=original_query,
                 pipeline_id=pipeline.pipeline_id,
                 search_keywords=pipeline.search_output.keywords,
                 keyword_search_results=[],
