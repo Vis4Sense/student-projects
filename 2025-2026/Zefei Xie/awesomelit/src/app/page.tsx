@@ -136,7 +136,7 @@ export default function HomePage() {
                   >
                     <div className="flex flex-col items-center gap-2">
                       <span className="text-2xl">🎯</span>
-                      <span>Manual Mode</span>
+                      <span>Interactive Mode</span>
                       <span className="text-xs opacity-80">Review each stage</span>
                     </div>
                   </button>

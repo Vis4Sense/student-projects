@@ -309,6 +309,11 @@ export default function Header({
         router.push(`/`);
     };
 
+    const handleReport = () => {
+        // @ts-ignore
+        router.push(`/auto/${pipeline.pipeline_id}`)
+    }
+
     const stageInfo = STAGE_INFO[selectedStage];
 
     return (
@@ -452,7 +457,7 @@ export default function Header({
                         {pipeline && pipeline.stage === 'completed' && (
                             <button
                                 className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-                                onClick={handleBack}
+                                onClick={handleReport}
                             >
                                 Check Report
                             </button>
