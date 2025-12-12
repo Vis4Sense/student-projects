@@ -354,10 +354,10 @@ export default function Header({
                         {pipeline && (
                             <button
                                 onClick={handleToggleVisualization}
-                                className="flex items-center gap-2 px-4 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-colors shadow-md"
+                                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors shadow-sm"
                                 title="Open Paper Visualization"
                             >
-                                <Search className="w-4 h-4" />
+                                <Search className="w-4 h-4 text-white"/>
                                 <span>Visualization</span>
                             </button>
                         )}
@@ -365,10 +365,10 @@ export default function Header({
                         {pipeline && (
                             <button
                                 onClick={handleShowQueryTree}
-                                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-md"
+                                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors shadow-sm"
                                 title="Open Query Tree"
                             >
-                                <Search className="w-4 h-4" />
+                                <Search className="w-4 h-4 text-white"/>
                                 <span>Query Tree</span>
                             </button>
                         )}
@@ -377,9 +377,9 @@ export default function Header({
                         {pipeline && pipeline.stage === 'completed' && (
                             <button
                                 onClick={handleNextIteration}
-                                className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition-colors shadow-md"
+                                className="flex items-center gap-2 px-4 py-2 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-600 transition-colors duration-200 shadow-sm"
                             >
-                                <Sparkles className="w-4 h-4" />
+                                <Sparkles className="w-4 h-4 text-white"/>
                                 <span>Next Iteration</span>
                             </button>
                         )}
@@ -394,7 +394,8 @@ export default function Header({
                                     >
                                         <div className="flex items-center gap-2">
                                             <span>{STAGE_INFO[selectedStage].emoji}</span>
-                                            <span className="text-sm">{STAGE_INFO[selectedStage].label}</span>
+                                            <span
+                                                className="text-sm text-gray-700">{STAGE_INFO[selectedStage].label}</span>
                                         </div>
                                         <svg
                                             className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
@@ -402,7 +403,8 @@ export default function Header({
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                  d="M19 9l-7 7-7-7"/>
                                         </svg>
                                     </button>
 
@@ -412,7 +414,8 @@ export default function Header({
                                                 className="fixed inset-0 z-10"
                                                 onClick={() => setIsDropdownOpen(false)}
                                             />
-                                            <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-20">
+                                            <div
+                                                className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-20">
                                                 {availableStages.map((stage) => (
                                                     <button
                                                         key={stage}
@@ -420,9 +423,7 @@ export default function Header({
                                                             setSelectedStage(stage);
                                                             setIsDropdownOpen(false);
                                                         }}
-                                                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                                                            selectedStage === stage ? 'bg-gray-100' : ''
-                                                        }`}
+                                                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 transition-colors first:rounded-t-lg last:rounded-b-lg ${selectedStage === stage ? 'bg-gray-100' : ''}`}
                                                     >
                                                         <span>{STAGE_INFO[stage].emoji}</span>
                                                         <span>{STAGE_INFO[stage].label}</span>
@@ -435,10 +436,10 @@ export default function Header({
 
                                 <button
                                     onClick={() => setIsRestartDialogOpen(true)}
-                                    className="flex items-center gap-2 px-4 py-2 border border-orange-500 text-orange-600 font-semibold rounded-lg hover:bg-orange-50 transition-colors"
+                                    className="flex items-center gap-2 px-4 py-2 border border-orange-500 text-orange-600 font-medium rounded-md hover:bg-orange-50 transition-colors"
                                     title="Restart pipeline from selected stage"
                                 >
-                                    <RotateCcw className="w-4 h-4" />
+                                    <RotateCcw className="w-4 h-4 text-orange-600"/>
                                     <span>Restart</span>
                                 </button>
                             </div>
@@ -448,7 +449,7 @@ export default function Header({
                             <button
                                 onClick={onContinue}
                                 disabled={continueLoading}
-                                className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+                                className="px-6 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                             >
                                 {getButtonText()}
                             </button>
@@ -456,13 +457,14 @@ export default function Header({
 
                         {pipeline && pipeline.stage === 'completed' && (
                             <button
-                                className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+                                className="px-6 py-2 bg-gray-700 text-white font-medium rounded-md hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                                 onClick={handleReport}
                             >
                                 Check Report
                             </button>
                         )}
                     </div>
+
                 </div>
             </header>
 
@@ -478,7 +480,7 @@ export default function Header({
                         <div className="flex items-start justify-between p-6 border-b border-gray-200">
                             <div>
                                 <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                                    {stageInfo.emoji} Restart from {stageInfo.label} Stage?
+                                    Restart from {stageInfo.label} Stage?
                                 </h2>
                                 <p className="text-gray-600 mt-1">{stageInfo.description}</p>
                             </div>
@@ -528,7 +530,7 @@ export default function Header({
                                     )}
                                 </div>
                             </div>
-
+                            <br/>
                             <p className="text-sm text-gray-600 italic flex items-start gap-2">
                                 <span>This action cannot be undone. The pipeline will re-execute from the selected stage.</span>
                             </p>
@@ -545,7 +547,7 @@ export default function Header({
                             <button
                                 onClick={handleRestart}
                                 disabled={isRestarting}
-                                className="flex items-center gap-2 px-6 py-2 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                className="flex items-center gap-2 px-6 py-2 bg-gray-800 text-white font-medium rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                             >
                                 {isRestarting ? (
                                     <>
@@ -565,176 +567,182 @@ export default function Header({
             )}
 
             {/* Next Iteration Modal */}
-            {isNextIterationOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div
-                        className="absolute inset-0 bg-black/50"
-                        onClick={() => !isStartingIteration && setIsNextIterationOpen(false)}
-                    />
+            {/* Next Iteration Modal */}
+{isNextIterationOpen && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => !isStartingIteration && setIsNextIterationOpen(false)}
+        />
 
-                    <div className="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-                        {/* Header */}
-                        <div className="flex items-start justify-between p-6 border-b border-gray-200">
-                            <div className="flex-1">
-                                <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                                    <Sparkles className="w-6 h-6 text-purple-500" />
-                                    Choose Direction for Next Iteration
-                                </h2>
-                                <p className="text-gray-600 mt-2">
-                                    Based on the future work identified, select a refined research question to explore next.
-                                </p>
-                                {originalQuery && (
-                                    <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                                        <p className="text-sm text-gray-600">
-                                            <span className="font-semibold">Current query:</span> {originalQuery}
-                                        </p>
-                                    </div>
-                                )}
+        <div className="relative bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-gray-100">
+            {/* Header */}
+            <div className="flex items-start justify-between p-6 border-b border-gray-200">
+                <div className="flex-1">
+                    <h2 className="text-2xl font-semibold text-gray-900 flex items-center gap-2">
+                        <Sparkles className="w-6 h-6 text-indigo-600" />
+                        Choose Direction for Next Iteration
+                    </h2>
+                    <p className="text-gray-600 mt-2 text-sm">
+                        Based on the identified future work, select a refined research question to explore next.
+                    </p>
 
-                                {/* Regenerate button */}
-                                {refinedQueries.length > 0 && !isLoadingQueries && (
-                                    <button
-                                        onClick={handleForceRegenerate}
-                                        className="mt-3 text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1"
-                                    >
-                                        <RotateCcw className="w-3 h-3" />
-                                        Regenerate queries
-                                    </button>
-                                )}
-                            </div>
+                    {originalQuery && (
+                        <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <p className="text-sm text-gray-600">
+                                <span className="font-semibold">Current query:</span> {originalQuery}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Regenerate button */}
+                    {refinedQueries.length > 0 && !isLoadingQueries && (
+                        <button
+                            onClick={handleForceRegenerate}
+                            className="mt-3 text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1"
+                        >
+                            <RotateCcw className="w-3 h-3" />
+                            Regenerate queries
+                        </button>
+                    )}
+                </div>
+
+                {/* Close button */}
+                <button
+                    onClick={() => !isStartingIteration && setIsNextIterationOpen(false)}
+                    disabled={isStartingIteration}
+                    className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                >
+                    <X className="w-6 h-6" />
+                </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6 bg-gray-50/50">
+                {isLoadingQueries ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                        <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+                        <p className="text-gray-600">Generating refined queries from future work...</p>
+                    </div>
+                ) : refinedQueries.length === 0 ? (
+                    <div className="text-center py-12">
+                        <p className="text-gray-600">No refined queries available.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {/* Tab switcher */}
+                        <div className="flex gap-2 mb-4">
                             <button
-                                onClick={() => !isStartingIteration && setIsNextIterationOpen(false)}
-                                disabled={isStartingIteration}
-                                className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                                onClick={() => setIsCustomMode(false)}
+                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                    !isCustomMode
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
                             >
-                                <X className="w-6 h-6" />
+                                Recommended Queries
+                            </button>
+                            <button
+                                onClick={() => setIsCustomMode(true)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                                    isCustomMode
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                            >
+                                <Edit3 className="w-4 h-4" />
+                                Custom Query
                             </button>
                         </div>
 
-                        {/* Content */}
-                        <div className="flex-1 overflow-y-auto p-6">
-                            {isLoadingQueries ? (
-                                <div className="flex flex-col items-center justify-center py-12">
-                                    <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin mb-4"></div>
-                                    <p className="text-gray-600">Generating refined queries from future work...</p>
-                                </div>
-                            ) : refinedQueries.length === 0 ? (
-                                <div className="text-center py-12">
-                                    <p className="text-gray-600">No refined queries available.</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-4">
-                                    {/* Tab switcher */}
-                                    <div className="flex gap-2 mb-4">
-                                        <button
-                                            onClick={() => setIsCustomMode(false)}
-                                            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                                                !isCustomMode
-                                                    ? 'bg-purple-500 text-white'
-                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                            }`}
-                                        >
-                                            Recommended Queries
-                                        </button>
-                                        <button
-                                            onClick={() => setIsCustomMode(true)}
-                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                                                isCustomMode
-                                                    ? 'bg-purple-500 text-white'
-                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                            }`}
-                                        >
-                                            <Edit3 className="w-4 h-4" />
-                                            Custom Query
-                                        </button>
-                                    </div>
+                        <br />
 
-                                    <br/>
-
-                                    {!isCustomMode ? (
-                                        // Recommended queries
-                                        refinedQueries.map((query, index) => (
-                                            <div key={index} className="p-1">
-                                            <div
-                                                className="group relative border-2 border-gray-200 rounded-xl p-6 hover:border-purple-400 hover:shadow-lg transition-all cursor-pointer "
-                                                onClick={() => !isStartingIteration && handleSelectQuery(query.query)}
-                                            >
-                                                <div className="absolute top-4 right-4 w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-sm">
-                                                    {index + 1}
-                                                </div>
-
-                                                <h3 className="text-lg font-semibold text-gray-900 pr-12 mb-3 group-hover:text-purple-600 transition-colors">
-                                                    {query.query}
-                                                </h3>
-
-                                                <div className="mb-3">
-                                                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
-                                                        <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                                                        {query.focus_area}
-                                                    </span>
-                                                </div>
-
-                                                <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                                                    {query.rationale}
-                                                </p>
-
-                                                <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button
-                                                        className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition-colors"
-                                                        disabled={isStartingIteration}
-                                                    >
-                                                        <span>Start with this query</span>
-                                                        <ChevronRight className="w-4 h-4" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        // Custom query input
-                                        <div className="border-2 border-gray-200 rounded-xl p-6">
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                                                <Edit3 className="w-5 h-5 text-purple-500" />
-                                                Enter Your Custom Research Question
-                                            </h3>
-
-                                            <textarea
-                                                value={customQuery}
-                                                onChange={(e) => setCustomQuery(e.target.value)}
-                                                placeholder="Type your specific research question here..."
-                                                className="w-full h-32 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-400 focus:outline-none resize-none text-gray-900"
-                                                disabled={isStartingIteration}
-                                            />
-
-                                            <div className="mt-4 flex justify-end">
-                                                <button
-                                                    onClick={handleCustomQuerySubmit}
-                                                    disabled={isStartingIteration || !customQuery.trim()}
-                                                    className="flex items-center gap-2 px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                                >
-                                                    <span>Start with custom query</span>
-                                                    <ChevronRight className="w-4 h-4" />
-                                                </button>
-                                            </div>
+                        {!isCustomMode ? (
+                            // Recommended queries
+                            refinedQueries.map((query, index) => (
+                                <div key={index} className="p-1">
+                                    <div
+                                        className="group relative border-2 border-gray-200 rounded-xl p-6 hover:border-indigo-400 hover:shadow-md transition-all cursor-pointer bg-white"
+                                        onClick={() => !isStartingIteration && handleSelectQuery(query.query)}
+                                    >
+                                        <div className="absolute top-4 right-4 w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                            {index + 1}
                                         </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
 
-                        {/* Loading Overlay */}
-                        {isStartingIteration && (
-                            <div className="absolute inset-0 bg-white/90 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                                    <p className="text-gray-900 font-semibold">Starting new iteration...</p>
-                                    <p className="text-gray-600 text-sm mt-1">This may take a moment</p>
+                                        <h3 className="text-lg font-semibold text-gray-900 pr-12 mb-3 group-hover:text-indigo-600 transition-colors">
+                                            {query.query}
+                                        </h3>
+
+                                        <div className="mb-3">
+                                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                                                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                                                {query.focus_area}
+                                            </span>
+                                        </div>
+
+                                        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                            {query.rationale}
+                                        </p>
+
+                                        <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button
+                                                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
+                                                disabled={isStartingIteration}
+                                            >
+                                                <span>Start with this query</span>
+                                                <ChevronRight className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            // Custom query input
+                            <div className="border-2 border-gray-200 rounded-xl p-6 bg-white">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                    <Edit3 className="w-5 h-5 text-indigo-600" />
+                                    Enter Your Custom Research Question
+                                </h3>
+
+                                <textarea
+                                    value={customQuery}
+                                    onChange={(e) => setCustomQuery(e.target.value)}
+                                    placeholder="Type your specific research question here..."
+                                    className="w-full h-32 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-400 focus:outline-none resize-none text-gray-900"
+                                    disabled={isStartingIteration}
+                                />
+
+                                <div className="mt-4 flex justify-end">
+                                    <button
+                                        onClick={handleCustomQuerySubmit}
+                                        disabled={isStartingIteration || !customQuery.trim()}
+                                        className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    >
+                                        <span>Start with custom query</span>
+                                        <ChevronRight className="w-4 h-4" />
+                                    </button>
                                 </div>
                             </div>
                         )}
                     </div>
+                )}
+            </div>
+
+            {/* Loading Overlay */}
+            {isStartingIteration && (
+                <div className="absolute inset-0 bg-white/90 flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-gray-900 font-semibold">Starting new iteration...</p>
+                        <p className="text-gray-600 text-sm mt-1">This may take a moment</p>
+                    </div>
                 </div>
             )}
+        </div>
+    </div>
+)}
+
+
 
             {isVisualizationOpen && pipeline && (
                             <PaperVisualizationModal

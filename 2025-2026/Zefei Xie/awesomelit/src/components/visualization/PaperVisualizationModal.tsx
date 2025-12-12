@@ -125,28 +125,29 @@ export default function PaperVisualizationModal({
         return (
             <div key={node.query.query_text} className="select-none">
                 <div
-                    className={`flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors ${
-                        isSelected ? 'bg-blue-50' : ''
+                    className={`flex items-center gap-3 py-3 px-4 rounded-lg transition-colors cursor-pointer ${
+                        isSelected ? 'bg-blue-100' : 'hover:bg-gray-50'
                     }`}
-                    style={{ marginLeft: `${level * 24}px` }}
+                    style={{marginLeft: `${level * 24}px`}}
                 >
+                    {/* Expand/Collapse button */}
                     {hasChildren && (
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
                                 toggleExpand(node.query.query_text);
                             }}
-                            className="p-0.5 hover:bg-gray-200 rounded"
+                            className="p-1 hover:bg-gray-200 rounded transition-colors"
                         >
                             {node.isExpanded ? (
-                                <ChevronDown className="w-4 h-4" />
+                                <ChevronDown className="w-4 h-4"/>
                             ) : (
-                                <ChevronRight className="w-4 h-4" />
+                                <ChevronRight className="w-4 h-4"/>
                             )}
                         </button>
                     )}
-                    {!hasChildren && <div className="w-5" />}
 
+                    {/* Checkbox */}
                     <input
                         type="checkbox"
                         checked={isSelected}
@@ -155,37 +156,42 @@ export default function PaperVisualizationModal({
                         onClick={(e) => e.stopPropagation()}
                     />
 
+                    {/* Query color dot */}
                     <div
-                        className="w-5 h-5 rounded-full border-4 bg-white flex-shrink-0"
-                        style={{ borderColor: queryColor }}
+                        className="w-5 h-5 rounded-full border-2 bg-white flex-shrink-0"
+                        style={{borderColor: queryColor}}
                     />
 
+                    {/* Query Text and Status */}
                     <div className="flex-1 flex items-center justify-between gap-2 min-w-0">
-                        <span className={`text-sm truncate ${
-                            isSelected ? 'font-medium text-gray-900' : 'text-gray-600'
-                        }`}>
-                            {node.query.query_text}
-                        </span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${
-                            node.query.status === 'completed' 
-                                ? 'bg-green-100 text-green-700' 
-                                : node.query.status === 'pending'
-                                ? 'bg-yellow-100 text-yellow-700'
-                                : 'bg-gray-100 text-gray-600'
-                        }`}>
-                            {node.query.status}
-                        </span>
+                    <span className={`text-sm truncate ${isSelected ? 'font-medium text-gray-900' : 'text-gray-600'}`}>
+                        {node.query.query_text}
+                    </span>
+
+                        <span
+                            className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${
+                                node.query.status === 'completed'
+                                    ? 'bg-green-100 text-green-700'
+                                    : node.query.status === 'pending'
+                                        ? 'bg-yellow-100 text-yellow-700'
+                                        : 'bg-gray-100 text-gray-600'
+                            }`}
+                        >
+                        {node.query.status}
+                    </span>
                     </div>
                 </div>
 
+                {/* Render children if expanded */}
                 {hasChildren && node.isExpanded && (
-                    <div>
+                    <div className="ml-6">
                         {node.children.map(child => renderQueryNode(child, level + 1))}
                     </div>
                 )}
             </div>
         );
     };
+
 
     useEffect(() => {
         const canVisualize = [
@@ -355,24 +361,25 @@ export default function PaperVisualizationModal({
                         <div className="flex flex-col gap-4 p-6">
                             {/* Statistics Cards */}
                             {vizData.statistics && (
-                                <div className="mb-6 grid grid-cols-4 gap-4">
-                                    <div className="bg-white p-4 rounded-lg border border-gray-200">
+                                <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    <div className="bg-white p-6 rounded-lg border border-gray-300 shadow-sm">
                                         <p className="text-sm text-gray-600">Total Papers</p>
-                                        <p className="text-2xl font-bold">{vizData.statistics.total_papers}</p>
+                                        <p className="text-3xl font-semibold text-gray-800">{vizData.statistics.total_papers}</p>
                                     </div>
-                                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                                    <div className="bg-white p-6 rounded-lg border border-green-300 shadow-sm">
                                         <p className="text-sm text-gray-600">Accepted</p>
-                                        <p className="text-2xl font-bold text-green-600">{vizData.statistics.total_accepted}</p>
+                                        <p className="text-3xl font-semibold text-green-700">{vizData.statistics.total_accepted}</p>
                                     </div>
-                                    <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                                    <div className="bg-white p-6 rounded-lg border border-red-300 shadow-sm">
                                         <p className="text-sm text-gray-600">Rejected</p>
-                                        <p className="text-2xl font-bold text-red-600">{vizData.statistics.total_rejected}</p>
+                                        <p className="text-3xl font-semibold text-red-700">{vizData.statistics.total_rejected}</p>
                                     </div>
-                                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                    <div className="bg-white p-6 rounded-lg border border-blue-300 shadow-sm">
                                         <p className="text-sm text-gray-600">Queries</p>
-                                        <p className="text-2xl font-bold text-blue-600">{vizData.statistics.total_queries}</p>
+                                        <p className="text-3xl font-semibold text-blue-700">{vizData.statistics.total_queries}</p>
                                     </div>
                                 </div>
+
                             )}
 
                             {/* Query Tree Selector Query Legend */}
