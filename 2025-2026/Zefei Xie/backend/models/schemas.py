@@ -93,12 +93,19 @@ class SynthesisAgentOutput(BaseModel):
     confidence_score: float
     structure: Dict[str, Any]
 
+class SemanticDelta(BaseModel):
+    """Semantic delta between two queries"""
+    magnitude: float = Field(description="Semantic leap magnitude (0-1)")
+    added: List[str] = Field(description="Keywords/concepts added")
+    removed: List[str] = Field(description="Keywords/concepts removed")
+
 class QueryRecord(BaseModel):
     """Query record"""
     query_text: str
     parent_query: Optional[str] = None
     status: Literal["pending", "completed", "unexplored"]
     output: Optional[SynthesisAgentOutput] = None
+    semantic_delta: Optional[SemanticDelta] = None
 
 class PipelineState(BaseModel):
     """Pipeline state"""

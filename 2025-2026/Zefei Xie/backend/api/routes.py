@@ -4,7 +4,7 @@ Date: 2025/10/16 9:12
 File: routes.py
 Description: [Add your description here]
 """
-
+import numpy as np
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 import json
 from fastapi.responses import StreamingResponse
@@ -12,7 +12,7 @@ from models.chat_model import ChatRequest, ChatResponse
 from models.schemas import (
     SearchRequest, HumanInterventionRequest, PipelineState,
     VisualizationData, Paper, PaperReviewDecision, SearchAgentOutput, KeywordModel, RevisingAgentOutput,
-    SynthesisAgentOutput, KeywordSearchResult, QueryRecord
+    SynthesisAgentOutput, KeywordSearchResult, QueryRecord, SemanticDelta
 )
 from graph.workflow import ResearchWorkflow
 from graph.state import AgentState
@@ -735,6 +735,140 @@ async def get_pipeline_summary(pipeline_id: str):
     return summary
 
 
+async def create_query_record_with_semantic_analysis(
+        original_query: str,
+        new_query: str,
+) -> QueryRecord:
+    import numpy as np  # <-- Keep local import
+
+    semantic_delta = None
+    embedding_calculation_successful = False
+
+    # 预初始化变量，以便在异常处理中安全访问
+    added_concepts = []
+    removed_concepts = []
+    magnitude = 0.0
+    embeddings = None  # 预初始化 embeddings
+
+    try:
+        # Step 1: Use LLM to analyze added/removed concepts
+        # ... (LLM prompt setup remains the same) ...
+        analysis_prompt = f"""Compare these two research queries and identify the semantic changes:
+
+Original Query: "{original_query}"
+New Query: "{new_query}"
+
+Analyze what concepts/keywords are:
+1. ADDED in the new query (concepts that appear in new but not in original)
+2. REMOVED or de-emphasized from the original query
+3. At most 3 tags each
+
+Respond with ONLY valid JSON (no markdown):
+{{
+  "added_concepts": ["concept1", "concept2"],
+  "removed_concepts": ["concept1", "concept2"]
+}}
+
+Keep concepts concise (1-3 words each). Focus on key semantic differences."""
+
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a semantic analysis expert. Respond only with valid JSON."
+            },
+            {
+                "role": "user",
+                "content": analysis_prompt
+            }
+        ]
+
+        # Get LLM analysis
+        response = await llm_service.chat(messages)
+
+        # Parse JSON response
+        content = response.strip()
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        concept_analysis = json.loads(content)
+        added_concepts = concept_analysis.get("added_concepts", [])
+        removed_concepts = concept_analysis.get("removed_concepts", [])
+
+        logger.info(f"LLM analysis - Added: {added_concepts}, Removed: {removed_concepts}")
+
+        # Step 2A: Retrieve embeddings (Still inside try block for service error handling)
+        embeddings = embed_service.get_embeddings([original_query, new_query])
+
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse LLM concept analysis: {e}")
+        # added_concepts/removed_concepts
+
+    except Exception as e:
+        # 捕获其他服务错误，如 LLM 或 embed_service 连接失败
+        logger.error(f"Failed during LLM chat or embedding retrieval: {e}")
+
+
+    # Step 2B: Compute embedding-based magnitude (NumPy operations)
+    if embeddings is not None and len(embeddings) == 2:
+        try:
+            original_vec = np.array(embeddings[0])
+            new_vec = np.array(embeddings[1])
+
+            if original_vec.size > 0 and new_vec.size > 0:
+                # 规范化向量
+                original_norm = original_vec / (np.linalg.norm(original_vec) + 1e-10)
+                new_norm = new_vec / (np.linalg.norm(new_vec) + 1e-10)
+
+                # Cosine similarity
+                similarity = np.dot(original_norm, new_norm)
+
+                # Magnitude
+                magnitude = float(1 - similarity)
+                embedding_calculation_successful = True
+
+                logger.info(f"Computed semantic magnitude: {magnitude:.3f} (similarity: {similarity:.3f})")
+            else:
+                logger.warning("Embeddings retrieved but are empty vectors.")
+
+        except Exception as e:
+            # 捕获 NumPy 内部的错误，例如形状不匹配或 LinAlgError
+            logger.error(f"NumPy vector calculation failed: {e}")
+            # magnitude 保持 0.0
+
+    # Step 2.5: Fallback Magnitude Calculation
+    if not embedding_calculation_successful:
+        # Fallback: use a heuristic based on concept changes
+        concept_count = len(added_concepts) + len(removed_concepts)
+
+        # Limit heuristic magnitude to 1.0 (e.g., max change rate of 10 keywords)
+        magnitude = min(concept_count / 10.0, 1.0)
+        logger.warning(f"Using fallback magnitude calculation: {magnitude:.3f} based on {concept_count} concepts.")
+
+    # Step 3: Create SemanticDelta (Only if we have concepts OR magnitude > 0)
+    if magnitude > 0 or len(added_concepts) > 0 or len(removed_concepts) > 0:
+        semantic_delta = SemanticDelta(
+            magnitude=magnitude,
+            added=added_concepts,
+            removed=removed_concepts,
+        )
+    else:
+        # If everything is empty/zero, keep semantic_delta as None
+        semantic_delta = None
+
+    # Step 4: Create and return QueryRecord
+    record = QueryRecord(
+        query_text=new_query,
+        parent_query=original_query,
+        status="unexplored",
+        output=None,
+        semantic_delta=semantic_delta
+    )
+
+    return record
+
+
 @router.post("/pipeline/{pipeline_id}/restart")
 async def restart_pipeline(
         pipeline_id: str,
@@ -994,7 +1128,12 @@ async def restart_pipeline_with_new_query(
 
     # If the new query is not in the query_history, add it
     if flag:
-        pipeline.query_history.append(QueryRecord( query_text=new_query, parent_query=original_query, status="pending"))
+        record = await create_query_record_with_semantic_analysis(
+            original_query=original_query,
+            new_query=new_query,
+        )
+        record.status = "pending"
+        pipeline.query_history.append(record)
 
 
     try:
@@ -1200,6 +1339,7 @@ Requirements:
 3. Questions should be specific, focused, and actionable for literature search
 4. Questions should build upon the original research interest
 5. Avoid overlap between questions - each should explore a unique angle
+6. At most 5 angles
 
 Format your response as a JSON array (ONLY output valid JSON, no markdown):
 [
@@ -1243,8 +1383,10 @@ Generate queries now:"""
                 raise ValueError("Response is not a JSON array")
 
             for query in refined_queries:
-                q = query["query"]
-                record = QueryRecord(query_text=q, parent_query=original_query, status="unexplored")
+                record = await create_query_record_with_semantic_analysis(
+                    original_query=original_query,
+                    new_query=query["query"],
+                )
                 pipeline.query_history.append(record)
 
             # Validate structure

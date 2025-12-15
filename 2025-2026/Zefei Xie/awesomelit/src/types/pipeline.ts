@@ -63,11 +63,18 @@ export interface SynthesisAgentOutput {
     structure: Record<string, any>;
 }
 
+export interface SemanticDelta {
+    magnitude: number;
+    added: string[];
+    removed: string[];
+}
+
 export interface QueryRecord {
     query_text: string;
     parent_query: string | null;
     status: 'pending' | 'completed' | 'unexplored';
     output?: SynthesisAgentOutput;
+    semantic_delta?: SemanticDelta;
 }
 
 export interface PipelineState {
