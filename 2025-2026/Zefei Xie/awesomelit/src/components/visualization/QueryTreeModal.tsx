@@ -160,7 +160,7 @@ const renderCustomNode = (rd3tNodeProps: CustomNodeElementProps) => {
       const magnitude = (delta.magnitude * 100).toFixed(0);
 
       const FO_WIDTH = 220;
-      const FO_HEIGHT = 120;
+      const FO_HEIGHT = 125;
 
       return (
         <foreignObject
