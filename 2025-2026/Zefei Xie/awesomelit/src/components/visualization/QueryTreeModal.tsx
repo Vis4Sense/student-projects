@@ -31,9 +31,8 @@ export interface QueryRecord {
 
 export interface PipelineState {
     query_history: QueryRecord[];
-    stage: 'initializing' | 'running' | 'completed' | 'failed';
+    stage: "search" | "revising" | "synthesis" | "completed" | "search_complete" | "revising_complete" | "error";
 }
-// --- 接口定义结束 ---
 
 
 interface QueryTreeModalProps {
